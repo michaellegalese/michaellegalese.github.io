@@ -216,6 +216,16 @@
 <priority>0.7</priority>
 </url>
 <url>
+<loc>https://legalese.com/solutions/litigate</loc>
+<changefreq>monthly</changefreq>
+<priority>0.7</priority>
+</url>
+<url>
+<loc>https://legalese.com/solutions/negotiate</loc>
+<changefreq>monthly</changefreq>
+<priority>0.7</priority>
+</url>
+<url>
 <loc>https://legalese.com/solutions/insure</loc>
 <changefreq>monthly</changefreq>
 <priority>0.7</priority>
