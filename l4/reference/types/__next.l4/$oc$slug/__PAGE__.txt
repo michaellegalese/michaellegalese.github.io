@@ -1,0 +1,269 @@
+1:"$Sreact.fragment"
+2:I[90160,["/_next/static/chunks/0ypf.t599.7y6.js","/_next/static/chunks/0t2xr05rlu96l.js","/_next/static/chunks/0uxaa7wo_wmcw.js","/_next/static/chunks/0fl~me.qwn48c.js"],"default"]
+6:I[97367,["/_next/static/chunks/0ypf.t599.7y6.js","/_next/static/chunks/0t2xr05rlu96l.js"],"OutletBoundary"]
+7:"$Sreact.suspense"
+3:T21e4,<h1>Types</h1>
+<p>Every value in L4 has a type, and the type checker makes sure each rule is given and returns values of the right types.
+L4 has a few built-in types, and <code>DECLARE</code> makes new ones: records, enumerations and synonyms.
+Types are usually inferred, but writing them in <code>GIVEN</code> and <code>GIVETH</code> makes rules easier to read.</p>
+<h2 id="pages">Pages</h2>
+<ul>
+<li><a href="/l4/reference/types/DECLARE">DECLARE</a>: records, enumerations, type synonyms, parameterised types, <code>A</code>/<code>AN</code> and type expressions</li>
+<li><a href="/l4/reference/types/ASSUME">ASSUME</a>: a name with a type and no definition</li>
+<li><a href="/l4/reference/types/for-all">FOR ALL</a>: type variables in the type of an <code>ASSUME</code></li>
+<li><a href="/l4/reference/types/coercions">Coercions</a>: converting between types (<code>TOSTRING</code>, <code>TONUMBER</code>, <code>TODATE</code>, <code>AS STRING</code> and others)</li>
+</ul>
+<h2 id="built-in-types">Built-in types</h2>
+<table>
+<thead>
+<tr>
+<th>Type</th>
+<th>Values</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>NUMBER</code></td>
+<td>exact numbers, whole or fractional: <code>42</code>, <code>-17</code>, <code>3.14</code>, <code>5.4%</code> (= <code>0.054</code>), <code>100_000</code></td>
+</tr>
+<tr>
+<td><code>STRING</code></td>
+<td>text in double quotes: <code>"Hello"</code>; <code>\"</code>, <code>\\</code> and <code>\n</code> are escapes</td>
+</tr>
+<tr>
+<td><code>BOOLEAN</code></td>
+<td><code>TRUE</code> and <code>FALSE</code></td>
+</tr>
+<tr>
+<td><code>DATE</code></td>
+<td>a calendar date, made with <code>Date 15 1 2025</code> from <a href="/l4/reference/libraries/daydate">daydate</a>, or parsed with <code>TODATE</code></td>
+</tr>
+<tr>
+<td><code>TIME</code></td>
+<td>a time of day, without a date or time zone; see <a href="/l4/reference/libraries/time">time</a></td>
+</tr>
+<tr>
+<td><code>DATETIME</code></td>
+<td>a point in time with a time zone; see <a href="/l4/reference/libraries/datetime">datetime</a></td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>Arithmetic on <code>NUMBER</code> is exact: <code>10 / 4</code> is <code>2.5</code>, not a rounded value.</li>
+<li>In a number, underscores between digits are ignored: <code>100_000</code> is <code>100000</code>. A number must start with a digit and must not end with an underscore.</li>
+<li><code>TRUE</code> and <code>FALSE</code> are written in capitals.</li>
+</ul>
+<h2 id="lists-optional-values-and-choices">Lists, optional values and choices</h2>
+<p>These built-in types take another type as a parameter.</p>
+<table>
+<thead>
+<tr>
+<th>Type</th>
+<th>Values</th>
+<th>Example file</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>LIST OF a</code></td>
+<td><code>LIST 1, 2, 3</code>, <code>EMPTY</code>, <code>1 FOLLOWED BY EMPTY</code></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<pre><code class="language-l4-file">-- Example: List type usage
+-- Demonstrates list literals and cons operator
+
+-- List literal syntax
+`first list` MEANS LIST 1, 2, 3
+
+-- Cons operator (FOLLOWED BY)
+`second list` MEANS 1 FOLLOWED BY 2 FOLLOWED BY 3 FOLLOWED BY EMPTY
+
+#EVAL `first list`
+#EVAL `second list`
+</code></pre>
+<pre><code> |
+</code></pre>
+<p>| <code>MAYBE a</code>    | <code>JUST 42</code> when there is a value, <code>NOTHING</code> when there is none |</p>
+<pre><code class="language-l4-file">-- Example: Maybe type usage
+-- Demonstrates optional values with JUST and NOTHING
+
+`value is present` MEANS JUST OF 42
+`value is absent` MEANS NOTHING
+
+`get the value or default to zero` MEANS
+  CONSIDER `value is present`
+  WHEN JUST OF x THEN x
+  WHEN NOTHING THEN 0
+
+#EVAL `get the value or default to zero`
+</code></pre>
+<p>|
+| <code>EITHER a b</code> | <code>LEFT "error"</code> or <code>RIGHT 42</code>                                  |</p>
+<pre><code class="language-l4-file">-- Example: Either type usage
+-- Either represents a choice: LEFT for errors, RIGHT for success values
+
+-- Declare a result with explicit EITHER type
+ASSUME `api result` IS AN EITHER STRING NUMBER
+
+-- Create specific Either values
+`error case` MEANS LEFT OF "Error occurred"
+`success case` MEANS RIGHT OF 42
+
+-- Pattern match to handle both cases
+GIVEN result IS AN EITHER STRING NUMBER
+`handle the result` result MEANS
+  CONSIDER result
+  WHEN LEFT OF err THEN CONCAT "Error: ", err
+  WHEN RIGHT OF val THEN CONCAT "Success: ", TOSTRING val
+
+#EVAL `handle the result` `error case`
+#EVAL `handle the result` `success case`
+</code></pre>
+<p>|</p>
+<p>L4 has no null: a value that may be missing has a <code>MAYBE</code> type, and <a href="/l4/reference/control-flow/CONSIDER">CONSIDER</a> handles both cases.
+Functions on these types, and the <code>PAIR</code> and <code>Dictionary</code> types, are in the <a href="/l4/reference/libraries/prelude">prelude</a>.</p>
+<h2 id="records-and-enumerations">Records and enumerations</h2>
+<p>A record has named fields; an enumeration has a fixed list of values, each of which can carry fields. Both are made with <a href="/l4/reference/types/DECLARE">DECLARE</a>.
+Examples:</p>
+<pre><code class="language-l4-file">-- Example: Record type declaration
+-- Demonstrates product types with named fields
+
+DECLARE Person
+  HAS `full name` IS A STRING
+      age         IS A NUMBER
+
+-- Example: Creating a person record
+`the applicant` MEANS Person WITH
+  `full name` IS "John Doe"
+  age         IS 30
+
+#EVAL `the applicant`'s `full name`
+#EVAL `the applicant`'s age
+</code></pre>
+<p>,</p>
+<pre><code class="language-l4-file">-- Example: Enum type declaration
+-- Demonstrates sum types with named constructors
+
+DECLARE Color IS ONE OF
+  Red
+  Green
+  Blue
+
+-- Example usage
+`my favorite color` MEANS Red
+
+`name of the color` MEANS
+  CONSIDER `my favorite color`
+  WHEN Red   THEN "red"
+  WHEN Green THEN "green"
+  WHEN Blue  THEN "blue"
+
+#EVAL `name of the color`
+</code></pre>
+<p>.</p>
+<h2 id="functions">Functions</h2>
+<p>A function is a value too. Its type is written <code>FUNCTION FROM Type1 AND Type2 TO Result</code>, so a function can be an input of another function.
+Example:</p>
+<pre><code class="language-l4-file">-- Example: Function type
+-- Demonstrates function type signature
+
+GIVEN x IS A NUMBER
+      y IS A NUMBER
+GIVETH A NUMBER
+add x y MEANS x PLUS y
+
+#EVAL add 5 3
+</code></pre>
+<p>.</p>
+<h2 id="type-parameters-and-inference">Type parameters and inference</h2>
+<p>A function or a type can work for any type, with a type parameter (<code>GIVEN a IS A TYPE</code>; see <a href="/l4/reference/functions/GIVEN#type-parameters">GIVEN and GIVETH</a>).
+Example:</p>
+<pre><code class="language-l4-file">-- Example: Polymorphic function
+-- Demonstrates generic types that work with any type
+
+GIVEN a IS A TYPE
+      list IS A LIST OF a
+GIVETH A NUMBER
+`length of list` list MEANS go 0 list
+  WHERE
+    go acc l MEANS
+      CONSIDER l
+      WHEN EMPTY THEN acc
+      WHEN x FOLLOWED BY xs THEN go (acc + 1) xs
+
+#EVAL `length of list` (LIST 1, 2, 3)
+#EVAL `length of list` (LIST "a", "b", "c")
+</code></pre>
+<p>.</p>
+<p>When <code>GIVETH</code> or an input's type is left out, L4 infers it.
+Example:</p>
+<pre><code class="language-l4-file">
+GIVEN x IS A NUMBER
+      y IS A NUMBER
+`add two numbers` x y MEANS x PLUS y
+</code></pre>
+<p>.</p>
+<h2 id="comparison-with-other-languages">Comparison with other languages</h2>
+<table>
+<thead>
+<tr>
+<th>L4</th>
+<th>Haskell</th>
+<th>Other languages</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>DECLARE T HAS ...</code></td>
+<td><code>data T = T { ... }</code></td>
+<td>struct, class, record</td>
+</tr>
+<tr>
+<td><code>DECLARE T IS ONE OF</code></td>
+<td><code>data T = A | B</code></td>
+<td>enum, union, sealed class</td>
+</tr>
+<tr>
+<td><code>GIVEN … GIVETH</code></td>
+<td><code>a -> b</code></td>
+<td>function signature</td>
+</tr>
+<tr>
+<td><code>MAYBE T</code></td>
+<td><code>Maybe T</code></td>
+<td>Optional, nullable</td>
+</tr>
+<tr>
+<td><code>LIST OF T</code></td>
+<td><code>[T]</code></td>
+<td>array, list</td>
+</tr>
+<tr>
+<td><code>CONSIDER</code></td>
+<td><code>case … of</code></td>
+<td>switch, match</td>
+</tr>
+<tr>
+<td><code>BRANCH</code></td>
+<td>guards</td>
+<td>if-else-if chain</td>
+</tr>
+<tr>
+<td><code>WHERE</code>, <code>LET … IN</code></td>
+<td><code>where</code>, <code>let … in</code></td>
+<td>local variables</td>
+</tr>
+<tr>
+<td><code>'s</code></td>
+<td>record field</td>
+<td><code>.field</code></td>
+</tr>
+</tbody>
+</table>
+<p>How the type system works, formally: <a href="/l4/concepts/type-system/type-theory">Type theory</a>. Why types matter for legal rules: <a href="/l4/concepts/type-system/algebraic-types">Types as legal categories</a>.</p>
+0:{"rsc":["$","$1","c",{"children":[["$","$L2",null,{"navSections":[{"title":"","items":[{"title":"Language Reference","href":"reference"},{"title":"Glossary","href":"reference/GLOSSARY"},{"title":"Cheat sheet","href":"reference/cheat-sheet"},{"title":"Types","href":"reference/types","children":[{"title":"DECLARE","href":"reference/types/DECLARE"},{"title":"ASSUME","href":"reference/types/ASSUME"},{"title":"FOR ALL","href":"reference/types/for-all"},{"title":"Coercions","href":"reference/types/coercions"}]},{"title":"Functions","href":"reference/functions","children":[{"title":"DECIDE","href":"reference/functions/DECIDE"},{"title":"GIVEN and GIVETH","href":"reference/functions/GIVEN"},{"title":"MEANS","href":"reference/functions/MEANS"},{"title":"LET and WHERE","href":"reference/functions/LET"},{"title":"YIELD","href":"reference/functions/YIELD"},{"title":"AKA","href":"reference/functions/AKA"}]},{"title":"Control flow","href":"reference/control-flow","children":[{"title":"IF","href":"reference/control-flow/IF"},{"title":"BRANCH","href":"reference/control-flow/BRANCH"},{"title":"CONSIDER","href":"reference/control-flow/CONSIDER"}]},{"title":"Operators","href":"reference/operators","children":[{"title":"AND, OR, NOT, IMPLIES","href":"reference/operators/logical"},{"title":"UNLESS","href":"reference/operators/UNLESS"},{"title":"Arithmetic","href":"reference/operators/arithmetic"},{"title":"Comparisons","href":"reference/operators/comparisons"}]},{"title":"Regulative rules","href":"reference/regulative","children":[{"title":"PARTY, MUST, MAY, SHANT","href":"reference/regulative/PARTY"},{"title":"Deadlines and consequences","href":"reference/regulative/consequences"},{"title":"BECAUSE","href":"reference/regulative/BECAUSE"},{"title":"DEONTIC","href":"reference/regulative/DEONTIC"},{"title":"EVENT","href":"reference/regulative/EVENT"}]},{"title":"Syntax and directives","href":"reference/syntax"},{"title":"Built-in functions","href":"reference/builtins","children":[{"title":"HTTP and JSON","href":"reference/builtins/http-json"}]},{"title":"Standard libraries","href":"reference/libraries","children":[{"title":"prelude","href":"reference/libraries/prelude"},{"title":"math","href":"reference/libraries/math"},{"title":"daydate","href":"reference/libraries/daydate"},{"title":"time","href":"reference/libraries/time"},{"title":"datetime","href":"reference/libraries/datetime"},{"title":"timezone","href":"reference/libraries/timezone"},{"title":"excel-date","href":"reference/libraries/excel-date"},{"title":"currency","href":"reference/libraries/currency"},{"title":"holdings","href":"reference/libraries/holdings"},{"title":"actus","href":"reference/libraries/actus"},{"title":"legal-persons","href":"reference/libraries/legal-persons"},{"title":"jurisdiction","href":"reference/libraries/jurisdiction"},{"title":"llm","href":"reference/libraries/llm"}]},{"title":"Error messages","href":"reference/errors"}]}],"toc":[],"htmlContent":"$3","pager":{"prev":"$0:rsc:props:children:0:props:navSections:0:items:2","next":"$0:rsc:props:children:0:props:navSections:0:items:3:children:0"}}],["$L4"],"$L5"]}],"isPartial":false,"staleTime":300,"varyParams":null,"buildId":"iJUXAyHcmcW99cMci3ei9"}
+4:["$","script","script-0",{"src":"/_next/static/chunks/0fl~me.qwn48c.js","async":true}]
+5:["$","$L6",null,{"children":["$","$7",null,{"name":"Next.MetadataOutlet","children":"$@8"}]}]
+8:null

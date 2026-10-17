@@ -1,0 +1,482 @@
+1:"$Sreact.fragment"
+2:I[90160,["/_next/static/chunks/0ypf.t599.7y6.js","/_next/static/chunks/0t2xr05rlu96l.js","/_next/static/chunks/0uxaa7wo_wmcw.js","/_next/static/chunks/0fl~me.qwn48c.js"],"default"]
+6:I[97367,["/_next/static/chunks/0ypf.t599.7y6.js","/_next/static/chunks/0t2xr05rlu96l.js"],"OutletBoundary"]
+7:"$Sreact.suspense"
+3:T4a96,<h1>Deadlines and consequences</h1>
+<p>A regulative rule says who must, may or must not act (see <a href="/l4/reference/regulative/PARTY">PARTY, MUST, MAY, SHANT</a>). This page covers the rest of the rule: the deadline (<code>WITHIN</code>), what follows (<code>HENCE</code>, <code>LEST</code>), how the action is matched (<code>PROVIDED</code>, <code>EXACTLY</code>), the end states (<code>FULFILLED</code>, <code>BREACH</code>), and rules that run side by side (<code>RAND</code>, <code>ROR</code>).</p>
+<pre><code class="language-text">PARTY party
+MUST action PROVIDED condition
+WITHIN deadline
+HENCE rule-if-complied
+LEST rule-if-not
+</code></pre>
+<p><strong>Example file:</strong></p>
+<pre><code class="language-l4-file">-- DEONTIC Type Examples - Regulative Values in L4
+
+-- ============================================================
+-- § Type Declarations
+-- ============================================================
+
+-- Every DEONTIC value needs Actor and Action types
+-- These define WHO can act and WHAT actions exist
+
+DECLARE Actor IS ONE OF
+    Buyer
+    Seller
+    Commissioner
+
+DECLARE Action IS ONE OF
+    `deliver goods` HAS description IS A STRING
+    `pay invoice` HAS amount IS A NUMBER
+    `inspect goods`
+    `issue notice` HAS content IS A STRING
+    `cancel order`
+
+-- ============================================================
+-- § Basic DEONTIC Values
+-- ============================================================
+
+-- A DEONTIC value represents an obligation, permission, or prohibition
+-- The type signature shows the Actor and Action types
+
+GIVETH A DEONTIC Actor Action
+`simple delivery obligation` MEANS
+    PARTY Seller
+    MUST `deliver goods` "standard package"
+    WITHIN 14
+    HENCE FULFILLED
+    LEST BREACH
+
+-- DEONTIC values are first-class - they can be stored in variables
+GIVETH A DEONTIC Actor Action
+`the seller's duty` MEANS `simple delivery obligation`
+
+-- ============================================================
+-- § DEONTIC with Parameters
+-- ============================================================
+
+-- Functions can take parameters and return DEONTIC values
+
+GIVEN deadline IS A NUMBER
+GIVETH A DEONTIC Actor Action
+`delivery within days` MEANS
+    PARTY Seller
+    MUST `deliver goods` "standard package"
+    WITHIN deadline
+    HENCE FULFILLED
+    LEST BREACH
+
+GIVEN price IS A NUMBER
+      `payment deadline` IS A NUMBER
+GIVETH A DEONTIC Actor Action
+`payment obligation` MEANS
+    PARTY Buyer
+    MUST `pay invoice` (EXACTLY price)
+    WITHIN `payment deadline`
+    HENCE FULFILLED
+    LEST BREACH
+
+-- ============================================================
+-- § DEONTIC Composition with HENCE
+-- ============================================================
+
+-- HENCE chains DEONTIC values - one obligation leads to another
+
+GIVEN price IS A NUMBER
+GIVETH A DEONTIC Actor Action
+`sale contract` MEANS
+    PARTY Seller
+    MUST `deliver goods` "merchandise"
+    WITHIN 14
+    HENCE
+        PARTY Buyer
+        MUST `pay invoice` (EXACTLY price)
+        WITHIN 30
+        HENCE FULFILLED
+        LEST BREACH BY Buyer BECAUSE "failed to pay"
+    LEST BREACH BY Seller BECAUSE "failed to deliver"
+
+-- ============================================================
+-- § DEONTIC Composition with RAND (Parallel)
+-- ============================================================
+
+-- RAND combines DEONTIC values that must ALL be fulfilled
+
+GIVETH A DEONTIC Actor Action
+`mutual obligations` MEANS
+    (PARTY Seller MUST `deliver goods` "item A" WITHIN 14 HENCE FULFILLED LEST BREACH)
+    RAND
+    (PARTY Buyer MUST `pay invoice` 1000 WITHIN 30 HENCE FULFILLED LEST BREACH)
+
+-- ============================================================
+-- § DEONTIC Composition with ROR (Alternative)
+-- ============================================================
+
+-- ROR combines DEONTIC values where ANY ONE fulfills the contract
+-- Note: ROR applies to entire provisions, not individual obligations
+
+GIVETH A DEONTIC Actor Action
+`flexible delivery` MEANS
+    (PARTY Seller MUST `deliver goods` "express shipping" WITHIN 7 HENCE FULFILLED LEST BREACH)
+    ROR
+    (PARTY Seller MUST `deliver goods` "standard shipping" WITHIN 14 HENCE FULFILLED LEST BREACH)
+
+-- ============================================================
+-- § Terminal DEONTIC Values
+-- ============================================================
+
+-- FULFILLED - The contract is successfully completed
+-- BREACH - The contract is broken (optionally with blame)
+
+GIVETH A DEONTIC Actor Action
+`already fulfilled` MEANS FULFILLED
+
+GIVETH A DEONTIC Actor Action
+`immediate breach` MEANS BREACH
+
+GIVETH A DEONTIC Actor Action
+`breach with blame` MEANS BREACH BY Seller BECAUSE "goods were defective"
+
+-- ============================================================
+-- § Conditional DEONTIC Values
+-- ============================================================
+
+-- DEONTIC values can be computed conditionally
+
+GIVEN `is urgent` IS A BOOLEAN
+GIVETH A DEONTIC Actor Action
+`conditional delivery` MEANS
+    IF `is urgent`
+    THEN
+        PARTY Seller
+        MUST `deliver goods` "urgent delivery"
+        WITHIN 3
+        HENCE FULFILLED
+        LEST BREACH
+    ELSE
+        PARTY Seller
+        MUST `deliver goods` "standard delivery"
+        WITHIN 14
+        HENCE FULFILLED
+        LEST BREACH
+
+-- ============================================================
+-- § The EVALTRACE Function
+-- ============================================================
+
+-- EVALTRACE is the underlying function for evaluating contracts
+-- Type: FORALL party action. DEONTIC party action -> NUMBER -> LIST (EVENT party action) -> DEONTIC party action
+
+-- Create events using the EVENT constructor
+`test events` MEANS LIST EVENT Seller (`deliver goods` "standard package") 5, EVENT Buyer (`pay invoice` 100) 20
+
+-- Evaluate a contract against events starting at time 0
+#EVAL EVALTRACE `simple delivery obligation` 0 `test events`
+
+-- ============================================================
+-- § Testing DEONTIC Values with #TRACE
+-- ============================================================
+
+-- #TRACE is syntactic sugar for EVALTRACE
+
+-- Test 1: Simple obligation fulfilled
+#TRACE `simple delivery obligation` AT 0 WITH
+    PARTY Seller DOES `deliver goods` "standard package" AT 10
+
+-- Test 2: Simple obligation breached (deadline passed)
+#TRACE `simple delivery obligation` AT 0 WITH
+    PARTY Seller DOES `deliver goods` "standard package" AT 20
+
+-- Test 3: Parameterized delivery
+#TRACE `delivery within days` 7 AT 0 WITH
+    PARTY Seller DOES `deliver goods` "standard package" AT 5
+
+-- Test 4: Sale contract - happy path
+#TRACE `sale contract` 500 AT 0 WITH
+    PARTY Seller DOES `deliver goods` "merchandise" AT 10
+    PARTY Buyer DOES `pay invoice` 500 AT 30
+
+-- Test 5: Mutual obligations with RAND
+#TRACE `mutual obligations` AT 0 WITH
+    PARTY Seller DOES `deliver goods` "item A" AT 10
+    PARTY Buyer DOES `pay invoice` 1000 AT 25
+
+-- Test 6: Flexible delivery with ROR (first option)
+#TRACE `flexible delivery` AT 0 WITH
+    PARTY Seller DOES `deliver goods` "express shipping" AT 5
+
+-- Test 7: Flexible delivery with ROR (second option)
+#TRACE `flexible delivery` AT 0 WITH
+    PARTY Seller DOES `deliver goods` "standard shipping" AT 12
+
+-- Test 8: Conditional delivery (urgent)
+#TRACE `conditional delivery` TRUE AT 0 WITH
+    PARTY Seller DOES `deliver goods` "urgent delivery" AT 2
+
+-- Test 9: Conditional delivery (not urgent)
+#TRACE `conditional delivery` FALSE AT 0 WITH
+    PARTY Seller DOES `deliver goods` "standard delivery" AT 10
+
+-- ============================================================
+-- § Advanced: PROVIDED Clause for Pattern Matching
+-- ============================================================
+
+-- PROVIDED adds conditions to action pattern matching
+
+GIVETH A DEONTIC Actor Action
+`minimum payment contract` MEANS
+    PARTY Buyer
+    MUST `pay invoice` amount PROVIDED amount >= 100
+    WITHIN 30
+    HENCE FULFILLED
+    LEST BREACH
+
+-- Test: Payment meets minimum
+#TRACE `minimum payment contract` AT 0 WITH
+    PARTY Buyer DOES `pay invoice` 150 AT 20
+
+-- Test: Payment below minimum (doesn't match, continues waiting)
+#TRACE `minimum payment contract` AT 0 WITH
+    PARTY Buyer DOES `pay invoice` 50 AT 20
+
+-- ============================================================
+-- § Advanced: EXACTLY for Precise Matching
+-- ============================================================
+
+-- EXACTLY requires an exact value match in patterns
+
+GIVEN `required amount` IS A NUMBER
+GIVETH A DEONTIC Actor Action
+`exact payment required` MEANS
+    PARTY Buyer
+    MUST EXACTLY `pay invoice` `required amount`
+    WITHIN 30
+    HENCE FULFILLED
+    LEST BREACH
+
+-- Test: Exact amount paid
+#TRACE `exact payment required` 500 AT 0 WITH
+    PARTY Buyer DOES `pay invoice` 500 AT 15
+
+-- Test: Wrong amount (doesn't match)
+#TRACE `exact payment required` 500 AT 0 WITH
+    PARTY Buyer DOES `pay invoice` 499 AT 15
+
+-- ============================================================
+-- § Advanced: WAIT UNTIL for Time Advancement
+-- ============================================================
+
+-- WAIT UNTIL advances time without an event
+-- Useful for testing deadline behavior
+
+#TRACE `simple delivery obligation` AT 0 WITH
+    (`WAIT UNTIL` 20)
+
+-- ============================================================
+-- § DEONTIC as Return Values
+-- ============================================================
+
+-- Functions can compute and return DEONTIC values dynamically
+
+GIVEN `order type` IS A STRING
+      price IS A NUMBER
+GIVETH A DEONTIC Actor Action
+`create order contract` MEANS
+    IF `order type` EQUALS "express"
+    THEN
+        PARTY Seller
+        MUST `deliver goods` "express order"
+        WITHIN 3
+        HENCE
+            PARTY Buyer
+            MUST `pay invoice` (EXACTLY `express price`)
+            WITHIN 7
+            HENCE FULFILLED
+            LEST BREACH
+        LEST BREACH
+    ELSE
+        PARTY Seller
+        MUST `deliver goods` "standard order"
+        WITHIN 14
+        HENCE
+            PARTY Buyer
+            MUST `pay invoice` (EXACTLY price)
+            WITHIN 30
+            HENCE FULFILLED
+            LEST BREACH
+        LEST BREACH
+    WHERE
+        `express price` MEANS price + 50
+
+-- Test express order
+#TRACE `create order contract` "express" 200 AT 0 WITH
+    PARTY Seller DOES `deliver goods` "express order" AT 2
+    PARTY Buyer DOES `pay invoice` 250 AT 5
+
+-- Test standard order
+#TRACE `create order contract` "standard" 200 AT 0 WITH
+    PARTY Seller DOES `deliver goods` "standard order" AT 10
+    PARTY Buyer DOES `pay invoice` 200 AT 30
+</code></pre>
+<h2 id="within">WITHIN</h2>
+<p><code>WITHIN</code> gives the time the party has to act, as a NUMBER on the same timeline as the events in a <code>#TRACE</code>.
+The timeline has no fixed unit: days, hours or business days all work, as long as the deadlines and the event times use the same one.</p>
+<pre><code class="language-l4">DECLARE Party IS ONE OF Buyer, Seller
+DECLARE Action IS ONE OF `confirm order`, deliver
+
+GIVETH A DEONTIC Party Action
+`order and delivery` MEANS
+  PARTY Buyer
+  MUST `confirm order`
+  WITHIN 30
+  HENCE
+    PARTY Seller
+    MUST deliver
+    WITHIN 5
+    HENCE FULFILLED
+    LEST BREACH BY Seller BECAUSE "late delivery"
+
+#TRACE `order and delivery` AT 0 WITH
+  PARTY Buyer DOES `confirm order` AT 10
+  PARTY Seller DOES deliver AT 14
+</code></pre>
+<ul>
+<li>A deadline counts from the moment its rule becomes active: from the start time for the first rule, and from the event that led to it for a rule after <code>HENCE</code> or <code>LEST</code>. Above, the buyer confirms at 10, so the seller must deliver by 15.</li>
+<li>Deadlines are relative. There is no absolute date such as "by 1 January 2026", and no <code>WITHIN 5 days OF event</code>: to count from an event, put the rule after the <code>HENCE</code> of the rule for that event, as above.</li>
+<li>As events are read, the time left shrinks: after an event at 12, what was <code>WITHIN 14</code> from 0 has 2 left.</li>
+<li>A rule without <code>WITHIN</code> has no deadline. It waits for its action however long it takes, and time alone never takes it to <code>LEST</code>.</li>
+<li>L4 finds that a deadline has passed when it reads an event, or a <code>`WAIT UNTIL`</code> (see <a href="/l4/reference/regulative/EVENT">EVENT</a>), with a later time. The rule that follows starts at that event's time, and that event is not matched against it.</li>
+</ul>
+<h2 id="hence-and-lest">HENCE and LEST</h2>
+<p><code>HENCE</code> names what follows when the rule is complied with, and <code>LEST</code> what follows when it is not.
+Each can be <code>FULFILLED</code>, <code>BREACH</code>, or another rule, so rules chain into a contract.
+A <code>LEST</code> that is another rule expresses a remedy, such as a penalty or a grace period:</p>
+<pre><code class="language-l4">DECLARE Party IS ONE OF Borrower
+DECLARE Action IS ONE OF pay HAS amount IS A NUMBER
+
+GIVETH A DEONTIC Party Action
+`payment with penalty` MEANS
+  PARTY Borrower
+  MUST pay 1000
+  WITHIN 30
+  HENCE FULFILLED
+  LEST
+    PARTY Borrower
+    MUST pay 1100
+    WITHIN 15
+    LEST BREACH
+</code></pre>
+<p>Which branch is taken, and what is used when it is left out, depends on the modal:</p>
+<table>
+<thead>
+<tr>
+<th>Modal</th>
+<th><code>HENCE</code> is taken when</th>
+<th><code>LEST</code> is taken when</th>
+<th><code>HENCE</code> default</th>
+<th><code>LEST</code> default</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>MUST</code></td>
+<td>the action is taken in time</td>
+<td>the deadline passes without it</td>
+<td><code>FULFILLED</code></td>
+<td><code>BREACH</code></td>
+</tr>
+<tr>
+<td><code>MAY</code></td>
+<td>the action is taken in time, or the deadline passes without it</td>
+<td>never</td>
+<td><code>FULFILLED</code></td>
+<td>not used</td>
+</tr>
+<tr>
+<td><code>SHANT / MUST NOT</code></td>
+<td>the deadline passes without the action</td>
+<td>the action is taken</td>
+<td><code>FULFILLED</code></td>
+<td><code>BREACH</code></td>
+</tr>
+<tr>
+<td><code>DO</code></td>
+<td>the action is taken in time</td>
+<td>the deadline passes without it</td>
+<td><code>FULFILLED</code></td>
+<td><code>BREACH</code></td>
+</tr>
+</tbody>
+</table>
+<p>For a prohibition the polarity flips: the deadline passing quietly is the good outcome. <code>HENCE</code> always names the outcome the rule wants, and <code>LEST</code> the one it does not.</p>
+<p>A rule written on the same line as its <code>HENCE</code> needs parentheses when a <code>LEST</code> follows on the next line: <code>HENCE (PARTY Seller MUST deliver WITHIN 5)</code>. Without them, that <code>LEST</code> is an indentation error. A rule on lines of its own, as above, needs none.</p>
+<h2 id="fulfilled-and-breach">FULFILLED and BREACH</h2>
+<p><code>FULFILLED</code> and <code>BREACH</code> are the two end states. <code>FULFILLED</code> means nothing more is owed; <code>BREACH</code> means a party failed and nothing absorbed the failure.</p>
+<pre><code class="language-text">LEST BREACH
+LEST BREACH BY party
+LEST BREACH BECAUSE reason
+LEST BREACH BY party BECAUSE reason
+</code></pre>
+<p><code>BY</code> names the party in breach and <a href="/l4/reference/regulative/BECAUSE">BECAUSE</a> gives the reason, a STRING.
+<code>FULFILLED</code> is also the natural result for a case where no duty arises: <code>IF NOT `conditions are met` THEN FULFILLED ELSE PARTY …</code>.</p>
+<h2 id="provided">PROVIDED</h2>
+<p><code>PROVIDED</code> adds a condition to the action. An event first has to match the action; then the condition is evaluated, with the names the action bound. If it is FALSE, the event does not count and the next one is tried.</p>
+<pre><code class="language-l4">DECLARE Party IS ONE OF Buyer
+DECLARE Action IS ONE OF `pay invoice` HAS amount IS A NUMBER
+
+GIVETH A DEONTIC Party Action
+`minimum payment` MEANS
+  PARTY Buyer
+  MUST `pay invoice` amount PROVIDED amount >= 100
+  WITHIN 30
+
+#TRACE `minimum payment` AT 0 WITH
+  PARTY Buyer DOES `pay invoice` 50 AT 5
+  PARTY Buyer DOES `pay invoice` 150 AT 6
+</code></pre>
+<p>The payment of 50 does not count; the payment of 150 fulfils the rule. Without <code>PROVIDED</code>, the condition is TRUE.</p>
+<h2 id="exactly">EXACTLY</h2>
+<p>The action after the modal is a pattern, as in a <a href="/l4/reference/control-flow/CONSIDER">CONSIDER</a>:</p>
+<ul>
+<li>a value, such as <code>pay 1000</code> or <code>deliver "goods"</code>, matches only that value;</li>
+<li>a name, such as <code>pay amount</code>, matches anything and binds the name for <code>PROVIDED</code> and for the rules after <code>HENCE</code> and <code>LEST</code>. This holds even when a name with that spelling is already defined: with <code>GIVEN price IS A NUMBER</code>, <code>MUST pay price</code> matches a payment of any amount.</li>
+</ul>
+<p><code>EXACTLY</code> turns an expression into a value to match. Use it to compare with an input or another defined value:</p>
+<pre><code class="language-l4">DECLARE Party IS ONE OF Buyer
+DECLARE Action IS ONE OF payment HAS amount IS A NUMBER
+
+GIVEN price IS A NUMBER
+GIVETH A DEONTIC Party Action
+`pay the price` price MEANS
+  PARTY Buyer
+  MUST payment (EXACTLY price)
+  WITHIN 10
+</code></pre>
+<p><code>EXACTLY</code> can also come before the whole action: <code>MUST EXACTLY payment price</code>.</p>
+<h2 id="rand-and-ror">RAND and ROR</h2>
+<p><code>RAND</code> and <code>ROR</code> combine two rules that run at the same time, on the same events.</p>
+<ul>
+<li><code>A RAND B</code> is fulfilled when both are fulfilled, and breached as soon as either is breached.</li>
+<li><code>A ROR B</code> is fulfilled as soon as either is fulfilled, and breached only when both are breached.</li>
+</ul>
+<pre><code class="language-l4">DECLARE Party IS ONE OF Seller
+DECLARE Action IS ONE OF ship, `arrange pickup`
+
+GIVETH A DEONTIC Party Action
+`either way of delivering` MEANS
+     (PARTY Seller MUST ship WITHIN 14 HENCE FULFILLED LEST BREACH)
+  ROR
+     (PARTY Seller MUST `arrange pickup` WITHIN 7 HENCE FULFILLED LEST BREACH)
+</code></pre>
+<p><code>RAND</code> binds more tightly than <code>ROR</code>: <code>A ROR B RAND C</code> means <code>A ROR (B RAND C)</code>.
+A combination can follow <code>HENCE</code> or <code>LEST</code>, so one event can start several duties.</p>
+<h2 id="related-pages">Related pages</h2>
+<ul>
+<li><a href="/l4/reference/regulative">Regulative rules</a>: the parts of a rule and <code>#TRACE</code></li>
+<li><a href="/l4/reference/regulative/DEONTIC">DEONTIC</a>: the type of rules, and how they are evaluated</li>
+<li><a href="/l4/concepts/legal-modeling/regulative-rules">How obligations unfold</a>: the model behind deadlines and events</li>
+</ul>
+0:{"rsc":["$","$1","c",{"children":[["$","$L2",null,{"navSections":[{"title":"","items":[{"title":"Language Reference","href":"reference"},{"title":"Glossary","href":"reference/GLOSSARY"},{"title":"Cheat sheet","href":"reference/cheat-sheet"},{"title":"Types","href":"reference/types","children":[{"title":"DECLARE","href":"reference/types/DECLARE"},{"title":"ASSUME","href":"reference/types/ASSUME"},{"title":"FOR ALL","href":"reference/types/for-all"},{"title":"Coercions","href":"reference/types/coercions"}]},{"title":"Functions","href":"reference/functions","children":[{"title":"DECIDE","href":"reference/functions/DECIDE"},{"title":"GIVEN and GIVETH","href":"reference/functions/GIVEN"},{"title":"MEANS","href":"reference/functions/MEANS"},{"title":"LET and WHERE","href":"reference/functions/LET"},{"title":"YIELD","href":"reference/functions/YIELD"},{"title":"AKA","href":"reference/functions/AKA"}]},{"title":"Control flow","href":"reference/control-flow","children":[{"title":"IF","href":"reference/control-flow/IF"},{"title":"BRANCH","href":"reference/control-flow/BRANCH"},{"title":"CONSIDER","href":"reference/control-flow/CONSIDER"}]},{"title":"Operators","href":"reference/operators","children":[{"title":"AND, OR, NOT, IMPLIES","href":"reference/operators/logical"},{"title":"UNLESS","href":"reference/operators/UNLESS"},{"title":"Arithmetic","href":"reference/operators/arithmetic"},{"title":"Comparisons","href":"reference/operators/comparisons"}]},{"title":"Regulative rules","href":"reference/regulative","children":[{"title":"PARTY, MUST, MAY, SHANT","href":"reference/regulative/PARTY"},{"title":"Deadlines and consequences","href":"reference/regulative/consequences"},{"title":"BECAUSE","href":"reference/regulative/BECAUSE"},{"title":"DEONTIC","href":"reference/regulative/DEONTIC"},{"title":"EVENT","href":"reference/regulative/EVENT"}]},{"title":"Syntax and directives","href":"reference/syntax"},{"title":"Built-in functions","href":"reference/builtins","children":[{"title":"HTTP and JSON","href":"reference/builtins/http-json"}]},{"title":"Standard libraries","href":"reference/libraries","children":[{"title":"prelude","href":"reference/libraries/prelude"},{"title":"math","href":"reference/libraries/math"},{"title":"daydate","href":"reference/libraries/daydate"},{"title":"time","href":"reference/libraries/time"},{"title":"datetime","href":"reference/libraries/datetime"},{"title":"timezone","href":"reference/libraries/timezone"},{"title":"excel-date","href":"reference/libraries/excel-date"},{"title":"currency","href":"reference/libraries/currency"},{"title":"holdings","href":"reference/libraries/holdings"},{"title":"actus","href":"reference/libraries/actus"},{"title":"legal-persons","href":"reference/libraries/legal-persons"},{"title":"jurisdiction","href":"reference/libraries/jurisdiction"},{"title":"llm","href":"reference/libraries/llm"}]},{"title":"Error messages","href":"reference/errors"}]}],"toc":[],"htmlContent":"$3","pager":{"prev":"$0:rsc:props:children:0:props:navSections:0:items:7:children:0","next":"$0:rsc:props:children:0:props:navSections:0:items:7:children:2"}}],["$L4"],"$L5"]}],"isPartial":false,"staleTime":300,"varyParams":null,"buildId":"iJUXAyHcmcW99cMci3ei9"}
+4:["$","script","script-0",{"src":"/_next/static/chunks/0fl~me.qwn48c.js","async":true}]
+5:["$","$L6",null,{"children":["$","$7",null,{"name":"Next.MetadataOutlet","children":"$@8"}]}]
+8:null

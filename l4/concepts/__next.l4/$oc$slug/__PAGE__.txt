@@ -1,0 +1,25 @@
+1:"$Sreact.fragment"
+2:I[90160,["/_next/static/chunks/0ypf.t599.7y6.js","/_next/static/chunks/0t2xr05rlu96l.js","/_next/static/chunks/0uxaa7wo_wmcw.js","/_next/static/chunks/0fl~me.qwn48c.js"],"default"]
+4:I[97367,["/_next/static/chunks/0ypf.t599.7y6.js","/_next/static/chunks/0t2xr05rlu96l.js"],"OutletBoundary"]
+5:"$Sreact.suspense"
+3:T6db,<h1>Concepts</h1>
+<p>These pages explain why L4 works the way it does: the choices behind its syntax, how it models legal rules, and what its type system guarantees. Read them after you have tried a feature. For what a keyword does, see the <a href="/l4/reference">Reference</a>; for step-by-step guides, see the <a href="/l4/tutorials">Tutorials</a>.</p>
+<h2 id="language-design">Language design</h2>
+<ul>
+<li><a href="/l4/concepts/language-design/principles">Design principles</a>: the five principles behind L4, and the style of writing that follows from them.</li>
+<li><a href="/l4/concepts/language-design/linguistic-syntax">Reading like the law</a>: how L4 borrows from English grammar so that code can be checked against its source text.</li>
+</ul>
+<h2 id="legal-modeling">Legal modeling</h2>
+<ul>
+<li><a href="/l4/concepts/legal-modeling/constitutive-vs-regulative">Definitions and duties</a>: why L4 keeps rules that define things apart from rules that impose duties.</li>
+<li><a href="/l4/concepts/legal-modeling/default-reasoning">Exceptions and defaults</a>: how to encode a general rule followed by its exceptions.</li>
+<li><a href="/l4/concepts/legal-modeling/regulative-rules">How obligations unfold</a>: a contract as something that waits for events and moves through time.</li>
+</ul>
+<h2 id="types">Types</h2>
+<ul>
+<li><a href="/l4/concepts/type-system/algebraic-types">Types as legal categories</a>: records and enumerations as the shapes of legal definitions.</li>
+<li><a href="/l4/concepts/type-system/exhaustiveness">Exhaustiveness</a>: why L4 checks that a determination handles every case.</li>
+<li><a href="/l4/concepts/type-system/type-theory">Type theory</a>: the formal foundations, for readers who know type theory.</li>
+</ul>
+0:{"rsc":["$","$1","c",{"children":[["$","$L2",null,{"navSections":[{"title":"","items":[{"title":"Concepts home","href":"concepts"},{"title":"Design principles","href":"concepts/language-design/principles"},{"title":"Reading like the law","href":"concepts/language-design/linguistic-syntax"},{"title":"Definitions and duties","href":"concepts/legal-modeling/constitutive-vs-regulative"},{"title":"Exceptions and defaults","href":"concepts/legal-modeling/default-reasoning"},{"title":"How obligations unfold","href":"concepts/legal-modeling/regulative-rules"},{"title":"Types as legal categories","href":"concepts/type-system/algebraic-types"},{"title":"Exhaustiveness","href":"concepts/type-system/exhaustiveness"},{"title":"Type theory","href":"concepts/type-system/type-theory"}]}],"toc":[],"htmlContent":"$3","pager":{"next":"$0:rsc:props:children:0:props:navSections:0:items:1"}}],[["$","script","script-0",{"src":"/_next/static/chunks/0fl~me.qwn48c.js","async":true}]],["$","$L4",null,{"children":["$","$5",null,{"name":"Next.MetadataOutlet","children":"$@6"}]}]]}],"isPartial":false,"staleTime":300,"varyParams":null,"buildId":"iJUXAyHcmcW99cMci3ei9"}
+6:null

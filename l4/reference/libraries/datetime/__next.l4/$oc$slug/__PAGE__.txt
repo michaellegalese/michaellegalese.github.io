@@ -1,0 +1,279 @@
+1:"$Sreact.fragment"
+2:I[90160,["/_next/static/chunks/0ypf.t599.7y6.js","/_next/static/chunks/0t2xr05rlu96l.js","/_next/static/chunks/0uxaa7wo_wmcw.js","/_next/static/chunks/0fl~me.qwn48c.js"],"default"]
+6:I[97367,["/_next/static/chunks/0ypf.t599.7y6.js","/_next/static/chunks/0t2xr05rlu96l.js"],"OutletBoundary"]
+7:"$Sreact.suspense"
+3:T2087,<h1>datetime</h1>
+<p>Absolute points in time: a date, a time of day and a time zone together, for deadlines that fall at a particular moment and for comparisons across time zones. Import it with <code>IMPORT datetime</code>. Import <code>daydate</code> and <code>time</code> as well if you also build <code>DATE</code> or <code>TIME</code> values with <code>Date</code> and <code>Time</code>.</p>
+<p>A DATETIME is stored as a moment in UTC together with its IANA time zone name. The functions that read it give local values in that time zone.</p>
+<p><strong>Example:</strong></p>
+<pre><code class="language-l4-file">-- DateTime Example: Absolute points in time with timezones
+IMPORT datetime
+IMPORT timezone
+IMPORT daydate
+
+TIMEZONE IS SGT
+
+
+-- DateTime construction from DATE + time components (uses document timezone SGT by default)
+DECIDE `the deadline` IS Datetime (Date 31 12 2025) 17 0 0
+#EVAL `the deadline`  -- 2025-12-31T17:00:00+08:00
+
+-- With explicit timezone override
+DECIDE `london meeting` IS Datetime (DATE_FROM_DMY 1 6 2026) (TIME_FROM_HMS 9 0 0) "Europe/London"
+#EVAL `london meeting`  -- 2026-06-01T09:00:00+01:00
+
+-- Date-only (midnight in document timezone)
+DECIDE `start of year` IS Datetime (Date 1 1 2026)
+#EVAL `start of year`  -- 2026-01-01T00:00:00+08:00
+
+
+-- DateTime construction from numbers (DMY order, like Date d m y)
+DECIDE `full datetime` IS Datetime 31 12 2025 17 30 0
+#EVAL `full datetime`  -- 2025-12-31T17:30:00+08:00
+
+DECIDE `date and hour` IS Datetime 15 6 2025 14
+#EVAL `date and hour`  -- 2025-06-15T14:00:00+08:00
+
+DECIDE `date only` IS Datetime 25 12 2025
+#EVAL `date only`  -- 2025-12-25T00:00:00+08:00
+
+DECIDE `month and year` IS Datetime 6 2025
+#EVAL `month and year`  -- 2025-06-01T00:00:00+08:00
+
+DECIDE `year only` IS Datetime 2025
+#EVAL `year only`  -- 2025-01-01T00:00:00+08:00
+
+-- Number constructors with explicit timezone
+DECIDE `nyc new year` IS Datetime 1 1 2026 0 0 0 EST
+#EVAL `nyc new year`  -- 2026-01-01T00:00:00-05:00
+
+
+-- DateTime from ISO-8601 string (JSON interop) - returns MAYBE DATETIME
+DECIDE `from iso` IS Datetime "2025-06-15T10:30:00Z"
+#EVAL `from iso`  -- JUST OF (2025-06-15T18:30:00+0800)
+
+-- ISO string with explicit display timezone - returns MAYBE DATETIME
+DECIDE `from iso tz` IS Datetime "2025-06-15T10:30:00Z" SGT
+#EVAL `from iso tz`  -- JUST OF (2025-06-15T18:30:00+0800)
+
+
+-- Extracting components (returns local values)
+DECIDE `meeting` IS Datetime (Date 15 6 2025) (TIME_FROM_HMS 14 30 0)
+#EVAL `Date of` `meeting`      -- the date component
+#EVAL `Time of` `meeting`      -- the time component
+#EVAL `Timezone of` `meeting`  -- "Asia/Singapore"
+#EVAL `the hour of` `meeting`  -- 14
+#EVAL `the day of` `meeting`   -- 15
+
+-- Predicates
+DECIDE `afternoon check` IS `meeting` `is afternoon`
+#EVAL `afternoon check`  -- TRUE
+
+-- Relative operations
+#EVAL `at midnight` `meeting`  -- same date at 00:00:00
+#EVAL `at noon` `meeting`      -- same date at 12:00:00
+
+-- Cross-timezone comparison (compares UTC instants)
+DECIDE `sg morning` IS Datetime (Date 1 6 2026) 8 0 0 SGT
+DECIDE `london midnight` IS Datetime (Date 1 6 2026) 0 0 0 "Europe/London"
+DECIDE `sg is later` IS `sg morning` GREATER THAN `london midnight`
+#EVAL `sg is later`  -- TRUE (SGT 08:00 = UTC 00:00, London 00:00 BST = UTC 23:00 prev day)
+
+-- DateTime comparisons
+DECIDE `before deadline` IS `meeting` LESS THAN `the deadline`
+#EVAL `before deadline`  -- TRUE
+
+DECIDE `meeting is before deadline` IS `meeting` `is before` `the deadline`
+DECIDE `deadline is after meeting` IS `the deadline` `is after` `meeting`
+#EVAL `meeting is before deadline`  -- TRUE
+#EVAL `deadline is after meeting`   -- TRUE
+
+#EVAL `the earlier of` `meeting` `the deadline`
+#EVAL `the later of` `meeting` `the deadline`
+</code></pre>
+<h2 id="the-document-time-zone">The document time zone</h2>
+<p>The forms of <code>Datetime</code> without a time zone use the document's time zone, so the file needs a <code>TIMEZONE IS</code> line. The <a href="/l4/reference/libraries/timezone">timezone</a> library has constants for common zones:</p>
+<pre><code class="language-l4">IMPORT datetime
+IMPORT timezone
+
+TIMEZONE IS SGT
+</code></pre>
+<h2 id="building-a-datetime">Building a DATETIME</h2>
+<p>Every form below also takes a time zone as a last input, an IANA name such as <code>"Europe/Paris"</code>, to use instead of the document's.</p>
+<table>
+<thead>
+<tr>
+<th>Function</th>
+<th>Gives</th>
+<th>What it does</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>Datetime</code> date time</td>
+<td>DATETIME</td>
+<td>A DATE and a TIME</td>
+</tr>
+<tr>
+<td><code>Datetime</code> date h m s</td>
+<td>DATETIME</td>
+<td>A DATE and the hour, minute and second</td>
+</tr>
+<tr>
+<td><code>Datetime</code> date</td>
+<td>DATETIME</td>
+<td>Midnight at the start of the date</td>
+</tr>
+<tr>
+<td><code>Datetime</code> d m y h mn s</td>
+<td>DATETIME</td>
+<td>Day, month, year, hour, minute and second</td>
+</tr>
+<tr>
+<td><code>Datetime</code> d m y h mn</td>
+<td>DATETIME</td>
+<td>Seconds are 0</td>
+</tr>
+<tr>
+<td><code>Datetime</code> d m y h</td>
+<td>DATETIME</td>
+<td>Minutes and seconds are 0</td>
+</tr>
+<tr>
+<td><code>Datetime</code> d m y</td>
+<td>DATETIME</td>
+<td>Midnight on that day</td>
+</tr>
+<tr>
+<td><code>Datetime</code> m y</td>
+<td>DATETIME</td>
+<td>Midnight on the 1st of the month</td>
+</tr>
+<tr>
+<td><code>Datetime</code> y</td>
+<td>DATETIME</td>
+<td>Midnight on 1 January</td>
+</tr>
+<tr>
+<td><code>Datetime</code> text</td>
+<td>MAYBE DATETIME</td>
+<td>Reads ISO 8601 text such as <code>"2024-06-15T10:30:00Z"</code></td>
+</tr>
+<tr>
+<td><code>Datetime</code> text tz</td>
+<td>MAYBE DATETIME</td>
+<td>The same, shown in the time zone <code>tz</code></td>
+</tr>
+</tbody>
+</table>
+<p>The number forms take the day before the month, as in <code>Datetime 15 6 2024 10 30 0</code>.</p>
+<h2 id="reading-a-datetime">Reading a DATETIME</h2>
+<table>
+<thead>
+<tr>
+<th>Function</th>
+<th>Gives</th>
+<th>What it does</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>Date of</code> dt</td>
+<td>DATE</td>
+<td>The local date</td>
+</tr>
+<tr>
+<td><code>Time of</code> dt</td>
+<td>TIME</td>
+<td>The local time of day</td>
+</tr>
+<tr>
+<td><code>Timezone of</code> dt</td>
+<td>STRING</td>
+<td>The IANA time zone name</td>
+</tr>
+<tr>
+<td><code>the hour of</code> dt</td>
+<td>NUMBER</td>
+<td>Local hour, 0 to 23</td>
+</tr>
+<tr>
+<td><code>the minute of</code> dt</td>
+<td>NUMBER</td>
+<td>Local minute</td>
+</tr>
+<tr>
+<td><code>the second of</code> dt</td>
+<td>NUMBER</td>
+<td>Local second</td>
+</tr>
+<tr>
+<td><code>the day of</code> dt</td>
+<td>NUMBER</td>
+<td>Local day of the month</td>
+</tr>
+<tr>
+<td><code>the month of</code> dt</td>
+<td>NUMBER</td>
+<td>Local month</td>
+</tr>
+<tr>
+<td><code>the year of</code> dt</td>
+<td>NUMBER</td>
+<td>Local year</td>
+</tr>
+<tr>
+<td>dt <code>`Datetime to serial`</code></td>
+<td>NUMBER</td>
+<td>A serial number counted in UTC</td>
+</tr>
+<tr>
+<td>dt <code>`is morning`</code>, <code>`is afternoon`</code>, <code>`is evening`</code></td>
+<td>BOOLEAN</td>
+<td>Before 12:00; 12:00 to 17:59; 18:00 or later, in local time</td>
+</tr>
+<tr>
+<td>dt <code>`is before noon`</code>, <code>`is after noon`</code></td>
+<td>BOOLEAN</td>
+<td>Before 12:00; 12:00 or later</td>
+</tr>
+</tbody>
+</table>
+<h2 id="moving-a-datetime">Moving a DATETIME</h2>
+<table>
+<thead>
+<tr>
+<th>Function</th>
+<th>Gives</th>
+<th>What it does</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>at midnight</code> dt</td>
+<td>DATETIME</td>
+<td>The same date at 00:00, in the same time zone</td>
+</tr>
+<tr>
+<td><code>at noon</code> dt</td>
+<td>DATETIME</td>
+<td>The same date at 12:00</td>
+</tr>
+<tr>
+<td>dt <code>`at`</code> time</td>
+<td>DATETIME</td>
+<td>The same date at another time of day</td>
+</tr>
+</tbody>
+</table>
+<h2 id="comparing-datetime-values">Comparing DATETIME values</h2>
+<p>Comparisons use the moment in UTC, so 09:00 in Singapore is before 09:00 in London on the same day.</p>
+<ul>
+<li><code>=</code>, <code>&#x3C;</code>, <code>&#x3C;=</code>, <code>></code>, <code>>=</code> and their word forms compare two DATETIME values.</li>
+<li>dt1 <code>`is before`</code> dt2 and dt1 <code>`is after`</code> dt2 read as sentences.</li>
+<li><code>`the earlier of`</code> dt1 dt2 and <code>`the later of`</code> dt1 dt2 pick one of two values.</li>
+</ul>
+0:{"rsc":["$","$1","c",{"children":[["$","$L2",null,{"navSections":[{"title":"","items":[{"title":"Language Reference","href":"reference"},{"title":"Glossary","href":"reference/GLOSSARY"},{"title":"Cheat sheet","href":"reference/cheat-sheet"},{"title":"Types","href":"reference/types","children":[{"title":"DECLARE","href":"reference/types/DECLARE"},{"title":"ASSUME","href":"reference/types/ASSUME"},{"title":"FOR ALL","href":"reference/types/for-all"},{"title":"Coercions","href":"reference/types/coercions"}]},{"title":"Functions","href":"reference/functions","children":[{"title":"DECIDE","href":"reference/functions/DECIDE"},{"title":"GIVEN and GIVETH","href":"reference/functions/GIVEN"},{"title":"MEANS","href":"reference/functions/MEANS"},{"title":"LET and WHERE","href":"reference/functions/LET"},{"title":"YIELD","href":"reference/functions/YIELD"},{"title":"AKA","href":"reference/functions/AKA"}]},{"title":"Control flow","href":"reference/control-flow","children":[{"title":"IF","href":"reference/control-flow/IF"},{"title":"BRANCH","href":"reference/control-flow/BRANCH"},{"title":"CONSIDER","href":"reference/control-flow/CONSIDER"}]},{"title":"Operators","href":"reference/operators","children":[{"title":"AND, OR, NOT, IMPLIES","href":"reference/operators/logical"},{"title":"UNLESS","href":"reference/operators/UNLESS"},{"title":"Arithmetic","href":"reference/operators/arithmetic"},{"title":"Comparisons","href":"reference/operators/comparisons"}]},{"title":"Regulative rules","href":"reference/regulative","children":[{"title":"PARTY, MUST, MAY, SHANT","href":"reference/regulative/PARTY"},{"title":"Deadlines and consequences","href":"reference/regulative/consequences"},{"title":"BECAUSE","href":"reference/regulative/BECAUSE"},{"title":"DEONTIC","href":"reference/regulative/DEONTIC"},{"title":"EVENT","href":"reference/regulative/EVENT"}]},{"title":"Syntax and directives","href":"reference/syntax"},{"title":"Built-in functions","href":"reference/builtins","children":[{"title":"HTTP and JSON","href":"reference/builtins/http-json"}]},{"title":"Standard libraries","href":"reference/libraries","children":[{"title":"prelude","href":"reference/libraries/prelude"},{"title":"math","href":"reference/libraries/math"},{"title":"daydate","href":"reference/libraries/daydate"},{"title":"time","href":"reference/libraries/time"},{"title":"datetime","href":"reference/libraries/datetime"},{"title":"timezone","href":"reference/libraries/timezone"},{"title":"excel-date","href":"reference/libraries/excel-date"},{"title":"currency","href":"reference/libraries/currency"},{"title":"holdings","href":"reference/libraries/holdings"},{"title":"actus","href":"reference/libraries/actus"},{"title":"legal-persons","href":"reference/libraries/legal-persons"},{"title":"jurisdiction","href":"reference/libraries/jurisdiction"},{"title":"llm","href":"reference/libraries/llm"}]},{"title":"Error messages","href":"reference/errors"}]}],"toc":[],"htmlContent":"$3","pager":{"prev":"$0:rsc:props:children:0:props:navSections:0:items:10:children:3","next":"$0:rsc:props:children:0:props:navSections:0:items:10:children:5"}}],["$L4"],"$L5"]}],"isPartial":false,"staleTime":300,"varyParams":null,"buildId":"iJUXAyHcmcW99cMci3ei9"}
+4:["$","script","script-0",{"src":"/_next/static/chunks/0fl~me.qwn48c.js","async":true}]
+5:["$","$L6",null,{"children":["$","$7",null,{"name":"Next.MetadataOutlet","children":"$@8"}]}]
+8:null

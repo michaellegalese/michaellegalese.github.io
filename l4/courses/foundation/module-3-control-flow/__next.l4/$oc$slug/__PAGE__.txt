@@ -1,0 +1,801 @@
+1:"$Sreact.fragment"
+2:I[90160,["/_next/static/chunks/0ypf.t599.7y6.js","/_next/static/chunks/0t2xr05rlu96l.js","/_next/static/chunks/0uxaa7wo_wmcw.js","/_next/static/chunks/0fl~me.qwn48c.js"],"default"]
+6:I[97367,["/_next/static/chunks/0ypf.t599.7y6.js","/_next/static/chunks/0t2xr05rlu96l.js"],"OutletBoundary"]
+7:"$Sreact.suspense"
+3:T65b8,<h1>Module 3: Control flow</h1>
+<p>In this module, you'll learn how to handle conditional logic, work with lists, and use boolean operators in L4.</p>
+<h2 id="learning-objectives">Learning Objectives</h2>
+<p>By the end of this module, you will be able to:</p>
+<ul>
+<li>Write conditional expressions with IF/THEN/ELSE</li>
+<li>Use pattern matching with CONSIDER</li>
+<li>Work with lists using prelude functions</li>
+<li>Combine boolean conditions with AND, OR, NOT</li>
+<li>Understand operator precedence</li>
+</ul>
+<hr>
+<h2 id="conditional-expressions">Conditional Expressions</h2>
+<p>This is the complete working example to work along.</p>
+<pre><code class="language-l4-file">-- Module 3: Control Flow - Complete Examples
+-- All examples are validated and use natural language identifiers
+
+IMPORT prelude
+
+-- =============================================================================
+-- SECTION 1: Conditional Expressions
+-- =============================================================================
+
+-- Categorize a person's age
+GIVEN age IS A NUMBER
+GIVETH A STRING
+`the age category` MEANS
+    IF age &#x3C; 18
+    THEN "minor"
+    ELSE "adult"
+
+-- Grade a score with nested conditionals
+GIVEN score IS A NUMBER
+GIVETH A STRING
+`the letter grade` MEANS
+    IF score >= 90
+    THEN "A"
+    ELSE IF score >= 80
+         THEN "B"
+         ELSE IF score >= 70
+              THEN "C"
+              ELSE IF score >= 60
+                   THEN "D"
+                   ELSE "F"
+
+-- Categorize an amount
+GIVEN amount IS A NUMBER
+GIVETH A STRING
+`the amount category` MEANS
+    IF amount &#x3C; 100
+    THEN "small"
+    ELSE IF amount &#x3C; 1000
+         THEN "medium"
+         ELSE "large"
+
+-- =============================================================================
+-- SECTION 2: Boolean Logic
+-- =============================================================================
+
+-- Can a person vote?
+GIVEN age IS A NUMBER
+      `is registered` IS A BOOLEAN
+GIVETH A BOOLEAN
+DECIDE `the person can vote` IF
+    age >= 18 AND `is registered`
+
+-- Does a transaction need review?
+GIVEN amount IS A NUMBER
+      `is high risk` IS A BOOLEAN
+GIVETH A BOOLEAN
+DECIDE `the transaction needs review` IF
+    amount > 10000 OR `is high risk`
+
+-- Is the person a minor?
+GIVEN age IS A NUMBER
+GIVETH A BOOLEAN
+DECIDE `the person is a minor` IF
+    NOT age >= 18
+
+-- =============================================================================
+-- SECTION 3: Working with Lists
+-- =============================================================================
+
+-- Check if all numbers are positive
+GIVEN numbers IS A LIST OF NUMBER
+GIVETH A BOOLEAN
+DECIDE `all numbers are positive` IF
+    all (GIVEN n YIELD n > 0) numbers
+
+-- Check if any number is negative
+GIVEN numbers IS A LIST OF NUMBER
+GIVETH A BOOLEAN
+DECIDE `some number is negative` IF
+    any (GIVEN n YIELD n &#x3C; 0) numbers
+
+-- Get numbers greater than a threshold
+GIVEN numbers IS A LIST OF NUMBER
+      threshold IS A NUMBER
+GIVETH A LIST OF NUMBER
+`numbers above threshold` MEANS
+    filter (GIVEN n YIELD n > threshold) numbers
+
+-- =============================================================================
+-- SECTION 4: Pattern Matching on Lists
+-- =============================================================================
+
+-- Describe a list
+GIVEN items IS A LIST OF STRING
+GIVETH A STRING
+`describe the list` MEANS
+    CONSIDER items
+    WHEN EMPTY THEN "no items"
+    WHEN first FOLLOWED BY EMPTY THEN "one item"
+    WHEN first FOLLOWED BY rest THEN "multiple items"
+
+-- =============================================================================
+-- SECTION 5: Complex Eligibility Example
+-- =============================================================================
+
+-- A conviction record
+DECLARE Conviction
+    HAS `the description` IS A STRING
+        `the conviction is spent` IS A BOOLEAN
+
+-- A person with potential convictions
+DECLARE Person
+    HAS `the person's name` IS A STRING
+        `the person's age` IS A NUMBER
+        `the person is bankrupt` IS A BOOLEAN
+        `the person's convictions` IS A LIST OF Conviction
+
+-- Check if a person has an unspent conviction
+GIVEN person IS A Person
+GIVETH A BOOLEAN
+DECIDE `the person has an unspent conviction` IF
+    any (GIVEN c YIELD c's `the conviction is spent` EQUALS FALSE) (person's `the person's convictions`)
+
+-- Check if a person is eligible for a position
+GIVEN person IS A Person
+GIVETH A BOOLEAN
+DECIDE `the person is eligible for the position` IF
+    person's `the person's age` >= 21
+    AND NOT person's `the person is bankrupt`
+    AND NOT `the person has an unspent conviction` person
+
+-- =============================================================================
+-- SECTION 6: Test Data
+-- =============================================================================
+
+-- Test lists
+`positive numbers` MEANS LIST 1, 2, 3, 4, 5
+`mixed numbers` MEANS LIST -1, 2, -3, 4
+`empty list` MEANS LIST
+`single item` MEANS LIST "apple"
+`multiple items` MEANS LIST "apple", "banana", "cherry"
+
+-- Test people
+`spent conviction` MEANS Conviction "Minor offense 2010" TRUE
+`unspent conviction` MEANS Conviction "Fraud 2023" FALSE
+
+`eligible person` MEANS Person "Alice" 30 FALSE (LIST)
+`bankrupt person` MEANS Person "Bob" 35 TRUE (LIST)
+`person with unspent conviction` MEANS Person "Charlie" 40 FALSE (LIST `unspent conviction`)
+`young person` MEANS Person "Diana" 19 FALSE (LIST)
+
+-- =============================================================================
+-- SECTION 7: Tests
+-- =============================================================================
+
+-- Conditional tests
+#EVAL `the age category` 16
+#EVAL `the age category` 25
+#EVAL `the letter grade` 85
+#EVAL `the amount category` 50
+#EVAL `the amount category` 500
+#EVAL `the amount category` 5000
+
+-- Boolean tests
+#EVAL `the person can vote` 21 TRUE
+#EVAL `the person can vote` 16 TRUE
+#EVAL `the person is a minor` 16
+
+-- List tests
+#EVAL `all numbers are positive` `positive numbers`
+#EVAL `all numbers are positive` `mixed numbers`
+#EVAL `some number is negative` `mixed numbers`
+#EVAL `numbers above threshold` `positive numbers` 3
+
+-- Pattern matching tests
+#EVAL `describe the list` `empty list`
+#EVAL `describe the list` `single item`
+#EVAL `describe the list` `multiple items`
+
+-- Eligibility tests
+#EVAL `the person is eligible for the position` `eligible person`
+#EVAL `the person is eligible for the position` `bankrupt person`
+#EVAL `the person is eligible for the position` `person with unspent conviction`
+#EVAL `the person is eligible for the position` `young person`
+</code></pre>
+<h3 id="basic-ifthenelse">Basic IF/THEN/ELSE</h3>
+<pre><code class="language-l4">GIVEN age IS A NUMBER
+GIVETH A STRING
+`the age category` MEANS
+    IF age &#x3C; 18
+    THEN "minor"
+    ELSE "adult"
+</code></pre>
+<p>Every <code>IF</code> must have both <code>THEN</code> and <code>ELSE</code> branches—L4 requires you to handle all cases.</p>
+<h3 id="multi-way-decisions-with-branch">Multi-Way Decisions with BRANCH</h3>
+<p>When you need to choose between multiple alternatives based on conditions, use <code>BRANCH</code> instead of nesting <code>IF/THEN/ELSE</code> statements.</p>
+<p><strong>Why BRANCH?</strong></p>
+<p>Nested IF/THEN/ELSE can lead to indentation problems and is harder to read:</p>
+<pre><code class="language-l4">-- Avoid: Nested IF/THEN/ELSE (fragile indentation)
+`grade` MEANS
+    IF score >= 90 THEN "A"
+    ELSE IF score >= 80 THEN "B"
+         ELSE IF score >= 70 THEN "C"
+              ELSE IF score >= 60 THEN "D"
+                   ELSE "F"
+</code></pre>
+<p>BRANCH provides a cleaner, more readable alternative:</p>
+<pre><code class="language-l4">-- Better: BRANCH (clear, flat structure)
+GIVEN score IS A NUMBER
+GIVETH A STRING
+`grade` MEANS
+    BRANCH
+        IF score >= 90 THEN "A"
+        IF score >= 80 THEN "B"
+        IF score >= 70 THEN "C"
+        IF score >= 60 THEN "D"
+        OTHERWISE "F"
+</code></pre>
+<p><strong>When to use BRANCH:</strong></p>
+<ul>
+<li>Multiple conditions checked in sequence</li>
+<li>Classification into categories</li>
+<li>Any time you'd write nested IF/THEN/ELSE</li>
+</ul>
+<p><strong>Key points:</strong></p>
+<ul>
+<li>Conditions are checked top-to-bottom</li>
+<li>First matching condition wins</li>
+<li><code>OTHERWISE</code> provides the default case</li>
+<li>All branches must have same return type</li>
+</ul>
+<h3 id="conditional-in-context">Conditional in Context</h3>
+<p>Conditionals are expressions—they can be used anywhere a value is expected:</p>
+<pre><code class="language-l4">message MEANS IF `is active` THEN "Active" ELSE "Inactive"
+</code></pre>
+<hr>
+<h2 id="pattern-matching-with-consider">Pattern Matching with CONSIDER</h2>
+<p>For more complex branching, especially with enumeration types, use <code>CONSIDER</code>:</p>
+<pre><code class="language-l4">GIVEN status IS A Status
+GIVETH A STRING
+`the status message` MEANS
+    CONSIDER status
+    WHEN Active THEN "The account is active"
+    WHEN Suspended reason THEN "Suspended: " APPEND reason
+    WHEN Closed THEN "The account has been closed"
+</code></pre>
+<p>(<code>APPEND</code> joins two strings; it comes from the prelude, so add <code>IMPORT prelude</code> at the top of your file.)</p>
+<h3 id="pattern-matching-on-lists">Pattern Matching on Lists</h3>
+<pre><code class="language-l4">GIVEN items IS A LIST OF STRING
+GIVETH A STRING
+`describe the list` MEANS
+    CONSIDER items
+    WHEN EMPTY THEN "no items"
+    WHEN first FOLLOWED BY EMPTY THEN "one item"
+    WHEN first FOLLOWED BY rest THEN "multiple items"
+</code></pre>
+<p>The pattern <code>first FOLLOWED BY rest</code> destructures a list into its head and tail.</p>
+<hr>
+<h2 id="boolean-logic">Boolean Logic</h2>
+<h3 id="basic-operators">Basic Operators</h3>
+<table>
+<thead>
+<tr>
+<th>Operator</th>
+<th>Meaning</th>
+<th>Example</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>AND</code> or <code>&#x26;&#x26;</code></td>
+<td>Both must be true</td>
+<td><code>a AND b</code></td>
+</tr>
+<tr>
+<td><code>OR</code> or <code>||</code></td>
+<td>At least one true</td>
+<td><code>a OR b</code></td>
+</tr>
+<tr>
+<td><code>NOT</code></td>
+<td>Negation</td>
+<td><code>NOT a</code></td>
+</tr>
+<tr>
+<td><code>IMPLIES</code> or <code>=></code></td>
+<td>If-then</td>
+<td><code>a IMPLIES b</code></td>
+</tr>
+</tbody>
+</table>
+<h3 id="examples">Examples</h3>
+<pre><code class="language-l4">-- AND: Both conditions must be true
+DECIDE `the person can vote` IF age >= 18 AND `is registered`
+
+-- OR: At least one condition must be true
+DECIDE `the transaction needs review` IF amount > 10000 OR `is high risk`
+
+-- NOT: Negation
+DECIDE `the person is a minor` IF NOT age >= 18
+
+-- IMPLIES: If first is true, second must be true
+DECIDE `the rule holds` IF `has a permit` IMPLIES `paid the fee`
+</code></pre>
+<h3 id="operator-precedence">Operator Precedence</h3>
+<p>From highest to lowest precedence:</p>
+<ol>
+<li><code>NOT</code> (tightest)</li>
+<li><code>AND</code></li>
+<li><code>OR</code></li>
+<li><code>IMPLIES</code> (loosest)</li>
+</ol>
+<p>This means:</p>
+<pre><code class="language-l4">a OR b AND c        -- means: a OR (b AND c)
+NOT a AND b         -- means: (NOT a) AND b
+</code></pre>
+<p>Use parentheses to make precedence explicit:</p>
+<pre><code class="language-l4">(a OR b) AND c      -- clear: OR first, then AND
+</code></pre>
+<hr>
+<h2 id="comparison-operators">Comparison Operators</h2>
+<table>
+<thead>
+<tr>
+<th>Operator</th>
+<th>Alternative</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>=</code></td>
+<td><code>EQUALS</code></td>
+<td>Equal to</td>
+</tr>
+<tr>
+<td><code>></code></td>
+<td><code>GREATER THAN</code></td>
+<td>Greater than</td>
+</tr>
+<tr>
+<td><code>&#x3C;</code></td>
+<td><code>LESS THAN</code></td>
+<td>Less than</td>
+</tr>
+<tr>
+<td><code>>=</code></td>
+<td><code>AT LEAST</code></td>
+<td>Greater than or equal</td>
+</tr>
+<tr>
+<td><code>&#x3C;=</code></td>
+<td><code>AT MOST</code></td>
+<td>Less than or equal</td>
+</tr>
+</tbody>
+</table>
+<h3 id="examples-1">Examples</h3>
+<pre><code class="language-l4">-- Numeric comparisons
+age >= 18
+amount LESS THAN 1000
+score AT LEAST 70
+
+-- String comparison
+status EQUALS "Active"
+name = "Alice"
+
+-- Boolean comparison (often unnecessary)
+`is active` EQUALS TRUE    -- same as just: `is active`
+`is active` EQUALS FALSE   -- same as: NOT `is active`
+</code></pre>
+<hr>
+<h2 id="working-with-lists">Working with Lists</h2>
+<p>L4 provides prelude functions for working with lists. <strong>Note:</strong> You must <code>IMPORT prelude</code> to use these functions.</p>
+<h3 id="creating-lists">Creating Lists</h3>
+<pre><code class="language-l4">numbers MEANS LIST 1, 2, 3, 4, 5
+empty MEANS EMPTY
+</code></pre>
+<h3 id="common-list-functions">Common List Functions</h3>
+<table>
+<thead>
+<tr>
+<th>Function</th>
+<th>Purpose</th>
+<th>Example</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>null</code></td>
+<td>Is empty?</td>
+<td><code>null numbers</code></td>
+</tr>
+<tr>
+<td><code>map</code></td>
+<td>Transform each</td>
+<td><code>map f numbers</code></td>
+</tr>
+<tr>
+<td><code>filter</code></td>
+<td>Keep matching</td>
+<td><code>filter f numbers</code></td>
+</tr>
+<tr>
+<td><code>all</code></td>
+<td>All satisfy?</td>
+<td><code>all f numbers</code></td>
+</tr>
+<tr>
+<td><code>any</code></td>
+<td>Any satisfy?</td>
+<td><code>any f numbers</code></td>
+</tr>
+<tr>
+<td><code>elem</code></td>
+<td>Check membership</td>
+<td><code>elem 3 numbers</code></td>
+</tr>
+</tbody>
+</table>
+<h3 id="using-quantifiers">Using Quantifiers</h3>
+<pre><code class="language-l4">-- All elements positive?
+all (GIVEN n YIELD n > 0) numbers
+
+-- Any element negative?
+any (GIVEN n YIELD n &#x3C; 0) numbers
+</code></pre>
+<p><code>GIVEN n YIELD n > 0</code> is a function without a name (a lambda): read it as "given a number n, is n greater than 0?". <code>all</code> asks that question of every item. <a href="/l4/courses/foundation/module-5-functions#higher-order-functions">Module 5</a> covers these functions in full; for now, copy the pattern.</p>
+<h3 id="important-parentheses-with-field-access">Important: Parentheses with Field Access</h3>
+<p>When passing field access to functions, use parentheses:</p>
+<pre><code class="language-l4">-- Wrong: Parser confusion
+any (GIVEN c YIELD NOT c's `the conviction is spent`) person's `the person's convictions`
+
+-- Right: Parentheses around the list argument
+any (GIVEN c YIELD NOT c's `the conviction is spent`) (person's `the person's convictions`)
+</code></pre>
+<p>This is one of the most common mistakes in L4!</p>
+<hr>
+<h2 id="real-world-example-eligibility-check">Real-World Example: Eligibility Check</h2>
+<p>Using the <code>Person</code> and <code>Conviction</code> types from</p>
+<pre><code class="language-l4-file">-- Module 3: Control Flow - Complete Examples
+-- All examples are validated and use natural language identifiers
+
+IMPORT prelude
+
+-- =============================================================================
+-- SECTION 1: Conditional Expressions
+-- =============================================================================
+
+-- Categorize a person's age
+GIVEN age IS A NUMBER
+GIVETH A STRING
+`the age category` MEANS
+    IF age &#x3C; 18
+    THEN "minor"
+    ELSE "adult"
+
+-- Grade a score with nested conditionals
+GIVEN score IS A NUMBER
+GIVETH A STRING
+`the letter grade` MEANS
+    IF score >= 90
+    THEN "A"
+    ELSE IF score >= 80
+         THEN "B"
+         ELSE IF score >= 70
+              THEN "C"
+              ELSE IF score >= 60
+                   THEN "D"
+                   ELSE "F"
+
+-- Categorize an amount
+GIVEN amount IS A NUMBER
+GIVETH A STRING
+`the amount category` MEANS
+    IF amount &#x3C; 100
+    THEN "small"
+    ELSE IF amount &#x3C; 1000
+         THEN "medium"
+         ELSE "large"
+
+-- =============================================================================
+-- SECTION 2: Boolean Logic
+-- =============================================================================
+
+-- Can a person vote?
+GIVEN age IS A NUMBER
+      `is registered` IS A BOOLEAN
+GIVETH A BOOLEAN
+DECIDE `the person can vote` IF
+    age >= 18 AND `is registered`
+
+-- Does a transaction need review?
+GIVEN amount IS A NUMBER
+      `is high risk` IS A BOOLEAN
+GIVETH A BOOLEAN
+DECIDE `the transaction needs review` IF
+    amount > 10000 OR `is high risk`
+
+-- Is the person a minor?
+GIVEN age IS A NUMBER
+GIVETH A BOOLEAN
+DECIDE `the person is a minor` IF
+    NOT age >= 18
+
+-- =============================================================================
+-- SECTION 3: Working with Lists
+-- =============================================================================
+
+-- Check if all numbers are positive
+GIVEN numbers IS A LIST OF NUMBER
+GIVETH A BOOLEAN
+DECIDE `all numbers are positive` IF
+    all (GIVEN n YIELD n > 0) numbers
+
+-- Check if any number is negative
+GIVEN numbers IS A LIST OF NUMBER
+GIVETH A BOOLEAN
+DECIDE `some number is negative` IF
+    any (GIVEN n YIELD n &#x3C; 0) numbers
+
+-- Get numbers greater than a threshold
+GIVEN numbers IS A LIST OF NUMBER
+      threshold IS A NUMBER
+GIVETH A LIST OF NUMBER
+`numbers above threshold` MEANS
+    filter (GIVEN n YIELD n > threshold) numbers
+
+-- =============================================================================
+-- SECTION 4: Pattern Matching on Lists
+-- =============================================================================
+
+-- Describe a list
+GIVEN items IS A LIST OF STRING
+GIVETH A STRING
+`describe the list` MEANS
+    CONSIDER items
+    WHEN EMPTY THEN "no items"
+    WHEN first FOLLOWED BY EMPTY THEN "one item"
+    WHEN first FOLLOWED BY rest THEN "multiple items"
+
+-- =============================================================================
+-- SECTION 5: Complex Eligibility Example
+-- =============================================================================
+
+-- A conviction record
+DECLARE Conviction
+    HAS `the description` IS A STRING
+        `the conviction is spent` IS A BOOLEAN
+
+-- A person with potential convictions
+DECLARE Person
+    HAS `the person's name` IS A STRING
+        `the person's age` IS A NUMBER
+        `the person is bankrupt` IS A BOOLEAN
+        `the person's convictions` IS A LIST OF Conviction
+
+-- Check if a person has an unspent conviction
+GIVEN person IS A Person
+GIVETH A BOOLEAN
+DECIDE `the person has an unspent conviction` IF
+    any (GIVEN c YIELD c's `the conviction is spent` EQUALS FALSE) (person's `the person's convictions`)
+
+-- Check if a person is eligible for a position
+GIVEN person IS A Person
+GIVETH A BOOLEAN
+DECIDE `the person is eligible for the position` IF
+    person's `the person's age` >= 21
+    AND NOT person's `the person is bankrupt`
+    AND NOT `the person has an unspent conviction` person
+
+-- =============================================================================
+-- SECTION 6: Test Data
+-- =============================================================================
+
+-- Test lists
+`positive numbers` MEANS LIST 1, 2, 3, 4, 5
+`mixed numbers` MEANS LIST -1, 2, -3, 4
+`empty list` MEANS LIST
+`single item` MEANS LIST "apple"
+`multiple items` MEANS LIST "apple", "banana", "cherry"
+
+-- Test people
+`spent conviction` MEANS Conviction "Minor offense 2010" TRUE
+`unspent conviction` MEANS Conviction "Fraud 2023" FALSE
+
+`eligible person` MEANS Person "Alice" 30 FALSE (LIST)
+`bankrupt person` MEANS Person "Bob" 35 TRUE (LIST)
+`person with unspent conviction` MEANS Person "Charlie" 40 FALSE (LIST `unspent conviction`)
+`young person` MEANS Person "Diana" 19 FALSE (LIST)
+
+-- =============================================================================
+-- SECTION 7: Tests
+-- =============================================================================
+
+-- Conditional tests
+#EVAL `the age category` 16
+#EVAL `the age category` 25
+#EVAL `the letter grade` 85
+#EVAL `the amount category` 50
+#EVAL `the amount category` 500
+#EVAL `the amount category` 5000
+
+-- Boolean tests
+#EVAL `the person can vote` 21 TRUE
+#EVAL `the person can vote` 16 TRUE
+#EVAL `the person is a minor` 16
+
+-- List tests
+#EVAL `all numbers are positive` `positive numbers`
+#EVAL `all numbers are positive` `mixed numbers`
+#EVAL `some number is negative` `mixed numbers`
+#EVAL `numbers above threshold` `positive numbers` 3
+
+-- Pattern matching tests
+#EVAL `describe the list` `empty list`
+#EVAL `describe the list` `single item`
+#EVAL `describe the list` `multiple items`
+
+-- Eligibility tests
+#EVAL `the person is eligible for the position` `eligible person`
+#EVAL `the person is eligible for the position` `bankrupt person`
+#EVAL `the person is eligible for the position` `person with unspent conviction`
+#EVAL `the person is eligible for the position` `young person`
+</code></pre>
+<p>:</p>
+<pre><code class="language-l4">-- Helper: Check for unspent convictions
+GIVEN person IS A Person
+GIVETH A BOOLEAN
+DECIDE `the person has an unspent conviction` IF
+    any (GIVEN c YIELD c's `the conviction is spent` EQUALS FALSE) (person's `the person's convictions`)
+
+-- Main eligibility rule
+GIVEN person IS A Person
+GIVETH A BOOLEAN
+DECIDE `the person is eligible for the position` IF
+    person's `the person's age` >= 21
+    AND NOT person's `the person is bankrupt`
+    AND NOT `the person has an unspent conviction` person
+</code></pre>
+<hr>
+<h2 id="exercises">Exercises</h2>
+<h3 id="exercise-1-branch-for-classification">Exercise 1: BRANCH for Classification</h3>
+<p>Write a function that categorizes an amount as "small" (&#x3C; 100), "medium" (100-999), or "large" (>= 1000). Use <code>BRANCH</code> for the multi-way decision.</p>
+<p><strong>Hint:</strong></p>
+<pre><code class="language-l4">GIVEN amount IS A NUMBER
+GIVETH A STRING
+`the amount category` MEANS
+    BRANCH
+        IF ... THEN "small"
+        -- Complete this
+</code></pre>
+<details>
+<summary>Solution</summary>
+<pre><code class="language-l4">GIVEN amount IS A NUMBER
+GIVETH A STRING
+`the amount category` MEANS
+    BRANCH
+        IF amount &#x3C; 100 THEN "small"
+        IF amount &#x3C; 1000 THEN "medium"
+        OTHERWISE "large"
+
+#EVAL `the amount category` 50
+#EVAL `the amount category` 500
+#EVAL `the amount category` 5000
+</code></pre>
+</details>
+<h3 id="exercise-2-list-validation">Exercise 2: List Validation</h3>
+<p>Write a function that checks if all items in a list of numbers are positive. (Remember to <code>IMPORT prelude</code>.)</p>
+<details>
+<summary>Solution</summary>
+<pre><code class="language-l4">IMPORT prelude
+
+GIVEN numbers IS A LIST OF NUMBER
+GIVETH A BOOLEAN
+DECIDE `all numbers are positive` IF
+    all (GIVEN n YIELD n > 0) numbers
+
+#EVAL `all numbers are positive` (LIST 1, 2, 3)
+#EVAL `all numbers are positive` (LIST 1, -2, 3)
+</code></pre>
+</details>
+<h3 id="exercise-3-complex-condition">Exercise 3: Complex Condition</h3>
+<p>Write a rule: "A person can purchase alcohol if they are at least 21, have valid ID, and are not on the banned list."</p>
+<details>
+<summary>Solution</summary>
+<pre><code class="language-l4">GIVEN `the person's age` IS A NUMBER
+      `the person has valid ID` IS A BOOLEAN
+      `the person is on the banned list` IS A BOOLEAN
+GIVETH A BOOLEAN
+DECIDE `the person may purchase alcohol` IF
+    `the person's age` >= 21
+    AND `the person has valid ID`
+    AND NOT `the person is on the banned list`
+
+#EVAL `the person may purchase alcohol` 25 TRUE FALSE
+#EVAL `the person may purchase alcohol` 25 TRUE TRUE
+#EVAL `the person may purchase alcohol` 18 TRUE FALSE
+</code></pre>
+</details>
+<hr>
+<h2 id="common-mistakes">Common Mistakes</h2>
+<h3 id="1-missing-else">1. Missing ELSE</h3>
+<pre><code class="language-l4">-- Wrong: No ELSE branch
+result MEANS IF condition THEN "yes"
+
+-- Right: Both branches required
+result MEANS IF condition THEN "yes" ELSE "no"
+</code></pre>
+<h3 id="2-precedence-confusion">2. Precedence Confusion</h3>
+<pre><code class="language-l4">-- Confusing: What does this mean?
+a OR b AND c IMPLIES d
+
+-- Clear: Use parentheses
+(a OR (b AND c)) IMPLIES d
+</code></pre>
+<h3 id="3-forgetting-parentheses-with-functions">3. Forgetting Parentheses with Functions</h3>
+<pre><code class="language-l4">-- Wrong: Parser error
+length person's items > 0
+
+-- Right: Parentheses around field access
+length (person's items) > 0
+</code></pre>
+<h3 id="4-forgetting-to-import-prelude">4. Forgetting to IMPORT prelude</h3>
+<p>Functions like <code>all</code>, <code>any</code>, <code>filter</code>, <code>map</code> require <code>IMPORT prelude</code>.</p>
+<hr>
+<h2 id="summary">Summary</h2>
+<table>
+<thead>
+<tr>
+<th>Concept</th>
+<th>Syntax</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Conditional</td>
+<td><code>IF condition THEN result1 ELSE result2</code></td>
+</tr>
+<tr>
+<td>Multi-way</td>
+<td><code>BRANCH IF cond1 THEN res1 ... OTHERWISE resN</code></td>
+</tr>
+<tr>
+<td>Pattern match</td>
+<td><code>CONSIDER expr WHEN pattern THEN result</code></td>
+</tr>
+<tr>
+<td>List destructure</td>
+<td><code>WHEN first FOLLOWED BY rest THEN ...</code></td>
+</tr>
+<tr>
+<td>Boolean AND</td>
+<td><code>condition1 AND condition2</code></td>
+</tr>
+<tr>
+<td>Boolean OR</td>
+<td><code>condition1 OR condition2</code></td>
+</tr>
+<tr>
+<td>Boolean NOT</td>
+<td><code>NOT condition</code></td>
+</tr>
+<tr>
+<td>Check all</td>
+<td><code>all (GIVEN x YIELD condition) list</code></td>
+</tr>
+<tr>
+<td>Check any</td>
+<td><code>any (GIVEN x YIELD condition) list</code></td>
+</tr>
+<tr>
+<td>List membership</td>
+<td><code>elem item list</code></td>
+</tr>
+</tbody>
+</table>
+<hr>
+<p>Next, <a href="/l4/courses/foundation/module-4-decision-logic">Module 4: Decision logic</a> uses <code>DECIDE</code> and <code>MEANS</code> to write legal determinations, and <code>WHERE</code> to break them down.</p>
+0:{"rsc":["$","$1","c",{"children":[["$","$L2",null,{"navSections":[{"title":"","items":[{"title":"Overview","href":"courses"},{"title":"Overview","href":"courses/foundation"},{"title":"0. Introduction to L4","href":"courses/foundation/module-0-introduction"},{"title":"1. Your first legal rule","href":"courses/foundation/module-1-first-rule"},{"title":"2. Legal entities and relationships","href":"courses/foundation/module-2-entities"},{"title":"3. Control flow","href":"courses/foundation/module-3-control-flow"},{"title":"4. Decision logic","href":"courses/foundation/module-4-decision-logic"},{"title":"5. Functions","href":"courses/foundation/module-5-functions"},{"title":"6. Regulative rules","href":"courses/foundation/module-6-regulative"},{"title":"7. Putting it together","href":"courses/foundation/module-7-capstone"},{"title":"Overview","href":"courses/advanced"},{"title":"A1. Real regulatory schemes","href":"courses/advanced/module-a1-regulatory"},{"title":"A2. Cross-cutting concerns","href":"courses/advanced/module-a2-cross-cutting"},{"title":"A3. Contracts in depth","href":"courses/advanced/module-a3-contracts"},{"title":"A4. Production patterns","href":"courses/advanced/module-a4-production"}]}],"toc":[],"htmlContent":"$3","pager":{"prev":"$0:rsc:props:children:0:props:navSections:0:items:4","next":"$0:rsc:props:children:0:props:navSections:0:items:6"}}],["$L4"],"$L5"]}],"isPartial":false,"staleTime":300,"varyParams":null,"buildId":"iJUXAyHcmcW99cMci3ei9"}
+4:["$","script","script-0",{"src":"/_next/static/chunks/0fl~me.qwn48c.js","async":true}]
+5:["$","$L6",null,{"children":["$","$7",null,{"name":"Next.MetadataOutlet","children":"$@8"}]}]
+8:null

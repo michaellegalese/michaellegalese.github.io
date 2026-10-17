@@ -1,0 +1,335 @@
+1:"$Sreact.fragment"
+2:I[90160,["/_next/static/chunks/0ypf.t599.7y6.js","/_next/static/chunks/0t2xr05rlu96l.js","/_next/static/chunks/0uxaa7wo_wmcw.js","/_next/static/chunks/0fl~me.qwn48c.js"],"default"]
+6:I[97367,["/_next/static/chunks/0ypf.t599.7y6.js","/_next/static/chunks/0t2xr05rlu96l.js"],"OutletBoundary"]
+7:"$Sreact.suspense"
+3:T50ec,<h1>Connect an AI agent: Claude, Codex, Cursor and VS Code</h1>
+<p>Let an AI agent answer questions by running your deployed rules instead of guessing. This page covers Claude (Claude Code, Claude Desktop and claude.ai), OpenAI Codex (the CLI, the Codex app and the IDE extension), Cursor, and VS Code with GitHub Copilot, as well as the GitHub Copilot CLI, Windsurf, Cline and any other client that speaks the <a href="https://modelcontextprotocol.io">Model Context Protocol</a> (MCP).</p>
+<p><strong>Before you start:</strong> a deployment on Legalese Cloud (<a href="/l4/tutorials/deploying-rules/exporting-rules-for-deployment">Deploy your rules</a>). For permissions and self-hosted addresses, see <a href="/l4/tutorials/legalese-cloud">Choose an integration</a>.</p>
+<p>There are two ways to connect:</p>
+<ul>
+<li><strong>All your rules at once</strong> (recommended): one MCP server for your whole organization. The agent searches for the right rule, reads its inputs and runs it, however many deployments you have. Install it with the <a href="#install-all-your-rules-skills-marketplace">skills marketplace</a> to also teach the agent when to use your rules.</li>
+<li><strong>One deployment</strong>: an MCP server whose tools are exactly that deployment's rules. Install it <a href="#install-one-deployment-as-a-plugin">as a plugin</a> to include a skill for that rule set.</li>
+</ul>
+<hr>
+<h2 id="mcp-endpoint">MCP endpoint</h2>
+<h3 id="all-deployments">All deployments</h3>
+<pre><code>https://mcp.legalese.cloud
+</code></pre>
+<p>There is no organization in the address: it comes from your sign-in. The server offers these tools:</p>
+<table>
+<thead>
+<tr>
+<th>Tool</th>
+<th>Does</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>search_rules</code></td>
+<td>Finds the deployments a question needs (keywords separated by spaces, any match).</td>
+</tr>
+<tr>
+<td><code>get_schema</code></td>
+<td>Returns a rule's inputs and output, and the deployment's version.</td>
+</tr>
+<tr>
+<td><code>evaluate</code></td>
+<td>Runs a rule and returns its result.</td>
+</tr>
+<tr>
+<td><code>list_files</code>, <code>read_file</code>, <code>search_identifier</code>, <code>search_text</code></td>
+<td>Browse the L4 source of a deployment.</td>
+</tr>
+</tbody>
+</table>
+<p>Only deployments with an <strong>Intended use</strong> description can be found with <code>search_rules</code>.</p>
+<h3 id="one-deployment">One deployment</h3>
+<pre><code>https://mcp.legalese.cloud/{orgSlug}/{deploymentId}
+</code></pre>
+<p>This server registers <strong>one tool per exported rule</strong>, plus the same four source-browsing tools. Tool names and input fields are the L4 names with spaces turned into hyphens, because tool names may only contain letters, digits, <code>_</code> and <code>-</code>: <code>`calculate premium`</code> becomes the tool <code>calculate-premium</code>, and the field <code>`risk score`</code> becomes <code>risk-score</code>. The server maps them back when it runs the rule. Each tool's description is your <code>@export</code> text, and its input schema comes from the <code>GIVEN</code> inputs and their <code>@desc</code> texts.</p>
+<h3 id="tool-names-in-webmcp">Tool names in WebMCP</h3>
+<p>The <a href="/l4/tutorials/legalese-cloud/webmcp-embed">WebMCP embed script</a> offers the same search, schema and run steps under different names: <code>search_rules</code>, <code>get_rule_schema</code> and <code>evaluate_rule</code>. An agent that uses both sees both sets.</p>
+<h3 id="authentication">Authentication</h3>
+<p>MCP clients that support it sign you in with your Legalese Cloud account in the browser the first time they connect. Otherwise, send an API key: <code>Authorization: Bearer sk_...</code>. The key needs <code>l4:rules</code> and <code>l4:evaluate</code>, and <code>l4:read</code> for full schemas and the source tools; see <a href="/l4/tutorials/legalese-cloud#api-keys-and-permissions">API keys and permissions</a>.</p>
+<h3 id="add-the-server-by-hand">Add the server by hand</h3>
+<p>In Claude Code:</p>
+<pre><code class="language-bash"># All deployments
+claude mcp add --transport http legalese-rules https://mcp.legalese.cloud
+
+# One deployment
+claude mcp add --transport http {orgSlug}-{deploymentId} \
+  https://mcp.legalese.cloud/{orgSlug}/{deploymentId}
+</code></pre>
+<p>Without a header, Claude Code signs you in on first use. To use an API key instead, add <code>--header "Authorization: Bearer sk_..."</code>. The single-deployment server is named after the deployment, as the plugin install below names it, so the two kinds of server can sit side by side.</p>
+<p>In Codex (the CLI, the Codex app and the IDE extension share one configuration):</p>
+<pre><code class="language-bash"># All deployments
+codex mcp add legalese-rules --url https://mcp.legalese.cloud
+codex mcp login legalese-rules
+</code></pre>
+<p><code>codex mcp login</code> signs you in through the browser. To use an API key instead, keep it in an environment variable and name that variable in <code>~/.codex/config.toml</code>:</p>
+<pre><code class="language-toml">[mcp_servers.legalese-rules]
+url = "https://mcp.legalese.cloud"
+bearer_token_env_var = "LEGALESE_TOKEN"
+</code></pre>
+<p>For one deployment, use the address <code>https://mcp.legalese.cloud/{orgSlug}/{deploymentId}</code> and the server name <code>{orgSlug}-{deploymentId}</code>. In the Codex app or IDE extension, you can also add the server under <strong>Settings → MCP servers</strong> as a Streamable HTTP server; type <code>/mcp</code> to check that it is connected.</p>
+<p>In any other MCP client, add an HTTP server with one of the addresses above, and an <code>Authorization</code> header if you use a key. The client then lists the tools, and the model calls them with structured arguments.</p>
+<p>Adding a server by hand gives the agent the tools, but not the skill that tells it when to use them. The installs below add both.</p>
+<hr>
+<h2 id="install-all-your-rules-skills-marketplace">Install all your rules (skills marketplace)</h2>
+<p>The Legalese skills marketplace, the public repository <a href="https://github.com/legalese/cloud-rules">legalese/cloud-rules</a>, installs two things:</p>
+<ul>
+<li>a <strong>skill</strong> (a <code>SKILL.md</code> in the <a href="https://agentskills.io">Agent Skills</a> format) that tells the agent to answer questions about eligibility, entitlements, deadlines, compliance and similar decisions by running your rules rather than reasoning them out;</li>
+<li>the <strong>all-deployments MCP server</strong> (<code>https://mcp.legalese.cloud</code>), which the skill uses to search for and run your rules.</li>
+</ul>
+<p>The public catalogue contains only this one gateway plugin. Your deployments' names, descriptions and rules are visible only after sign-in, through <code>search_rules</code>.</p>
+<h3 id="from-the-vs-code-extension">From the VS Code extension</h3>
+<p>In the L4 sidebar, open the <strong>Deployments</strong> tab, choose <strong>Install Skills Marketplace</strong>, and pick your agent: Claude Code, VS Code (Copilot), GitHub Copilot CLI, Cursor, Windsurf, Cline or Claude Desktop. The extension registers the MCP server in that agent's own configuration. For Claude Code and the Copilot CLI it installs the full plugin (skill and server) through their plugin commands, and falls back to registering only the server if that command is not on your <code>PATH</code>. No token is stored; the agent signs you in on first use.</p>
+<h3 id="claude-code-and-claudeai">Claude Code and claude.ai</h3>
+<pre><code>/plugin marketplace add legalese/cloud-rules
+/plugin install rules@legalese-cloud
+</code></pre>
+<p>If <code>install</code> reports "not found in any marketplace", check that <code>/plugin marketplace list</code> shows <code>legalese-cloud</code>. Instead of the GitHub repository, you can also add <code>https://skills.legalese.cloud/marketplace.json</code> or <code>https://skills.legalese.cloud/marketplace.git</code>.</p>
+<h3 id="github-copilot-cli-and-vs-code">GitHub Copilot CLI and VS Code</h3>
+<pre><code class="language-sh">copilot plugin marketplace add legalese/cloud-rules
+copilot plugin install rules@legalese-cloud
+</code></pre>
+<p>In VS Code, add <code>legalese/cloud-rules</code> (or <code>https://skills.legalese.cloud/marketplace.git</code>) to the <code>chat.plugins.marketplaces</code> setting, then search for <code>@agentPlugins</code> in the Extensions view. <strong>Chat: Install Plugin From Source</strong> with the git address also works.</p>
+<p>These clients read the plugin's portable <code>mcp.json</code>, which has no credential in it (the Agent Plugins format does not allow secrets), so they sign you in on first connect. Claude Code reads <code>.mcp.json</code> instead, which can take an API key from the <code>LEGALESE_TOKEN</code> environment variable.</p>
+<h3 id="which-agents-support-what">Which agents support what</h3>
+<table>
+<thead>
+<tr>
+<th>Agent</th>
+<th>MCP server</th>
+<th>VS Code one-click</th>
+<th>Skill</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Claude Code</td>
+<td>Yes</td>
+<td>Yes</td>
+<td>Yes: <code>/plugin install</code></td>
+</tr>
+<tr>
+<td>Claude Desktop, claude.ai</td>
+<td>Yes</td>
+<td>Yes</td>
+<td>Yes</td>
+</tr>
+<tr>
+<td>VS Code (Copilot)</td>
+<td>Yes</td>
+<td>Yes</td>
+<td>Yes: <code>@agentPlugins</code></td>
+</tr>
+<tr>
+<td>GitHub Copilot CLI</td>
+<td>Yes</td>
+<td>Yes</td>
+<td>Yes: <code>copilot plugin install</code></td>
+</tr>
+<tr>
+<td>Cursor, Windsurf, Cline</td>
+<td>Yes</td>
+<td>Yes</td>
+<td>Varies</td>
+</tr>
+<tr>
+<td>OpenAI Codex (CLI, app, IDE)</td>
+<td>Yes</td>
+<td>No</td>
+<td>Yes</td>
+</tr>
+<tr>
+<td>Gemini CLI</td>
+<td>Yes</td>
+<td>No</td>
+<td>Yes</td>
+</tr>
+</tbody>
+</table>
+<p>MCP is what they all share; the skill is an addition on top. Support changes quickly, so check your agent's own documentation.</p>
+<h3 id="troubleshooting">Troubleshooting</h3>
+<ul>
+<li><strong>The server does not connect.</strong> The address is <code>https://mcp.legalese.cloud</code>, with no organization in it. Sign in when the agent asks, or send an <code>Authorization: Bearer sk_...</code> header.</li>
+<li><strong><code>forbidden</code>.</strong> The credential lacks <code>l4:rules</code>, or belongs to a different organization.</li>
+<li><strong>A rule cannot be found.</strong> Only deployments with an <strong>Intended use</strong> description are searchable.</li>
+<li><strong><code>marketplace add</code> fails.</strong> Check that <a href="https://github.com/legalese/cloud-rules">github.com/legalese/cloud-rules</a> or <code>https://skills.legalese.cloud/marketplace.json</code> opens in a browser.</li>
+<li><strong>The install asks for git credentials.</strong> You are using an old per-deployment repository address, not the gateway plugin.</li>
+</ul>
+<hr>
+<h2 id="install-one-deployment-as-a-plugin">Install one deployment as a plugin</h2>
+<p>For a skill that triggers on one rule set specifically, install a single deployment as a plugin. In VS Code, open the deployment's <strong>Integrate</strong> dialog (Deployments tab, then <strong>Integrate</strong>). Under <strong>Install as AI agent skill</strong>, choose a target:</p>
+<table>
+<thead>
+<tr>
+<th>Target</th>
+<th>Skill folder</th>
+<th>MCP server registered in</th>
+<th>Then</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Claude Code</td>
+<td><code>~/.claude/skills/{orgSlug}-{deploymentId}/</code></td>
+<td><code>~/.claude.json</code></td>
+<td>Restart Claude Code.</td>
+</tr>
+<tr>
+<td>VS Code (Copilot)</td>
+<td><code>~/.claude/skills/{orgSlug}-{deploymentId}/</code></td>
+<td>VS Code's user <code>mcp.json</code></td>
+<td>Reload the window.</td>
+</tr>
+<tr>
+<td>GitHub Copilot CLI</td>
+<td><code>~/.copilot/skills/{orgSlug}-{deploymentId}/</code></td>
+<td><code>~/.copilot/mcp-config.json</code></td>
+<td>Restart, or run <code>/skills reload</code>.</td>
+</tr>
+</tbody>
+</table>
+<p>Claude Code and VS Code share the skill folder, so installing for both does not duplicate it. The Copilot CLI paths follow <code>COPILOT_HOME</code> if you have set it. Installing again refreshes the skill in place. Because each deployment gets its own name, several deployments can be installed side by side.</p>
+<p>The download button next to the targets saves the plugin as a zip, to install with <code>claude --plugin-url file:///path/to/plugin.zip</code>, to inspect, or to give to a colleague who is not signed in to your organization.</p>
+<h3 id="what-the-plugin-contains">What the plugin contains</h3>
+<ul>
+<li><code>SKILL.md</code>: its name and description come from the deployment's <strong>Intended use</strong>; its body lists every exported rule with its description.</li>
+<li><code>references/schemas.json</code>: the rules' schemas, the same as the MCP server's tool list.</li>
+<li><code>plugin.json</code> and <code>mcp.json</code>: the <a href="https://agent-plugins.org/specification">Agent Plugins</a> manifest, read by VS Code and the Copilot CLI, with no credential in it.</li>
+<li><code>.claude-plugin/plugin.json</code> and <code>.mcp.json</code>: the same for Claude Code, with <code>Authorization: Bearer ${LEGALESE_TOKEN}</code>, so one API key covers both the install and the tool calls.</li>
+</ul>
+<p>The plugin is generated from the deployment's details, with no AI involved. Edit <strong>Intended use</strong> in the sidebar and redeploy, and the next install has the new text.</p>
+<p>A deployment needs an <strong>Intended use</strong> description before it can be installed: an agent would never use a skill with no description. Without one, the install shows an error.</p>
+<h3 id="other-ways-to-get-it">Other ways to get it</h3>
+<ul>
+<li>
+<p>The plugin is served at <code>https://mcp.legalese.cloud/{orgSlug}/{deploymentId}/.plugin</code>, with the same sign-in or API key as the MCP server (<code>l4:rules</code>). It is not available from a self-hosted jl4-service, so the install options appear only when the extension is connected to Legalese Cloud.</p>
+</li>
+<li>
+<p>Each deployment's skill is also a git repository, <code>https://skills.legalese.cloud/{orgSlug}/{deploymentId}.git</code>, for your own <code>marketplace.json</code> or a <code>git clone</code>. It uses HTTP Basic authentication with your token as the password. Let the <code>legalese</code> command supply it:</p>
+<pre><code class="language-sh">git config --global credential.https://skills.legalese.cloud.helper "legalese git-credential"
+</code></pre>
+</li>
+</ul>
+<hr>
+<h2 id="example-claude-and-cursor">Example: Claude and Cursor</h2>
+<p>This example uses the <code>insurance-premium</code> deployment from <a href="/l4/tutorials/deploying-rules/exporting-rules-for-deployment">Deploy your rules</a>, with two exported rules: <code>`calculate premium`</code> ("Calculate the insurance premium for an applicant") and <code>`qualifies for discount`</code> ("Check whether the applicant qualifies for a discount"). Its MCP address is <code>https://mcp.legalese.cloud/{orgSlug}/insurance-premium</code>.</p>
+<h3 id="connect">Connect</h3>
+<p><strong>claude.ai:</strong> go to <strong>Settings</strong>, then <strong>Connectors</strong>, then <strong>Add custom connector</strong>, and paste the address. You sign in to Legalese Cloud the first time it is used.</p>
+<p><strong>Claude Code:</strong></p>
+<pre><code class="language-bash">claude mcp add --transport http {orgSlug}-insurance-premium \
+  https://mcp.legalese.cloud/{orgSlug}/insurance-premium
+</code></pre>
+<p><strong>Cursor:</strong> add the server to <code>.cursor/mcp.json</code> in the project, or <code>~/.cursor/mcp.json</code> for all projects:</p>
+<pre><code class="language-json">{
+  "mcpServers": {
+    "{orgSlug}-insurance-premium": {
+      "url": "https://mcp.legalese.cloud/{orgSlug}/insurance-premium",
+      "headers": {
+        "Authorization": "Bearer sk_..."
+      }
+    }
+  }
+}
+</code></pre>
+<p>To check the connection by hand:</p>
+<pre><code class="language-bash">curl -X POST https://mcp.legalese.cloud/{orgSlug}/insurance-premium \
+  -H "Authorization: Bearer sk_..." \
+  -H "Content-Type: application/json" \
+  -d '{"jsonrpc":"2.0","id":1,"method":"tools/list"}'
+</code></pre>
+<p>Each rule appears as a tool, with your <code>@export</code> description and a schema built from its inputs and <code>@desc</code> texts:</p>
+<pre><code class="language-json">{
+  "name": "calculate-premium",
+  "description": "L4 Rule: Calculate the insurance premium for an applicant [insurance-premium/calculate premium]",
+  "inputSchema": {
+    "type": "object",
+    "properties": {
+      "applicant": {
+        "type": "object",
+        "description": "The applicant's details",
+        "properties": {
+          "age": { "type": "number" },
+          "risk-score": { "type": "number" },
+          "is-existing-customer": { "type": "boolean" }
+        }
+      }
+    },
+    "required": ["applicant"]
+  },
+  "_meta": { "version": "1.0.3" }
+}
+</code></pre>
+<p>These descriptions are all the model knows when it decides whether and how to call a rule, which is why the <code>@export</code> and <code>@desc</code> texts matter.</p>
+<h3 id="a-conversation">A conversation</h3>
+<blockquote>
+<p><strong>User:</strong> Dana is 35, her risk score is 0.4, and she's an existing customer. What premium should we quote her, and does she get the discount?</p>
+</blockquote>
+<p>The assistant finds two tools whose descriptions match the question and calls them instead of estimating:</p>
+<pre><code class="language-json">{
+  "method": "tools/call",
+  "params": {
+    "name": "calculate-premium",
+    "arguments": {
+      "applicant": {
+        "age": 35,
+        "risk-score": 0.4,
+        "is-existing-customer": true
+      }
+    }
+  }
+}
+</code></pre>
+<pre><code class="language-json">{
+  "content": [
+    {
+      "type": "text",
+      "text": "{\"contents\":{\"result\":{\"value\":1400}},\"tag\":\"SimpleResponse\"}"
+    }
+  ]
+}
+</code></pre>
+<p>It calls <code>qualifies-for-discount</code> with the same applicant and gets <code>true</code>, then answers:</p>
+<blockquote>
+<p><strong>Assistant:</strong> Per the deployed <code>insurance-premium</code> rules, Dana's premium is <strong>1400</strong> (her risk score of 0.4 is under the 0.7 high-risk threshold, and as an existing customer she gets the lower rate), and she <strong>qualifies for the discount</strong> (an existing customer with a risk score of at most 0.5).</p>
+</blockquote>
+<p>The numbers come from the same type-checked L4 that serves the REST API: the model contributes the conversation, not the arithmetic.</p>
+<h3 id="citing-the-source">Citing the source</h3>
+<p>For a "why?" question, the source tools let the assistant quote the rule itself:</p>
+<blockquote>
+<p><strong>User:</strong> Why 1400 exactly?</p>
+</blockquote>
+<pre><code class="language-json">{
+  "method": "tools/call",
+  "params": {
+    "name": "read_file",
+    "arguments": {
+      "deployment": "insurance-premium",
+      "path": "insurance-premium.l4",
+      "lines": "12:20"
+    }
+  }
+}
+</code></pre>
+<p>The assistant reads the <code>calculate premium</code> rule (an existing customer below the high-risk threshold pays age × 40) and answers 35 × 40 = 1400, grounded in the deployed source.</p>
+<h3 id="when-you-redeploy">When you redeploy</h3>
+<p>Tools and their schemas update automatically, and each tool reports the deployment version in <code>_meta</code>. Compatible changes, such as a new rule, simply appear in the tool list. Breaking changes are caught at deploy time; see <a href="/l4/tutorials/getting-started/version-control-for-rules#redeploy-when-a-merge-changes-a-live-api">Manage rules in git and CI</a>.</p>
+<hr>
+<h2 id="the-legalese-command-shell-and-ci">The <code>legalese</code> command (shell and CI)</h2>
+<p>Where there is no MCP client, such as a shell script or a CI job, the <code>legalese</code> command reaches the same rules. Install it with <code>l4 install legalese</code> (macOS and Linux), or with:</p>
+<pre><code class="language-sh">curl -fsSL https://legalese.cloud/cli/install.sh | sh
+</code></pre>
+<p>Then:</p>
+<pre><code class="language-sh">legalese login                                   # sign in through the browser and choose your organization
+legalese search "rent overdue"                   # find a rule
+legalese schema &#x3C;deployment> &#x3C;function>          # see its inputs
+legalese eval &#x3C;deployment> &#x3C;function> '&#x3C;json>'   # run it
+</code></pre>
+<p><code>legalese login --device</code> signs in with a code instead, for machines without a browser. In CI, skip the login and set an API key and organization: <code>LEGALESE_TOKEN=sk_...</code> and <code>LEGALESE_ORG={orgSlug}</code>. The same sign-in is what <code>l4 deploy</code> uses.</p>
+0:{"rsc":["$","$1","c",{"children":[["$","$L2",null,{"navSections":[{"title":"","items":[{"title":"Overview","href":"tutorials"},{"title":"Install L4 and write your first rule","href":"tutorials/getting-started/first-l4-file"},{"title":"Draft rules with Legalese AI","href":"tutorials/llm-integration/composing-l4-with-ai"},{"title":"Test your rules","href":"tutorials/getting-started/testing-your-rules"},{"title":"Fix errors","href":"tutorials/getting-started/debugging-type-errors"},{"title":"Encode legislation","href":"tutorials/getting-started/encoding-legislation"},{"title":"Make rules read like law","href":"tutorials/natural-language-functions/optimising-natural-language-generation"},{"title":"Common patterns","href":"tutorials/getting-started/common-patterns"},{"title":"Deploy your rules","href":"tutorials/deploying-rules/exporting-rules-for-deployment"},{"title":"Choose an integration","href":"tutorials/legalese-cloud"},{"title":"Connect an AI agent","href":"tutorials/legalese-cloud/ai-agents"},{"title":"Chat with your rules","href":"tutorials/legalese-cloud/openai-compatible-api"},{"title":"Call rules over REST","href":"tutorials/legalese-cloud/openapi-spec"},{"title":"Embed rules in a website","href":"tutorials/legalese-cloud/webmcp-embed"},{"title":"Using the l4 CLI","href":"tutorials/getting-started/l4-cli"},{"title":"Manage rules in git and CI","href":"tutorials/getting-started/version-control-for-rules"}]}],"toc":[],"htmlContent":"$3","pager":{"prev":"$0:rsc:props:children:0:props:navSections:0:items:9","next":"$0:rsc:props:children:0:props:navSections:0:items:11"}}],["$L4"],"$L5"]}],"isPartial":false,"staleTime":300,"varyParams":null,"buildId":"iJUXAyHcmcW99cMci3ei9"}
+4:["$","script","script-0",{"src":"/_next/static/chunks/0fl~me.qwn48c.js","async":true}]
+5:["$","$L6",null,{"children":["$","$7",null,{"name":"Next.MetadataOutlet","children":"$@8"}]}]
+8:null

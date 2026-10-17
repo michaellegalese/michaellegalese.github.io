@@ -1,0 +1,320 @@
+1:"$Sreact.fragment"
+2:I[90160,["/_next/static/chunks/0ypf.t599.7y6.js","/_next/static/chunks/0t2xr05rlu96l.js","/_next/static/chunks/0uxaa7wo_wmcw.js","/_next/static/chunks/0fl~me.qwn48c.js"],"default"]
+6:I[97367,["/_next/static/chunks/0ypf.t599.7y6.js","/_next/static/chunks/0t2xr05rlu96l.js"],"OutletBoundary"]
+7:"$Sreact.suspense"
+3:T2a73,<h1>Module 5: Functions</h1>
+<p><a href="/l4/courses/foundation/module-4-decision-logic">Module 4</a> showed how to write a rule with a signature (<code>GIVEN</code> and <code>GIVETH</code>) and break it into parts with <code>WHERE</code>. This module goes further: calling functions, functions that work for any type, functions that call themselves, and functions that take other functions.</p>
+<h2 id="learning-objectives">Learning Objectives</h2>
+<p>By the end of this module, you will be able to:</p>
+<ul>
+<li>Call functions with several arguments, in the right order</li>
+<li>Write functions that work for values of any type</li>
+<li>Write recursive functions</li>
+<li>Use higher-order functions such as <code>map</code>, <code>filter</code> and <code>foldl</code>, with lambdas</li>
+</ul>
+<hr>
+<p>The complete working example to work along:</p>
+<pre><code class="language-l4-file">-- Module 5: Functions - Complete Examples
+-- All examples are validated and use natural language identifiers
+
+IMPORT prelude
+
+-- =============================================================================
+-- SECTION 1: Function Basics
+-- =============================================================================
+
+-- A function with two parameters and a NUMBER result
+GIVEN x IS A NUMBER
+      y IS A NUMBER
+GIVETH A NUMBER
+`the sum of x and y` MEANS
+    x + y
+
+-- A function with one parameter
+GIVEN n IS A NUMBER
+GIVETH A NUMBER
+`the square of` MEANS n * n
+
+-- Argument order matters
+GIVEN x IS A NUMBER
+      y IS A NUMBER
+GIVETH A NUMBER
+`the difference of` MEANS x - y
+
+-- DECIDE IF for boolean predicates
+GIVEN `the person's age` IS A NUMBER
+GIVETH A BOOLEAN
+DECIDE `the person is an adult` IF `the person's age` >= 18
+
+-- =============================================================================
+-- SECTION 2: Polymorphic Functions
+-- =============================================================================
+
+-- Works with values of any type
+GIVEN a IS A TYPE
+      x IS AN a
+      y IS AN a
+GIVETH AN a
+`the first of` MEANS x
+
+-- =============================================================================
+-- SECTION 3: Recursive Functions
+-- =============================================================================
+
+-- Simple recursion
+GIVEN n IS A NUMBER
+GIVETH A NUMBER
+`the factorial of` MEANS
+    IF n &#x3C;= 1
+    THEN 1
+    ELSE n * `the factorial of` (n - 1)
+
+-- List recursion with CONSIDER
+GIVEN numbers IS A LIST OF NUMBER
+GIVETH A NUMBER
+`the sum of the list` MEANS
+    CONSIDER numbers
+    WHEN EMPTY THEN 0
+    WHEN x FOLLOWED BY rest THEN x + `the sum of the list` rest
+
+-- =============================================================================
+-- SECTION 4: Higher-Order Functions
+-- =============================================================================
+
+-- Transform every element with map
+GIVEN numbers IS A LIST OF NUMBER
+GIVETH A LIST OF NUMBER
+`the doubled numbers` MEANS
+    map (GIVEN n YIELD n * 2) numbers
+
+-- Keep matching elements with filter
+GIVEN numbers IS A LIST OF NUMBER
+GIVETH A LIST OF NUMBER
+`the positive numbers` MEANS
+    filter (GIVEN n YIELD n > 0) numbers
+
+-- Combine a whole list into one value with foldl
+GIVEN numbers IS A LIST OF NUMBER
+GIVETH A NUMBER
+`the total of` MEANS
+    foldl (GIVEN acc, n YIELD acc + n) 0 numbers
+
+-- =============================================================================
+-- SECTION 5: Tests
+-- =============================================================================
+
+-- Function basics
+#EVAL `the sum of x and y` 3 5
+#EVAL `the square of` 5
+#EVAL `the square of` (3 + 2)
+#EVAL `the difference of` 10 3
+#EVAL `the person is an adult` 21
+
+-- Polymorphic functions
+#EVAL `the first of` 1 2
+#EVAL `the first of` "yes" "no"
+
+-- Recursion
+#EVAL `the factorial of` 5
+#EVAL `the sum of the list` (LIST 1, 2, 3, 4, 5)
+
+-- Higher-order functions
+#EVAL `the doubled numbers` (LIST 1, 2, 3)
+#EVAL `the positive numbers` (LIST -1, 2, -3, 4)
+#EVAL `the total of` (LIST 1, 2, 3, 4, 5)
+</code></pre>
+<h2 id="function-parameters">Function Parameters</h2>
+<h3 id="multiple-parameters">Multiple Parameters</h3>
+<p>List parameters with <code>GIVEN</code>, separated by newlines or commas:</p>
+<pre><code class="language-l4">GIVEN x IS A NUMBER
+      y IS A NUMBER
+GIVETH A NUMBER
+`the difference of` MEANS x - y
+</code></pre>
+<p>The order of the parameters is the order in which callers supply arguments.</p>
+<h3 id="polymorphic-functions">Polymorphic Functions</h3>
+<p>Use <code>TYPE</code> for functions that work with any type:</p>
+<pre><code class="language-l4">GIVEN a IS A TYPE
+      x IS AN a
+      y IS AN a
+GIVETH AN a
+`the first of` MEANS x
+</code></pre>
+<hr>
+<h2 id="calling-functions">Calling Functions</h2>
+<h3 id="simple-function-calls">Simple Function Calls</h3>
+<pre><code class="language-l4">-- Define a function
+GIVEN n IS A NUMBER
+GIVETH A NUMBER
+`the square of` MEANS n * n
+
+-- Call it
+#EVAL `the square of` 5        -- Result: 25
+#EVAL `the square of` (3 + 2)  -- Result: 25
+</code></pre>
+<h3 id="multi-argument-calls">Multi-Argument Calls</h3>
+<p>Arguments are separated by spaces, in the order of the <code>GIVEN</code> lines:</p>
+<pre><code class="language-l4">GIVEN x IS A NUMBER
+      y IS A NUMBER
+GIVETH A NUMBER
+`the sum of x and y` MEANS x + y
+
+#EVAL `the sum of x and y` 3 5       -- Result: 8
+</code></pre>
+<p>An argument that is itself a function call goes in parentheses: <code>`the square of` (`the sum of x and y` 1 2)</code> is <code>9</code>. Without them, <code>`the square of` `the sum of x and y` 1 2</code> would pass three separate arguments to <code>`the square of`</code>.</p>
+<hr>
+<h2 id="recursive-functions">Recursive Functions</h2>
+<p>L4 supports recursion—functions that call themselves:</p>
+<h3 id="simple-recursion">Simple Recursion</h3>
+<pre><code class="language-l4">GIVEN n IS A NUMBER
+GIVETH A NUMBER
+`the factorial of` MEANS
+    IF n &#x3C;= 1
+    THEN 1
+    ELSE n * `the factorial of` (n - 1)
+
+#EVAL `the factorial of` 5  -- Result: 120
+</code></pre>
+<h3 id="list-recursion">List Recursion</h3>
+<pre><code class="language-l4">GIVEN numbers IS A LIST OF NUMBER
+GIVETH A NUMBER
+`the sum of the list` MEANS
+    CONSIDER numbers
+    WHEN EMPTY THEN 0
+    WHEN x FOLLOWED BY rest THEN x + `the sum of the list` rest
+
+#EVAL `the sum of the list` (LIST 1, 2, 3, 4, 5)  -- Result: 15
+</code></pre>
+<p>The <code>CONSIDER</code> walks the list: an empty list sums to 0; otherwise add the first element to the sum of the rest.</p>
+<hr>
+<h2 id="higher-order-functions">Higher-Order Functions</h2>
+<p>Functions that take or return other functions.</p>
+<p><strong>Note:</strong> You must <code>IMPORT prelude</code> to use <code>map</code>, <code>filter</code>, <code>all</code>, <code>any</code>, etc.</p>
+<h3 id="anonymous-functions-lambdas">Anonymous Functions (Lambdas)</h3>
+<p>Use <code>GIVEN ... YIELD</code>:</p>
+<pre><code class="language-l4">IMPORT prelude
+
+-- Double each number: LIST 2, 4, 6
+#EVAL map (GIVEN n YIELD n * 2) (LIST 1, 2, 3)
+
+-- Keep the positive numbers: LIST 2, 4
+#EVAL filter (GIVEN n YIELD n > 0) (LIST -1, 2, -3, 4)
+</code></pre>
+<p>Multi-parameter lambdas separate their parameters with commas: <code>GIVEN acc, n YIELD acc + n</code>.</p>
+<h3 id="folding-a-list-into-one-value">Folding a List into One Value</h3>
+<p><code>foldl</code> combines a whole list into a single result, starting from an initial value:</p>
+<pre><code class="language-l4">IMPORT prelude
+
+GIVEN numbers IS A LIST OF NUMBER
+GIVETH A NUMBER
+`the total of` MEANS
+    foldl (GIVEN acc, n YIELD acc + n) 0 numbers
+
+#EVAL `the total of` (LIST 1, 2, 3, 4, 5)  -- Result: 15
+</code></pre>
+<p>Use <code>foldl</code> (fold from the left) or <code>foldr</code> (fold from the right) from the prelude.</p>
+<hr>
+<h2 id="exercises">Exercises</h2>
+<h3 id="exercise-1-simple-function">Exercise 1: Simple Function</h3>
+<p>Write a function that calculates the area of a rectangle.</p>
+<details>
+<summary>Solution</summary>
+<pre><code class="language-l4">GIVEN `the width` IS A NUMBER
+      `the height` IS A NUMBER
+GIVETH A NUMBER
+`the area of the rectangle` MEANS
+    `the width` * `the height`
+
+#EVAL `the area of the rectangle` 4 5
+</code></pre>
+</details>
+<h3 id="exercise-2-recursive-function">Exercise 2: Recursive Function</h3>
+<p>Write a recursive function that counts the items in a list of strings.</p>
+<details>
+<summary>Solution</summary>
+<pre><code class="language-l4">GIVEN items IS A LIST OF STRING
+GIVETH A NUMBER
+`the number of items in` MEANS
+    CONSIDER items
+    WHEN EMPTY THEN 0
+    WHEN first FOLLOWED BY rest THEN 1 + `the number of items in` rest
+
+#EVAL `the number of items in` (LIST "deed", "lease", "will")
+</code></pre>
+<p>An empty list has no items; any other list has one more item than the rest of it.</p>
+</details>
+<h3 id="exercise-3-higher-order-function">Exercise 3: Higher-Order Function</h3>
+<p>Use <code>filter</code> to get all numbers greater than 10 from a list. (Remember to <code>IMPORT prelude</code>.)</p>
+<details>
+<summary>Solution</summary>
+<pre><code class="language-l4">IMPORT prelude
+
+GIVEN numbers IS A LIST OF NUMBER
+GIVETH A LIST OF NUMBER
+`the numbers above ten` MEANS
+    filter (GIVEN n YIELD n > 10) numbers
+
+#EVAL `the numbers above ten` (LIST 5, 15, 8, 22, 10)
+</code></pre>
+</details>
+<hr>
+<h2 id="common-mistakes">Common Mistakes</h2>
+<h3 id="wrong-argument-order-in-calls">Wrong Argument Order in Calls</h3>
+<pre><code class="language-l4">-- Definition
+GIVEN x IS A NUMBER
+      y IS A NUMBER
+GIVETH A NUMBER
+`the difference of` MEANS x - y
+
+-- Wrong: Gets 3 - 10 = -7, not 10 - 3
+#EVAL `the difference of` 3 10
+
+-- Right: Match the order in GIVEN
+#EVAL `the difference of` 10 3  -- Gets 10 - 3 = 7
+</code></pre>
+<hr>
+<h2 id="summary">Summary</h2>
+<table>
+<thead>
+<tr>
+<th>Concept</th>
+<th>Syntax</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Function definition</td>
+<td><code>GIVEN params GIVETH Type name MEANS expr</code></td>
+</tr>
+<tr>
+<td>Polymorphic function</td>
+<td><code>GIVEN a IS A TYPE</code> before the parameters</td>
+</tr>
+<tr>
+<td>Recursion</td>
+<td>Function calls itself in definition</td>
+</tr>
+<tr>
+<td>Lambda</td>
+<td><code>GIVEN x YIELD expression</code></td>
+</tr>
+<tr>
+<td>Multi-param lambda</td>
+<td><code>GIVEN acc, x YIELD expression</code></td>
+</tr>
+<tr>
+<td>Fold</td>
+<td><code>foldl (GIVEN acc, x YIELD ...) start xs</code></td>
+</tr>
+<tr>
+<td>Function application</td>
+<td><code>`function name` arg1 arg2</code></td>
+</tr>
+</tbody>
+</table>
+<hr>
+<p>Next, <a href="/l4/courses/foundation/module-6-regulative">Module 6: Regulative rules</a> models obligations, permissions and prohibitions: the part of L4 with no equivalent in other programming languages.</p>
+0:{"rsc":["$","$1","c",{"children":[["$","$L2",null,{"navSections":[{"title":"","items":[{"title":"Overview","href":"courses"},{"title":"Overview","href":"courses/foundation"},{"title":"0. Introduction to L4","href":"courses/foundation/module-0-introduction"},{"title":"1. Your first legal rule","href":"courses/foundation/module-1-first-rule"},{"title":"2. Legal entities and relationships","href":"courses/foundation/module-2-entities"},{"title":"3. Control flow","href":"courses/foundation/module-3-control-flow"},{"title":"4. Decision logic","href":"courses/foundation/module-4-decision-logic"},{"title":"5. Functions","href":"courses/foundation/module-5-functions"},{"title":"6. Regulative rules","href":"courses/foundation/module-6-regulative"},{"title":"7. Putting it together","href":"courses/foundation/module-7-capstone"},{"title":"Overview","href":"courses/advanced"},{"title":"A1. Real regulatory schemes","href":"courses/advanced/module-a1-regulatory"},{"title":"A2. Cross-cutting concerns","href":"courses/advanced/module-a2-cross-cutting"},{"title":"A3. Contracts in depth","href":"courses/advanced/module-a3-contracts"},{"title":"A4. Production patterns","href":"courses/advanced/module-a4-production"}]}],"toc":[],"htmlContent":"$3","pager":{"prev":"$0:rsc:props:children:0:props:navSections:0:items:6","next":"$0:rsc:props:children:0:props:navSections:0:items:8"}}],["$L4"],"$L5"]}],"isPartial":false,"staleTime":300,"varyParams":null,"buildId":"iJUXAyHcmcW99cMci3ei9"}
+4:["$","script","script-0",{"src":"/_next/static/chunks/0fl~me.qwn48c.js","async":true}]
+5:["$","$L6",null,{"children":["$","$7",null,{"name":"Next.MetadataOutlet","children":"$@8"}]}]
+8:null

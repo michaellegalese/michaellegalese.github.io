@@ -1,0 +1,217 @@
+1:"$Sreact.fragment"
+2:I[90160,["/_next/static/chunks/0ypf.t599.7y6.js","/_next/static/chunks/0t2xr05rlu96l.js","/_next/static/chunks/0uxaa7wo_wmcw.js","/_next/static/chunks/0fl~me.qwn48c.js"],"default"]
+6:I[97367,["/_next/static/chunks/0ypf.t599.7y6.js","/_next/static/chunks/0t2xr05rlu96l.js"],"OutletBoundary"]
+7:"$Sreact.suspense"
+3:T1e82,<h1>CONSIDER</h1>
+<p><code>CONSIDER</code> looks at a value and chooses a result by its shape: which value of an enumeration it is, whether a <code>MAYBE</code> holds something, whether a list is empty, and so on. Other languages call this <code>case</code> or <code>match</code>.</p>
+<h2 id="syntax">Syntax</h2>
+<pre><code class="language-text">CONSIDER expression
+WHEN pattern1 THEN result1
+WHEN pattern2 THEN result2
+OTHERWISE default-result
+</code></pre>
+<p>The branches are tried from top to bottom, and the first that matches gives the result.
+<code>OTHERWISE</code> matches anything and is optional. On one line, separate the branches with commas.</p>
+<p><strong>Example file:</strong></p>
+<pre><code class="language-l4-file">-- CONSIDER keyword examples (pattern matching)
+
+-- Matching Simple Enums
+
+DECLARE Colour IS ONE OF red, green, blue
+
+GIVEN c IS A Colour
+`name of colour` c MEANS
+  CONSIDER c
+  WHEN red THEN "Red"
+  WHEN green THEN "Green"
+  WHEN blue THEN "Blue"
+
+#EVAL `name of colour` red
+#EVAL `name of colour` blue
+
+-- Matching Lists
+
+-- Sum all elements
+GIVEN xs IS A LIST OF NUMBER
+GIVETH A NUMBER
+`sum of list` xs MEANS
+  CONSIDER xs
+  WHEN EMPTY THEN 0
+  WHEN head FOLLOWED BY tail THEN head PLUS `sum of list` tail
+
+#EVAL `sum of list` (LIST 1, 2, 3, 4, 5)
+
+-- Get first element
+GIVEN ys IS A LIST OF NUMBER
+GIVETH A NUMBER
+`first element or zero` ys MEANS
+  CONSIDER ys
+  WHEN EMPTY THEN 0
+  WHEN head FOLLOWED BY rest THEN head
+
+#EVAL `first element or zero` (LIST 10, 20, 30)
+#EVAL `first element or zero` EMPTY
+
+-- Count elements
+GIVEN a IS A TYPE, zs IS A LIST OF a
+GIVETH A NUMBER
+`length of list` zs MEANS
+  CONSIDER zs
+  WHEN EMPTY THEN 0
+  WHEN hd FOLLOWED BY rest THEN 1 PLUS `length of list` rest
+
+#EVAL `length of list` (LIST "a", "b", "c")
+
+-- Matching MAYBE Values
+
+GIVEN mx IS A MAYBE NUMBER
+`get value or default to zero` mx MEANS
+  CONSIDER mx
+  WHEN NOTHING THEN 0
+  WHEN JUST x THEN x
+
+#EVAL `get value or default to zero` (JUST 42)
+#EVAL `get value or default to zero` NOTHING
+
+-- Matching Enums with Fields
+
+DECLARE Shape IS ONE OF
+  Circle HAS radius IS A NUMBER
+  Rectangle HAS width IS A NUMBER, height IS A NUMBER
+  Point
+
+GIVEN s IS A Shape
+`area of shape` s MEANS
+  CONSIDER s
+  WHEN Circle r THEN 3.14159 TIMES r TIMES r
+  WHEN Rectangle w h THEN w TIMES h
+  WHEN Point THEN 0
+
+DECIDE `my circle` IS Circle WITH radius IS 5
+DECIDE `my rectangle` IS Rectangle WITH width IS 4, height IS 6
+
+#EVAL `area of shape` `my circle`
+#EVAL `area of shape` `my rectangle`
+#EVAL `area of shape` Point
+
+-- Matching EITHER Values
+
+GIVEN result IS AN EITHER STRING NUMBER
+`handle either result` result MEANS
+  CONSIDER result
+  WHEN LEFT err THEN CONCAT "Error: ", err
+  WHEN RIGHT val THEN CONCAT "Value: ", TOSTRING val
+
+#EVAL `handle either result` (LEFT "not found")
+#EVAL `handle either result` (RIGHT 42)
+
+-- Matching Pairs/Tuples
+
+DECLARE PairNum HAS first IS A NUMBER, second IS A NUMBER
+
+GIVEN p IS A PairNum
+`add pair values` p MEANS
+  CONSIDER p
+  WHEN PairNum a b THEN a PLUS b
+
+DECIDE `first pair` IS PairNum WITH first IS 10, second IS 20
+#EVAL `add pair values` `first pair`
+
+-- Nested Pattern Matching
+
+GIVEN maybeList IS A MAYBE (LIST OF NUMBER)
+`sum of maybe list` maybeList MEANS
+  CONSIDER maybeList
+  WHEN NOTHING THEN 0
+  WHEN JUST xs THEN `sum of list` xs
+
+#EVAL `sum of maybe list` (JUST (LIST 1, 2, 3))
+#EVAL `sum of maybe list` NOTHING
+</code></pre>
+<h2 id="patterns">Patterns</h2>
+<h3 id="values-of-an-enumeration">Values of an enumeration</h3>
+<pre><code class="language-l4">DECLARE Colour IS ONE OF Red, Green, Blue
+
+GIVEN colour IS A Colour
+GIVETH A STRING
+`name of` colour MEANS
+  CONSIDER colour
+  WHEN Red THEN "red"
+  WHEN Green THEN "green"
+  WHEN Blue THEN "blue"
+</code></pre>
+<h3 id="values-with-fields">Values with fields</h3>
+<p>A pattern names the fields it takes apart, in the order they are declared:</p>
+<pre><code class="language-l4">DECLARE Shape IS ONE OF
+  Circle HAS radius IS A NUMBER
+  Rectangle HAS width IS A NUMBER, height IS A NUMBER
+
+GIVEN shape IS A Shape
+GIVETH A NUMBER
+`area of` shape MEANS
+  CONSIDER shape
+  WHEN Circle r THEN 3.14159 TIMES r TIMES r
+  WHEN Rectangle w h THEN w TIMES h
+</code></pre>
+<h3 id="lists">Lists</h3>
+<pre><code class="language-l4">GIVEN xs IS A LIST OF NUMBER
+GIVETH A NUMBER
+`total of` xs MEANS
+  CONSIDER xs
+  WHEN EMPTY THEN 0
+  WHEN first FOLLOWED BY rest THEN first PLUS `total of` rest
+</code></pre>
+<h3 id="maybe-values">MAYBE values</h3>
+<pre><code class="language-l4">GIVEN amount IS A MAYBE NUMBER
+GIVETH A NUMBER
+`amount or zero` amount MEANS
+  CONSIDER amount
+  WHEN NOTHING THEN 0
+  WHEN JUST a THEN a
+</code></pre>
+<h3 id="numbers-and-text">Numbers and text</h3>
+<p>A number or a piece of text matches only itself. Such a <code>CONSIDER</code> needs an <code>OTHERWISE</code> for the rest:</p>
+<pre><code class="language-l4">GIVEN n IS A NUMBER
+GIVETH A STRING
+`count word for` n MEANS
+  CONSIDER n
+  WHEN 0 THEN "none"
+  WHEN 1 THEN "one"
+  OTHERWISE "many"
+</code></pre>
+<h3 id="names-and-wildcards">Names and wildcards</h3>
+<ul>
+<li>A name in a pattern matches anything and stands for that part of the value, like <code>r</code> and <code>first</code> above.</li>
+<li><code>`_`</code>, an underscore in backquotes, matches anything without naming it. A bare <code>_</code> is a syntax error.</li>
+<li><code>EXACTLY expression</code> matches a value equal to the expression, for example <code>WHEN EXACTLY `the limit` THEN …</code>.</li>
+</ul>
+<h2 id="missing-and-redundant-branches">Missing and redundant branches</h2>
+<p><code>l4 check</code> looks at every <code>CONSIDER</code> and warns about two things:</p>
+<ul>
+<li>
+<p><strong>Missing branches:</strong> a value of the type that no branch matches. The warning lists the branches still needed:</p>
+<pre><code class="language-text">The following branches still need to be considered:
+
+  WHEN Suspended THEN
+</code></pre>
+</li>
+<li>
+<p><strong>Redundant branches:</strong> a branch that can never be reached, because the branches above it already match everything it could.</p>
+</li>
+</ul>
+<p>The check knows every value of an enumeration declared in the same file, and <code>TRUE</code> and <code>FALSE</code>. A <code>CONSIDER</code> over an enumeration declared in an imported file gets no missing-branch warning.
+A number, a piece of text or a date has no end of values, so the check asks for an <code>OTHERWISE</code>.
+For <code>MAYBE</code>, <code>EITHER</code> and lists, it checks what they hold but does not ask for each of <code>JUST</code>/<code>NOTHING</code>, <code>LEFT</code>/<code>RIGHT</code> or <code>EMPTY</code>/<code>FOLLOWED BY</code>.
+The check also applies inside <code>WHERE</code> and <code>LET</code>.</p>
+<p>The warnings do not stop the file from running. If evaluation reaches a value that no branch matches, it stops with "The value … reached a CONSIDER that has no branch for it."</p>
+<p>The messages and their fixes are in <a href="/l4/reference/errors#non-exhaustive-pattern-match">Error messages: Non-exhaustive pattern match</a>. Why L4 checks this, and the details of what it can and cannot see, are in <a href="/l4/concepts/type-system/exhaustiveness">Exhaustiveness</a>.</p>
+<h2 id="related-pages">Related pages</h2>
+<ul>
+<li><a href="/l4/reference/functions/DECIDE#several-clauses">DECIDE: Several clauses</a>: a function written as one clause per case, which means the same as a <code>CONSIDER</code></li>
+<li><a href="/l4/reference/control-flow/IF">IF</a> and <a href="/l4/reference/control-flow/BRANCH">BRANCH</a>: choose by conditions</li>
+<li><a href="/l4/reference/control-flow">Control flow</a></li>
+</ul>
+0:{"rsc":["$","$1","c",{"children":[["$","$L2",null,{"navSections":[{"title":"","items":[{"title":"Language Reference","href":"reference"},{"title":"Glossary","href":"reference/GLOSSARY"},{"title":"Cheat sheet","href":"reference/cheat-sheet"},{"title":"Types","href":"reference/types","children":[{"title":"DECLARE","href":"reference/types/DECLARE"},{"title":"ASSUME","href":"reference/types/ASSUME"},{"title":"FOR ALL","href":"reference/types/for-all"},{"title":"Coercions","href":"reference/types/coercions"}]},{"title":"Functions","href":"reference/functions","children":[{"title":"DECIDE","href":"reference/functions/DECIDE"},{"title":"GIVEN and GIVETH","href":"reference/functions/GIVEN"},{"title":"MEANS","href":"reference/functions/MEANS"},{"title":"LET and WHERE","href":"reference/functions/LET"},{"title":"YIELD","href":"reference/functions/YIELD"},{"title":"AKA","href":"reference/functions/AKA"}]},{"title":"Control flow","href":"reference/control-flow","children":[{"title":"IF","href":"reference/control-flow/IF"},{"title":"BRANCH","href":"reference/control-flow/BRANCH"},{"title":"CONSIDER","href":"reference/control-flow/CONSIDER"}]},{"title":"Operators","href":"reference/operators","children":[{"title":"AND, OR, NOT, IMPLIES","href":"reference/operators/logical"},{"title":"UNLESS","href":"reference/operators/UNLESS"},{"title":"Arithmetic","href":"reference/operators/arithmetic"},{"title":"Comparisons","href":"reference/operators/comparisons"}]},{"title":"Regulative rules","href":"reference/regulative","children":[{"title":"PARTY, MUST, MAY, SHANT","href":"reference/regulative/PARTY"},{"title":"Deadlines and consequences","href":"reference/regulative/consequences"},{"title":"BECAUSE","href":"reference/regulative/BECAUSE"},{"title":"DEONTIC","href":"reference/regulative/DEONTIC"},{"title":"EVENT","href":"reference/regulative/EVENT"}]},{"title":"Syntax and directives","href":"reference/syntax"},{"title":"Built-in functions","href":"reference/builtins","children":[{"title":"HTTP and JSON","href":"reference/builtins/http-json"}]},{"title":"Standard libraries","href":"reference/libraries","children":[{"title":"prelude","href":"reference/libraries/prelude"},{"title":"math","href":"reference/libraries/math"},{"title":"daydate","href":"reference/libraries/daydate"},{"title":"time","href":"reference/libraries/time"},{"title":"datetime","href":"reference/libraries/datetime"},{"title":"timezone","href":"reference/libraries/timezone"},{"title":"excel-date","href":"reference/libraries/excel-date"},{"title":"currency","href":"reference/libraries/currency"},{"title":"holdings","href":"reference/libraries/holdings"},{"title":"actus","href":"reference/libraries/actus"},{"title":"legal-persons","href":"reference/libraries/legal-persons"},{"title":"jurisdiction","href":"reference/libraries/jurisdiction"},{"title":"llm","href":"reference/libraries/llm"}]},{"title":"Error messages","href":"reference/errors"}]}],"toc":[],"htmlContent":"$3","pager":{"prev":"$0:rsc:props:children:0:props:navSections:0:items:5:children:1","next":"$0:rsc:props:children:0:props:navSections:0:items:6"}}],["$L4"],"$L5"]}],"isPartial":false,"staleTime":300,"varyParams":null,"buildId":"iJUXAyHcmcW99cMci3ei9"}
+4:["$","script","script-0",{"src":"/_next/static/chunks/0fl~me.qwn48c.js","async":true}]
+5:["$","$L6",null,{"children":["$","$7",null,{"name":"Next.MetadataOutlet","children":"$@8"}]}]
+8:null

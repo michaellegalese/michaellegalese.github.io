@@ -1,0 +1,160 @@
+1:"$Sreact.fragment"
+2:I[90160,["/_next/static/chunks/0ypf.t599.7y6.js","/_next/static/chunks/0t2xr05rlu96l.js","/_next/static/chunks/0uxaa7wo_wmcw.js","/_next/static/chunks/0fl~me.qwn48c.js"],"default"]
+6:I[97367,["/_next/static/chunks/0ypf.t599.7y6.js","/_next/static/chunks/0t2xr05rlu96l.js"],"OutletBoundary"]
+7:"$Sreact.suspense"
+3:T28b0,<h1>Manage rules in git and CI</h1>
+<p>Keep L4 rules in git: repository layout, commits, review, automatic checks, and safe redeployment.</p>
+<p><strong>Before you start:</strong> <a href="/l4/tutorials/getting-started/testing-your-rules">Test your rules</a>, and basic git.</p>
+<hr>
+<h2 id="why-legal-rules-belong-in-git">Why legal rules belong in git</h2>
+<p>An <code>.l4</code> file is a legal text that happens to be executable. That makes version control more than an engineering habit:</p>
+<ul>
+<li><strong>The diff is the amendment.</strong> When a threshold moves from 18 to 21, the git diff <em>is</em> the amendment, line by line — reviewable by a lawyer, not just a programmer.</li>
+<li><strong>The history is the audit trail.</strong> <code>git log</code> answers "what did the rule say on 3 March, and who changed it, and why" — the exact questions a regulator or court asks.</li>
+<li><strong>A tag is a version of record.</strong> Tag the commit that was deployed; you can always re-run last year's cases against last year's rules.</li>
+<li><strong>A revert is a repeal.</strong> Rolling back a bad change is one command, with the reversal itself on the record.</li>
+</ul>
+<p>None of this works if rules live in a wiki, a shared drive, or someone's editor. Put them in a repository from day one.</p>
+<hr>
+<h2 id="a-repository-layout">A repository layout</h2>
+<p>Keep it simple. A rules project needs little more than:</p>
+<pre><code>loan-rules/
+├── README.md              # what these rules encode, which instrument, which version
+├── rules/
+│   ├── eligibility.l4     # one file per part/instrument, named after the source text
+│   ├── repayment.l4       # rules + their §§ Tests sections
+│   └── shared-types.l4    # DECLAREs shared across files (IMPORTed by the others)
+└── .github/
+    └── workflows/
+        └── check.yml      # CI: l4 check and the tests on every pull request
+</code></pre>
+<p>Guidelines:</p>
+<ul>
+<li><strong>Mirror the source text.</strong> One file per statute part or contract, with <code>§</code> sections matching the source's numbering, keeps every diff traceable to a clause.</li>
+<li><strong>Tests live with the rules.</strong> Deployment publishes only the rules marked <code>@export</code>, so keep each rule's tests in the same file, in a <code>§§ Tests</code> section.</li>
+<li><strong>Shared vocabulary in one place.</strong> If several files need the same <code>DECLARE</code>s, put them in one file and <code>IMPORT</code> it (a same-directory file can be imported by name).</li>
+</ul>
+<hr>
+<h2 id="one-legal-change-per-commit">One legal change per commit</h2>
+<p>Because the diff is the amendment, cut commits along legal lines, not editing sessions:</p>
+<ul>
+<li><strong>One substantive change per commit.</strong> Raising an age threshold and adding a new exemption are two amendments — two commits.</li>
+<li><strong>Separate substance from form.</strong> Run <code>l4 format</code> in its own commit so reformatting noise never obscures a change of meaning.</li>
+<li><strong>Update the assertions in the same commit.</strong> A rule change without its test change is an unreviewable claim.</li>
+<li><strong>Say why, cite the source.</strong> The message should name the instrument and reason, not describe the syntax.</li>
+</ul>
+<p>A well-cut commit reads like this:</p>
+<pre><code class="language-diff"> GIVEN `the applicant's age` IS A NUMBER
+ GIVETH A BOOLEAN
+ DECIDE `meets the qualifying age` IF
+-    `the applicant's age` AT LEAST 18
++    `the applicant's age` AT LEAST 21
+
+-#ASSERT `meets the qualifying age` 18
+-#ASSERT NOT `meets the qualifying age` 17
++#ASSERT `meets the qualifying age` 21
++#ASSERT NOT `meets the qualifying age` 20
+</code></pre>
+<pre><code>Raise qualifying age to 21 per Amendment Act 2025 s 3(b)
+
+Effective 2025-07-01. Boundary assertions moved to the new threshold.
+</code></pre>
+<p>Anyone — including a reviewer who has never seen L4 — can see exactly what changed in the law and that the boundary tests moved with it.</p>
+<hr>
+<h2 id="review-rule-changes">Review rule changes</h2>
+<p>Treat a pull request on a rules repo as an amendment bill:</p>
+<ol>
+<li><strong>Read the diff as law.</strong> Does the change say what the amending instrument says — and nothing else?</li>
+<li><strong>Check the assertions moved.</strong> New boundary values need new <code>#ASSERT</code>s on both sides of the boundary; changed obligations need updated <code>#TRACE</code> timelines.</li>
+<li><strong>Let CI do the mechanical part.</strong> Reviewers should never spend attention on "does it compile".</li>
+</ol>
+<h2 id="check-every-change-in-ci">Check every change in CI</h2>
+<p>This GitHub Actions workflow type-checks every rule file and fails when an assertion fails. It takes the <code>l4</code> binary from the Linux build of the VS Code extension, which is attached to each <code>l4-ide-build-…</code> release of <a href="https://github.com/legalese/l4-ide/releases">legalese/l4-ide</a>:</p>
+<pre><code class="language-yaml">name: check-rules
+on: [pull_request]
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install l4
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          tag=$(gh release list --repo legalese/l4-ide --limit 50 --json tagName \
+                  --jq '[.[] | select(.tagName | startswith("l4-ide-build-"))][0].tagName')
+          gh release download "$tag" --repo legalese/l4-ide \
+            --pattern 'l4-vscode-linux-x64-*.vsix' --output l4.vsix
+          mkdir -p "$HOME/.local/bin"
+          unzip -j l4.vsix 'extension/bin/linux-x64/l4' -d "$HOME/.local/bin"
+          chmod +x "$HOME/.local/bin/l4"
+          echo "$HOME/.local/bin" >> "$GITHUB_PATH"
+
+      - name: Typecheck all rule files
+        run: |
+          for f in $(git ls-files '*.l4'); do
+            l4 check "$f"
+          done
+
+      - name: Run tests (fail on failed assertions)
+        run: |
+          status=0
+          for f in $(git ls-files '*.l4'); do
+            out=$(l4 run "$f" 2>&#x26;1) || status=1
+            if echo "$out" | grep -q "assertion failed"; then
+              echo "::error file=$f::assertion failed in $f"
+              echo "$out"
+              status=1
+            fi
+          done
+          exit $status
+</code></pre>
+<p>To pin a version, replace the <code>tag=$(...)</code> line with a fixed tag, such as <code>tag=l4-ide-build-95</code>. To build <code>l4</code> from source instead, see <a href="/l4/tutorials/getting-started/l4-cli">Using the l4 CLI</a>.</p>
+<p>Two details worth knowing:</p>
+<ul>
+<li><code>l4 check</code> exits non-zero on any parse or type error, so the typecheck step needs no extra logic.</li>
+<li><code>l4 run</code> exits non-zero on type errors and on directives that crash during evaluation, but <strong>not</strong> on failed assertions — a failing <code>#ASSERT</code> prints <code>assertion failed</code> while the file still typechecks. That is why the test step greps for it (alternatively, use <code>l4 run --json</code> and inspect results of <code>"kind": "assertion"</code>).</li>
+</ul>
+<p>If rules use <code>NOW</code> or <code>TODAY</code>, add <code>--fixed-now &#x3C;ISO8601></code> to the <code>l4 run</code> calls so CI results do not depend on the day the job runs.</p>
+<hr>
+<h2 id="redeploy-when-a-merge-changes-a-live-api">Redeploy when a merge changes a live API</h2>
+<p>If your rules are deployed (<a href="/l4/tutorials/deploying-rules/exporting-rules-for-deployment">Deploy your rules</a>), merging to main is not the end of the story — the deployment has consumers, and its exported interface is a contract with them.</p>
+<p>When you redeploy to an existing deployment name, the interface of the new bundle is diffed against the currently deployed one. <strong>Backwards-compatible</strong> changes go through silently:</p>
+<ul>
+<li>adding a new exported rule</li>
+<li>adding a new <em>optional</em> parameter</li>
+<li>adding a new field to a result</li>
+</ul>
+<p><strong>Breaking</strong> changes are detected and stopped:</p>
+<ul>
+<li>removing or renaming an exported rule</li>
+<li>removing or renaming a parameter, or changing its type</li>
+<li>making a previously optional parameter required</li>
+<li>narrowing the accepted values of an input enum</li>
+<li>changing a rule's return type, removing a result field, or widening an output enum with values consumers may not handle</li>
+</ul>
+<p>Both surfaces enforce this. The VS Code Deploy tab runs the check client-side and warns you before you confirm (<a href="/l4/tutorials/deploying-rules/exporting-rules-for-deployment#update-a-deployment">Update a deployment</a>); the service runs the same diff server-side on a guarded update and rejects it outright with a message listing every incompatibility:</p>
+<pre><code>Update rejected — it would break existing integrations:
+  calculate premium parameter applicant.risk score removed;
+  qualifies for discount return type changed from BOOLEAN to NUMBER
+</code></pre>
+<p>If the break is intentional, overwrite explicitly: confirm the warning in VS Code, or run <code>l4 redeploy --force</code>. The deployment's version number records it — the breaking component of the version is bumped, so consumers can see at a glance that the interface changed incompatibly.</p>
+<p>Practical workflow:</p>
+<ul>
+<li><strong>Tag what you deploy</strong> (<code>git tag deployed/insurance-premium/2025-07-01</code>) so the live interface always corresponds to a known commit.</li>
+<li><strong>Prefer additive evolution.</strong> Add the new rule or optional parameter alongside the old one; retire the old one in a later, announced release.</li>
+<li><strong>Treat an intentional break like a major release</strong>: coordinate with consumers first, then overwrite, then note the new deployment version in the PR.</li>
+</ul>
+<hr>
+<h2 id="next-steps">Next steps</h2>
+<ul>
+<li><a href="/l4/tutorials/getting-started/testing-your-rules">Test your rules</a>: the assertions your CI runs.</li>
+<li><a href="/l4/tutorials/deploying-rules/exporting-rules-for-deployment">Deploy your rules</a>: the deployment this page protects.</li>
+<li><a href="/l4/tutorials/getting-started/l4-cli">Using the l4 CLI</a>: every command used in the workflow.</li>
+</ul>
+0:{"rsc":["$","$1","c",{"children":[["$","$L2",null,{"navSections":[{"title":"","items":[{"title":"Overview","href":"tutorials"},{"title":"Install L4 and write your first rule","href":"tutorials/getting-started/first-l4-file"},{"title":"Draft rules with Legalese AI","href":"tutorials/llm-integration/composing-l4-with-ai"},{"title":"Test your rules","href":"tutorials/getting-started/testing-your-rules"},{"title":"Fix errors","href":"tutorials/getting-started/debugging-type-errors"},{"title":"Encode legislation","href":"tutorials/getting-started/encoding-legislation"},{"title":"Make rules read like law","href":"tutorials/natural-language-functions/optimising-natural-language-generation"},{"title":"Common patterns","href":"tutorials/getting-started/common-patterns"},{"title":"Deploy your rules","href":"tutorials/deploying-rules/exporting-rules-for-deployment"},{"title":"Choose an integration","href":"tutorials/legalese-cloud"},{"title":"Connect an AI agent","href":"tutorials/legalese-cloud/ai-agents"},{"title":"Chat with your rules","href":"tutorials/legalese-cloud/openai-compatible-api"},{"title":"Call rules over REST","href":"tutorials/legalese-cloud/openapi-spec"},{"title":"Embed rules in a website","href":"tutorials/legalese-cloud/webmcp-embed"},{"title":"Using the l4 CLI","href":"tutorials/getting-started/l4-cli"},{"title":"Manage rules in git and CI","href":"tutorials/getting-started/version-control-for-rules"}]}],"toc":[],"htmlContent":"$3","pager":{"prev":"$0:rsc:props:children:0:props:navSections:0:items:14"}}],["$L4"],"$L5"]}],"isPartial":false,"staleTime":300,"varyParams":null,"buildId":"iJUXAyHcmcW99cMci3ei9"}
+4:["$","script","script-0",{"src":"/_next/static/chunks/0fl~me.qwn48c.js","async":true}]
+5:["$","$L6",null,{"children":["$","$7",null,{"name":"Next.MetadataOutlet","children":"$@8"}]}]
+8:null

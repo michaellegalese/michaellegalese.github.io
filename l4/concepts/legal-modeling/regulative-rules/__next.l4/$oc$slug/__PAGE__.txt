@@ -1,0 +1,180 @@
+1:"$Sreact.fragment"
+2:I[90160,["/_next/static/chunks/0ypf.t599.7y6.js","/_next/static/chunks/0t2xr05rlu96l.js","/_next/static/chunks/0uxaa7wo_wmcw.js","/_next/static/chunks/0fl~me.qwn48c.js"],"default"]
+6:I[97367,["/_next/static/chunks/0ypf.t599.7y6.js","/_next/static/chunks/0t2xr05rlu96l.js"],"OutletBoundary"]
+7:"$Sreact.suspense"
+3:T3189,<h1>How obligations unfold</h1>
+<p>A regulative rule says who must, may or must not do what, by when, and what follows. This page explains how such a rule behaves over time: what it waits for, how it moves forward, and what it can end in. For the keywords themselves, see the reference: <a href="/l4/reference/regulative">Regulative rules</a>, <a href="/l4/reference/regulative/PARTY">PARTY, MUST, MAY, SHANT</a> and <a href="/l4/reference/regulative/consequences">Deadlines and consequences</a>.</p>
+<p>Regulative rules sit beside constitutive rules, which define what things are. A constitutive rule answers "is the borrower a small business?". A regulative rule answers "what does the borrower have to do now, given everything that has happened so far?". <a href="/l4/concepts/legal-modeling/constitutive-vs-regulative">Definitions and duties</a> explains why L4 keeps the two apart.</p>
+<hr>
+<h2 id="a-contract-awaiting-events">A contract awaiting events</h2>
+<p>This is the most important idea in the regulative part of L4, and the one most often missed:</p>
+<blockquote>
+<p><strong>A regulative rule decides nothing by itself. It is a contract that waits until it is given a start time and a sequence of events.</strong></p>
+</blockquote>
+<p>A <code>DEONTIC</code> value behaves like a function of two inputs:</p>
+<pre><code>contract  ×  (start time, events)  →  verdict
+</code></pre>
+<ul>
+<li>The <strong>start time</strong> places "now" on a timeline. Deadlines and event times are measured on the same timeline.</li>
+<li>The <strong>events</strong> are what actually happened, in order. Each records who acted, what they did, and when.</li>
+<li>The <strong>verdict</strong> is <code>FULFILLED</code>, a breach, or a <em>residual obligation</em>: the contract, partly advanced and still waiting.</li>
+</ul>
+<p>So a regulative rule is more than a yes-or-no check. It watches a timeline, moves forward as events arrive, and keeps enough state to be resumed later.</p>
+<p><strong>Example:</strong></p>
+<pre><code class="language-l4-file">-- How a regulative rule plays out against events.
+-- Times are numbers on one timeline; read them as days.
+
+DECLARE Party IS ONE OF
+    `the seller`
+    `the buyer`
+
+DECLARE Action IS ONE OF
+    `deliver the goods`
+    `pay the invoice`
+
+GIVETH A DEONTIC Party Action
+`the delivery obligation` MEANS
+    PARTY  `the seller`
+    MUST   `deliver the goods`
+    WITHIN 14
+    HENCE  FULFILLED
+    LEST   BREACH BY `the seller` BECAUSE "did not deliver within 14 days"
+
+-- 1. The seller delivers on day 10: FULFILLED
+#TRACE `the delivery obligation` AT 0 WITH
+    PARTY `the seller` DOES `deliver the goods` AT 10
+
+-- 2. The next event comes on day 20, after the deadline: BREACH BY `the seller`
+#TRACE `the delivery obligation` AT 0 WITH
+    PARTY `the seller` DOES `deliver the goods` AT 20
+
+-- 3. The wrong party acts on day 10: the event does not match and is skipped.
+--    The result is a residual obligation: the seller must still deliver, WITHIN 4.
+#TRACE `the delivery obligation` AT 0 WITH
+    PARTY `the buyer` DOES `deliver the goods` AT 10
+
+-- 4. No events at all: the result is the obligation itself, still waiting.
+#TRACE `the delivery obligation` AT 0 WITH
+</code></pre>
+<p>The four <code>#TRACE</code> runs in the example give four different results from one rule:</p>
+<table>
+<thead>
+<tr>
+<th>Events</th>
+<th>Result</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>The seller delivers on day 10</td>
+<td><code>FULFILLED</code></td>
+</tr>
+<tr>
+<td>The next event is on day 20</td>
+<td><code>BREACH BY</code> the seller, with the reason given in <code>LEST</code></td>
+</tr>
+<tr>
+<td>The buyer "delivers" on day 10</td>
+<td>A residual obligation: the seller must deliver within 4</td>
+</tr>
+<tr>
+<td>No events</td>
+<td>A residual obligation: the rule itself, still waiting</td>
+</tr>
+</tbody>
+</table>
+<p>The last two rows surprise most people. A missing event is not a breach. Nothing has happened yet that shows the deadline passed, so the contract is still open.</p>
+<hr>
+<h2 id="events-and-the-timeline">Events and the timeline</h2>
+<p>An event is a triple:</p>
+<pre><code>(party, action, time)
+</code></pre>
+<p>The contract reads events in order. With each event, two things move: the contract's clock advances to the event's time, and the remaining window of the current <code>WITHIN</code> shrinks by the time that has passed. Then:</p>
+<ul>
+<li>If the event comes <strong>after the deadline</strong>, the contract takes the branch for a missed deadline, without looking at what the event was.</li>
+<li>If the event is <strong>in time and matches</strong> the duty (right party, right action, any <code>PROVIDED</code> condition true), the contract takes the branch for the action being done.</li>
+<li>If the event is <strong>in time but does not match</strong>, it is skipped. The next event is tried, with the clock further on.</li>
+</ul>
+<p>For <code>MUST</code>, doing the action leads to <code>HENCE</code> and a missed deadline to <code>LEST</code>. For <code>MAY</code>, both lead to <code>HENCE</code>, because not using a permission is no breach. A prohibition, <code>SHANT</code>, turns <code>MUST</code> around: doing the forbidden act leads to <code>LEST</code>, and reaching the deadline without it leads to <code>HENCE</code>. In every case, <code>HENCE</code> names the outcome the law wants, and <code>LEST</code> the one it does not.</p>
+<p>The timeline is just numbers. It can stand for days, hours or business days, as long as deadlines and event times use the same unit.</p>
+<p>A <code>WITHIN</code> window starts when its obligation becomes active. In a chain, the next duty's window starts at the event that fulfilled the one before: if the buyer confirms an order on day 10 and the seller then has <code>WITHIN 5</code>, the seller's deadline is day 15. There is no syntax for counting a deadline from some other named event, and none for a deadline on a fixed date; build the timing by chaining obligations with <code>HENCE</code>.</p>
+<hr>
+<h2 id="three-possible-outcomes">Three possible outcomes</h2>
+<p>After a contract has read its events, it is in one of three states.</p>
+<p><strong><code>FULFILLED</code>.</strong> Every duty was discharged. Nobody has anything left to do under this contract.</p>
+<p><strong>Breach.</strong> A party failed a duty, or did something forbidden, and no fallback took over. The breach records who breached and, if <code>BECAUSE</code> was used, why. That reason is what a reviewer or a downstream system reads, so it is worth writing.</p>
+<p><strong>A residual obligation.</strong> The events ran out before the contract was fulfilled or breached. The result is a new <code>DEONTIC</code> value: the contract in its current state, with the clock where the events stopped, any <code>WITHIN</code> window shortened, and any chain ready to resume from its current step. It is a first-class value, so you can:</p>
+<ul>
+<li>inspect it: what is still owed, by whom, and how much time is left?</li>
+<li>store it, to keep a long-running contract between sessions;</li>
+<li>give it more events later, to resume where it left off.</li>
+</ul>
+<p>This is what makes L4 a contract language rather than only a checking language. A contract can be partly performed and picked up again at any time.</p>
+<hr>
+<h2 id="chains-fallbacks-and-repeating-duties">Chains, fallbacks and repeating duties</h2>
+<p>Larger contracts are built by putting rules inside rules.</p>
+<ul>
+<li><strong>Chains.</strong> <code>HENCE</code> can name another obligation: once the seller delivers, the buyer must pay. One stream of events runs through the whole chain, and each step starts reading where the last one stopped.</li>
+<li><strong>Fallbacks.</strong> <code>LEST</code> can name another obligation instead of a breach: pay on time, or pay more within a further period. This is how reparation, penalties and grace periods are written. The contract walks down the fallbacks until something is fulfilled, or a step with no fallback is missed and breaches.</li>
+<li><strong>Repeating duties.</strong> A function can return the next period's obligation and call itself in <code>HENCE</code>, so instalments or periodic reports need no fixed-length list of steps.</li>
+<li><strong>Parallel duties.</strong> <code>RAND</code> runs two obligations side by side and needs both; <code>ROR</code> needs either.</li>
+</ul>
+<p><a href="/l4/reference/regulative/consequences">Deadlines and consequences</a> gives the syntax and the exact rules for each.</p>
+<hr>
+<h2 id="the-lifecycle">The lifecycle</h2>
+<pre><code>                  ┌──────────────────────────┐
+                  │      Contract starts     │
+                  │ (with a start time and   │
+                  │  an event stream)        │
+                  └────────────┬─────────────┘
+                               │
+                               ▼
+                  ┌──────────────────────────┐
+                  │   Awaiting next event    │◄─────┐
+                  └────────────┬─────────────┘      │
+                               │                    │
+              ┌────────────────┼────────────────┐   │
+              ▼                ▼                ▼   │
+        ┌──────────┐    ┌─────────────┐  ┌────────────────┐
+        │ Matching │    │  Deadline   │  │ Non-matching   │
+        │  event   │    │   passes    │  │  event arrives │
+        │ arrives  │    │             │  │                │
+        └────┬─────┘    └──────┬──────┘  └──────┬─────────┘
+             │                 │                │
+   (MUST/MAY: HENCE)   (MUST: LEST,            │
+   (SHANT:    LEST)     SHANT/MAY: HENCE)      │
+             │                 │           (skip, try next ─┘
+             ▼                 ▼            with clock advanced)
+       ┌──────────┐      ┌──────────┐
+       │  HENCE   │      │   LEST   │
+       │  branch  │      │  branch  │
+       └────┬─────┘      └────┬─────┘
+            │                 │
+            ▼                 ▼
+   ┌────────────────────────────────────┐
+   │   FULFILLED  /  BREACH  /  another │
+   │  obligation (which becomes the     │
+   │  new waiting state — go to top)    │
+   └────────────────────────────────────┘
+</code></pre>
+<p>If the events run out before the loop ends, the contract in progress is returned as a residual obligation.</p>
+<hr>
+<h2 id="running-a-contract">Running a contract</h2>
+<p><code>#TRACE</code> runs a contract from a start time against a fixed list of events and reports the verdict, as in the example above. The same thing is available as a function, <code>EVALTRACE</code>, whose type states the mental model directly:</p>
+<pre><code>EVALTRACE  :  DEONTIC party action          -- the contract
+           →  NUMBER                        -- start time
+           →  LIST OF EVENT party action    -- events
+           →  DEONTIC party action          -- the result: finished or residual
+</code></pre>
+<p>To advance a long-running contract step by step, call <code>EVALTRACE</code> again on the residual from the previous call, starting at the time where the previous events stopped. <a href="/l4/reference/regulative/EVENT">EVENT</a> shows how to build the event list.</p>
+<hr>
+<h2 id="further-reading">Further reading</h2>
+<ul>
+<li><a href="/l4/courses/foundation/module-6-regulative">Module 6: Regulative rules</a>: writing and testing regulative rules step by step.</li>
+<li><a href="/l4/reference/regulative">Regulative rules</a>, <a href="/l4/reference/regulative/PARTY">PARTY, MUST, MAY, SHANT</a> and <a href="/l4/reference/regulative/consequences">Deadlines and consequences</a>: the keyword reference.</li>
+<li><a href="/l4/reference/regulative/DEONTIC">DEONTIC</a>: the type of a regulative rule.</li>
+</ul>
+0:{"rsc":["$","$1","c",{"children":[["$","$L2",null,{"navSections":[{"title":"","items":[{"title":"Concepts home","href":"concepts"},{"title":"Design principles","href":"concepts/language-design/principles"},{"title":"Reading like the law","href":"concepts/language-design/linguistic-syntax"},{"title":"Definitions and duties","href":"concepts/legal-modeling/constitutive-vs-regulative"},{"title":"Exceptions and defaults","href":"concepts/legal-modeling/default-reasoning"},{"title":"How obligations unfold","href":"concepts/legal-modeling/regulative-rules"},{"title":"Types as legal categories","href":"concepts/type-system/algebraic-types"},{"title":"Exhaustiveness","href":"concepts/type-system/exhaustiveness"},{"title":"Type theory","href":"concepts/type-system/type-theory"}]}],"toc":[],"htmlContent":"$3","pager":{"prev":"$0:rsc:props:children:0:props:navSections:0:items:4","next":"$0:rsc:props:children:0:props:navSections:0:items:6"}}],["$L4"],"$L5"]}],"isPartial":false,"staleTime":300,"varyParams":null,"buildId":"iJUXAyHcmcW99cMci3ei9"}
+4:["$","script","script-0",{"src":"/_next/static/chunks/0fl~me.qwn48c.js","async":true}]
+5:["$","$L6",null,{"children":["$","$7",null,{"name":"Next.MetadataOutlet","children":"$@8"}]}]
+8:null

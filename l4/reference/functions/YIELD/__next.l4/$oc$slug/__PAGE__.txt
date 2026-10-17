@@ -1,0 +1,152 @@
+1:"$Sreact.fragment"
+2:I[90160,["/_next/static/chunks/0ypf.t599.7y6.js","/_next/static/chunks/0t2xr05rlu96l.js","/_next/static/chunks/0uxaa7wo_wmcw.js","/_next/static/chunks/0fl~me.qwn48c.js"],"default"]
+6:I[97367,["/_next/static/chunks/0ypf.t599.7y6.js","/_next/static/chunks/0t2xr05rlu96l.js"],"OutletBoundary"]
+7:"$Sreact.suspense"
+3:T1114,<h1>YIELD</h1>
+<p><code>GIVEN … YIELD</code> makes a function without a name (a lambda). It is mostly used to pass a small function to another function, such as <code>all</code>, <code>any</code>, <code>map</code> or <code>filter</code> from the <a href="/l4/reference/libraries/prelude">prelude</a>.</p>
+<h2 id="syntax">Syntax</h2>
+<pre><code class="language-text">GIVEN name YIELD expression
+GIVEN name1, name2 YIELD expression
+GIVEN name IS A Type YIELD expression
+GIVEN name1
+      name2
+YIELD expression
+</code></pre>
+<p>The types of the inputs can be left out when L4 can infer them.</p>
+<p><strong>Example file:</strong></p>
+<pre><code class="language-l4-file">-- YIELD keyword examples: Anonymous functions (lambdas)
+
+IMPORT prelude
+
+
+-- BASIC LAMBDA SYNTAX
+
+
+-- Simple single-parameter lambda
+DECIDE `add one` IS GIVEN x YIELD x + 1
+
+-- Multiple parameters (comma-separated)
+DECIDE `add together` IS GIVEN x, y YIELD x + y
+
+-- Multiple parameters (layout-based)
+DECIDE `multiply values` IS
+  GIVEN a
+        b
+  YIELD a * b
+
+
+-- TYPED LAMBDAS
+
+
+-- Single typed parameter
+DECIDE `double number` IS GIVEN n IS A NUMBER YIELD n * 2
+
+-- Multiple typed parameters
+DECIDE `format pair` IS
+  GIVEN `person name` IS A STRING
+        `person age` IS A NUMBER
+  YIELD `person name`
+
+
+-- LAMBDAS WITH HIGHER-ORDER FUNCTIONS
+
+
+-- Using lambda with `all` (universal quantifier)
+GIVEN numbers IS A LIST OF NUMBER
+GIVETH A BOOLEAN
+`all positive` MEANS all (GIVEN n YIELD n > 0) numbers
+
+-- Using lambda with `any` (existential quantifier)
+GIVEN numbers IS A LIST OF NUMBER
+GIVETH A BOOLEAN
+`has negative` MEANS any (GIVEN n YIELD n &#x3C; 0) numbers
+
+-- Using lambda with `map`
+GIVEN numbers IS A LIST OF NUMBER
+GIVETH A LIST OF NUMBER
+`doubled list` MEANS map (GIVEN n YIELD n * 2) numbers
+
+-- Using lambda with `filter`
+GIVEN numbers IS A LIST OF NUMBER
+GIVETH A LIST OF NUMBER
+`only positive` MEANS filter (GIVEN n YIELD n > 0) numbers
+
+
+-- COMPLEX LAMBDA EXAMPLES
+
+
+-- Record field access in lambda
+DECLARE Person HAS
+  name IS A STRING
+  age IS A NUMBER
+
+GIVEN people IS A LIST OF Person
+GIVETH A BOOLEAN
+`all adults` MEANS all (GIVEN p YIELD p's age >= 18) people
+
+-- Nested lambdas (currying)
+GIVEN predicate IS A FUNCTION FROM NUMBER TO BOOLEAN
+GIVETH A FUNCTION FROM NUMBER TO BOOLEAN
+negate predicate MEANS GIVEN x YIELD NOT predicate x
+
+-- Lambda returning a function
+GIVEN a IS A TYPE
+      b IS A TYPE
+      c IS A TYPE
+      f IS A FUNCTION FROM b TO c
+      g IS A FUNCTION FROM a TO b
+GIVETH A FUNCTION FROM a TO c
+compose f g MEANS GIVEN x IS AN a YIELD f (g x)
+
+
+-- EVALUATION TESTS
+
+
+#EVAL `add one` 5
+#EVAL `add together` 3 7
+#EVAL `double number` 21
+</code></pre>
+<h2 id="examples">Examples</h2>
+<pre><code class="language-l4">IMPORT prelude
+
+GIVEN amounts IS A LIST OF NUMBER
+GIVETH A BOOLEAN
+`all positive` amounts MEANS all (GIVEN n YIELD n > 0) amounts
+
+GIVEN amounts IS A LIST OF NUMBER
+GIVETH A LIST OF NUMBER
+`doubled` amounts MEANS map (GIVEN n YIELD n * 2) amounts
+</code></pre>
+<p>A lambda can also be the body of a named definition. These two define the same function:</p>
+<pre><code class="language-l4">GIVEN n IS A NUMBER
+GIVETH A NUMBER
+`double` n MEANS n * 2
+
+DECIDE `double as a lambda` IS GIVEN n YIELD n * 2
+</code></pre>
+<h2 id="parentheses">Parentheses</h2>
+<p>When a lambda is passed to a function, put it in parentheses.
+An argument that uses <code>'s</code> needs parentheses too:</p>
+<pre><code class="language-l4">IMPORT prelude
+
+DECLARE Person HAS
+  name IS A STRING
+  age IS A NUMBER
+DECLARE Household HAS
+  members IS A LIST OF Person
+
+GIVEN household IS A Household
+GIVETH A BOOLEAN
+`all adults` household MEANS all (GIVEN p YIELD p's age >= 18) (household's members)
+</code></pre>
+<p>Without the parentheses, <code>all (GIVEN p YIELD p's age >= 18) household's members</code> is a syntax error.</p>
+<h2 id="related-pages">Related pages</h2>
+<ul>
+<li><a href="/l4/reference/functions/GIVEN">GIVEN and GIVETH</a>: inputs of a named function</li>
+<li><a href="/l4/reference/functions/MEANS">MEANS</a>: named definitions</li>
+<li><a href="/l4/reference/libraries/prelude">prelude</a>: <code>all</code>, <code>any</code>, <code>map</code>, <code>filter</code> and other functions that take a function</li>
+</ul>
+0:{"rsc":["$","$1","c",{"children":[["$","$L2",null,{"navSections":[{"title":"","items":[{"title":"Language Reference","href":"reference"},{"title":"Glossary","href":"reference/GLOSSARY"},{"title":"Cheat sheet","href":"reference/cheat-sheet"},{"title":"Types","href":"reference/types","children":[{"title":"DECLARE","href":"reference/types/DECLARE"},{"title":"ASSUME","href":"reference/types/ASSUME"},{"title":"FOR ALL","href":"reference/types/for-all"},{"title":"Coercions","href":"reference/types/coercions"}]},{"title":"Functions","href":"reference/functions","children":[{"title":"DECIDE","href":"reference/functions/DECIDE"},{"title":"GIVEN and GIVETH","href":"reference/functions/GIVEN"},{"title":"MEANS","href":"reference/functions/MEANS"},{"title":"LET and WHERE","href":"reference/functions/LET"},{"title":"YIELD","href":"reference/functions/YIELD"},{"title":"AKA","href":"reference/functions/AKA"}]},{"title":"Control flow","href":"reference/control-flow","children":[{"title":"IF","href":"reference/control-flow/IF"},{"title":"BRANCH","href":"reference/control-flow/BRANCH"},{"title":"CONSIDER","href":"reference/control-flow/CONSIDER"}]},{"title":"Operators","href":"reference/operators","children":[{"title":"AND, OR, NOT, IMPLIES","href":"reference/operators/logical"},{"title":"UNLESS","href":"reference/operators/UNLESS"},{"title":"Arithmetic","href":"reference/operators/arithmetic"},{"title":"Comparisons","href":"reference/operators/comparisons"}]},{"title":"Regulative rules","href":"reference/regulative","children":[{"title":"PARTY, MUST, MAY, SHANT","href":"reference/regulative/PARTY"},{"title":"Deadlines and consequences","href":"reference/regulative/consequences"},{"title":"BECAUSE","href":"reference/regulative/BECAUSE"},{"title":"DEONTIC","href":"reference/regulative/DEONTIC"},{"title":"EVENT","href":"reference/regulative/EVENT"}]},{"title":"Syntax and directives","href":"reference/syntax"},{"title":"Built-in functions","href":"reference/builtins","children":[{"title":"HTTP and JSON","href":"reference/builtins/http-json"}]},{"title":"Standard libraries","href":"reference/libraries","children":[{"title":"prelude","href":"reference/libraries/prelude"},{"title":"math","href":"reference/libraries/math"},{"title":"daydate","href":"reference/libraries/daydate"},{"title":"time","href":"reference/libraries/time"},{"title":"datetime","href":"reference/libraries/datetime"},{"title":"timezone","href":"reference/libraries/timezone"},{"title":"excel-date","href":"reference/libraries/excel-date"},{"title":"currency","href":"reference/libraries/currency"},{"title":"holdings","href":"reference/libraries/holdings"},{"title":"actus","href":"reference/libraries/actus"},{"title":"legal-persons","href":"reference/libraries/legal-persons"},{"title":"jurisdiction","href":"reference/libraries/jurisdiction"},{"title":"llm","href":"reference/libraries/llm"}]},{"title":"Error messages","href":"reference/errors"}]}],"toc":[],"htmlContent":"$3","pager":{"prev":"$0:rsc:props:children:0:props:navSections:0:items:4:children:3","next":"$0:rsc:props:children:0:props:navSections:0:items:4:children:5"}}],["$L4"],"$L5"]}],"isPartial":false,"staleTime":300,"varyParams":null,"buildId":"iJUXAyHcmcW99cMci3ei9"}
+4:["$","script","script-0",{"src":"/_next/static/chunks/0fl~me.qwn48c.js","async":true}]
+5:["$","$L6",null,{"children":["$","$7",null,{"name":"Next.MetadataOutlet","children":"$@8"}]}]
+8:null

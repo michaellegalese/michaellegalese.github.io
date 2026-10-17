@@ -1,0 +1,270 @@
+1:"$Sreact.fragment"
+2:I[90160,["/_next/static/chunks/0ypf.t599.7y6.js","/_next/static/chunks/0t2xr05rlu96l.js","/_next/static/chunks/0uxaa7wo_wmcw.js","/_next/static/chunks/0fl~me.qwn48c.js"],"default"]
+6:I[97367,["/_next/static/chunks/0ypf.t599.7y6.js","/_next/static/chunks/0t2xr05rlu96l.js"],"OutletBoundary"]
+7:"$Sreact.suspense"
+3:T38f0,<h1>Design principles</h1>
+<p>The principles that guide L4's design, and the style of writing L4 that follows from them.</p>
+<hr>
+<h2 id="overview">Overview</h2>
+<p>L4 is designed around five principles:</p>
+<ol>
+<li><strong>Legal Isomorphism</strong> - L4 structure mirrors legal text structure</li>
+<li><strong>Human Readability</strong> - Code should be readable by lawyers</li>
+<li><strong>Formal Precision</strong> - Unambiguous, machine-checkable semantics</li>
+<li><strong>Accessibility</strong> - Usable by non-programmers</li>
+<li><strong>Composability</strong> - Small pieces combine into larger systems</li>
+</ol>
+<p>These principles sometimes pull against each other. The art of language design is finding the right balance.</p>
+<hr>
+<h2 id="principle-1-legal-isomorphism">Principle 1: Legal Isomorphism</h2>
+<p><strong>L4 code should look like the legal text it encodes.</strong></p>
+<h3 id="why">Why?</h3>
+<ul>
+<li><strong>Traceability</strong>: Easy to map code to source legislation</li>
+<li><strong>Review</strong>: Lawyers can verify correctness without learning to code</li>
+<li><strong>Maintenance</strong>: Changes in law map to changes in code</li>
+</ul>
+<h3 id="example">Example</h3>
+<p>Legal text:</p>
+<blockquote>
+<p>Alcohol prohibition rule:
+A person shall not buy alcohol if the person is not at least 18 years of age.</p>
+</blockquote>
+<p>L4 code:</p>
+<pre><code class="language-l4">DECLARE Person HAS
+    age IS A NUMBER
+
+DECLARE Action IS ONE OF `buy alcohol`
+
+GIVEN person IS A Person
+GIVETH A DEONTIC Person Action
+`Alcohol prohibition rule` MEANS
+    IF      NOT person's age AT LEAST 18
+    THEN    PARTY  person
+            SHANT  `buy alcohol`
+    ELSE    FULFILLED
+</code></pre>
+<p>The wording of the L4 can follow the wording of the original.</p>
+<h3 id="implications">Implications</h3>
+<ul>
+<li>Keywords read like legal English (MUST, MAY, SHANT)</li>
+<li>Backtick identifiers allow natural-language names</li>
+<li>Conditions use legal phrasing, not programmer conventions</li>
+</ul>
+<p><a href="/l4/concepts/language-design/linguistic-syntax">Reading like the law</a> shows the features that make this possible.</p>
+<hr>
+<h2 id="principle-2-human-readability">Principle 2: Human Readability</h2>
+<p><strong>Code should be understandable by legal professionals.</strong></p>
+<h3 id="why-1">Why?</h3>
+<ul>
+<li><strong>Domain experts</strong> should validate the encoding</li>
+<li><strong>Stakeholders</strong> need to understand what rules do</li>
+<li><strong>Auditors</strong> must verify compliance</li>
+</ul>
+<h3 id="design-choices">Design Choices</h3>
+<p><strong>Layout sensitivity.</strong> As in Python, indentation shows the structure:</p>
+<pre><code class="language-l4">DECLARE Person
+    HAS name IS A STRING
+        age IS A NUMBER
+</code></pre>
+<p><strong>Words rather than symbols.</strong> L4 writes <code>IS A</code> where other languages write <code>:</code>, <code>MEANS</code> where they write <code>=</code>, and offers <code>AND</code>, <code>OR</code>, <code>NOT</code>, <code>EQUALS</code>, <code>AT LEAST</code> and <code>PLUS</code> beside <code>&#x26;&#x26;</code>, <code>||</code>, <code>>=</code> and <code>+</code>:</p>
+<pre><code class="language-l4">GIVEN `the applicant's age` IS A NUMBER
+      `the applicant has valid identification` IS A BOOLEAN
+GIVETH A BOOLEAN
+DECIDE `the applicant may apply` IF
+        `the applicant's age` AT LEAST 18
+    AND `the applicant has valid identification`
+</code></pre>
+<h3 id="trade-offs">Trade-offs</h3>
+<ul>
+<li>More typing than terse syntax</li>
+<li>Longer files</li>
+<li>But: far more accessible to non-programmers</li>
+</ul>
+<hr>
+<h2 id="principle-3-formal-precision">Principle 3: Formal Precision</h2>
+<p><strong>Every L4 program has unambiguous, machine-checkable meaning.</strong></p>
+<h3 id="why-2">Why?</h3>
+<ul>
+<li><strong>Computation</strong>: Rules can be executed to get decisions</li>
+<li><strong>Verification</strong>: Rules can be checked for consistency</li>
+<li><strong>Explanation</strong>: Traces of the reasoning can be produced</li>
+</ul>
+<h3 id="design-choices-1">Design Choices</h3>
+<p><strong>Strong static typing.</strong> <code>GIVEN</code> and <code>GIVETH</code> state what goes in and what comes out, and the type checker holds every rule to them before anything runs.</p>
+<p><strong>Exhaustive pattern matching.</strong> A <code>CONSIDER</code> over an enumeration should handle every case, and L4 warns when one is missing:</p>
+<pre><code class="language-l4">DECLARE `account status` IS ONE OF Active, Suspended, Terminated
+
+GIVEN status IS AN `account status`
+GIVETH A STRING
+`the status message` MEANS
+    CONSIDER status
+    WHEN Active     THEN "The account is active"
+    WHEN Suspended  THEN "The account is suspended"
+    WHEN Terminated THEN "The account is closed"
+</code></pre>
+<p>Leave out a <code>WHEN</code> and L4 lists the missing case. Over a <code>NUMBER</code>, a <code>STRING</code> or a <code>DATE</code>, whose values cannot be listed, it asks for an <code>OTHERWISE</code>. See <a href="/l4/concepts/type-system/exhaustiveness">Exhaustiveness</a>.</p>
+<p><strong>No implicit behaviour.</strong> An <code>IF</code> always has an <code>ELSE</code>; there is no "null" to fall back on.</p>
+<h3 id="trade-offs-1">Trade-offs</h3>
+<ul>
+<li>More explicit code</li>
+<li>Sometimes verbose</li>
+<li>But: no surprises, and every rule can be audited</li>
+</ul>
+<hr>
+<h2 id="functional-purity">Functional purity</h2>
+<p>L4 decision logic is written as functions: every fact a decision depends on comes in through its <code>GIVEN</code>. This is a feature, not a limitation.</p>
+<h3 id="the-signature-lists-the-factors">The signature lists the factors</h3>
+<p>A rule's signature says exactly what information it needs:</p>
+<pre><code>GIVEN `the applicant` IS A Person
+      `today` IS A DATE
+GIVETH A BOOLEAN
+DECIDE `the application is timely` IF ...
+</code></pre>
+<p>To decide whether an application is timely, this rule needs to know who the applicant is and what today's date is, and nothing else.</p>
+<h3 id="it-depends-on-what-exactly">"It depends", on what exactly?</h3>
+<p>Legal text often leaves its dependencies implicit: "the applicant is eligible if they are a resident". Resident of where, and for how long? L4 makes you answer, and the answer becomes part of the rule:</p>
+<pre><code class="language-l4">DECLARE Person HAS
+    `country of residence` IS A STRING
+    `years of residence` IS A NUMBER
+
+GIVEN `the applicant` IS A Person
+      `the jurisdiction` IS A STRING
+GIVETH A BOOLEAN
+DECIDE `the applicant is eligible` IF
+    `the applicant is a resident of the jurisdiction`
+    WHERE
+        `the applicant is a resident of the jurisdiction` MEANS
+                `the applicant`'s `country of residence` EQUALS `the jurisdiction`
+            AND `the applicant`'s `years of residence` AT LEAST 5
+</code></pre>
+<p>When someone says "it depends", L4 makes them say what it depends on. Because the signature lists every factor that affects the decision, the rule is:</p>
+<ul>
+<li><strong>Auditable</strong>: you can trace exactly what information influenced a decision.</li>
+<li><strong>Testable</strong>: you know exactly which inputs to vary in your test cases.</li>
+<li><strong>Maintainable</strong>: when requirements change, you know which dependencies to update.</li>
+<li><strong>Explainable</strong>: you can show stakeholders exactly which factors matter.</li>
+</ul>
+<h3 id="passing-facts-along">Passing facts along</h3>
+<p>If a sub-decision needs a fact, the rule that uses it must pass the fact in. A helper cannot quietly look up the date or a setting of its own. Prefer passing the date in as an input over reading the clock with <code>TODAY</code>, so the answer depends only on what the rule was given. This can feel verbose, but it is transparency, not bureaucracy: every fact that influences the outcome is visible in the code.</p>
+<hr>
+<h2 id="principle-4-accessibility">Principle 4: Accessibility</h2>
+<p><strong>L4 should be usable by domain experts, not just programmers.</strong></p>
+<h3 id="why-3">Why?</h3>
+<ul>
+<li><strong>The knowledge is with lawyers</strong>, not programmers</li>
+<li><strong>Validation requires understanding</strong>: you can't validate what you can't read</li>
+<li><strong>Maintenance</strong>: laws change, and updates shouldn't require programmers</li>
+</ul>
+<h3 id="design-choices-2">Design Choices</h3>
+<ul>
+<li><strong>No installation to start.</strong> The web editor runs L4 in a browser.</li>
+<li><strong>Familiar constructs.</strong> <code>IF … THEN … ELSE</code>, lists written as <code>LIST 1, 2, 3</code>, and keywords that are English words.</li>
+<li><strong>Names in the reader's language.</strong> Backtick identifiers let a rule use the same words as the text it encodes.</li>
+</ul>
+<h3 id="trade-offs-2">Trade-offs</h3>
+<ul>
+<li>May feel limiting to experienced programmers</li>
+<li>Some advanced patterns are not directly supported</li>
+<li>But: a much lower barrier to entry</li>
+</ul>
+<hr>
+<h2 id="principle-5-composability">Principle 5: Composability</h2>
+<p><strong>Small pieces should combine predictably into larger systems.</strong></p>
+<h3 id="why-4">Why?</h3>
+<ul>
+<li><strong>Real legal systems are large</strong>: thousands of rules</li>
+<li><strong>Reuse</strong>: the same patterns appear again and again</li>
+<li><strong>Testing</strong>: small parts can be tested on their own</li>
+</ul>
+<h3 id="design-choices-3">Design Choices</h3>
+<p><strong>Functions are first-class, and complex expressions decompose into named parts with <code>WHERE</code>:</strong></p>
+<pre><code class="language-l4">IMPORT prelude
+
+GIVEN `the amounts` IS A LIST OF NUMBER
+GIVETH A LIST OF NUMBER
+`the amounts with tax` MEANS
+    map (GIVEN amount YIELD amount TIMES `the tax factor`) `the amounts`
+    WHERE
+        `the tax rate`   MEANS 0.09
+        `the tax factor` MEANS 1 PLUS `the tax rate`
+</code></pre>
+<p><strong>Modules.</strong> <code>IMPORT</code> brings in libraries such as <code>prelude</code> and <code>daydate</code>, or another file of your own.</p>
+<p><strong>Regulative combinators.</strong> <code>RAND</code> joins two obligations that must both be fulfilled; <code>ROR</code> joins two of which either will do.</p>
+<h3 id="trade-offs-3">Trade-offs</h3>
+<ul>
+<li>More moving parts</li>
+<li>Needs good tooling support</li>
+<li>But: scales to real-world complexity</li>
+</ul>
+<hr>
+<h2 id="principle-tensions">Principle Tensions</h2>
+<h3 id="readability-vs-precision">Readability vs Precision</h3>
+<p>Natural language is readable but ambiguous. In "a licence or a permit", is "or" inclusive (one or both) or exclusive (one but not both)? L4 keeps the natural keyword and gives it one precise meaning: <code>OR</code> is always inclusive.</p>
+<h3 id="accessibility-vs-power">Accessibility vs Power</h3>
+<p>Simple syntax limits expressiveness. L4 offers simple syntax for the common cases (<code>IF</code>, <code>AND</code>, <code>OR</code>) and keeps the full power of a functional language (functions as values, recursion, <code>map</code> and <code>filter</code>) available when it is needed.</p>
+<h3 id="legal-isomorphism-vs-consistency">Legal Isomorphism vs Consistency</h3>
+<p>Different drafters write differently: some texts say "shall not", others "must not". L4 accepts <code>SHANT</code> and <code>MUST NOT</code> as two spellings of one prohibition, so the code can follow whichever the source uses.</p>
+<hr>
+<h2 id="writing-in-the-l4-style">Writing in the L4 style</h2>
+<p>The principles above lead to a few habits that make a rule easy to check against its source.</p>
+<p><strong>Name things as the source does.</strong> Write identifiers in natural language, inside backticks: <code>`the applicant`</code>, not <code>applicant</code>; <code>`has valid identification`</code>, not <code>hasValidID</code>. Do not use camelCase, snake_case or abbreviations. A function's name should read as a phrase: <code>`the applicant is eligible for benefits`</code>. A type is named after the legal category it models: <code>Person</code>, <code>`registered charity`</code>.</p>
+<p><strong>Mirror the structure of the text.</strong> One named rule per provision, <code>§</code> sections that follow the source's numbering, and a comment citing the article or section a rule encodes. When an exception refers to another provision, name that provision as its own rule (see <a href="/l4/concepts/legal-modeling/default-reasoning">Exceptions and defaults</a>).</p>
+<p><strong>Prefer words in legal contexts.</strong> <code>AND</code>, <code>OR</code>, <code>NOT</code>, <code>AT LEAST</code> and <code>PLUS</code> read better to a lawyer than <code>&#x26;&#x26;</code>, <code>||</code>, <code>>=</code> and <code>+</code>.</p>
+<p><strong>Lay it out consistently.</strong> Indent with spaces, never tabs, and align related items vertically. <code>l4 format</code> lays a file out for you; run it in a change of its own, so that reformatting never hides a change of meaning.</p>
+<p><strong>Keep tests beside the rules.</strong> Put a rule's <code>#EVAL</code>, <code>#ASSERT</code> and <code>#TRACE</code> checks in a <code>§§ Tests</code> section of the same file (<a href="/l4/tutorials/getting-started/testing-your-rules">Test your rules</a>).</p>
+<hr>
+<h2 id="summary">Summary</h2>
+<table>
+<thead>
+<tr>
+<th>Principle</th>
+<th>Key Idea</th>
+<th>Trade-off</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Legal Isomorphism</td>
+<td>Mirror legal text</td>
+<td>Longer code</td>
+</tr>
+<tr>
+<td>Human Readability</td>
+<td>Readable by lawyers</td>
+<td>More verbose</td>
+</tr>
+<tr>
+<td>Formal Precision</td>
+<td>Machine-checkable</td>
+<td>More explicit</td>
+</tr>
+<tr>
+<td>Functional purity</td>
+<td>Every factor is an input</td>
+<td>More parameters</td>
+</tr>
+<tr>
+<td>Accessibility</td>
+<td>Domain-expert friendly</td>
+<td>Less "powerful"</td>
+</tr>
+<tr>
+<td>Composability</td>
+<td>Small pieces combine</td>
+<td>More complexity</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h2 id="further-reading">Further Reading</h2>
+<ul>
+<li><a href="/l4/concepts/language-design/linguistic-syntax">Reading like the law</a> - The linguistic features behind legal isomorphism</li>
+<li><a href="/l4/reference/syntax">Syntax and directives</a> - Full syntax reference</li>
+<li><a href="/l4/tutorials/natural-language-functions/optimising-natural-language-generation">Make rules read like law</a> - Hands-on guide to readable rules</li>
+<li><a href="/l4/courses/foundation">Foundation course</a> - Learn L4 from scratch</li>
+</ul>
+0:{"rsc":["$","$1","c",{"children":[["$","$L2",null,{"navSections":[{"title":"","items":[{"title":"Concepts home","href":"concepts"},{"title":"Design principles","href":"concepts/language-design/principles"},{"title":"Reading like the law","href":"concepts/language-design/linguistic-syntax"},{"title":"Definitions and duties","href":"concepts/legal-modeling/constitutive-vs-regulative"},{"title":"Exceptions and defaults","href":"concepts/legal-modeling/default-reasoning"},{"title":"How obligations unfold","href":"concepts/legal-modeling/regulative-rules"},{"title":"Types as legal categories","href":"concepts/type-system/algebraic-types"},{"title":"Exhaustiveness","href":"concepts/type-system/exhaustiveness"},{"title":"Type theory","href":"concepts/type-system/type-theory"}]}],"toc":[],"htmlContent":"$3","pager":{"prev":"$0:rsc:props:children:0:props:navSections:0:items:0","next":"$0:rsc:props:children:0:props:navSections:0:items:2"}}],["$L4"],"$L5"]}],"isPartial":false,"staleTime":300,"varyParams":null,"buildId":"iJUXAyHcmcW99cMci3ei9"}
+4:["$","script","script-0",{"src":"/_next/static/chunks/0fl~me.qwn48c.js","async":true}]
+5:["$","$L6",null,{"children":["$","$7",null,{"name":"Next.MetadataOutlet","children":"$@8"}]}]
+8:null

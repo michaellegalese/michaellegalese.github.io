@@ -1,0 +1,160 @@
+1:"$Sreact.fragment"
+2:I[90160,["/_next/static/chunks/0ypf.t599.7y6.js","/_next/static/chunks/0t2xr05rlu96l.js","/_next/static/chunks/0uxaa7wo_wmcw.js","/_next/static/chunks/0fl~me.qwn48c.js"],"default"]
+6:I[97367,["/_next/static/chunks/0ypf.t599.7y6.js","/_next/static/chunks/0t2xr05rlu96l.js"],"OutletBoundary"]
+7:"$Sreact.suspense"
+3:T1be4,<h1>Choose an integration</h1>
+<p>A deployed rule set can be used in four ways, all served from the same deployment and always computing the same answers. This page compares them and collects what they share: addresses, API keys and permissions, and self-hosting. To create a deployment first, see <a href="/l4/tutorials/deploying-rules/exporting-rules-for-deployment">Deploy your rules</a>.</p>
+<table>
+<thead>
+<tr>
+<th>You want</th>
+<th>Use</th>
+<th>Page</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>An AI agent (Claude, Codex, Cursor, VS Code with Copilot, …) to find and run your rules as tools</td>
+<td>MCP, optionally with an agent skill</td>
+<td><a href="/l4/tutorials/legalese-cloud/ai-agents">Connect an AI agent</a></td>
+</tr>
+<tr>
+<td>A chat assistant that answers from your rules, called with an OpenAI or Anthropic client</td>
+<td>Chat API with the <code>legalese-comply-4</code> model</td>
+<td><a href="/l4/tutorials/legalese-cloud/openai-compatible-api">Chat with your rules</a></td>
+</tr>
+<tr>
+<td>Your own application to call rules directly, with no model involved</td>
+<td>REST, described by an OpenAPI document</td>
+<td><a href="/l4/tutorials/legalese-cloud/openapi-spec">Call rules over REST</a></td>
+</tr>
+<tr>
+<td>AI agents in your visitors' browsers to use your rules on your website</td>
+<td>The WebMCP embed script</td>
+<td><a href="/l4/tutorials/legalese-cloud/webmcp-embed">Embed rules in a website</a></td>
+</tr>
+</tbody>
+</table>
+<p>REST is deterministic: the same inputs always give the same result, which suits back-end workflows, batch jobs and audited systems. MCP, chat and WebMCP put a model in front of the rules: the model chooses the rule and gathers the inputs, and the rule computes the answer.</p>
+<p>In VS Code, the <strong>Integrate</strong> dialog of a deployment (Deployments tab) shows every address below, filled in for that deployment.</p>
+<hr>
+<h2 id="addresses">Addresses</h2>
+<p><code>{orgSlug}</code> is your organization on Legalese Cloud; <code>{deploymentId}</code> is the deployment's name.</p>
+<table>
+<thead>
+<tr>
+<th>Integration</th>
+<th>Legalese Cloud</th>
+<th>Self-hosted jl4-service</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>MCP, all deployments</td>
+<td><code>https://mcp.legalese.cloud</code></td>
+<td><code>{serviceUrl}/.mcp</code></td>
+</tr>
+<tr>
+<td>MCP, one deployment</td>
+<td><code>https://mcp.legalese.cloud/{orgSlug}/{deploymentId}</code></td>
+<td><code>{serviceUrl}/{deploymentId}/.mcp</code></td>
+</tr>
+<tr>
+<td>Chat API</td>
+<td><code>https://ai.legalese.cloud/{orgSlug}/{deploymentId}/v1</code></td>
+<td>Not available</td>
+</tr>
+<tr>
+<td>OpenAPI document</td>
+<td><code>https://api.legalese.cloud/{orgSlug}/{deploymentId}/openapi.json</code></td>
+<td><code>{serviceUrl}/{deploymentId}/openapi.json</code></td>
+</tr>
+<tr>
+<td>REST: list rules</td>
+<td><code>https://api.legalese.cloud/{orgSlug}/{deploymentId}/functions</code></td>
+<td><code>{serviceUrl}/{deploymentId}/functions</code></td>
+</tr>
+<tr>
+<td>REST: run a rule</td>
+<td><code>https://api.legalese.cloud/{orgSlug}/{deploymentId}/functions/{name}/evaluation</code></td>
+<td><code>{serviceUrl}/{deploymentId}/{name}/evaluation</code></td>
+</tr>
+<tr>
+<td>WebMCP embed script</td>
+<td><code>https://api.legalese.cloud/.webmcp/embed.js</code></td>
+<td><code>{serviceUrl}/.webmcp/embed.js</code></td>
+</tr>
+</tbody>
+</table>
+<p><code>{name}</code> is the rule's name with spaces turned into hyphens: <code>`calculate premium`</code> becomes <code>calculate-premium</code>.</p>
+<hr>
+<h2 id="api-keys-and-permissions">API keys and permissions</h2>
+<p>Every call is authenticated, either with your Legalese Cloud sign-in or with an API key. Clients that support it (MCP clients, the VS Code extension) sign you in through the browser the first time they connect. For everything else, create an API key in the <a href="https://legalese.cloud">Legalese Cloud console</a> and send it as <code>Authorization: Bearer sk_...</code>; the chat API also accepts <code>x-api-key: sk_...</code>, the Anthropic SDK's default header.</p>
+<p>A key carries permissions. Give it only the ones the integration needs:</p>
+<table>
+<thead>
+<tr>
+<th>Permission</th>
+<th>Allows</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>l4:rules</code></td>
+<td>Seeing which rules exist: their names and descriptions. Without it, a client sees no rules at all.</td>
+</tr>
+<tr>
+<td><code>l4:read</code></td>
+<td>Reading each rule's full input and output schema, the OpenAPI document, and the L4 source.</td>
+</tr>
+<tr>
+<td><code>l4:evaluate</code></td>
+<td>Running a rule and getting its result.</td>
+</tr>
+<tr>
+<td><code>ai:chat</code></td>
+<td>Using the chat API.</td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th>Integration</th>
+<th>Permissions</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>AI agent over MCP</td>
+<td><code>l4:rules</code>, <code>l4:evaluate</code>; add <code>l4:read</code> for full schemas and the source-browsing tools</td>
+</tr>
+<tr>
+<td>Chat API</td>
+<td><code>ai:chat</code>, <code>l4:rules</code>, <code>l4:evaluate</code></td>
+</tr>
+<tr>
+<td>REST</td>
+<td><code>l4:evaluate</code> to call rules; <code>l4:rules</code> and <code>l4:read</code> to list them and fetch the OpenAPI document</td>
+</tr>
+<tr>
+<td>WebMCP embed script</td>
+<td><code>l4:rules</code>, <code>l4:evaluate</code> only</td>
+</tr>
+</tbody>
+</table>
+<p>With <code>l4:rules</code> and <code>l4:read</code> but not <code>l4:evaluate</code>, a key gives a read-only catalogue: the rules are visible but cannot be run. A common split for REST is a build-time key with <code>l4:rules</code> and <code>l4:read</code> for generating clients, and a separate run-time key with <code>l4:evaluate</code> for the service that calls the rules.</p>
+<p>The WebMCP key is visible to anyone who opens your web page. Treat it like a publishable key: give it only <code>l4:rules</code> and <code>l4:evaluate</code>, limit it to the deployment you embed, and replace it if it is misused.</p>
+<hr>
+<h2 id="self-hosted-jl4-service">Self-hosted jl4-service</h2>
+<p>If you run your own jl4-service (deploy to it with <code>l4 deploy FILE --server URL</code>; see <a href="/l4/tutorials/getting-started/l4-cli">Using the l4 CLI</a>):</p>
+<ul>
+<li>Every per-deployment address also works with a <code>/deployments</code> prefix: <code>{serviceUrl}/deployments/{deploymentId}/.mcp</code> and <code>{serviceUrl}/deployments/{deploymentId}/openapi.json</code> are the same as the short forms in the table above. Under that prefix, rules sit under <code>functions/</code>: <code>{serviceUrl}/deployments/{deploymentId}/functions/{name}/evaluation</code>. These pages use the short forms.</li>
+<li>Authentication is whatever your jl4-service is configured with, often none for a local instance.</li>
+<li>The chat API, the org-wide MCP search tools (<code>search_rules</code>, <code>get_schema</code>, <code>evaluate</code>) and the agent plugin download exist on Legalese Cloud only. A self-hosted MCP server offers one tool per exported rule and the source-browsing tools.</li>
+<li>The self-hosted embed script ignores <code>data-org</code>: the service already knows its own deployments.</li>
+</ul>
+0:{"rsc":["$","$1","c",{"children":[["$","$L2",null,{"navSections":[{"title":"","items":[{"title":"Overview","href":"tutorials"},{"title":"Install L4 and write your first rule","href":"tutorials/getting-started/first-l4-file"},{"title":"Draft rules with Legalese AI","href":"tutorials/llm-integration/composing-l4-with-ai"},{"title":"Test your rules","href":"tutorials/getting-started/testing-your-rules"},{"title":"Fix errors","href":"tutorials/getting-started/debugging-type-errors"},{"title":"Encode legislation","href":"tutorials/getting-started/encoding-legislation"},{"title":"Make rules read like law","href":"tutorials/natural-language-functions/optimising-natural-language-generation"},{"title":"Common patterns","href":"tutorials/getting-started/common-patterns"},{"title":"Deploy your rules","href":"tutorials/deploying-rules/exporting-rules-for-deployment"},{"title":"Choose an integration","href":"tutorials/legalese-cloud"},{"title":"Connect an AI agent","href":"tutorials/legalese-cloud/ai-agents"},{"title":"Chat with your rules","href":"tutorials/legalese-cloud/openai-compatible-api"},{"title":"Call rules over REST","href":"tutorials/legalese-cloud/openapi-spec"},{"title":"Embed rules in a website","href":"tutorials/legalese-cloud/webmcp-embed"},{"title":"Using the l4 CLI","href":"tutorials/getting-started/l4-cli"},{"title":"Manage rules in git and CI","href":"tutorials/getting-started/version-control-for-rules"}]}],"toc":[],"htmlContent":"$3","pager":{"prev":"$0:rsc:props:children:0:props:navSections:0:items:8","next":"$0:rsc:props:children:0:props:navSections:0:items:10"}}],["$L4"],"$L5"]}],"isPartial":false,"staleTime":300,"varyParams":null,"buildId":"iJUXAyHcmcW99cMci3ei9"}
+4:["$","script","script-0",{"src":"/_next/static/chunks/0fl~me.qwn48c.js","async":true}]
+5:["$","$L6",null,{"children":["$","$7",null,{"name":"Next.MetadataOutlet","children":"$@8"}]}]
+8:null

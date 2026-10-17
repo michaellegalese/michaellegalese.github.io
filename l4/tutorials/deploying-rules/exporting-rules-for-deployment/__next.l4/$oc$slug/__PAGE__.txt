@@ -1,0 +1,160 @@
+1:"$Sreact.fragment"
+2:I[90160,["/_next/static/chunks/0ypf.t599.7y6.js","/_next/static/chunks/0t2xr05rlu96l.js","/_next/static/chunks/0uxaa7wo_wmcw.js","/_next/static/chunks/0fl~me.qwn48c.js"],"default"]
+6:I[97367,["/_next/static/chunks/0ypf.t599.7y6.js","/_next/static/chunks/0t2xr05rlu96l.js"],"OutletBoundary"]
+7:"$Sreact.suspense"
+3:T245e,<h1>Deploy your rules</h1>
+<p>Publish L4 rules on <a href="https://legalese.cloud">Legalese Cloud</a>, where applications and AI agents can call them.</p>
+<p><strong>Before you start:</strong> <a href="/l4/tutorials/getting-started/first-l4-file">Install L4 and write your first rule</a>.</p>
+<p>You will deploy an insurance premium calculator with two published rules, one that computes a premium and one that checks whether a discount applies, and then call one of them.</p>
+<p><strong>Complete example:</strong></p>
+<pre><code class="language-l4-file">-- insurance-premium.l4
+-- Example: Exporting functions for deployment
+
+§ `Insurance Premium Calculator`
+
+DECLARE Applicant
+    HAS `age` IS A NUMBER
+        `risk score` IS A NUMBER
+        `is existing customer` IS A BOOLEAN
+
+-- The primary function, marked as the default export
+@export default Calculate the insurance premium for an applicant
+GIVEN applicant IS AN Applicant @desc The applicant's details
+GIVETH A NUMBER
+DECIDE `calculate premium` IS
+    IF applicant's `risk score` > 0.7
+    THEN applicant's `age` * 100
+    ELSE IF applicant's `is existing customer`
+         THEN applicant's `age` * 40
+         ELSE applicant's `age` * 60
+
+-- A secondary exported function
+@export Check whether the applicant qualifies for a discount
+GIVEN applicant IS AN Applicant @desc The applicant to check
+GIVETH A BOOLEAN
+DECIDE `qualifies for discount` IF
+    applicant's `is existing customer`
+    AND applicant's `risk score` &#x3C;= 0.5
+
+-- Internal helper — not exported (no @export annotation)
+GIVEN applicant IS AN Applicant
+GIVETH A NUMBER
+`base rate` applicant MEANS
+    IF applicant's `age` &#x3C; 30 THEN 50 ELSE 80
+
+-- Test data
+`test applicant` MEANS Applicant 35 0.4 TRUE
+
+#EVAL `calculate premium` `test applicant`
+#EVAL `qualifies for discount` `test applicant`
+</code></pre>
+<hr>
+<h2 id="step-1-mark-rules-with-export">Step 1: Mark rules with <code>@export</code></h2>
+<p><code>@export</code> marks a rule for publication. Put it on the line directly above the rule's <code>GIVEN</code> (or above the rule itself, if it has no <code>GIVEN</code>). The rest of the line describes the rule:</p>
+<pre><code class="language-l4">DECLARE Applicant
+    HAS `age`                  IS A NUMBER
+        `risk score`           IS A NUMBER
+        `is existing customer` IS A BOOLEAN
+
+@export default Calculate the insurance premium for an applicant
+GIVEN applicant IS AN Applicant @desc The applicant's details
+GIVETH A NUMBER
+DECIDE `calculate premium` IS
+    IF applicant's `risk score` > 0.7
+    THEN applicant's `age` * 100
+    ELSE IF applicant's `is existing customer`
+         THEN applicant's `age` * 40
+         ELSE applicant's `age` * 60
+
+@export Check whether the applicant qualifies for a discount
+GIVEN applicant IS AN Applicant @desc The applicant to check
+GIVETH A BOOLEAN
+DECIDE `qualifies for discount` IF
+        applicant's `is existing customer`
+    AND applicant's `risk score` &#x3C;= 0.5
+</code></pre>
+<table>
+<thead>
+<tr>
+<th>Annotation</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>@export &#x3C;description></code></td>
+<td>Publish this rule, with this description.</td>
+</tr>
+<tr>
+<td><code>@export default &#x3C;description></code></td>
+<td>Publish it as the <strong>default</strong> rule, used when a caller names no rule.</td>
+</tr>
+<tr>
+<td><code>@desc &#x3C;description></code></td>
+<td>After a <code>GIVEN</code> input: describe the input for people and agents calling it.</td>
+</tr>
+</tbody>
+</table>
+<p>The descriptions become the rule's documentation in the API schema, and they are all an AI agent knows when it decides whether and how to call the rule, so write them with care. Rules without <code>@export</code> stay internal: other rules can use them, but they are not published.</p>
+<p>An <code>@export</code> anywhere else, such as between <code>GIVETH</code> and <code>DECIDE</code>, is not picked up, and the rule is not published. See <a href="/l4/reference/syntax#annotations">annotations</a> for the details.</p>
+<hr>
+<h2 id="step-2-check-what-will-be-published">Step 2: Check what will be published</h2>
+<p>In VS Code, open the file, open the <strong>L4</strong> sidebar and select the <strong>Deploy</strong> tab. It lists every exported rule in the file, with its description, inputs and result type. If the list is empty, the file has no <code>@export</code> or does not type-check.</p>
+<hr>
+<h2 id="step-3-deploy">Step 3: Deploy</h2>
+<ol>
+<li>In the sidebar, sign in to your <a href="https://legalese.cloud">Legalese Cloud</a> account.</li>
+<li>Check the list of exported rules.</li>
+<li>Click <strong>Deploy</strong>.</li>
+<li>Enter a <strong>deployment name</strong>, such as <code>insurance-premium</code>. It becomes part of the API address: 1 to 36 characters, using letters, digits, hyphens and underscores.</li>
+<li>Click <strong>Deploy Now</strong>.</li>
+</ol>
+<p>The extension uploads the file and the service compiles it, and its status goes through <strong>Pending</strong> (uploaded), <strong>Compiling</strong>, then <strong>Ready</strong> (live) or <strong>Failed</strong> (with the compiler's error message).</p>
+<h3 id="update-a-deployment">Update a deployment</h3>
+<p>Deploying to a name that already exists updates that deployment. The extension first checks for <strong>breaking changes</strong>, such as a removed rule, a removed or renamed input, or a changed result type, and warns you before you confirm. <a href="/l4/tutorials/getting-started/version-control-for-rules#redeploy-when-a-merge-changes-a-live-api">Manage rules in git and CI</a> explains which changes break callers.</p>
+<h3 id="from-the-command-line">From the command line</h3>
+<p>The <code>l4</code> command deploys the same way. Sign in once with the <code>legalese</code> command (<code>l4 install legalese</code>, then <code>legalese login</code>), then run <code>l4 deploy insurance-premium.l4</code> to create the deployment and <code>l4 redeploy insurance-premium.l4</code> to update it; <code>redeploy</code> refuses breaking changes unless you add <code>--force</code>. <code>l4 deployments</code> lists your deployments and <code>l4 undeploy NAME</code> removes one. With <code>--server</code>, the same commands deploy to a jl4-service you run yourself. See <a href="/l4/tutorials/getting-started/l4-cli">Using the l4 CLI</a>.</p>
+<hr>
+<h2 id="step-4-manage-deployments">Step 4: Manage deployments</h2>
+<p>The <strong>Deployments</strong> tab in the sidebar lists your organization's deployments, with each one's rules, descriptions and inputs. From there you can open a deployment's <strong>Integrate</strong> dialog, which shows its addresses for each kind of client, or <strong>Undeploy</strong> it. Undeploying asks for confirmation, because it breaks every integration that uses the deployment.</p>
+<hr>
+<h2 id="step-5-call-a-rule">Step 5: Call a rule</h2>
+<p>Once the deployment is <strong>Ready</strong>, each exported rule can be called over REST. Create an API key in the <a href="https://legalese.cloud">Legalese Cloud console</a>, then:</p>
+<pre><code class="language-bash">curl -X POST https://api.legalese.cloud/{orgSlug}/insurance-premium/functions/calculate-premium/evaluation \
+  -H "Authorization: Bearer sk_..." \
+  -H "Content-Type: application/json" \
+  -d '{
+    "arguments": {
+      "applicant": {
+        "age": 35,
+        "risk-score": 0.4,
+        "is-existing-customer": true
+      }
+    }
+  }'
+</code></pre>
+<p><code>{orgSlug}</code> is your organization on Legalese Cloud. In the address and the arguments, spaces in names become hyphens: the rule <code>`calculate premium`</code> is <code>calculate-premium</code>, and the field <code>`risk score`</code> is <code>"risk-score"</code>. The answer:</p>
+<pre><code class="language-json">{ "contents": { "result": { "value": 1400 } }, "tag": "SimpleResponse" }
+</code></pre>
+<p>The same deployment also works with AI agents, chat clients and websites. To pick a way in, see <a href="/l4/tutorials/legalese-cloud">Choose an integration</a>; for the REST interface in detail, including the answer format, see <a href="/l4/tutorials/legalese-cloud/openapi-spec">Call rules over REST</a>.</p>
+<hr>
+<h2 id="common-mistakes">Common mistakes</h2>
+<p><strong>Forgetting <code>@export</code>.</strong> Without it, a rule is not published, however useful it is.</p>
+<p><strong>Putting <code>@export</code> in the wrong place.</strong> It goes directly above <code>GIVEN</code>, not between <code>GIVETH</code> and the rule:</p>
+<pre><code class="language-l4">@export Square a number
+GIVEN x IS A NUMBER @desc The number to square
+GIVETH A NUMBER
+squared x MEANS x * x
+</code></pre>
+<p><strong>Leaving inputs undescribed.</strong> Without <code>@desc</code>, callers and AI agents have only the input's name to go on.</p>
+<hr>
+<h2 id="next-steps">Next steps</h2>
+<ul>
+<li><a href="/l4/tutorials/legalese-cloud">Choose an integration</a>: AI agents, chat, REST or a website.</li>
+<li><a href="/l4/tutorials/getting-started/version-control-for-rules">Manage rules in git and CI</a>: test and redeploy safely.</li>
+<li><a href="/l4/reference/syntax#annotations">Annotations</a>: <code>@export</code>, <code>@desc</code> and the others.</li>
+</ul>
+0:{"rsc":["$","$1","c",{"children":[["$","$L2",null,{"navSections":[{"title":"","items":[{"title":"Overview","href":"tutorials"},{"title":"Install L4 and write your first rule","href":"tutorials/getting-started/first-l4-file"},{"title":"Draft rules with Legalese AI","href":"tutorials/llm-integration/composing-l4-with-ai"},{"title":"Test your rules","href":"tutorials/getting-started/testing-your-rules"},{"title":"Fix errors","href":"tutorials/getting-started/debugging-type-errors"},{"title":"Encode legislation","href":"tutorials/getting-started/encoding-legislation"},{"title":"Make rules read like law","href":"tutorials/natural-language-functions/optimising-natural-language-generation"},{"title":"Common patterns","href":"tutorials/getting-started/common-patterns"},{"title":"Deploy your rules","href":"tutorials/deploying-rules/exporting-rules-for-deployment"},{"title":"Choose an integration","href":"tutorials/legalese-cloud"},{"title":"Connect an AI agent","href":"tutorials/legalese-cloud/ai-agents"},{"title":"Chat with your rules","href":"tutorials/legalese-cloud/openai-compatible-api"},{"title":"Call rules over REST","href":"tutorials/legalese-cloud/openapi-spec"},{"title":"Embed rules in a website","href":"tutorials/legalese-cloud/webmcp-embed"},{"title":"Using the l4 CLI","href":"tutorials/getting-started/l4-cli"},{"title":"Manage rules in git and CI","href":"tutorials/getting-started/version-control-for-rules"}]}],"toc":[],"htmlContent":"$3","pager":{"prev":"$0:rsc:props:children:0:props:navSections:0:items:7","next":"$0:rsc:props:children:0:props:navSections:0:items:9"}}],["$L4"],"$L5"]}],"isPartial":false,"staleTime":300,"varyParams":null,"buildId":"iJUXAyHcmcW99cMci3ei9"}
+4:["$","script","script-0",{"src":"/_next/static/chunks/0fl~me.qwn48c.js","async":true}]
+5:["$","$L6",null,{"children":["$","$7",null,{"name":"Next.MetadataOutlet","children":"$@8"}]}]
+8:null

@@ -1,0 +1,97 @@
+1:"$Sreact.fragment"
+2:I[90160,["/_next/static/chunks/0ypf.t599.7y6.js","/_next/static/chunks/0t2xr05rlu96l.js","/_next/static/chunks/0uxaa7wo_wmcw.js","/_next/static/chunks/0fl~me.qwn48c.js"],"default"]
+6:I[97367,["/_next/static/chunks/0ypf.t599.7y6.js","/_next/static/chunks/0t2xr05rlu96l.js"],"OutletBoundary"]
+7:"$Sreact.suspense"
+3:T100f,<h1>ASSUME</h1>
+<p><code>ASSUME</code> declares a name and its type without giving it a value or a definition.
+Use it for facts that are supplied from outside, and for functions whose definition lives elsewhere.</p>
+<h2 id="syntax">Syntax</h2>
+<pre><code class="language-text">ASSUME name IS A Type
+ASSUME name IS A FUNCTION FROM Type1 AND Type2 TO Type3
+</code></pre>
+<p><strong>Example file:</strong></p>
+<pre><code class="language-l4-file">-- ASSUME keyword examples
+
+-- Basic Variable Assumptions
+
+-- Assume primitive types
+ASSUME `is employed` IS A BOOLEAN
+ASSUME `annual income` IS A NUMBER
+ASSUME `applicant name` IS A STRING
+
+-- Function Assumptions
+
+-- Single parameter function
+ASSUME `calculate tax` IS A FUNCTION FROM NUMBER TO NUMBER
+
+-- The assumed function can be used in expressions
+DECIDE `tax on income` IS `calculate tax` `annual income`
+
+-- Using Assumed Values in Decisions
+
+ASSUME age IS A NUMBER
+ASSUME `has valid license` IS A BOOLEAN
+
+-- Combine assumed values in logic
+DECIDE `can drive` IS
+  age >= 16 AND `has valid license`
+
+-- Evaluating with Assumed Values
+
+-- The expression uses assumed values
+#CHECK `can drive`
+
+-- Complex Example: Eligibility Check
+
+ASSUME `applicant age` IS A NUMBER
+ASSUME `years of residence` IS A NUMBER
+ASSUME `has criminal record` IS A BOOLEAN
+
+DECIDE `is eligible for benefit` IS
+      `applicant age` >= 21
+  AND `years of residence` >= 5
+  AND NOT `has criminal record`
+
+#CHECK `is eligible for benefit`
+</code></pre>
+<h2 id="examples">Examples</h2>
+<pre><code class="language-l4">ASSUME `the applicant's age` IS A NUMBER
+ASSUME `the applicant is employed` IS A BOOLEAN
+ASSUME `the tax on` IS A FUNCTION FROM NUMBER TO NUMBER
+
+DECIDE `the applicant qualifies` IF
+      `the applicant's age` >= 18
+  AND `the applicant is employed`
+</code></pre>
+<p>An assumed name can be used anywhere its type fits, and the file type-checks.
+Evaluating an expression that needs its value stops with "I could not continue evaluating, because I needed to know the value of … but it is an assumed term."
+To try such a rule with values, give the facts as <code>GIVEN</code> inputs instead, or publish it with <code>@export</code> as below.</p>
+<p>For a polymorphic assumed function, see <a href="/l4/reference/types/for-all">FOR ALL</a>.</p>
+<h2 id="assume-and-export">ASSUME and <code>@export</code></h2>
+<p>When a function marked <code>@export</code> uses a top-level <code>ASSUME</code>, the assumed name becomes an input of the exported function, and the caller supplies it with the <code>GIVEN</code> inputs.
+An <code>ASSUME</code> that no exported function uses stays as it is.</p>
+<pre><code class="language-l4">ASSUME `the applicant's age` IS A NUMBER
+ASSUME `an unused fact` IS A BOOLEAN
+
+@export Check whether the applicant is an adult
+DECIDE `the applicant is an adult` IF `the applicant's age` >= 18
+</code></pre>
+<p>Here <code>`the applicant's age`</code> is an input of <code>`the applicant is an adult`</code>; <code>`an unused fact`</code> is not.</p>
+<h3 id="function-typed-inputs-are-not-supported-for-export">Function-typed inputs are not supported for <code>@export</code></h3>
+<p>An exported function cannot take an input of function type, whether it is a <code>GIVEN</code> input or an <code>ASSUME</code> it uses:</p>
+<pre><code class="language-text">ASSUME `the test` IS A FUNCTION FROM NUMBER TO BOOLEAN
+@export Apply the test
+DECIDE `passes` IF `the test` 42
+</code></pre>
+<p><code>l4 check</code> reports "Function type inputs are not supported for @export", and the service refuses to deploy such a file.
+A function cannot be sent as JSON over REST or MCP, and an assumed function has no definition to run.</p>
+<h2 id="related-pages">Related pages</h2>
+<ul>
+<li><a href="/l4/reference/functions/GIVEN">GIVEN and GIVETH</a>: inputs of a function</li>
+<li><a href="/l4/reference/types/DECLARE">DECLARE</a>: types and type expressions</li>
+<li><a href="/l4/tutorials/deploying-rules/exporting-rules-for-deployment">Deploy your rules</a>: <code>@export</code> in practice</li>
+</ul>
+0:{"rsc":["$","$1","c",{"children":[["$","$L2",null,{"navSections":[{"title":"","items":[{"title":"Language Reference","href":"reference"},{"title":"Glossary","href":"reference/GLOSSARY"},{"title":"Cheat sheet","href":"reference/cheat-sheet"},{"title":"Types","href":"reference/types","children":[{"title":"DECLARE","href":"reference/types/DECLARE"},{"title":"ASSUME","href":"reference/types/ASSUME"},{"title":"FOR ALL","href":"reference/types/for-all"},{"title":"Coercions","href":"reference/types/coercions"}]},{"title":"Functions","href":"reference/functions","children":[{"title":"DECIDE","href":"reference/functions/DECIDE"},{"title":"GIVEN and GIVETH","href":"reference/functions/GIVEN"},{"title":"MEANS","href":"reference/functions/MEANS"},{"title":"LET and WHERE","href":"reference/functions/LET"},{"title":"YIELD","href":"reference/functions/YIELD"},{"title":"AKA","href":"reference/functions/AKA"}]},{"title":"Control flow","href":"reference/control-flow","children":[{"title":"IF","href":"reference/control-flow/IF"},{"title":"BRANCH","href":"reference/control-flow/BRANCH"},{"title":"CONSIDER","href":"reference/control-flow/CONSIDER"}]},{"title":"Operators","href":"reference/operators","children":[{"title":"AND, OR, NOT, IMPLIES","href":"reference/operators/logical"},{"title":"UNLESS","href":"reference/operators/UNLESS"},{"title":"Arithmetic","href":"reference/operators/arithmetic"},{"title":"Comparisons","href":"reference/operators/comparisons"}]},{"title":"Regulative rules","href":"reference/regulative","children":[{"title":"PARTY, MUST, MAY, SHANT","href":"reference/regulative/PARTY"},{"title":"Deadlines and consequences","href":"reference/regulative/consequences"},{"title":"BECAUSE","href":"reference/regulative/BECAUSE"},{"title":"DEONTIC","href":"reference/regulative/DEONTIC"},{"title":"EVENT","href":"reference/regulative/EVENT"}]},{"title":"Syntax and directives","href":"reference/syntax"},{"title":"Built-in functions","href":"reference/builtins","children":[{"title":"HTTP and JSON","href":"reference/builtins/http-json"}]},{"title":"Standard libraries","href":"reference/libraries","children":[{"title":"prelude","href":"reference/libraries/prelude"},{"title":"math","href":"reference/libraries/math"},{"title":"daydate","href":"reference/libraries/daydate"},{"title":"time","href":"reference/libraries/time"},{"title":"datetime","href":"reference/libraries/datetime"},{"title":"timezone","href":"reference/libraries/timezone"},{"title":"excel-date","href":"reference/libraries/excel-date"},{"title":"currency","href":"reference/libraries/currency"},{"title":"holdings","href":"reference/libraries/holdings"},{"title":"actus","href":"reference/libraries/actus"},{"title":"legal-persons","href":"reference/libraries/legal-persons"},{"title":"jurisdiction","href":"reference/libraries/jurisdiction"},{"title":"llm","href":"reference/libraries/llm"}]},{"title":"Error messages","href":"reference/errors"}]}],"toc":[],"htmlContent":"$3","pager":{"prev":"$0:rsc:props:children:0:props:navSections:0:items:3:children:0","next":"$0:rsc:props:children:0:props:navSections:0:items:3:children:2"}}],["$L4"],"$L5"]}],"isPartial":false,"staleTime":300,"varyParams":null,"buildId":"iJUXAyHcmcW99cMci3ei9"}
+4:["$","script","script-0",{"src":"/_next/static/chunks/0fl~me.qwn48c.js","async":true}]
+5:["$","$L6",null,{"children":["$","$7",null,{"name":"Next.MetadataOutlet","children":"$@8"}]}]
+8:null

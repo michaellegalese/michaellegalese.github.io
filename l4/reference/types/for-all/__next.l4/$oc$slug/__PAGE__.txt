@@ -1,0 +1,310 @@
+1:"$Sreact.fragment"
+2:I[90160,["/_next/static/chunks/0ypf.t599.7y6.js","/_next/static/chunks/0t2xr05rlu96l.js","/_next/static/chunks/0uxaa7wo_wmcw.js","/_next/static/chunks/0fl~me.qwn48c.js"],"default"]
+6:I[97367,["/_next/static/chunks/0ypf.t599.7y6.js","/_next/static/chunks/0t2xr05rlu96l.js"],"OutletBoundary"]
+7:"$Sreact.suspense"
+3:T2585,<h1>FOR ALL</h1>
+<p><code>FOR ALL</code> introduces type variables in a type, so that an <code>ASSUME</code> can declare a value or function that works for any type.</p>
+<h2 id="syntax">Syntax</h2>
+<pre><code class="language-text">FOR ALL a
+FOR ALL a AND b
+FOR ALL a AND b AND c
+</code></pre>
+<p><code>FOR ALL</code> comes first in the type, followed by the type that uses the variables.</p>
+<p><strong>Example file:</strong></p>
+<pre><code class="language-l4-file">-- FOR ALL Examples
+-- Universal quantifier for polymorphic type signatures
+
+--------------------------------------------------------------------------------
+-- Basic Polymorphic Type Declarations
+--------------------------------------------------------------------------------
+
+-- Identity function: works for any type
+ASSUME identity IS
+  FOR ALL a
+  A FUNCTION FROM a TO a
+
+-- Constant function: ignores second argument
+ASSUME const IS
+  FOR ALL a AND b
+  A FUNCTION FROM a AND b TO a
+
+--------------------------------------------------------------------------------
+-- List Operations (Polymorphic)
+--------------------------------------------------------------------------------
+
+-- Map: apply function to each element
+ASSUME map IS
+  FOR ALL a AND b
+  A FUNCTION
+    FROM      FUNCTION FROM a TO b
+          AND LIST OF a
+    TO    LIST OF b
+
+-- Filter: keep elements matching predicate
+ASSUME filter IS
+  FOR ALL a
+  A FUNCTION
+    FROM      FUNCTION FROM a TO BOOLEAN
+          AND LIST OF a
+    TO    LIST OF a
+
+-- Fold: reduce list to single value
+ASSUME foldl IS
+  FOR ALL a AND b
+  A FUNCTION
+    FROM      FUNCTION FROM b AND a TO b
+          AND b
+          AND LIST OF a
+    TO    b
+
+--------------------------------------------------------------------------------
+-- Custom Algebraic Types with Type Parameters
+--------------------------------------------------------------------------------
+
+-- A choice between two types (like Either in Haskell)
+DECLARE Choice OF a, b
+  IS ONE OF
+    Left  HAS payload IS AN a
+    Right HAS payload IS A  b
+
+-- Optional value (like Maybe in Haskell)
+DECLARE Optional OF a
+  IS ONE OF
+    None
+    Some HAS value IS AN a
+
+-- A pair of two values
+DECLARE Pair OF a, b
+  HAS first IS AN a
+      second IS A b
+
+--------------------------------------------------------------------------------
+-- Functions Using Custom Types
+--------------------------------------------------------------------------------
+
+-- Handle either alternative of a Choice
+ASSUME either IS
+  FOR ALL a AND b AND c
+  A FUNCTION
+    FROM      FUNCTION FROM a TO c
+          AND FUNCTION FROM b TO c
+          AND Choice OF a, b
+    TO    c
+
+-- Extract value from Optional with default
+ASSUME fromOptional IS
+  FOR ALL a
+  A FUNCTION
+    FROM      a
+          AND Optional OF a
+    TO    a
+
+-- Create a pair
+ASSUME makePair IS
+  FOR ALL a AND b
+  A FUNCTION FROM a AND b TO Pair OF a, b
+
+--------------------------------------------------------------------------------
+-- Implementing Polymorphic Functions with GIVEN
+--------------------------------------------------------------------------------
+
+-- The definition style uses GIVEN ... IS A TYPE
+GIVEN a IS A TYPE
+      b IS A TYPE
+      f IS A FUNCTION FROM a TO b
+      list IS A LIST OF a
+GIVETH A LIST OF b
+myMap f list MEANS
+  CONSIDER list
+  WHEN EMPTY THEN EMPTY
+  WHEN x FOLLOWED BY xs THEN f x FOLLOWED BY myMap f xs
+
+-- Length works for any list type
+GIVEN a IS A TYPE
+      list IS A LIST OF a
+GIVETH A NUMBER
+myLength list MEANS
+  CONSIDER list
+  WHEN EMPTY THEN 0
+  WHEN x FOLLOWED BY xs THEN 1 PLUS myLength xs
+
+-- Reverse a list (simplified - just demonstrates the pattern)
+GIVEN a IS A TYPE
+      list IS A LIST OF a
+GIVETH A LIST OF a
+myReverse list MEANS
+  CONSIDER list
+  WHEN EMPTY THEN EMPTY
+  WHEN x FOLLOWED BY xs THEN append (myReverse xs) (x FOLLOWED BY EMPTY)
+
+-- Helper for append
+GIVEN a IS A TYPE
+      list1 IS A LIST OF a
+      list2 IS A LIST OF a
+GIVETH A LIST OF a
+append list1 list2 MEANS
+  CONSIDER list1
+  WHEN EMPTY THEN list2
+  WHEN x FOLLOWED BY xs THEN x FOLLOWED BY append xs list2
+
+--------------------------------------------------------------------------------
+-- Using Polymorphic Functions
+--------------------------------------------------------------------------------
+
+-- Test data
+DECIDE numbers IS LIST 1, 2, 3, 4, 5
+DECIDE strings IS LIST "a", "b", "c"
+
+-- Apply myLength to different list types
+#EVAL myLength numbers  -- 5
+#EVAL myLength strings  -- 3
+
+-- Map with different types
+GIVEN n IS A NUMBER
+double n MEANS n TIMES 2
+
+#EVAL myMap double numbers  -- LIST 2, 4, 6, 8, 10
+
+--------------------------------------------------------------------------------
+-- Higher-Order Polymorphic Functions
+--------------------------------------------------------------------------------
+
+-- Function composition
+ASSUME compose IS
+  FOR ALL a AND b AND c
+  A FUNCTION
+    FROM      FUNCTION FROM b TO c
+          AND FUNCTION FROM a TO b
+    TO    FUNCTION FROM a TO c
+
+-- Flip argument order
+ASSUME flip IS
+  FOR ALL a AND b AND c
+  A FUNCTION
+    FROM      FUNCTION FROM a AND b TO c
+    TO    FUNCTION FROM b AND a TO c
+
+--------------------------------------------------------------------------------
+-- Polymorphic Tree Type
+--------------------------------------------------------------------------------
+
+DECLARE Tree OF a
+  IS ONE OF
+    Leaf HAS value IS AN a
+    Node HAS
+      left IS A Tree OF a
+      right IS A Tree OF a
+
+-- Count nodes in a tree
+GIVEN a IS A TYPE
+      tree IS A Tree OF a
+GIVETH A NUMBER
+treeSize tree MEANS
+  CONSIDER tree
+  WHEN Leaf v THEN 1
+  WHEN Node l r THEN treeSize l PLUS treeSize r
+
+-- Example tree
+DECIDE exampleTree IS
+  Node WITH
+    left IS Leaf WITH value IS 1
+    right IS Node WITH
+      left IS Leaf WITH value IS 2
+      right IS Leaf WITH value IS 3
+
+#EVAL treeSize exampleTree  -- 3
+</code></pre>
+<h2 id="examples">Examples</h2>
+<h3 id="one-type-variable">One type variable</h3>
+<pre><code class="language-l4">ASSUME identity IS
+  FOR ALL a
+  A FUNCTION FROM a TO a
+</code></pre>
+<p><code>identity</code> takes a value of any type and returns a value of the same type.</p>
+<h3 id="several-type-variables">Several type variables</h3>
+<pre><code class="language-l4">ASSUME map IS
+  FOR ALL a AND b
+  A FUNCTION
+    FROM      FUNCTION FROM a TO b
+          AND LIST OF a
+    TO    LIST OF b
+</code></pre>
+<p>For all types <code>a</code> and <code>b</code>, <code>map</code> takes a function from <code>a</code> to <code>b</code> and a list of <code>a</code>, and returns a list of <code>b</code>.</p>
+<h3 id="with-a-parameterised-type">With a parameterised type</h3>
+<pre><code class="language-l4">DECLARE Choice OF a, b
+  IS ONE OF
+    Left  HAS payload IS AN a
+    Right HAS payload IS A  b
+
+ASSUME choose IS
+  FOR ALL a AND b AND c
+  A FUNCTION
+    FROM      FUNCTION FROM a TO c
+          AND FUNCTION FROM b TO c
+          AND Choice OF a, b
+    TO    c
+</code></pre>
+<h2 id="for-all-and-given">FOR ALL and GIVEN</h2>
+<p><code>FOR ALL</code> declares a polymorphic type with no definition, in an <code>ASSUME</code>.
+A function that is defined gets its type variables from <code>GIVEN … IS A TYPE</code> instead:</p>
+<pre><code class="language-l4">GIVEN a IS A TYPE
+      b IS A TYPE
+      f IS A FUNCTION FROM a TO b
+      list IS A LIST OF a
+GIVETH A LIST OF b
+`apply to each` f list MEANS
+  CONSIDER list
+  WHEN EMPTY THEN EMPTY
+  WHEN x FOLLOWED BY xs THEN f x FOLLOWED BY `apply to each` f xs
+</code></pre>
+<p>Both give the function the same type.</p>
+<h2 id="type-variables">Type variables</h2>
+<ul>
+<li>They are usually single lowercase letters (<code>a</code>, <code>b</code>, <code>c</code>), but any identifier works.</li>
+<li>They are in scope only in the type that follows.</li>
+<li>The names in one <code>FOR ALL</code> must be distinct: <code>FOR ALL a AND a</code> is an error.</li>
+</ul>
+<h2 id="not-a-quantifier-over-lists">Not a quantifier over lists</h2>
+<p><code>FOR ALL</code> works on types, not on values. To test every element of a list, or some element, use <code>all</code> or <code>any</code> from the <a href="/l4/reference/libraries/prelude">prelude</a> with a <a href="/l4/reference/functions/YIELD">YIELD</a> function:</p>
+<pre><code class="language-l4">IMPORT prelude
+
+GIVEN amounts IS A LIST OF NUMBER
+GIVETH A BOOLEAN
+`every amount is positive` amounts MEANS all (GIVEN x YIELD x > 0) amounts
+</code></pre>
+<h2 id="in-other-languages">In other languages</h2>
+<table>
+<thead>
+<tr>
+<th>L4</th>
+<th>Haskell</th>
+<th>TypeScript</th>
+<th>Java</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>FOR ALL a</code></td>
+<td><code>forall a.</code></td>
+<td><code>&#x3C;T></code></td>
+<td><code>&#x3C;T></code></td>
+</tr>
+<tr>
+<td><code>FOR ALL a AND b</code></td>
+<td><code>forall a b.</code></td>
+<td><code>&#x3C;T, U></code></td>
+<td><code>&#x3C;T, U></code></td>
+</tr>
+</tbody>
+</table>
+<h2 id="related-pages">Related pages</h2>
+<ul>
+<li><a href="/l4/reference/functions/GIVEN#type-parameters">GIVEN and GIVETH</a>: type parameters of a defined function</li>
+<li><a href="/l4/reference/types/ASSUME">ASSUME</a>: declare a name without a definition</li>
+<li><a href="/l4/reference/types/DECLARE#type-expressions">DECLARE: Type expressions</a>: <code>FUNCTION FROM … TO …</code> and <code>TYPE</code></li>
+<li><a href="/l4/reference/libraries/prelude">prelude</a>: polymorphic standard functions</li>
+</ul>
+0:{"rsc":["$","$1","c",{"children":[["$","$L2",null,{"navSections":[{"title":"","items":[{"title":"Language Reference","href":"reference"},{"title":"Glossary","href":"reference/GLOSSARY"},{"title":"Cheat sheet","href":"reference/cheat-sheet"},{"title":"Types","href":"reference/types","children":[{"title":"DECLARE","href":"reference/types/DECLARE"},{"title":"ASSUME","href":"reference/types/ASSUME"},{"title":"FOR ALL","href":"reference/types/for-all"},{"title":"Coercions","href":"reference/types/coercions"}]},{"title":"Functions","href":"reference/functions","children":[{"title":"DECIDE","href":"reference/functions/DECIDE"},{"title":"GIVEN and GIVETH","href":"reference/functions/GIVEN"},{"title":"MEANS","href":"reference/functions/MEANS"},{"title":"LET and WHERE","href":"reference/functions/LET"},{"title":"YIELD","href":"reference/functions/YIELD"},{"title":"AKA","href":"reference/functions/AKA"}]},{"title":"Control flow","href":"reference/control-flow","children":[{"title":"IF","href":"reference/control-flow/IF"},{"title":"BRANCH","href":"reference/control-flow/BRANCH"},{"title":"CONSIDER","href":"reference/control-flow/CONSIDER"}]},{"title":"Operators","href":"reference/operators","children":[{"title":"AND, OR, NOT, IMPLIES","href":"reference/operators/logical"},{"title":"UNLESS","href":"reference/operators/UNLESS"},{"title":"Arithmetic","href":"reference/operators/arithmetic"},{"title":"Comparisons","href":"reference/operators/comparisons"}]},{"title":"Regulative rules","href":"reference/regulative","children":[{"title":"PARTY, MUST, MAY, SHANT","href":"reference/regulative/PARTY"},{"title":"Deadlines and consequences","href":"reference/regulative/consequences"},{"title":"BECAUSE","href":"reference/regulative/BECAUSE"},{"title":"DEONTIC","href":"reference/regulative/DEONTIC"},{"title":"EVENT","href":"reference/regulative/EVENT"}]},{"title":"Syntax and directives","href":"reference/syntax"},{"title":"Built-in functions","href":"reference/builtins","children":[{"title":"HTTP and JSON","href":"reference/builtins/http-json"}]},{"title":"Standard libraries","href":"reference/libraries","children":[{"title":"prelude","href":"reference/libraries/prelude"},{"title":"math","href":"reference/libraries/math"},{"title":"daydate","href":"reference/libraries/daydate"},{"title":"time","href":"reference/libraries/time"},{"title":"datetime","href":"reference/libraries/datetime"},{"title":"timezone","href":"reference/libraries/timezone"},{"title":"excel-date","href":"reference/libraries/excel-date"},{"title":"currency","href":"reference/libraries/currency"},{"title":"holdings","href":"reference/libraries/holdings"},{"title":"actus","href":"reference/libraries/actus"},{"title":"legal-persons","href":"reference/libraries/legal-persons"},{"title":"jurisdiction","href":"reference/libraries/jurisdiction"},{"title":"llm","href":"reference/libraries/llm"}]},{"title":"Error messages","href":"reference/errors"}]}],"toc":[],"htmlContent":"$3","pager":{"prev":"$0:rsc:props:children:0:props:navSections:0:items:3:children:1","next":"$0:rsc:props:children:0:props:navSections:0:items:3:children:3"}}],["$L4"],"$L5"]}],"isPartial":false,"staleTime":300,"varyParams":null,"buildId":"iJUXAyHcmcW99cMci3ei9"}
+4:["$","script","script-0",{"src":"/_next/static/chunks/0fl~me.qwn48c.js","async":true}]
+5:["$","$L6",null,{"children":["$","$7",null,{"name":"Next.MetadataOutlet","children":"$@8"}]}]
+8:null

@@ -1,0 +1,219 @@
+1:"$Sreact.fragment"
+2:I[90160,["/_next/static/chunks/0ypf.t599.7y6.js","/_next/static/chunks/0t2xr05rlu96l.js","/_next/static/chunks/0uxaa7wo_wmcw.js","/_next/static/chunks/0fl~me.qwn48c.js"],"default"]
+6:I[97367,["/_next/static/chunks/0ypf.t599.7y6.js","/_next/static/chunks/0t2xr05rlu96l.js"],"OutletBoundary"]
+7:"$Sreact.suspense"
+3:T1aed,<h1>Operators</h1>
+<p>Operators combine values into expressions: arithmetic, comparisons and logic.
+Most have a word form, which reads well in legal text, and a symbol form; the two mean the same and can be mixed. Words suit rules that lawyers read; symbols are shorter.</p>
+<h2 id="pages">Pages</h2>
+<ul>
+<li><a href="/l4/reference/operators/logical">AND, OR, NOT, IMPLIES</a>: logical operators and their truth table</li>
+<li><a href="/l4/reference/operators/UNLESS">UNLESS</a>: exceptions</li>
+<li><a href="/l4/reference/operators/arithmetic">Arithmetic</a>: <code>PLUS</code>, <code>MINUS</code>, <code>TIMES</code>, <code>DIVIDED BY</code>, <code>MODULO</code></li>
+<li><a href="/l4/reference/operators/comparisons">Comparisons</a>: <code>EQUALS</code>, <code>GREATER THAN</code>, <code>AT LEAST</code> and the others</li>
+</ul>
+<h2 id="word-and-symbol-forms">Word and symbol forms</h2>
+<table>
+<thead>
+<tr>
+<th>Word</th>
+<th>Symbol</th>
+<th>Word</th>
+<th>Symbol</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>PLUS</code></td>
+<td><code>+</code></td>
+<td><code>EQUALS</code></td>
+<td><code>=</code></td>
+</tr>
+<tr>
+<td><code>MINUS</code></td>
+<td><code>-</code></td>
+<td><code>GREATER THAN</code>, <code>ABOVE</code></td>
+<td><code>></code></td>
+</tr>
+<tr>
+<td><code>TIMES</code></td>
+<td><code>*</code></td>
+<td><code>LESS THAN</code>, <code>BELOW</code></td>
+<td><code>&#x3C;</code></td>
+</tr>
+<tr>
+<td><code>DIVIDED BY</code></td>
+<td><code>/</code></td>
+<td><code>AT LEAST</code></td>
+<td><code>>=</code></td>
+</tr>
+<tr>
+<td><code>MODULO</code></td>
+<td></td>
+<td><code>AT MOST</code></td>
+<td><code>&#x3C;=</code></td>
+</tr>
+<tr>
+<td><code>AND</code></td>
+<td><code>&#x26;&#x26;</code></td>
+<td><code>OR</code></td>
+<td><code>||</code></td>
+</tr>
+<tr>
+<td><code>IMPLIES</code></td>
+<td><code>=></code></td>
+<td><code>NOT</code>, <code>UNLESS</code></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Example file:</strong></p>
+<pre><code class="language-l4-file">-- Example: Textual vs symbolic operators
+-- All forms are equivalent and can be mixed
+
+age MEANS 25
+citizen MEANS TRUE
+
+-- All equivalent forms
+eligible1 MEANS (age > 18) AND (citizen EQUALS TRUE)
+eligible2 MEANS (age GREATER THAN 18) AND (citizen = TRUE)
+eligible3 MEANS (age > 18) &#x26;&#x26; (citizen EQUALS TRUE)
+
+#EVAL eligible1
+#EVAL eligible2
+#EVAL eligible3
+</code></pre>
+<h2 id="precedence">Precedence</h2>
+<p>From the tightest-binding to the loosest:</p>
+<table>
+<thead>
+<tr>
+<th>Level</th>
+<th>Operators</th>
+<th>Grouping</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>function application, <code>'s</code></td>
+<td></td>
+</tr>
+<tr>
+<td>2</td>
+<td><code>TIMES</code>, <code>DIVIDED BY</code>, <code>MODULO</code></td>
+<td>left to right</td>
+</tr>
+<tr>
+<td>3</td>
+<td><code>PLUS</code>, <code>MINUS</code></td>
+<td>left to right</td>
+</tr>
+<tr>
+<td>4</td>
+<td><code>FOLLOWED BY</code></td>
+<td>to the right</td>
+</tr>
+<tr>
+<td>5</td>
+<td><code>EQUALS</code>, <code>GREATER THAN</code>, <code>LESS THAN</code>, <code>AT LEAST</code>, <code>AT MOST</code> and their symbols</td>
+<td></td>
+</tr>
+<tr>
+<td>6</td>
+<td><code>AND</code>, <code>...</code>, <code>RAND</code></td>
+<td>to the right</td>
+</tr>
+<tr>
+<td>7</td>
+<td><code>OR</code>, <code>..</code>, <code>ROR</code></td>
+<td>to the right</td>
+</tr>
+<tr>
+<td>8</td>
+<td><code>IMPLIES</code>, <code>UNLESS</code></td>
+<td>to the right</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li><code>2 + 3 * 4</code> is <code>14</code>, and <code>10 - 4 - 3</code> is <code>3</code>.</li>
+<li><code>NOT</code> is not in the table: it applies to everything after it on its line. See <a href="/l4/reference/operators/logical#not">NOT</a>.</li>
+<li>Parentheses override precedence: <code>(2 + 3) * 4</code> is <code>20</code>.</li>
+<li>When an expression spans several lines, an operator written further left than the lines above it applies to all of them together. See <a href="/l4/reference/operators/logical#several-lines">Several lines</a>.</li>
+</ul>
+<p><strong>Example files:</strong></p>
+<pre><code class="language-l4-file">-- Example: Operator precedence
+-- Demonstrates how operators are evaluated in order
+
+x MEANS 3
+y MEANS 4
+z MEANS 5
+
+-- Multiplication before addition
+#EVAL x PLUS y TIMES z
+-- Evaluates as: 3 + (4 * 5) = 23
+
+-- Use parentheses for clarity
+#EVAL (x PLUS y) TIMES z
+-- Evaluates as: 7 * 5 = 35
+</code></pre>
+<p>,</p>
+<pre><code class="language-l4-file">-- Example: Operator associativity
+-- Demonstrates left and right associative operators
+
+-- Left-associative: subtraction
+a MEANS 10
+b MEANS 3
+c MEANS 2
+
+#EVAL a MINUS b MINUS c
+-- Evaluates as: (10 - 3) - 2 = 5
+
+-- Right-associative: list cons
+#EVAL 1 FOLLOWED BY 2 FOLLOWED BY 3 FOLLOWED BY EMPTY
+-- Evaluates as: 1 FOLLOWED BY (2 FOLLOWED BY (3 FOLLOWED BY EMPTY))
+</code></pre>
+<h2 id="asyndetic-and-and-or">Asyndetic AND and OR</h2>
+<p>Legal text often lists conditions with punctuation instead of "and" or "or". L4 has two such forms:</p>
+<ul>
+<li><code>...</code> (three dots) means <code>AND</code>: <code>`is a citizen` ... `is over 18` ... `has ID`</code></li>
+<li><code>..</code> (two dots) means <code>OR</code>: <code>approved .. pending .. `under review`</code></li>
+</ul>
+<p>They have the same precedence as <code>AND</code> and <code>OR</code>.</p>
+<p><strong>Example file:</strong></p>
+<pre><code class="language-l4-file">-- Example: Asyndetic operators (... and ..)
+-- Implicit AND and OR using punctuation
+
+citizen MEANS TRUE
+over18 MEANS TRUE
+`has ID` MEANS TRUE
+
+approved MEANS TRUE
+pending MEANS FALSE
+review MEANS FALSE
+
+-- Ellipsis (...) = implicit AND
+eligible1 MEANS citizen ... over18 ... `has ID`
+-- Equivalent to: (citizen AND over18 AND has ID)
+
+-- Double dot (..) = implicit OR
+`in progress` MEANS approved .. pending .. review
+-- Equivalent to: (approved OR pending OR review)
+
+#EVAL eligible1
+#EVAL `in progress`
+</code></pre>
+<h2 id="other-operators">Other operators</h2>
+<ul>
+<li><code>FOLLOWED BY</code> adds an element to the front of a list: <code>1 FOLLOWED BY LIST 2, 3</code> is <code>LIST 1, 2, 3</code>.</li>
+<li><code>'s</code> reads a field of a record: <code>`the buyer`'s age</code>. See <a href="/l4/reference/syntax#genitive">Syntax and directives: Genitive</a>.</li>
+<li><code>%</code> after a number divides it by 100: <code>5%</code> is <code>0.05</code>.</li>
+<li><code>AS STRING</code> converts a value to text; see <a href="/l4/reference/types/coercions">Coercions</a>.</li>
+<li><code>CONCAT</code> joins text: <code>CONCAT "a", "b", "c"</code>. The <a href="/l4/reference/libraries/prelude">prelude</a> adds <code>APPEND</code> (<code>"a" APPEND "b"</code>); see <a href="/l4/reference/builtins">Built-in functions</a>.</li>
+<li><code>RAND</code> and <code>ROR</code> combine obligations; see <a href="/l4/reference/regulative/consequences">Deadlines and consequences</a>.</li>
+</ul>
+0:{"rsc":["$","$1","c",{"children":[["$","$L2",null,{"navSections":[{"title":"","items":[{"title":"Language Reference","href":"reference"},{"title":"Glossary","href":"reference/GLOSSARY"},{"title":"Cheat sheet","href":"reference/cheat-sheet"},{"title":"Types","href":"reference/types","children":[{"title":"DECLARE","href":"reference/types/DECLARE"},{"title":"ASSUME","href":"reference/types/ASSUME"},{"title":"FOR ALL","href":"reference/types/for-all"},{"title":"Coercions","href":"reference/types/coercions"}]},{"title":"Functions","href":"reference/functions","children":[{"title":"DECIDE","href":"reference/functions/DECIDE"},{"title":"GIVEN and GIVETH","href":"reference/functions/GIVEN"},{"title":"MEANS","href":"reference/functions/MEANS"},{"title":"LET and WHERE","href":"reference/functions/LET"},{"title":"YIELD","href":"reference/functions/YIELD"},{"title":"AKA","href":"reference/functions/AKA"}]},{"title":"Control flow","href":"reference/control-flow","children":[{"title":"IF","href":"reference/control-flow/IF"},{"title":"BRANCH","href":"reference/control-flow/BRANCH"},{"title":"CONSIDER","href":"reference/control-flow/CONSIDER"}]},{"title":"Operators","href":"reference/operators","children":[{"title":"AND, OR, NOT, IMPLIES","href":"reference/operators/logical"},{"title":"UNLESS","href":"reference/operators/UNLESS"},{"title":"Arithmetic","href":"reference/operators/arithmetic"},{"title":"Comparisons","href":"reference/operators/comparisons"}]},{"title":"Regulative rules","href":"reference/regulative","children":[{"title":"PARTY, MUST, MAY, SHANT","href":"reference/regulative/PARTY"},{"title":"Deadlines and consequences","href":"reference/regulative/consequences"},{"title":"BECAUSE","href":"reference/regulative/BECAUSE"},{"title":"DEONTIC","href":"reference/regulative/DEONTIC"},{"title":"EVENT","href":"reference/regulative/EVENT"}]},{"title":"Syntax and directives","href":"reference/syntax"},{"title":"Built-in functions","href":"reference/builtins","children":[{"title":"HTTP and JSON","href":"reference/builtins/http-json"}]},{"title":"Standard libraries","href":"reference/libraries","children":[{"title":"prelude","href":"reference/libraries/prelude"},{"title":"math","href":"reference/libraries/math"},{"title":"daydate","href":"reference/libraries/daydate"},{"title":"time","href":"reference/libraries/time"},{"title":"datetime","href":"reference/libraries/datetime"},{"title":"timezone","href":"reference/libraries/timezone"},{"title":"excel-date","href":"reference/libraries/excel-date"},{"title":"currency","href":"reference/libraries/currency"},{"title":"holdings","href":"reference/libraries/holdings"},{"title":"actus","href":"reference/libraries/actus"},{"title":"legal-persons","href":"reference/libraries/legal-persons"},{"title":"jurisdiction","href":"reference/libraries/jurisdiction"},{"title":"llm","href":"reference/libraries/llm"}]},{"title":"Error messages","href":"reference/errors"}]}],"toc":[],"htmlContent":"$3","pager":{"prev":"$0:rsc:props:children:0:props:navSections:0:items:5:children:2","next":"$0:rsc:props:children:0:props:navSections:0:items:6:children:0"}}],["$L4"],"$L5"]}],"isPartial":false,"staleTime":300,"varyParams":null,"buildId":"iJUXAyHcmcW99cMci3ei9"}
+4:["$","script","script-0",{"src":"/_next/static/chunks/0fl~me.qwn48c.js","async":true}]
+5:["$","$L6",null,{"children":["$","$7",null,{"name":"Next.MetadataOutlet","children":"$@8"}]}]
+8:null

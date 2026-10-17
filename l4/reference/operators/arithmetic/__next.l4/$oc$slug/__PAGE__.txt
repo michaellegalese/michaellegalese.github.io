@@ -1,0 +1,167 @@
+1:"$Sreact.fragment"
+2:I[90160,["/_next/static/chunks/0ypf.t599.7y6.js","/_next/static/chunks/0t2xr05rlu96l.js","/_next/static/chunks/0uxaa7wo_wmcw.js","/_next/static/chunks/0fl~me.qwn48c.js"],"default"]
+6:I[97367,["/_next/static/chunks/0ypf.t599.7y6.js","/_next/static/chunks/0t2xr05rlu96l.js"],"OutletBoundary"]
+7:"$Sreact.suspense"
+3:T10d7,<h1>Arithmetic</h1>
+<p>The arithmetic operators work on <code>NUMBER</code>. Each has a word form and a symbol form, except <code>MODULO</code>, which has only the word.</p>
+<table>
+<thead>
+<tr>
+<th>Word</th>
+<th>Symbol</th>
+<th>Operation</th>
+<th>Example</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>PLUS</code></td>
+<td><code>+</code></td>
+<td>addition</td>
+<td><code>5 PLUS 3</code> is <code>8</code></td>
+</tr>
+<tr>
+<td><code>MINUS</code></td>
+<td><code>-</code></td>
+<td>subtraction</td>
+<td><code>10 - 4</code> is <code>6</code></td>
+</tr>
+<tr>
+<td><code>TIMES</code></td>
+<td><code>*</code></td>
+<td>multiplication</td>
+<td><code>6 TIMES 7</code> is <code>42</code></td>
+</tr>
+<tr>
+<td><code>DIVIDED BY</code></td>
+<td><code>/</code></td>
+<td>division</td>
+<td><code>10 / 4</code> is <code>2.5</code></td>
+</tr>
+<tr>
+<td><code>MODULO</code></td>
+<td></td>
+<td>remainder after division</td>
+<td><code>17 MODULO 5</code> is <code>2</code></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Example file:</strong></p>
+<pre><code class="language-l4-file">-- Arithmetic keyword examples
+
+-- PLUS (Addition)
+
+#EVAL 5 PLUS 3
+#EVAL 5 + 3
+#EVAL 10.5 + 2.5
+#EVAL (-3) + 8
+
+-- MINUS (Subtraction)
+
+#EVAL 10 MINUS 4
+#EVAL 10 - 4
+#EVAL 5 - 8
+#EVAL 0 - 5
+
+-- TIMES (Multiplication)
+
+#EVAL 6 TIMES 7
+#EVAL 6 * 7
+#EVAL 3.14 * 2
+#EVAL (-3) * 4
+
+-- DIVIDED BY (Division)
+
+#EVAL 15 DIVIDED BY 3
+#EVAL 15 / 3
+#EVAL 10 / 4
+#EVAL 7 / 2
+
+-- MODULO (Remainder)
+
+#EVAL 17 MODULO 5
+#EVAL 10 MODULO 3
+#EVAL 8 MODULO 2
+
+-- Operator Precedence
+
+-- Multiplication before addition
+#EVAL 2 + 3 * 4
+
+-- Parentheses override precedence
+#EVAL (2 + 3) * 4
+
+-- Division before subtraction
+#EVAL 10 - 4 / 2
+
+-- With parentheses
+#EVAL (10 - 4) / 2
+
+-- Complex Expressions
+
+-- Circle area: pi * r^2
+GIVEN r IS A NUMBER
+`area of a circle` r MEANS 3.14159 TIMES r TIMES r
+
+#EVAL `area of a circle` 5
+
+-- Quadratic formula discriminant: b^2 - 4ac
+GIVEN a IS A NUMBER
+      b IS A NUMBER
+      c IS A NUMBER
+discriminant a b c MEANS
+  b TIMES b MINUS 4 TIMES a TIMES c
+
+#EVAL discriminant 1 5 6
+
+-- Practical Examples
+
+-- Calculate tax
+GIVEN price IS A NUMBER
+      `tax rate` IS A NUMBER
+`tax on` price `tax rate` MEANS
+  price TIMES `tax rate` / 100
+
+#EVAL `tax on` 100 8.5
+
+-- Calculate discount
+GIVEN `original price` IS A NUMBER
+      `discount percent` IS A NUMBER
+`discounted price` `original price` `discount percent` MEANS
+  `original price` MINUS (`original price` TIMES `discount percent` / 100)
+
+#EVAL `discounted price` 200 25
+
+-- Combining with Comparisons
+
+ASSUME income IS A NUMBER
+ASSUME expenses IS A NUMBER
+
+DECIDE profit IS income MINUS expenses
+DECIDE `is profitable` IS profit GREATER THAN 0
+
+#CHECK `is profitable`
+</code></pre>
+<h2 id="exact-numbers">Exact numbers</h2>
+<p>Arithmetic is exact: <code>(1 / 3) * 3 = 1</code> and <code>0.1 + 0.2 = 0.3</code> are both TRUE.
+A result that has no finite decimal form, such as <code>1 / 3</code>, is shown rounded (<code>0.3333333333333333</code>), but the value itself is exact.</p>
+<p><code>MODULO</code> works on whole numbers only: <code>7 MODULO 2.5</code> stops evaluation with an error.
+A negative number in an expression needs parentheses: <code>(-3) * 4</code>.</p>
+<h2 id="precedence">Precedence</h2>
+<p><code>TIMES</code>, <code>DIVIDED BY</code> and <code>MODULO</code> bind more tightly than <code>PLUS</code> and <code>MINUS</code>, and operators of the same level are applied from left to right:</p>
+<pre><code class="language-l4">#EVAL 2 + 3 * 4        -- 14
+#EVAL (2 + 3) * 4      -- 20
+#EVAL 10 - 4 - 3       -- 3
+</code></pre>
+<p>The full table, with comparisons and logical operators, is in <a href="/l4/reference/operators#precedence">Operators: Precedence</a>.</p>
+<h2 id="more-functions">More functions</h2>
+<p>Rounding (<code>ROUND</code>, <code>FLOOR</code>, <code>CEILING</code>, <code>TRUNC</code>) and functions such as <code>SQRT</code> are <a href="/l4/reference/builtins">built-in functions</a>. The <a href="/l4/reference/libraries/math">math</a> library adds more.</p>
+<h2 id="related-pages">Related pages</h2>
+<ul>
+<li><a href="/l4/reference/operators/comparisons">Comparisons</a></li>
+<li><a href="/l4/reference/types">Types</a>: <code>NUMBER</code></li>
+</ul>
+0:{"rsc":["$","$1","c",{"children":[["$","$L2",null,{"navSections":[{"title":"","items":[{"title":"Language Reference","href":"reference"},{"title":"Glossary","href":"reference/GLOSSARY"},{"title":"Cheat sheet","href":"reference/cheat-sheet"},{"title":"Types","href":"reference/types","children":[{"title":"DECLARE","href":"reference/types/DECLARE"},{"title":"ASSUME","href":"reference/types/ASSUME"},{"title":"FOR ALL","href":"reference/types/for-all"},{"title":"Coercions","href":"reference/types/coercions"}]},{"title":"Functions","href":"reference/functions","children":[{"title":"DECIDE","href":"reference/functions/DECIDE"},{"title":"GIVEN and GIVETH","href":"reference/functions/GIVEN"},{"title":"MEANS","href":"reference/functions/MEANS"},{"title":"LET and WHERE","href":"reference/functions/LET"},{"title":"YIELD","href":"reference/functions/YIELD"},{"title":"AKA","href":"reference/functions/AKA"}]},{"title":"Control flow","href":"reference/control-flow","children":[{"title":"IF","href":"reference/control-flow/IF"},{"title":"BRANCH","href":"reference/control-flow/BRANCH"},{"title":"CONSIDER","href":"reference/control-flow/CONSIDER"}]},{"title":"Operators","href":"reference/operators","children":[{"title":"AND, OR, NOT, IMPLIES","href":"reference/operators/logical"},{"title":"UNLESS","href":"reference/operators/UNLESS"},{"title":"Arithmetic","href":"reference/operators/arithmetic"},{"title":"Comparisons","href":"reference/operators/comparisons"}]},{"title":"Regulative rules","href":"reference/regulative","children":[{"title":"PARTY, MUST, MAY, SHANT","href":"reference/regulative/PARTY"},{"title":"Deadlines and consequences","href":"reference/regulative/consequences"},{"title":"BECAUSE","href":"reference/regulative/BECAUSE"},{"title":"DEONTIC","href":"reference/regulative/DEONTIC"},{"title":"EVENT","href":"reference/regulative/EVENT"}]},{"title":"Syntax and directives","href":"reference/syntax"},{"title":"Built-in functions","href":"reference/builtins","children":[{"title":"HTTP and JSON","href":"reference/builtins/http-json"}]},{"title":"Standard libraries","href":"reference/libraries","children":[{"title":"prelude","href":"reference/libraries/prelude"},{"title":"math","href":"reference/libraries/math"},{"title":"daydate","href":"reference/libraries/daydate"},{"title":"time","href":"reference/libraries/time"},{"title":"datetime","href":"reference/libraries/datetime"},{"title":"timezone","href":"reference/libraries/timezone"},{"title":"excel-date","href":"reference/libraries/excel-date"},{"title":"currency","href":"reference/libraries/currency"},{"title":"holdings","href":"reference/libraries/holdings"},{"title":"actus","href":"reference/libraries/actus"},{"title":"legal-persons","href":"reference/libraries/legal-persons"},{"title":"jurisdiction","href":"reference/libraries/jurisdiction"},{"title":"llm","href":"reference/libraries/llm"}]},{"title":"Error messages","href":"reference/errors"}]}],"toc":[],"htmlContent":"$3","pager":{"prev":"$0:rsc:props:children:0:props:navSections:0:items:6:children:1","next":"$0:rsc:props:children:0:props:navSections:0:items:6:children:3"}}],["$L4"],"$L5"]}],"isPartial":false,"staleTime":300,"varyParams":null,"buildId":"iJUXAyHcmcW99cMci3ei9"}
+4:["$","script","script-0",{"src":"/_next/static/chunks/0fl~me.qwn48c.js","async":true}]
+5:["$","$L6",null,{"children":["$","$7",null,{"name":"Next.MetadataOutlet","children":"$@8"}]}]
+8:null

@@ -1,0 +1,170 @@
+1:"$Sreact.fragment"
+2:I[90160,["/_next/static/chunks/0ypf.t599.7y6.js","/_next/static/chunks/0t2xr05rlu96l.js","/_next/static/chunks/0uxaa7wo_wmcw.js","/_next/static/chunks/0fl~me.qwn48c.js"],"default"]
+6:I[97367,["/_next/static/chunks/0ypf.t599.7y6.js","/_next/static/chunks/0t2xr05rlu96l.js"],"OutletBoundary"]
+7:"$Sreact.suspense"
+3:T1140,<h1>math</h1>
+<p>Exponentials, logarithms, square roots and trigonometry. Import it with <code>IMPORT math</code>.</p>
+<p>The functions are lowercase wrappers around the <a href="/l4/reference/builtins#numbers">built-in</a> <code>LN</code>, <code>SQRT</code>, <code>ASIN</code> and so on. Where the built-in stops with an error on bad input, the wrapper gives <code>NOTHING</code>, so the result is a <code>MAYBE NUMBER</code>.</p>
+<p><strong>Example:</strong></p>
+<pre><code class="language-l4-file">-- Math Example: Mathematical functions with safe error handling
+IMPORT math
+
+-- Euler's constant
+#EVAL EULER  -- 2.718281828459045
+
+-- Exponential function
+DECIDE `exponential growth` IS exp 2
+#EVAL `exponential growth`  -- e^2 ≈ 7.389
+
+-- Safe logarithms (return MAYBE to handle domain errors)
+DECIDE `valid natural log` IS ln 10
+#EVAL `valid natural log`  -- JUST 2.302...
+
+DECIDE `invalid natural log` IS ln (0 MINUS 5)
+#EVAL `invalid natural log`  -- NOTHING (negative input)
+
+DECIDE `base 10 logarithm` IS log10 100
+#EVAL `base 10 logarithm`  -- JUST 2
+
+-- Safe square root
+DECIDE `valid square root` IS sqrt 16
+#EVAL `valid square root`  -- JUST 4
+
+DECIDE `invalid square root` IS sqrt (0 MINUS 4)
+#EVAL `invalid square root`  -- NOTHING (negative input)
+
+-- Absolute value
+DECIDE `absolute of positive` IS absNumber 42
+#EVAL `absolute of positive`  -- 42
+
+DECIDE `absolute of negative` IS absNumber (0 MINUS 42)
+#EVAL `absolute of negative`  -- 42
+
+-- Trigonometric functions (angles in radians)
+DECIDE `sine of zero` IS sin 0
+#EVAL `sine of zero`  -- JUST 0
+
+DECIDE `cosine of zero` IS cos 0
+#EVAL `cosine of zero`  -- JUST 1
+
+-- Tangent with asymptote protection
+DECIDE `tangent of zero` IS tan 0
+#EVAL `tangent of zero`  -- JUST 0
+
+-- Inverse trig with domain checking
+DECIDE `valid arcsine` IS asin 0.5
+#EVAL `valid arcsine`  -- JUST 0.523... (π/6)
+
+DECIDE `invalid arcsine` IS asin 2
+#EVAL `invalid arcsine`  -- NOTHING (|x| > 1)
+
+-- Using fromMaybe to extract with default
+DECIDE `safe extracted value` IS fromMaybe 0 (sqrt 25)
+#EVAL `safe extracted value`  -- 5
+
+DECIDE `value with default` IS fromMaybe 0 (sqrt (0 MINUS 1))
+#EVAL `value with default`  -- 0 (used default)
+</code></pre>
+<h2 id="constants">Constants</h2>
+<table>
+<thead>
+<tr>
+<th>Constant</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>EULER</code></td>
+<td>Euler's number, 2.718281828459045</td>
+</tr>
+<tr>
+<td><code>TAN_EPSILON</code></td>
+<td>0.000000001, the threshold below which <code>tan</code> treats the cosine as zero</td>
+</tr>
+</tbody>
+</table>
+<h2 id="functions">Functions</h2>
+<table>
+<thead>
+<tr>
+<th>Function</th>
+<th>Input</th>
+<th>Gives</th>
+<th>What it does</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>exp</code></td>
+<td><code>x</code>: NUMBER</td>
+<td>NUMBER</td>
+<td>e to the power <code>x</code></td>
+</tr>
+<tr>
+<td><code>ln</code></td>
+<td><code>x</code>: NUMBER</td>
+<td>MAYBE NUMBER</td>
+<td>Natural logarithm; <code>NOTHING</code> if <code>x</code> is 0 or less</td>
+</tr>
+<tr>
+<td><code>log10</code></td>
+<td><code>x</code>: NUMBER</td>
+<td>MAYBE NUMBER</td>
+<td>Base-10 logarithm; <code>NOTHING</code> if <code>x</code> is 0 or less</td>
+</tr>
+<tr>
+<td><code>sqrt</code></td>
+<td><code>x</code>: NUMBER</td>
+<td>MAYBE NUMBER</td>
+<td>Square root; <code>NOTHING</code> if <code>x</code> is negative</td>
+</tr>
+<tr>
+<td><code>absNumber</code></td>
+<td><code>x</code>: NUMBER</td>
+<td>NUMBER</td>
+<td>Absolute value</td>
+</tr>
+<tr>
+<td><code>sin</code></td>
+<td><code>x</code>: NUMBER</td>
+<td>MAYBE NUMBER</td>
+<td>Sine; always <code>JUST</code></td>
+</tr>
+<tr>
+<td><code>cos</code></td>
+<td><code>x</code>: NUMBER</td>
+<td>MAYBE NUMBER</td>
+<td>Cosine; always <code>JUST</code></td>
+</tr>
+<tr>
+<td><code>tan</code></td>
+<td><code>x</code>: NUMBER</td>
+<td>MAYBE NUMBER</td>
+<td>Tangent; <code>NOTHING</code> where the cosine is almost zero</td>
+</tr>
+<tr>
+<td><code>asin</code></td>
+<td><code>x</code>: NUMBER</td>
+<td>MAYBE NUMBER</td>
+<td>Arc sine; <code>NOTHING</code> outside -1 to 1</td>
+</tr>
+<tr>
+<td><code>acos</code></td>
+<td><code>x</code>: NUMBER</td>
+<td>MAYBE NUMBER</td>
+<td>Arc cosine; <code>NOTHING</code> outside -1 to 1</td>
+</tr>
+<tr>
+<td><code>atan</code></td>
+<td><code>x</code>: NUMBER</td>
+<td>MAYBE NUMBER</td>
+<td>Arc tangent; always <code>JUST</code></td>
+</tr>
+</tbody>
+</table>
+<p>Angles are in radians.</p>
+0:{"rsc":["$","$1","c",{"children":[["$","$L2",null,{"navSections":[{"title":"","items":[{"title":"Language Reference","href":"reference"},{"title":"Glossary","href":"reference/GLOSSARY"},{"title":"Cheat sheet","href":"reference/cheat-sheet"},{"title":"Types","href":"reference/types","children":[{"title":"DECLARE","href":"reference/types/DECLARE"},{"title":"ASSUME","href":"reference/types/ASSUME"},{"title":"FOR ALL","href":"reference/types/for-all"},{"title":"Coercions","href":"reference/types/coercions"}]},{"title":"Functions","href":"reference/functions","children":[{"title":"DECIDE","href":"reference/functions/DECIDE"},{"title":"GIVEN and GIVETH","href":"reference/functions/GIVEN"},{"title":"MEANS","href":"reference/functions/MEANS"},{"title":"LET and WHERE","href":"reference/functions/LET"},{"title":"YIELD","href":"reference/functions/YIELD"},{"title":"AKA","href":"reference/functions/AKA"}]},{"title":"Control flow","href":"reference/control-flow","children":[{"title":"IF","href":"reference/control-flow/IF"},{"title":"BRANCH","href":"reference/control-flow/BRANCH"},{"title":"CONSIDER","href":"reference/control-flow/CONSIDER"}]},{"title":"Operators","href":"reference/operators","children":[{"title":"AND, OR, NOT, IMPLIES","href":"reference/operators/logical"},{"title":"UNLESS","href":"reference/operators/UNLESS"},{"title":"Arithmetic","href":"reference/operators/arithmetic"},{"title":"Comparisons","href":"reference/operators/comparisons"}]},{"title":"Regulative rules","href":"reference/regulative","children":[{"title":"PARTY, MUST, MAY, SHANT","href":"reference/regulative/PARTY"},{"title":"Deadlines and consequences","href":"reference/regulative/consequences"},{"title":"BECAUSE","href":"reference/regulative/BECAUSE"},{"title":"DEONTIC","href":"reference/regulative/DEONTIC"},{"title":"EVENT","href":"reference/regulative/EVENT"}]},{"title":"Syntax and directives","href":"reference/syntax"},{"title":"Built-in functions","href":"reference/builtins","children":[{"title":"HTTP and JSON","href":"reference/builtins/http-json"}]},{"title":"Standard libraries","href":"reference/libraries","children":[{"title":"prelude","href":"reference/libraries/prelude"},{"title":"math","href":"reference/libraries/math"},{"title":"daydate","href":"reference/libraries/daydate"},{"title":"time","href":"reference/libraries/time"},{"title":"datetime","href":"reference/libraries/datetime"},{"title":"timezone","href":"reference/libraries/timezone"},{"title":"excel-date","href":"reference/libraries/excel-date"},{"title":"currency","href":"reference/libraries/currency"},{"title":"holdings","href":"reference/libraries/holdings"},{"title":"actus","href":"reference/libraries/actus"},{"title":"legal-persons","href":"reference/libraries/legal-persons"},{"title":"jurisdiction","href":"reference/libraries/jurisdiction"},{"title":"llm","href":"reference/libraries/llm"}]},{"title":"Error messages","href":"reference/errors"}]}],"toc":[],"htmlContent":"$3","pager":{"prev":"$0:rsc:props:children:0:props:navSections:0:items:10:children:0","next":"$0:rsc:props:children:0:props:navSections:0:items:10:children:2"}}],["$L4"],"$L5"]}],"isPartial":false,"staleTime":300,"varyParams":null,"buildId":"iJUXAyHcmcW99cMci3ei9"}
+4:["$","script","script-0",{"src":"/_next/static/chunks/0fl~me.qwn48c.js","async":true}]
+5:["$","$L6",null,{"children":["$","$7",null,{"name":"Next.MetadataOutlet","children":"$@8"}]}]
+8:null

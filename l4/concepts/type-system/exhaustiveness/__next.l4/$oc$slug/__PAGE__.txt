@@ -1,0 +1,189 @@
+1:"$Sreact.fragment"
+2:I[90160,["/_next/static/chunks/0ypf.t599.7y6.js","/_next/static/chunks/0t2xr05rlu96l.js","/_next/static/chunks/0uxaa7wo_wmcw.js","/_next/static/chunks/0fl~me.qwn48c.js"],"default"]
+6:I[97367,["/_next/static/chunks/0ypf.t599.7y6.js","/_next/static/chunks/0t2xr05rlu96l.js"],"OutletBoundary"]
+7:"$Sreact.suspense"
+3:T357c,<h1>Exhaustiveness</h1>
+<p>Totality as a legal-safety property: every case of a determination handled.</p>
+<hr>
+<h2 id="the-legal-problem">The Legal Problem</h2>
+<p>A legal determination over a closed category must have an answer for <strong>every</strong> member of the category. A visa decision procedure that handles "granted" and "refused" but not "withdrawn" is not a smaller version of the right procedure — it is a procedure with a hole in it. In software, the hole surfaces as an unhandled case at the worst possible moment: on the first real input that falls into the forgotten category.</p>
+<p>Law is unusually exposed to this failure mode, for two reasons:</p>
+<ol>
+<li><strong>Legal categories are closed enumerations.</strong> Statutes define exhaustive lists ("'person' means (a)…, (b)…, or (c)…"), so "cover every case" is a well-defined, checkable demand. See <a href="/l4/concepts/type-system/algebraic-types">Types as legal categories</a> on why these lists become sum types.</li>
+<li><strong>Legal categories change.</strong> Amendments add variants: a new visa class, a new entity type, a new ground of refusal. Every determination written against the old category is now potentially incomplete — and nothing about its text looks wrong.</li>
+</ol>
+<p><strong>Exhaustiveness checking</strong> (totality over the scrutinised type) turns both problems into compiler diagnostics.</p>
+<hr>
+<h2 id="what-the-checker-does">What the Checker Does</h2>
+<p>When a <code>CONSIDER</code> expression scrutinises a value of an algebraic type, L4's type checker compares the branches against the type's full constructor set. A complete match is silent:</p>
+<pre><code class="language-l4">DECLARE `visa status` IS ONE OF
+    Granted
+    Refused HAS reason IS A STRING
+    Withdrawn
+
+GIVEN status IS A `visa status`
+GIVETH A STRING
+`outcome letter` MEANS
+    CONSIDER status
+    WHEN Granted THEN "Your visa has been granted."
+    WHEN Refused r THEN r
+    WHEN Withdrawn THEN "Your application was withdrawn."
+</code></pre>
+<h3 id="missing-branches">Missing branches</h3>
+<p>If a constructor is not covered, the checker emits a warning listing exactly what still needs to be handled:</p>
+<pre><code class="language-l4">GIVEN status IS A `visa status`
+GIVETH A STRING
+`incomplete letter` MEANS
+    CONSIDER status
+    WHEN Granted THEN "Your visa has been granted."
+    WHEN Refused r THEN r
+</code></pre>
+<pre><code>Warning: The following branches still need to be considered:
+
+  WHEN Withdrawn THEN
+</code></pre>
+<h3 id="redundant-branches">Redundant branches</h3>
+<p>The dual check also fires: a branch that can never be reached (for example, a second <code>WHEN Granted</code> after the first) is flagged:</p>
+<pre><code>Warning: The following CONSIDER branch is redundant:
+
+  WHEN Granted THEN "duplicate branch - unreachable"
+</code></pre>
+<p>Redundancy matters legally too — an unreachable branch is usually a sign that the author <em>believed</em> some case was being handled there, when in fact an earlier branch is absorbing it.</p>
+<h3 id="rules-written-as-clauses">Rules written as clauses</h3>
+<p>A rule written as several <code>DECIDE</code> clauses, one per case (see <a href="/l4/reference/functions/DECIDE#several-clauses">DECIDE</a>), is checked the same way, as one group. The warning lists the clauses still needed, ready to paste in and finish:</p>
+<pre><code>This multi-clause definition does not cover all cases. The following clauses are still needed:
+
+  DECIDE `price` Blue IS
+</code></pre>
+<p>L4 tries clauses from the top, so a clause below one that matches every input is never reached. That is warned about too.</p>
+<h3 id="the-amendment-scenario">The amendment scenario</h3>
+<p>The payoff comes when a category grows. Add a fourth variant to <code>`visa status`</code> and every checked <code>CONSIDER</code> site that scrutinises it — every letter template, every fee rule, every appeal-rights determination — immediately warns that the new case "still needs to be considered". The legislature's amendment becomes a checklist of code sites to revisit. This is the property flattened boolean encodings cannot offer: a bundle of independent <code>IF</code> tests has no notion of "covering" a category, so nothing notices when the category changes.</p>
+<hr>
+<h2 id="caveats-and-escape-hatches">Caveats and Escape Hatches</h2>
+<h3 id="numbers-text-and-dates">Numbers, text and dates</h3>
+<p>The check works by listing constructors, and a <code>NUMBER</code>, a <code>STRING</code> or a <code>DATE</code> has none to list: its values never run out. A <code>WHEN 0</code> or a <code>WHEN "Saturday"</code> matches one value, so the only way to complete such a match is a branch that matches everything. In a <code>CONSIDER</code> that is <code>OTHERWISE</code>; in a rule written as clauses it is a clause written with the input's <code>GIVEN</code> name. The warning suggests exactly that:</p>
+<pre><code class="language-l4">GIVEN n IS A NUMBER
+GIVETH A STRING
+`describe count` MEANS
+    CONSIDER n
+    WHEN 0 THEN "none"
+    WHEN 1 THEN "one"
+    -- warns: OTHERWISE
+
+GIVEN n IS A NUMBER
+GIVETH A STRING
+DECIDE `describe number` 0 IS "none"
+DECIDE `describe number` 1 IS "one"
+-- warns: DECIDE `describe number` n IS
+</code></pre>
+<p>The other inputs of a rule are still checked. Over <code>DECLARE Colour IS ONE OF Red, Green, Blue</code>, the clauses <code>DECIDE charge Red 0 IS 0</code>, <code>DECIDE charge Red n IS n</code> and <code>DECIDE charge Green n IS n TIMES 2</code> draw a warning for <code>DECIDE `charge` Blue n IS</code>: the clause for <code>0</code> covers one value, the clause below it the rest of <code>Red</code>, and <code>Blue</code> is still missing.</p>
+<p>A few more details:</p>
+<ul>
+<li><code>EXACTLY</code> of a number, a piece of text or a value of an enumeration is read as that value. An <code>EXACTLY</code> of anything else cannot be counted: over a number, text or date it covers nothing as far as the check knows, and over an enumeration it stops the check for that match.</li>
+<li>In a <code>CONSIDER</code>, a number repeated in another spelling (<code>WHEN 1.0</code> after <code>WHEN 1</code>) is reported as a redundant branch. A repeated value in a rule written as clauses is not reported.</li>
+<li>A type declared as another name for a number, text or date (<code>DECLARE Age IS A NUMBER</code>) is treated like that type.</li>
+</ul>
+<p>The practical consequence: when a statutory category is modelled as a <code>STRING</code> (status codes, category letters), the check can only ask for an <code>OTHERWISE</code>; it cannot tell you which categories you left out. Declare an enumeration instead. It is precisely what makes the completeness of your determinations checkable.</p>
+<h3 id="booleans-maybe-either-and-lists">Booleans, MAYBE, EITHER and lists</h3>
+<p><code>BOOLEAN</code> is checked like an enumeration of <code>TRUE</code> and <code>FALSE</code>: a <code>CONSIDER</code> with only <code>WHEN TRUE</code> warns about the missing <code>WHEN FALSE</code>.</p>
+<p><code>MAYBE</code>, <code>EITHER</code> and lists are checked only inside. Their own constructors are not listed, so a missing <code>WHEN NOTHING</code>, <code>WHEN RIGHT</code> or <code>WHEN EMPTY</code> is not reported. What they hold is checked: <code>WHEN JUST Basic</code> over a <code>MAYBE Tier</code> asks for <code>WHEN JUST Premium</code> and <code>WHEN JUST Gold</code>. A rule written as clauses goes less far. Where a missing case could only be found by telling such values apart, it gets no warning: over a <code>MAYBE Colour</code>, the clauses <code>DECIDE f (JUST Red) IS 1</code> and <code>DECIDE f NOTHING IS 0</code> draw none, while the same two branches in a <code>CONSIDER</code> ask for <code>WHEN JUST Green</code> and <code>WHEN JUST Blue</code>.</p>
+<h3 id="types-from-another-file">Types from another file</h3>
+<p>An enumeration declared in another file and brought in with <code>IMPORT</code> is not analysed. A <code>CONSIDER</code> or a rule written as clauses over it gets no missing-case warning, so cover such a type with extra care, or test every value.</p>
+<h3 id="very-large-tables">Very large tables</h3>
+<p>For a rule written as clauses, the check gives up without a warning when it would have to list more than 64 clauses, or needs more than 10,000 steps to find them. When the clauses match numbers or text, it does not fall silent at that limit, but gives a shorter, coarser list. A large <code>CONSIDER</code> still warns, but may list only some of the missing branches.</p>
+<h3 id="where-the-check-applies">Where the check applies</h3>
+<p>The check applies wherever the <code>CONSIDER</code> appears, in a rule's main body and equally inside <code>WHERE</code>- or <code>LET</code>-bound local definitions. Rules written as clauses are only recognised at the top level of a file or section.</p>
+<h3 id="otherwise-trades-checking-for-coverage">OTHERWISE trades checking for coverage</h3>
+<p><code>OTHERWISE</code> is a catch-all branch. It makes any match complete, and thereby switches the missing-case warning off — including for variants added in the future, which it will absorb without comment. Use it when the remaining cases genuinely share one treatment; avoid it when each case of a determination deserves an explicit decision.</p>
+<h3 id="what-happens-if-a-hole-is-hit-at-runtime">What happens if a hole is hit at runtime</h3>
+<p>Exhaustiveness warnings are compile-time advice, not a runtime guard. If evaluation actually reaches a <code>CONSIDER</code> with no matching branch, that evaluation fails with an error naming the offending value:</p>
+<pre><code>The value
+  Withdrawn
+reached a CONSIDER that has no branch for it.
+Add a WHEN branch for this case, or a catch-all OTHERWISE branch.
+The typechecker's exhaustiveness warning lists all missing branches.
+</code></pre>
+<p>A rule written as clauses fails the same way, with "No clause of <code>describe</code> matches these inputs." and the value it could not match. <code>l4 run</code> exits non-zero when any directive fails this way. The warning exists so you find the hole before an applicant does.</p>
+<hr>
+<h2 id="why-warnings-not-errors">Why Warnings, Not Errors</h2>
+<p>L4 reports incomplete matches as <strong>warnings</strong>: the program still compiles and runs. This is a deliberate choice about how legal encoding actually proceeds.</p>
+<ul>
+<li><strong>Encoding is incremental.</strong> A statute is formalised provision by provision. While the work is in progress, determinations are legitimately partial — the encoder is often deliberately deferring the hard case (the one that needs a policy decision) while validating the easy ones with <code>#EVAL</code>. A hard error would force placeholder branches everywhere, which are worse than an honest warning: a placeholder <em>looks</em> handled.</li>
+<li><strong>Existing code keeps working.</strong> Tightening the checker over time (covering more scrutinee types, sharper redundancy analysis) must not break rulebases that previously compiled. Warnings allow the analysis to improve without invalidating legacy encodings.</li>
+</ul>
+<p>The intended discipline: treat the warnings as a completeness report. A finished, production-ready determination should compile with none — at that point, every case of every closed category it examines has an explicit, reviewed answer.</p>
+<hr>
+<h2 id="summary">Summary</h2>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Behaviour</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Missing case in <code>CONSIDER</code></td>
+<td>Compile-time warning listing the uncovered branches</td>
+</tr>
+<tr>
+<td>Missing case in a multi-clause <code>DECIDE</code></td>
+<td>Compile-time warning listing the clauses still needed</td>
+</tr>
+<tr>
+<td>Unreachable branch</td>
+<td>Compile-time warning that the branch is redundant</td>
+</tr>
+<tr>
+<td><code>NUMBER</code> / <code>STRING</code> / <code>DATE</code> scrutinee</td>
+<td>Analysed; <code>OTHERWISE</code> is suggested when it is missing</td>
+</tr>
+<tr>
+<td>Clauses over a <code>NUMBER</code> or <code>STRING</code> input</td>
+<td>Analysed; the clause with the input's name is suggested when it is missing</td>
+</tr>
+<tr>
+<td><code>BOOLEAN</code> and declared enumerations (<code>IS ONE OF</code>)</td>
+<td>Fully analysed</td>
+</tr>
+<tr>
+<td><code>MAYBE</code> / <code>EITHER</code> / <code>LIST</code> scrutinee</td>
+<td>Their contents analysed; their own constructors not listed</td>
+</tr>
+<tr>
+<td>Enumeration declared in an imported file</td>
+<td>Not analysed</td>
+</tr>
+<tr>
+<td>More than 64 missing clauses</td>
+<td>No warning for a rule written as clauses</td>
+</tr>
+<tr>
+<td><code>CONSIDER</code> inside <code>WHERE</code> / <code>LET</code></td>
+<td>Analysed like any other</td>
+</tr>
+<tr>
+<td><code>OTHERWISE</code></td>
+<td>Completes the match, disables missing-case warnings</td>
+</tr>
+<tr>
+<td>Hole reached at runtime</td>
+<td>Evaluation fails, naming the unmatched value; <code>l4 run</code> exits non-zero</td>
+</tr>
+<tr>
+<td>Severity</td>
+<td>Warning, not error — the file still evaluates and its <code>#EVAL</code>s still run</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h2 id="further-reading">Further Reading</h2>
+<ul>
+<li><a href="/l4/concepts/type-system/algebraic-types">Types as legal categories</a> — Why legal categories become sum types in the first place</li>
+<li><a href="/l4/reference/control-flow/CONSIDER">CONSIDER</a> — Full pattern-matching syntax</li>
+<li><a href="/l4/concepts/legal-modeling/constitutive-vs-regulative">Definitions and duties</a> — Where determinations sit in the larger architecture</li>
+</ul>
+0:{"rsc":["$","$1","c",{"children":[["$","$L2",null,{"navSections":[{"title":"","items":[{"title":"Concepts home","href":"concepts"},{"title":"Design principles","href":"concepts/language-design/principles"},{"title":"Reading like the law","href":"concepts/language-design/linguistic-syntax"},{"title":"Definitions and duties","href":"concepts/legal-modeling/constitutive-vs-regulative"},{"title":"Exceptions and defaults","href":"concepts/legal-modeling/default-reasoning"},{"title":"How obligations unfold","href":"concepts/legal-modeling/regulative-rules"},{"title":"Types as legal categories","href":"concepts/type-system/algebraic-types"},{"title":"Exhaustiveness","href":"concepts/type-system/exhaustiveness"},{"title":"Type theory","href":"concepts/type-system/type-theory"}]}],"toc":[],"htmlContent":"$3","pager":{"prev":"$0:rsc:props:children:0:props:navSections:0:items:6","next":"$0:rsc:props:children:0:props:navSections:0:items:8"}}],["$L4"],"$L5"]}],"isPartial":false,"staleTime":300,"varyParams":null,"buildId":"iJUXAyHcmcW99cMci3ei9"}
+4:["$","script","script-0",{"src":"/_next/static/chunks/0fl~me.qwn48c.js","async":true}]
+5:["$","$L6",null,{"children":["$","$7",null,{"name":"Next.MetadataOutlet","children":"$@8"}]}]
+8:null

@@ -1,0 +1,267 @@
+1:"$Sreact.fragment"
+2:I[90160,["/_next/static/chunks/0ypf.t599.7y6.js","/_next/static/chunks/0t2xr05rlu96l.js","/_next/static/chunks/0uxaa7wo_wmcw.js","/_next/static/chunks/0fl~me.qwn48c.js"],"default"]
+6:I[97367,["/_next/static/chunks/0ypf.t599.7y6.js","/_next/static/chunks/0t2xr05rlu96l.js"],"OutletBoundary"]
+7:"$Sreact.suspense"
+3:T2849,<h1>Cheat sheet</h1>
+<p>This page is a quick translation guide for developers coming from Python, JavaScript/TypeScript, Java, Haskell, SQL, or other languages. Find the construct you already know in the left columns, then look right for the L4 equivalent.</p>
+<h2 id="quick-reference-table">Quick Reference Table</h2>
+<table>
+<thead>
+<tr>
+<th>Concept</th>
+<th>Other Languages</th>
+<th>L4 Equivalent</th>
+<th>Example</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Struct / class / record</td>
+<td><code>class</code> (Python/Java)<br><code>interface</code> (TS)<br><code>data</code> (Haskell)</td>
+<td><code>DECLARE ... HAS</code></td>
+<td><code>DECLARE Person HAS name IS A STRING, age IS A NUMBER</code></td>
+</tr>
+<tr>
+<td>Enum / union / variant</td>
+<td><code>enum</code> (Java/TS/Rust)<br><code>data</code> (Haskell)<br><code>Union</code> (Python)</td>
+<td><code>DECLARE ... IS ONE OF</code></td>
+<td><code>DECLARE Color IS ONE OF Red, Green, Blue</code></td>
+</tr>
+<tr>
+<td>Function definition</td>
+<td><code>def</code> (Python)<br><code>function</code> (JS)<br><code>fn</code> (Rust)<br><code>=</code> (Haskell)</td>
+<td><code>MEANS</code> or <code>DECIDE</code></td>
+<td><code>total MEANS x + y</code></td>
+</tr>
+<tr>
+<td>Switch / case / match</td>
+<td><code>switch</code> (JS/Java)<br><code>match</code> (Rust/Python)<br><code>case</code> (Haskell)</td>
+<td><code>CONSIDER ... WHEN</code></td>
+<td><code>CONSIDER status WHEN Active THEN "ok"</code></td>
+</tr>
+<tr>
+<td>Multi-way if / cond</td>
+<td><code>if/elif</code> (Python)<br>chained ternary (JS)<br>guards (Haskell)</td>
+<td><code>BRANCH</code></td>
+<td><code>BRANCH IF x > 0 THEN "pos" OTHERWISE "non-pos"</code></td>
+</tr>
+<tr>
+<td>If-else / ternary</td>
+<td><code>if/else</code>, <code>? :</code> (JS/Java)<br><code>if</code> (Haskell)</td>
+<td><code>IF ... THEN ... ELSE</code></td>
+<td><code>IF age >= 18 THEN "adult" ELSE "minor"</code></td>
+</tr>
+<tr>
+<td>Lambda / arrow function</td>
+<td><code>lambda</code> (Python)<br><code>=></code> (JS/TS)<br><code>\x -></code> (Haskell)</td>
+<td><code>GIVEN ... YIELD</code></td>
+<td><code>GIVEN n YIELD n > 0</code></td>
+</tr>
+<tr>
+<td>Let / const / local var</td>
+<td><code>let</code> (JS/Rust)<br>local var (Python/Java)<br><code>let</code> (Haskell)</td>
+<td><code>WHERE</code> or <code>LET ... IN</code></td>
+<td><code>result MEANS x + y WHERE x MEANS 1, y MEANS 2</code></td>
+</tr>
+<tr>
+<td>Null / nil / None</td>
+<td><code>None</code> (Python)<br><code>null</code> (JS/Java)<br><code>Nothing</code> (Haskell)</td>
+<td><code>MAYBE</code> (<code>NOTHING</code> / <code>JUST</code>)</td>
+<td><code>email IS A MAYBE STRING</code></td>
+</tr>
+<tr>
+<td>Null check</td>
+<td><code>if x is None</code> (Python)<br><code>x == null</code> (JS)</td>
+<td><code>CONSIDER ... WHEN NOTHING</code></td>
+<td><code>CONSIDER val WHEN NOTHING THEN 0 WHEN JUST x THEN x</code></td>
+</tr>
+<tr>
+<td>Array / list</td>
+<td><code>list</code> (Python)<br><code>Array</code> (JS)<br><code>[]</code> (Haskell)</td>
+<td><code>LIST OF</code></td>
+<td><code>scores IS A LIST OF NUMBER</code></td>
+</tr>
+<tr>
+<td>List literal</td>
+<td><code>[1,2,3]</code> (Python/JS/Haskell)</td>
+<td><code>LIST</code></td>
+<td><code>LIST 1, 2, 3</code></td>
+</tr>
+<tr>
+<td>Empty list</td>
+<td><code>[]</code> (Python/JS/Haskell)</td>
+<td><code>EMPTY</code></td>
+<td><code>CONSIDER xs WHEN EMPTY THEN 0</code></td>
+</tr>
+<tr>
+<td>Dot notation / property</td>
+<td><code>obj.field</code> (JS/Python/Java)<br><code>^. field</code> (Haskell lens)</td>
+<td><code>'s</code> (possessive)</td>
+<td><code>person's age</code>, <code>company's ceo's name</code></td>
+</tr>
+<tr>
+<td>String concatenation</td>
+<td><code>+</code> (JS/Python)<br><code>++</code> (Haskell)<br><code>concat</code> (Java)</td>
+<td><code>CONCAT</code></td>
+<td><code>CONCAT "Hello, ", name, "!"</code></td>
+</tr>
+<tr>
+<td>Modulo / remainder</td>
+<td><code>%</code> (JS/Python/Java)<br><code>mod</code> (Haskell)</td>
+<td><code>MODULO</code></td>
+<td><code>n MODULO 2 EQUALS 0</code></td>
+</tr>
+<tr>
+<td>toString / type cast</td>
+<td><code>str()</code> (Python)<br><code>String()</code> (JS)<br><code>show</code> (Haskell)</td>
+<td><code>TOSTRING</code></td>
+<td><code>TOSTRING 42</code></td>
+</tr>
+<tr>
+<td>map / filter / all / any</td>
+<td><code>map()</code>, <code>filter()</code> (JS/Python)<br><code>map</code> (Haskell)</td>
+<td><code>map</code>, <code>filter</code>, <code>all</code>, <code>any</code></td>
+<td><code>all (GIVEN n YIELD n > 0) numbers</code></td>
+</tr>
+<tr>
+<td>Namespace / module</td>
+<td><code>import</code> (Python/JS)<br><code>module</code> (Haskell)<br><code>package</code> (Java)</td>
+<td><code>IMPORT</code> / <code>§</code> sections</td>
+<td><code>IMPORT prelude</code></td>
+</tr>
+<tr>
+<td>Equality check</td>
+<td><code>==</code> (JS/Python/Java/Haskell)</td>
+<td><code>EQUALS</code> or <code>=</code></td>
+<td><code>x EQUALS 5</code></td>
+</tr>
+<tr>
+<td>Assignment</td>
+<td><code>=</code> (Python/JS)<br><code>x = 5</code> (Java)</td>
+<td>None -- use <code>MEANS</code></td>
+<td><code>x MEANS 5</code></td>
+</tr>
+<tr>
+<td>Return statement</td>
+<td><code>return</code> (JS/Python/Java)</td>
+<td>None -- expression-based</td>
+<td>Last expression is the result</td>
+</tr>
+<tr>
+<td>Semicolons / braces</td>
+<td><code>;</code> <code>{}</code> (JS/Java)<br><code>:</code> (Python)</td>
+<td>None -- layout-sensitive</td>
+<td>Indentation determines grouping</td>
+</tr>
+<tr>
+<td>Try / catch / exceptions</td>
+<td><code>try/except</code> (Python)<br><code>try/catch</code> (JS/Java)</td>
+<td>None -- use <code>MAYBE</code> or <code>EITHER</code></td>
+<td>Errors represented as values</td>
+</tr>
+<tr>
+<td>Comments (single line)</td>
+<td><code>#</code> (Python)<br><code>//</code> (JS/Java)<br><code>--</code> (Haskell/SQL)</td>
+<td><code>--</code></td>
+<td><code>-- this is a comment</code></td>
+</tr>
+<tr>
+<td>Comments (multi-line)</td>
+<td><code>"""</code> (Python)<br><code>/* */</code> (JS/Java)<br><code>{- -}</code> (Haskell)</td>
+<td><code>{- -}</code></td>
+<td><code>{- multi-line comment -}</code></td>
+</tr>
+<tr>
+<td>Boolean literals</td>
+<td><code>True</code>/<code>False</code> (Python)<br><code>true</code>/<code>false</code> (JS/Java)</td>
+<td><code>TRUE</code> / <code>FALSE</code></td>
+<td><code>DECIDE </code>is valid<code> IF TRUE</code></td>
+</tr>
+<tr>
+<td>Type annotation</td>
+<td><code>: int</code> (Python)<br><code>: number</code> (TS)<br><code>:: Int</code> (Haskell)</td>
+<td><code>IS A Type</code> / <code>GIVETH A Type</code></td>
+<td><code>GIVEN x IS A NUMBER GIVETH A BOOLEAN</code></td>
+</tr>
+<tr>
+<td>Function call with args</td>
+<td><code>f(a, b)</code> (most languages)<br><code>f a b</code> (Haskell)</td>
+<td><code>f OF a, b</code> or <code>f a b</code></td>
+<td><code>add OF 3, 4</code></td>
+</tr>
+<tr>
+<td>Arithmetic</td>
+<td><code>+</code>, <code>-</code>, <code>*</code>, <code>/</code> (all languages)</td>
+<td><code>PLUS</code>, <code>MINUS</code>, <code>TIMES</code>, <code>DIVIDED BY</code></td>
+<td><code>capital PLUS capital TIMES rate</code></td>
+</tr>
+</tbody>
+</table>
+<h2 id="l4-has-no">L4 Has No...</h2>
+<p>L4 is a pure functional language designed for legal specifications. Several constructs familiar from imperative languages are deliberately absent.</p>
+<table>
+<thead>
+<tr>
+<th>Missing Construct</th>
+<th>Why</th>
+<th>What to Use Instead</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Assignment / mutation</strong></td>
+<td>All values are immutable. No side effects means no hidden state changes, which is critical for auditable legal reasoning.</td>
+<td><code>MEANS</code> to bind names to expressions.</td>
+</tr>
+<tr>
+<td><strong>Loops</strong> (<code>for</code>, <code>while</code>)</td>
+<td>Iteration implies mutable state.</td>
+<td>Recursion, or <code>map</code>/<code>filter</code>/<code>all</code>/<code>any</code> from the prelude.</td>
+</tr>
+<tr>
+<td><strong>Null / nil / None</strong></td>
+<td>The "billion dollar mistake." Missing values must be handled explicitly.</td>
+<td><code>MAYBE</code> type with <code>NOTHING</code> and <code>JUST</code>. Pattern match with <code>CONSIDER</code>.</td>
+</tr>
+<tr>
+<td><strong>Exceptions</strong></td>
+<td>Thrown exceptions break referential transparency and make reasoning about code unreliable.</td>
+<td><code>MAYBE</code> or <code>EITHER</code> types to represent failure as data.</td>
+</tr>
+<tr>
+<td><strong>Semicolons / braces</strong></td>
+<td>L4 uses layout-sensitive syntax (like Python and Haskell).</td>
+<td>Indentation determines block structure.</td>
+</tr>
+<tr>
+<td><strong>Implicit coercion</strong></td>
+<td>No silent type conversions. Types must match explicitly.</td>
+<td><code>TOSTRING</code> for explicit conversion.</td>
+</tr>
+<tr>
+<td><strong>Mutable variables</strong></td>
+<td>See assignment above. There is no <code>let x = 1; x = 2</code>.</td>
+<td>Each <code>MEANS</code> or <code>WHERE</code> binding is a permanent definition.</td>
+</tr>
+<tr>
+<td><strong>Return statements</strong></td>
+<td>Every construct is an expression that produces a value.</td>
+<td>The last (or only) expression in a definition is its value.</td>
+</tr>
+</tbody>
+</table>
+<p>These omissions are by design. Legal rules must be deterministic, traceable, and auditable. Pure functional semantics guarantee that the same inputs always produce the same outputs, with no hidden dependencies.</p>
+<h2 id="see-also">See Also</h2>
+<ul>
+<li><a href="/l4/reference/GLOSSARY">Glossary</a> -- index of all language features</li>
+<li><a href="/l4/reference/types">Types</a> -- L4's type system (DECLARE, MAYBE, LIST, etc.)</li>
+<li><a href="/l4/reference/functions">Functions</a> -- defining computations (MEANS, DECIDE, GIVEN, GIVETH)</li>
+<li><a href="/l4/reference/control-flow">Control flow</a> -- conditionals and pattern matching (<a href="/l4/reference/control-flow/IF">IF</a>, <a href="/l4/reference/control-flow/BRANCH">BRANCH</a>, <a href="/l4/reference/control-flow/CONSIDER">CONSIDER</a>)</li>
+<li><a href="/l4/reference/operators">Operators</a> -- arithmetic, comparison, logical, and string operators</li>
+<li><a href="/l4/reference/syntax">Syntax and directives</a> -- layout rules, comments, backtick identifiers, annotations</li>
+<li><a href="/l4/reference/libraries">Standard libraries</a> -- prelude, daydate, math, and the other standard libraries</li>
+</ul>
+0:{"rsc":["$","$1","c",{"children":[["$","$L2",null,{"navSections":[{"title":"","items":[{"title":"Language Reference","href":"reference"},{"title":"Glossary","href":"reference/GLOSSARY"},{"title":"Cheat sheet","href":"reference/cheat-sheet"},{"title":"Types","href":"reference/types","children":[{"title":"DECLARE","href":"reference/types/DECLARE"},{"title":"ASSUME","href":"reference/types/ASSUME"},{"title":"FOR ALL","href":"reference/types/for-all"},{"title":"Coercions","href":"reference/types/coercions"}]},{"title":"Functions","href":"reference/functions","children":[{"title":"DECIDE","href":"reference/functions/DECIDE"},{"title":"GIVEN and GIVETH","href":"reference/functions/GIVEN"},{"title":"MEANS","href":"reference/functions/MEANS"},{"title":"LET and WHERE","href":"reference/functions/LET"},{"title":"YIELD","href":"reference/functions/YIELD"},{"title":"AKA","href":"reference/functions/AKA"}]},{"title":"Control flow","href":"reference/control-flow","children":[{"title":"IF","href":"reference/control-flow/IF"},{"title":"BRANCH","href":"reference/control-flow/BRANCH"},{"title":"CONSIDER","href":"reference/control-flow/CONSIDER"}]},{"title":"Operators","href":"reference/operators","children":[{"title":"AND, OR, NOT, IMPLIES","href":"reference/operators/logical"},{"title":"UNLESS","href":"reference/operators/UNLESS"},{"title":"Arithmetic","href":"reference/operators/arithmetic"},{"title":"Comparisons","href":"reference/operators/comparisons"}]},{"title":"Regulative rules","href":"reference/regulative","children":[{"title":"PARTY, MUST, MAY, SHANT","href":"reference/regulative/PARTY"},{"title":"Deadlines and consequences","href":"reference/regulative/consequences"},{"title":"BECAUSE","href":"reference/regulative/BECAUSE"},{"title":"DEONTIC","href":"reference/regulative/DEONTIC"},{"title":"EVENT","href":"reference/regulative/EVENT"}]},{"title":"Syntax and directives","href":"reference/syntax"},{"title":"Built-in functions","href":"reference/builtins","children":[{"title":"HTTP and JSON","href":"reference/builtins/http-json"}]},{"title":"Standard libraries","href":"reference/libraries","children":[{"title":"prelude","href":"reference/libraries/prelude"},{"title":"math","href":"reference/libraries/math"},{"title":"daydate","href":"reference/libraries/daydate"},{"title":"time","href":"reference/libraries/time"},{"title":"datetime","href":"reference/libraries/datetime"},{"title":"timezone","href":"reference/libraries/timezone"},{"title":"excel-date","href":"reference/libraries/excel-date"},{"title":"currency","href":"reference/libraries/currency"},{"title":"holdings","href":"reference/libraries/holdings"},{"title":"actus","href":"reference/libraries/actus"},{"title":"legal-persons","href":"reference/libraries/legal-persons"},{"title":"jurisdiction","href":"reference/libraries/jurisdiction"},{"title":"llm","href":"reference/libraries/llm"}]},{"title":"Error messages","href":"reference/errors"}]}],"toc":[],"htmlContent":"$3","pager":{"prev":"$0:rsc:props:children:0:props:navSections:0:items:1","next":"$0:rsc:props:children:0:props:navSections:0:items:3"}}],["$L4"],"$L5"]}],"isPartial":false,"staleTime":300,"varyParams":null,"buildId":"iJUXAyHcmcW99cMci3ei9"}
+4:["$","script","script-0",{"src":"/_next/static/chunks/0fl~me.qwn48c.js","async":true}]
+5:["$","$L6",null,{"children":["$","$7",null,{"name":"Next.MetadataOutlet","children":"$@8"}]}]
+8:null

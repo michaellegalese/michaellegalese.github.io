@@ -1,0 +1,130 @@
+1:"$Sreact.fragment"
+2:I[22016,["/_next/static/chunks/0ypf.t599.7y6.js","/_next/static/chunks/0t2xr05rlu96l.js"],""]
+3:I[5500,["/_next/static/chunks/0ypf.t599.7y6.js","/_next/static/chunks/0t2xr05rlu96l.js"],"Image"]
+12:I[97367,["/_next/static/chunks/0ypf.t599.7y6.js","/_next/static/chunks/0t2xr05rlu96l.js"],"OutletBoundary"]
+13:"$Sreact.suspense"
+0:{"rsc":["$","$1","c",{"children":[["$","main",null,{"children":["$","div",null,{"className":"container mx-auto px-5","children":[["$","header",null,{"className":"flex flex-col md:flex-row items-center justify-between py-8 mb-6","children":[["$","$L2",null,{"href":"/","className":"flex items-center gap-1 hover:opacity-80 transition-opacity","children":[["$","$L3",null,{"src":"/assets/logos/legalese-logo.png","alt":"§","width":42,"height":42,"className":"rounded"}],["$","span",null,{"className":"text-2xl font-bold tracking-tight font-merriweather","children":"Legalese"}]]}],["$","nav",null,{"className":"flex flex-wrap items-center justify-center gap-4 md:gap-6 mt-4 md:mt-0","children":[["$","div",null,{"className":"group relative","children":[["$","$L2",null,{"href":"/products","className":"text-sm font-medium hover:text-accent transition-colors font-merriweather","aria-haspopup":"true","children":"Products"}],["$","div",null,{"className":"invisible absolute left-1/2 top-full z-40 w-60 -translate-x-1/2 pt-3 opacity-0 transition-opacity group-hover:visible group-hover:opacity-100 group-focus-within:visible group-focus-within:opacity-100","children":["$","ul",null,{"className":"rounded-lg border border-gray-200 bg-white py-2 shadow-md","children":[[["$","li","cloud",{"children":["$","$L2",null,{"href":"/products/cloud","className":"block px-4 py-1.5 text-sm hover:bg-gray-50 hover:text-accent","children":"Cloud"}]}],["$","li","vscode",{"children":["$","$L2",null,{"href":"/products/vscode","className":"block px-4 py-1.5 text-sm hover:bg-gray-50 hover:text-accent","children":"VS Code extension"}]}],["$","li","studio",{"children":["$","span",null,{"className":"block px-4 py-1.5 text-sm text-gray-400","children":["Studio",["$","span",null,{"className":"ml-2 rounded border border-gray-300 px-1 text-[9px] font-semibold uppercase tracking-wider","children":"Coming"}]]}]}]],"$undefined",["$","li",null,{"className":"mt-1 border-t border-gray-100 pt-1","children":["$","$L2",null,{"href":"/products","className":"block px-4 py-1.5 text-xs font-semibold uppercase tracking-wider text-gray-500 hover:text-accent","children":"All products"}]}]]}]}]]}],["$","div",null,{"className":"group relative","children":[["$","$L2",null,{"href":"/solutions","className":"text-sm font-medium hover:text-accent transition-colors font-merriweather","aria-haspopup":"true","children":"Solutions"}],["$","div",null,{"className":"invisible absolute left-1/2 top-full z-40 w-60 -translate-x-1/2 pt-3 opacity-0 transition-opacity group-hover:visible group-hover:opacity-100 group-focus-within:visible group-focus-within:opacity-100","children":["$","ul",null,{"className":"rounded-lg border border-gray-200 bg-white py-2 shadow-md","children":[[["$","li","legislate",{"children":["$","$L2",null,{"href":"/solutions/legislate","className":"block px-4 py-1.5 text-sm hover:bg-gray-50 hover:text-accent","children":"Legislate.4"}]}],["$","li","regulate",{"children":["$","span",null,{"className":"block px-4 py-1.5 text-sm text-gray-400","children":["Regulate.4",["$","span",null,{"className":"ml-2 rounded border border-gray-300 px-1 text-[9px] font-semibold uppercase tracking-wider","children":"Coming"}]]}]}],["$","li","comply",{"children":["$","$L2",null,{"href":"/solutions/comply","className":"block px-4 py-1.5 text-sm hover:bg-gray-50 hover:text-accent","children":"Comply.4"}]}],["$","li","adjudicate",{"children":["$","span",null,{"className":"block px-4 py-1.5 text-sm text-gray-400","children":["Adjudicate.4",["$","span",null,{"className":"ml-2 rounded border border-gray-300 px-1 text-[9px] font-semibold uppercase tracking-wider","children":"Coming"}]]}]}],["$","li","prosecute",{"children":["$","$L2",null,{"href":"/solutions/prosecute","className":"block px-4 py-1.5 text-sm hover:bg-gray-50 hover:text-accent","children":"Prosecute.4"}]}],["$","li","litigate",{"children":["$","span",null,{"className":"block px-4 py-1.5 text-sm text-gray-400","children":["Litigate.4",["$","span",null,{"className":"ml-2 rounded border border-gray-300 px-1 text-[9px] font-semibold uppercase tracking-wider","children":"Coming"}]]}]}],"$L4","$L5"],"$undefined","$L6"]}]}]]}],"$L7","$L8",["$L9","$La","$Lb"],"$Lc",["$Ld","$Le"]]}]]}],"$Lf"]}]}],null,"$L10"]}],"isPartial":false,"staleTime":300,"varyParams":null,"buildId":"iJUXAyHcmcW99cMci3ei9"}
+4:["$","li","negotiate",{"children":["$","span",null,{"className":"block px-4 py-1.5 text-sm text-gray-400","children":["Negotiate.4",["$","span",null,{"className":"ml-2 rounded border border-gray-300 px-1 text-[9px] font-semibold uppercase tracking-wider","children":"Coming"}]]}]}]
+5:["$","li","insure",{"children":["$","$L2",null,{"href":"/solutions/insure","className":"block px-4 py-1.5 text-sm hover:bg-gray-50 hover:text-accent","children":"Insure.4"}]}]
+6:["$","li",null,{"className":"mt-1 border-t border-gray-100 pt-1","children":["$","$L2",null,{"href":"/solutions","className":"block px-4 py-1.5 text-xs font-semibold uppercase tracking-wider text-gray-500 hover:text-accent","children":"All solutions"}]}]
+7:["$","div",null,{"className":"group relative","children":[["$","$L2",null,{"href":"/apps","className":"text-sm font-medium hover:text-accent transition-colors font-merriweather","aria-haspopup":"true","children":"Apps"}],["$","div",null,{"className":"invisible absolute left-1/2 top-full z-40 w-60 -translate-x-1/2 pt-3 opacity-0 transition-opacity group-hover:visible group-hover:opacity-100 group-focus-within:visible group-focus-within:opacity-100","children":["$","ul",null,{"className":"rounded-lg border border-gray-200 bg-white py-2 shadow-md","children":[[["$","li","willpower",{"children":["$","span",null,{"className":"block px-4 py-1.5 text-sm text-gray-400","children":["WILLPOWER",["$","span",null,{"className":"ml-2 rounded border border-gray-300 px-1 text-[9px] font-semibold uppercase tracking-wider","children":"Coming"}]]}]}],["$","li","sue",{"children":["$","span",null,{"className":"block px-4 py-1.5 text-sm text-gray-400","children":["SUE",["$","span",null,{"className":"ml-2 rounded border border-gray-300 px-1 text-[9px] font-semibold uppercase tracking-wider","children":"Coming"}]]}]}],["$","li","usher",{"children":["$","span",null,{"className":"block px-4 py-1.5 text-sm text-gray-400","children":["Usher",["$","span",null,{"className":"ml-2 rounded border border-gray-300 px-1 text-[9px] font-semibold uppercase tracking-wider","children":"Coming"}]]}]}]],"$undefined",["$","li",null,{"className":"mt-1 border-t border-gray-100 pt-1","children":["$","$L2",null,{"href":"/apps","className":"block px-4 py-1.5 text-xs font-semibold uppercase tracking-wider text-gray-500 hover:text-accent","children":"All apps"}]}]]}]}]]}]
+8:["$","div",null,{"className":"group relative","children":[["$","$L2",null,{"href":"/commons","className":"text-sm font-medium hover:text-accent transition-colors font-merriweather","aria-haspopup":"true","children":"Commons"}],["$","div",null,{"className":"invisible absolute left-1/2 top-full z-40 w-60 -translate-x-1/2 pt-3 opacity-0 transition-opacity group-hover:visible group-hover:opacity-100 group-focus-within:visible group-focus-within:opacity-100","children":["$","ul",null,{"className":"rounded-lg border border-gray-200 bg-white py-2 shadow-md","children":[[],[["$","li","/commons/sg",{"children":["$","$L2",null,{"href":"/commons/sg","className":"block px-4 py-1.5 text-sm hover:bg-gray-50 hover:text-accent","children":"Singapore"}]}],["$","li","/commons/au",{"children":["$","$L2",null,{"href":"/commons/au","className":"block px-4 py-1.5 text-sm hover:bg-gray-50 hover:text-accent","children":"Australia (Commonwealth)"}]}],["$","li","/commons/au-wa",{"children":["$","$L2",null,{"href":"/commons/au-wa","className":"block px-4 py-1.5 text-sm hover:bg-gray-50 hover:text-accent","children":"Western Australia"}]}],["$","li","/commons/nz",{"children":["$","$L2",null,{"href":"/commons/nz","className":"block px-4 py-1.5 text-sm hover:bg-gray-50 hover:text-accent","children":"New Zealand"}]}],["$","li","/commons/live-simulation",{"children":["$","$L2",null,{"href":"/commons/live-simulation","className":"block px-4 py-1.5 text-sm hover:bg-gray-50 hover:text-accent","children":"Live simulation"}]}],["$","li","/commons/contribute",{"children":["$","$L2",null,{"href":"/commons/contribute","className":"block px-4 py-1.5 text-sm hover:bg-gray-50 hover:text-accent","children":"Contribute"}]}]],["$","li",null,{"className":"mt-1 border-t border-gray-100 pt-1","children":["$","$L2",null,{"href":"/commons","className":"block px-4 py-1.5 text-xs font-semibold uppercase tracking-wider text-gray-500 hover:text-accent","children":"Commons home"}]}]]}]}]]}]
+9:["$","$L2","about",{"href":"/about","className":"text-sm font-medium hover:text-accent transition-colors font-merriweather","children":"About us"}]
+a:["$","$L2","team",{"href":"/team","className":"text-sm font-medium hover:text-accent transition-colors font-merriweather","children":"Team"}]
+b:["$","$L2","community",{"href":"/community","className":"text-sm font-medium hover:text-accent transition-colors font-merriweather","children":"Community"}]
+c:["$","$L2",null,{"href":"/posts","className":"text-sm font-medium hover:text-accent transition-colors font-merriweather","children":"Blog"}]
+d:["$","a","l4-console",{"href":"https://legalese.com/console","target":"_blank","rel":"noopener noreferrer","className":"text-sm font-medium hover:text-accent transition-colors font-merriweather","children":["Cloud Console",false]}]
+e:["$","a","l4-documentation",{"href":"https://legalese.com/l4","target":"_blank","rel":"noopener noreferrer","className":"text-sm font-medium text-accent hover:text-accent-hover transition-colors font-merriweather","children":["L4 Docs"," →"]}]
+11:T1666,<blockquote>
+<p>"Isn't it enough to see that a garden is beautiful without having to believe that there are fairies at the bottom of it too?" — thought Ford Prefect in <em>The Hitchhiker's Guide to the Galaxy</em>, Douglas Adams, 1979</p>
+</blockquote>
+<h2>Cofounders</h2>
+<h3>Wong Meng Weng</h3>
+<p><img src="/assets/blog/authors/meng.jpg" alt="Wong Meng Weng"></p>
+<p><strong>Computer Scientist / CEO</strong></p>
+<p>Meng is running the ship and the lead language architect, computer scientist, and resident good cop at Legalese. Twenty years ago, while working during the first wave of Internet startups, he created and led the anti-spam standard SPF to worldwide adoption. He's purportedly a lot wiser and more experienced now, so he wants to do the same and bring Legalese's L4 to worldwide adoption. This time, with a revenue model.</p>
+<p><strong>Background:</strong></p>
+<ul>
+<li>
+<p>BSc Computer Science (U'Penn, '97)</p>
+</li>
+<li>
+<p>Singapore Delegate to MIT's Regional Entrepreneurship Acceleration Program</p>
+</li>
+<li>
+<p>Founder Institute Mentor</p>
+</li>
+<li>
+<p>Entrepreneur-in-Residence at INSEAD Business School</p>
+</li>
+<li>
+<p>Fellow at Harvard University Berkman Klein Center ('16 - '17)</p>
+</li>
+<li>
+<p>Fellow at Stanford University CodeX ('17 - '18)</p>
+</li>
+<li>
+<p>Co-founded <a href="http://pobox.com">pobox.com</a>, the first commercial email service</p>
+</li>
+<li>
+<p>Created <a href="https://en.wikipedia.org/wiki/Sender_Policy_Framework">RFC4408 SPF</a>, the anti-spam email standard</p>
+</li>
+<li>
+<p>Co-founded <a href="http://karmasphere.com">karmasphere.com</a>, one of the first big data analytics solutions</p>
+</li>
+<li>
+<p>Co-founded Hackerspace.SG and JFDI.Asia (Singapore's first startup accelerator)</p>
+</li>
+</ul>
+<h3>Thomas Gorissen</h3>
+<p><img src="/assets/blog/authors/thomas.jpg" alt="Thomas Gorissen"></p>
+<p><strong>Software Architect / CTO</strong></p>
+<p>Thomas is the conductor of agentic workers that build our products, the AI kind and soon maybe humans, too. For twenty-five years he has been pushing bits across screens with the intent to maximise user enjoyment. A Singapore transplant from Germany he grew up in the JavaScript open-source world and Southeast-Asian startup entrepreneurship. He adopted the world of rules after being uncomfortably confronted with them during his tenures at big enterprise.</p>
+<p><strong>Background:</strong></p>
+<ul>
+<li>
+<p>Bachelor of Information and Communication Technologies (Fonty's, '07)</p>
+</li>
+<li>
+<p>Founder and Organiser of <a href="https://jsconf.asia">JSConf.Asia</a> (SEA's largest web developer conference)</p>
+</li>
+<li>
+<p>Built early product for <a href="https://redmart.com">redmart.com</a></p>
+</li>
+<li>
+<p>Co-creator at The Reserve <a href="https://thereserve.sg">thereserve.sg</a></p>
+</li>
+<li>
+<p>JFDI.Asia Mentor</p>
+</li>
+<li>
+<p>Co-founded iSyndica - World's first professional media distribution service ('09)</p>
+</li>
+</ul>
+<h3>Michael Fairweather</h3>
+<p><img src="/assets/blog/authors/michael.jpg" alt="Michael Fairweather"></p>
+<p><strong>Lawyer / COO</strong></p>
+<p>Michael is an accomplished lawyer and technology consultant that has 20 years’ experience building legal automation systems all over the world. He holds degrees in Law and Computer Science from the University of Western Australia and provided technical consulting services on behalf of Oracle and Accenture before co-founding Monad in 2010. Michael is an expert in Legal Analysis and Legislative Quality Assurance (LQA), and has been a member of the International Association of Artificial Intelligence and Law (IAAIL) since 2007. He is from Australia and resides in the Philippines.</p>
+<p><strong>Background:</strong></p>
+<ul>
+<li>
+<p>BSc (IT Systems), LLB, GradDipLegPrac​</p>
+</li>
+<li>
+<p>Founder of Monad Solutions (acquired by Legalese '26)</p>
+</li>
+</ul>
+<h3>Alexis Natalie Chun</h3>
+<p><img src="/assets/blog/authors/alexis.jpg" alt="Alexis Natalie Chun"></p>
+<p><strong>Lawyer / Advisor</strong></p>
+<p>As cofounder and CEO of Legalese, Alexis's job description is very vague. Anything that's not done but ought to have been, is her job. As the recovering lawyer, Alexis also spends her day exorcising legal demons and unlearning her bad habits by sharing her understanding of the end-users, industry, and established conventions and practices (i.e. horror stories) with the engineering and product teams.</p>
+<p><strong>Background:</strong></p>
+<ul>
+<li>
+<p>Bachelor of Laws (LL.B) (Second Upper Class with Honours, Queen Mary University of London '11)</p>
+</li>
+<li>
+<p>Cambridge University Long Vacation Scholarship</p>
+</li>
+<li>
+<p>Advocate &#x26; Solicitor of the Supreme Court of Singapore</p>
+</li>
+<li>
+<p>TSMP Law Corporation (Corporate)</p>
+</li>
+<li>
+<p>Rajah &#x26; Tann LLP (Commercial Litigation; IP)</p>
+</li>
+<li>
+<p>Secondments: BNP Paribas &#x26; JP Morgan</p>
+</li>
+</ul>
+<hr>
+<h2>Team</h2>
+<h3>Aswathy Satheesan</h3>
+<p><img src="/assets/blog/authors/aswathy.jpg" alt="Aswathy Satheesan"></p>
+<p><strong>Legal Engineer</strong></p>
+<p>Aswathy is a seasoned professional with over 11 years of experience in designing and implementing complex Oracle Intelligent Advisor (OIA) rules for clients globally. She has a Master’s degree in Computing, IT Law, and Management from King’s College London and holds the Oracle Intelligent Advisor 2021 Certified Implementation Specialist certification. She is well-versed in web-based application development, software development, and data center management. Her diverse background, including experiences living and working in India, Dubai, and London, brings a unique global perspective to her work. She currently resides in Trivandrum, Kerala.</p>
+f:["$","article",null,{"className":"mb-32","children":[["$","div",null,{"className":"max-w-4xl mx-auto mb-12","children":["$","h1",null,{"className":"text-4xl md:text-5xl lg:text-6xl font-bold tracking-tighter leading-tight md:leading-none mb-4","children":"Team"}]}],["$","div",null,{"className":"max-w-4xl mx-auto","children":["$","div",null,{"className":"prose","dangerouslySetInnerHTML":{"__html":"$11"}}]}]]}]
+10:["$","$L12",null,{"children":["$","$13",null,{"name":"Next.MetadataOutlet","children":"$@14"}]}]
+14:null

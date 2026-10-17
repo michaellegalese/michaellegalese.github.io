@@ -1,0 +1,293 @@
+1:"$Sreact.fragment"
+2:I[90160,["/_next/static/chunks/0ypf.t599.7y6.js","/_next/static/chunks/0t2xr05rlu96l.js","/_next/static/chunks/0uxaa7wo_wmcw.js","/_next/static/chunks/0fl~me.qwn48c.js"],"default"]
+6:I[97367,["/_next/static/chunks/0ypf.t599.7y6.js","/_next/static/chunks/0t2xr05rlu96l.js"],"OutletBoundary"]
+7:"$Sreact.suspense"
+3:T3ca8,<h1>Type theory</h1>
+<p>The formal foundations of L4's type system. This page is for readers who know some type theory or functional programming and want the precise mechanics behind L4's type checking, inference and evaluation.</p>
+<p>For practical use of L4 types, see <a href="/l4/reference/types">Types</a>. For the intuitive account of records and enumerations, see <a href="/l4/concepts/type-system/algebraic-types">Types as legal categories</a>.</p>
+<hr>
+<h2 id="type-system-overview">Type System Overview</h2>
+<p>L4's type system draws from well-established foundations in programming language theory:</p>
+<ul>
+<li><strong>Paradigm:</strong> Hindley-Milner-style with algebraic data types</li>
+<li><strong>Inference:</strong> Bidirectional type checking (mixing inference and checking modes)</li>
+<li><strong>Purity:</strong> Pure functional core with no side effects in the expression language</li>
+<li><strong>Effect type:</strong> DEONTIC serves as a modal effect type for regulative rules</li>
+<li><strong>Evaluation:</strong> Lazy (call-by-need), following Haskell semantics</li>
+</ul>
+<p>The combination of Hindley-Milner inference with bidirectional checking means that most expressions do not require explicit type annotations, while top-level function signatures (via GIVEN/GIVETH) provide checking anchors that improve error messages and serve as documentation.</p>
+<hr>
+<h2 id="type-correspondence">Type Correspondence</h2>
+<p>How L4 constructs map to type theory, Haskell, other languages and category theory:</p>
+<table>
+<thead>
+<tr>
+<th>L4 construct</th>
+<th>Type theory</th>
+<th>Haskell</th>
+<th>Other languages</th>
+<th>Category theory</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>DECLARE T HAS ...</td>
+<td>Product</td>
+<td>data T = T { ... }</td>
+<td>struct/class/interface</td>
+<td>Product (×)</td>
+</tr>
+<tr>
+<td>IS ONE OF</td>
+<td>Sum</td>
+<td>data T = A | B</td>
+<td>enum/union/variant/sealed class</td>
+<td>Coproduct (+)</td>
+</tr>
+<tr>
+<td>GIVEN...GIVETH</td>
+<td>Arrow</td>
+<td>a -> b</td>
+<td>function signature/def/fn</td>
+<td>Exponential (B^A)</td>
+</tr>
+<tr>
+<td>MAYBE T</td>
+<td>Option</td>
+<td>Maybe T</td>
+<td>Optional/null/nil/None/?</td>
+<td>T + 1</td>
+</tr>
+<tr>
+<td>LIST OF T</td>
+<td>List</td>
+<td>[T]</td>
+<td>Array/List/Vec/Sequence</td>
+<td>Free monoid</td>
+</tr>
+<tr>
+<td>CONSIDER</td>
+<td>Match</td>
+<td>case...of</td>
+<td>switch/case/match/when</td>
+<td>Catamorphism</td>
+</tr>
+<tr>
+<td>BRANCH</td>
+<td>Guards</td>
+<td>| cond = ...</td>
+<td>if-elseif chain/cond</td>
+<td>-</td>
+</tr>
+<tr>
+<td>WHERE / LET...IN</td>
+<td>Binding</td>
+<td>where / let...in</td>
+<td>let/const/var/local</td>
+<td>Substitution</td>
+</tr>
+<tr>
+<td>DEONTIC</td>
+<td>Effect</td>
+<td>Custom monad</td>
+<td>- (domain-specific)</td>
+<td>Kleisli category</td>
+</tr>
+<tr>
+<td>'s genitive</td>
+<td>Accessor</td>
+<td>Record field / lens</td>
+<td>dot notation / .field</td>
+<td>Projection</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h2 id="type-inference-rules">Type Inference Rules</h2>
+<p>The following rules describe how types are assigned to L4 expressions. The notation uses a typing context (environment) written as a Greek capital gamma, and the turnstile symbol to mean "entails" or "has type".</p>
+<h3 id="variables">Variables</h3>
+<p>A variable has the type assigned to it in the environment:</p>
+<pre><code>Γ ⊢ x : τ    if (x : τ) ∈ Γ
+</code></pre>
+<h3 id="application">Application</h3>
+<p>If <code>f</code> has function type and <code>e</code> has the argument type, then the application <code>f e</code> has the return type:</p>
+<pre><code>Γ ⊢ f : τ₁ → τ₂    Γ ⊢ e : τ₁
+─────────────────────────────────
+         Γ ⊢ f e : τ₂
+</code></pre>
+<h3 id="abstraction-lambda-givenyield">Abstraction (Lambda / GIVEN...YIELD)</h3>
+<p>If, extending the environment with a binding for <code>x</code>, the body <code>e</code> has type τ₂, then the lambda (written <code>GIVEN x YIELD e</code> in L4) has arrow type:</p>
+<pre><code>   Γ, x : τ₁ ⊢ e : τ₂
+──────────────────────────────
+Γ ⊢ (GIVEN x YIELD e) : τ₁ → τ₂
+</code></pre>
+<h3 id="conditional-ifthenelse">Conditional (IF/THEN/ELSE)</h3>
+<p>The condition must be BOOLEAN, and both branches must have the same type:</p>
+<pre><code>Γ ⊢ c : BOOLEAN    Γ ⊢ e₁ : τ    Γ ⊢ e₂ : τ
+────────────────────────────────────────────────
+       Γ ⊢ IF c THEN e₁ ELSE e₂ : τ
+</code></pre>
+<h3 id="pattern-matching-considerwhen">Pattern Matching (CONSIDER/WHEN)</h3>
+<p>The scrutinee must have a known type T, and all branches must produce the same result type. Pattern variables are brought into scope within each branch:</p>
+<pre><code>Γ ⊢ e : T    Γ, vars(pᵢ) ⊢ eᵢ : τ  (for all i)
+──────────────────────────────────────────────────
+  Γ ⊢ CONSIDER e WHEN p₁ THEN e₁ ... : τ
+</code></pre>
+<hr>
+<h2 id="bidirectional-type-checking">Bidirectional Type Checking</h2>
+<p>L4 uses a bidirectional type checking strategy that combines two modes:</p>
+<h3 id="checking-mode">Checking Mode</h3>
+<p>In checking mode, the expected type flows <strong>downward</strong> into an expression. This is used when:</p>
+<ul>
+<li>A function definition has an explicit signature via GIVETH -- the declared return type is pushed into the function body</li>
+<li>Branches of IF/THEN/ELSE and CONSIDER/WHEN are checked against the type established by the first branch or the enclosing signature</li>
+<li>Arguments to functions with known parameter types</li>
+</ul>
+<p>Checking mode produces better error messages because the system knows what type it expects.</p>
+<h3 id="inference-mode">Inference Mode</h3>
+<p>In inference mode, the type flows <strong>upward</strong> from subexpressions. This is used when:</p>
+<ul>
+<li>Expressions appear without an explicit type annotation</li>
+<li>Field access (<code>person's name</code>) -- the field type is looked up in the record declaration</li>
+<li>Operators -- the result type is determined by the operator's definition</li>
+<li>Literals -- NUMBER, STRING, BOOLEAN literals have known types</li>
+</ul>
+<h3 id="how-they-interact">How They Interact</h3>
+<p>In practice, top-level GIVEN/GIVETH declarations establish checking anchors, while inference fills in the types of internal expressions. This means you rarely need to annotate local bindings: the top-level signature provides enough information for the checker to propagate types throughout the function body.</p>
+<hr>
+<h2 id="parametric-polymorphism">Parametric Polymorphism</h2>
+<p>L4 supports parametric polymorphism (generics) primarily through prelude functions. Type variables are implicit -- the system infers the concrete types at each call site.</p>
+<p>Prelude functions like <code>map</code> and <code>filter</code> are polymorphic:</p>
+<pre><code>map    : (a -> b) -> LIST OF a -> LIST OF b
+filter : (a -> BOOLEAN) -> LIST OF a -> LIST OF a
+</code></pre>
+<p>In L4 usage, the type variables are instantiated by inference:</p>
+<pre><code class="language-l4">IMPORT prelude
+
+numbers MEANS LIST 1, 2, 3
+doubled MEANS map (GIVEN x YIELD x * 2) numbers
+</code></pre>
+<p>Here <code>a</code> and <code>b</code> are both inferred as NUMBER from the multiplication operator and the type of <code>numbers</code>.</p>
+<p>User-defined polymorphism is available through type parameters declared with <code>IS A TYPE</code>:</p>
+<pre><code class="language-l4">GIVEN T IS A TYPE
+      xs IS A LIST OF T
+GIVETH A MAYBE T
+`the first item of` MEANS
+    CONSIDER xs
+    WHEN EMPTY THEN NOTHING
+    WHEN x FOLLOWED BY rest THEN JUST x
+</code></pre>
+<p><code>`the first item of` (LIST 1, 2, 3)</code> gives <code>JUST 1</code>, and <code>`the first item of` (LIST "a", "b")</code> gives <code>JUST "a"</code>: <code>T</code> is instantiated afresh at each call.</p>
+<hr>
+<h2 id="deontic-as-modal-type">DEONTIC as Modal Type</h2>
+<p>The DEONTIC type is L4's effect type for regulative rules. It has a modal logic interpretation that connects legal obligation theory (deontic logic) to type theory.</p>
+<h3 id="modal-operators">Modal Operators</h3>
+<table>
+<thead>
+<tr>
+<th>L4 Keyword</th>
+<th>Deontic Meaning</th>
+<th>Modal Logic</th>
+<th>Symbol</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>MUST</td>
+<td>Obligation</td>
+<td>Necessity</td>
+<td>Box</td>
+</tr>
+<tr>
+<td>MAY</td>
+<td>Permission</td>
+<td>Possibility</td>
+<td>Diamond</td>
+</tr>
+<tr>
+<td>SHANT</td>
+<td>Prohibition</td>
+<td>Necessity of not</td>
+<td>Box-Not</td>
+</tr>
+</tbody>
+</table>
+<p>In modal logic terms:</p>
+<ul>
+<li><strong>MUST p</strong> asserts that p is obligatory -- in all compliant futures, p holds. This corresponds to the necessity operator.</li>
+<li><strong>MAY p</strong> asserts that p is permitted -- there exists a compliant future where p holds. This corresponds to the possibility operator.</li>
+<li><strong>SHANT p</strong> asserts that p is forbidden -- in no compliant future does p hold. This corresponds to the necessity operator applied to not-p, or equivalently to the negation of the possibility operator.</li>
+</ul>
+<h3 id="composition">Composition</h3>
+<p>DEONTIC expressions compose through:</p>
+<ul>
+<li><strong>HENCE</strong> -- Sequential composition. After one obligation is fulfilled, the next obligation follows.</li>
+<li><strong>LEST</strong> -- Alternative composition. If an obligation is breached, the LEST branch specifies consequences.</li>
+<li><strong>IF</strong> -- Conditional guard. The deontic obligation only activates when the condition holds.</li>
+<li><strong>RAND / ROR</strong> -- Parallel composition. Both obligations, or either one, must be fulfilled.</li>
+</ul>
+<h3 id="trace-semantics">Trace Semantics</h3>
+<p>A DEONTIC value is run against a start time and a list of events, with <code>#TRACE</code> or the <code>EVALTRACE</code> function. The result is again a DEONTIC value: <code>FULFILLED</code>, a breach, or the residual obligation still waiting for events. <code>l4 state-graph</code> draws the possible paths through a rule's <code>HENCE</code> and <code>LEST</code> branches as a graph. <a href="/l4/concepts/legal-modeling/regulative-rules">How obligations unfold</a> explains this behaviour without the formalism.</p>
+<h3 id="type-signature">Type Signature</h3>
+<p>A regulative rule has type <code>DEONTIC party action</code>, parameterised over the type of its parties and the type of its actions; a rule declares it with <code>GIVETH A DEONTIC `Party` `Action`</code>.</p>
+<p>Within the type system, DEONTIC acts as a custom monad (in Haskell terms) or, in category-theoretic terms, lives in a Kleisli category.</p>
+<hr>
+<h2 id="subtyping">Subtyping</h2>
+<p>L4 has <strong>no subtyping</strong>, and its types are <strong>nominal</strong>:</p>
+<ul>
+<li>Types are distinguished by name, not by structure. Two record types with identical fields but different names are different types.</li>
+<li>There is no structural subtyping or row polymorphism.</li>
+<li>There is one numeric type, NUMBER, for whole and fractional numbers alike, so there is no numeric tower to coerce along. Conversions between types, such as <code>TOSTRING</code>, are explicit function calls (<a href="/l4/reference/types/coercions">Coercions</a>).</li>
+</ul>
+<hr>
+<h2 id="unit-type">Unit Type</h2>
+<p>The unit type (written <code>()</code> in Haskell) is <strong>implicit</strong> in L4 -- it is not directly exposed in the surface syntax.</p>
+<p>Its primary manifestation is through nullary constructors in sum types:</p>
+<pre><code class="language-l4">DECLARE Status IS ONE OF Active, Closed
+</code></pre>
+<p>Here, <code>Active</code> and <code>Closed</code> are nullary constructors. Internally, they can be understood as functions from unit to Status (<code>() -> Status</code>), though this is not visible to the L4 programmer.</p>
+<hr>
+<h2 id="lazy-evaluation">Lazy Evaluation</h2>
+<p>L4 uses <strong>call-by-need</strong> evaluation semantics, following Haskell:</p>
+<ul>
+<li><strong>Expressions are not evaluated until their value is needed.</strong> A WHERE binding that is never referenced in the result is never computed.</li>
+<li><strong>Once evaluated, the result is memoized.</strong> Subsequent references to the same binding reuse the computed value.</li>
+</ul>
+<h3 id="implications">Implications</h3>
+<ul>
+<li><strong>Infinite data structures</strong> are possible in principle (e.g., infinite lists), though this is rarely needed in legal domain code.</li>
+<li><strong>Short-circuit evaluation:</strong> AND and OR do not evaluate their second operand if the first operand determines the result. This is a natural consequence of laziness, not a special case.</li>
+<li><strong>WHERE bindings are lazy:</strong> Definitions in a WHERE clause are only evaluated if referenced. This allows defining multiple helper values without paying for unused ones.</li>
+<li><strong>Evaluation traces:</strong> The <code>#EVALTRACE</code> directive records which expressions were actually evaluated and in what order, providing visibility into the lazy evaluation process for debugging.</li>
+</ul>
+<hr>
+<h2 id="fixed-points-and-recursion">Fixed Points and Recursion</h2>
+<p>Recursive definitions in L4 use <strong>letrec semantics</strong> in WHERE blocks. A function can refer to itself in its own definition:</p>
+<pre><code class="language-l4">GIVEN n IS A NUMBER
+GIVETH A NUMBER
+factorial MEANS
+    IF n &#x3C;= 1 THEN 1
+    ELSE n * (factorial (n - 1))
+</code></pre>
+<p>In type-theoretic terms, this is interpreted as a fixed point:</p>
+<pre><code>factorial = fix (λf. λn. if n ≤ 1 then 1 else n × f(n - 1))
+</code></pre>
+<p>Where <code>fix</code> is the fixed-point combinator satisfying <code>fix f = f (fix f)</code>. The type checker handles recursive bindings by first assuming a type for the recursive name, then checking the body against that assumption, and finally verifying consistency.</p>
+<p>Mutual recursion (multiple functions referencing each other in the same WHERE block) follows the same letrec semantics.</p>
+<p>Recursive types are fixed points at the type level. The <code>`legal document`</code> type in <a href="/l4/concepts/type-system/algebraic-types#recursive-types">Types as legal categories</a>, whose sections contain lists of further documents, is the least fixed point</p>
+<pre><code>LegalDocument = μX. Section(STRING × STRING × List X) + Paragraph(STRING) + Definition(STRING × STRING)
+</code></pre>
+<p>and a function that recurses over it with CONSIDER, one branch per constructor, is a catamorphism (a fold) over that fixed point.</p>
+<hr>
+<h2 id="see-also">See Also</h2>
+<ul>
+<li><strong><a href="/l4/reference/types">Types</a></strong> -- Practical guide to all L4 types</li>
+<li><strong><a href="/l4/concepts/type-system/algebraic-types">Types as legal categories</a></strong> -- Conceptual explanation of product and sum types</li>
+<li><strong><a href="/l4/concepts/type-system/exhaustiveness">Exhaustiveness</a></strong> -- Why CONSIDER checks that every constructor is covered</li>
+<li><strong><a href="/l4/reference/regulative">Regulative rules</a></strong> -- MUST, MAY, SHANT and regulative rule structure</li>
+<li><strong><a href="/l4/reference/GLOSSARY">Glossary</a></strong> -- Complete language feature index</li>
+</ul>
+0:{"rsc":["$","$1","c",{"children":[["$","$L2",null,{"navSections":[{"title":"","items":[{"title":"Concepts home","href":"concepts"},{"title":"Design principles","href":"concepts/language-design/principles"},{"title":"Reading like the law","href":"concepts/language-design/linguistic-syntax"},{"title":"Definitions and duties","href":"concepts/legal-modeling/constitutive-vs-regulative"},{"title":"Exceptions and defaults","href":"concepts/legal-modeling/default-reasoning"},{"title":"How obligations unfold","href":"concepts/legal-modeling/regulative-rules"},{"title":"Types as legal categories","href":"concepts/type-system/algebraic-types"},{"title":"Exhaustiveness","href":"concepts/type-system/exhaustiveness"},{"title":"Type theory","href":"concepts/type-system/type-theory"}]}],"toc":[],"htmlContent":"$3","pager":{"prev":"$0:rsc:props:children:0:props:navSections:0:items:7"}}],["$L4"],"$L5"]}],"isPartial":false,"staleTime":300,"varyParams":null,"buildId":"iJUXAyHcmcW99cMci3ei9"}
+4:["$","script","script-0",{"src":"/_next/static/chunks/0fl~me.qwn48c.js","async":true}]
+5:["$","$L6",null,{"children":["$","$7",null,{"name":"Next.MetadataOutlet","children":"$@8"}]}]
+8:null

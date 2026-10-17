@@ -1,0 +1,274 @@
+1:"$Sreact.fragment"
+2:I[90160,["/_next/static/chunks/0ypf.t599.7y6.js","/_next/static/chunks/0t2xr05rlu96l.js","/_next/static/chunks/0uxaa7wo_wmcw.js","/_next/static/chunks/0fl~me.qwn48c.js"],"default"]
+6:I[97367,["/_next/static/chunks/0ypf.t599.7y6.js","/_next/static/chunks/0t2xr05rlu96l.js"],"OutletBoundary"]
+7:"$Sreact.suspense"
+3:T2ac7,<h1>Test your rules</h1>
+<p>Check that your rules give the answers you expect, with <code>#EVAL</code> and <code>#ASSERT</code>, and simulate obligations over time with <code>#TRACE</code>.</p>
+<p><strong>Before you start:</strong> <a href="/l4/tutorials/getting-started/first-l4-file">Install L4 and write your first rule</a>.</p>
+<p>You will build a small loan rulebook: an eligibility decision and a repayment obligation, with tests in the same file. When someone later edits a rule, the tests show at once whether the expected outcomes still hold.</p>
+<p><strong>Complete example:</strong></p>
+<pre><code class="language-l4-file">-- loan-rules.l4
+-- An eligibility rule and a repayment obligation, with tests.
+
+§ `Loan Rules`
+
+DECLARE Applicant
+    HAS `name`          IS A STRING
+        `age`           IS A NUMBER
+        `annual income` IS A NUMBER
+
+GIVEN applicant IS AN Applicant
+GIVETH A BOOLEAN
+DECIDE `is eligible for a loan` IF
+        applicant's `age` AT LEAST 21
+    AND applicant's `annual income` AT LEAST 30000
+
+§§ `Test data`
+
+`Alice` MEANS Applicant WITH
+    `name`          IS "Alice"
+    `age`           IS 34
+    `annual income` IS 55000
+
+`Bob` MEANS Applicant WITH
+    `name`          IS "Bob"
+    `age`           IS 19
+    `annual income` IS 42000
+
+§§ `Tests`
+
+#EVAL `is eligible for a loan` `Alice`
+#EVAL `is eligible for a loan` `Bob`
+
+#ASSERT `is eligible for a loan` `Alice`
+#ASSERT NOT `is eligible for a loan` `Bob`
+
+#CHECK `is eligible for a loan`
+
+§§ `Repayment obligation`
+
+DECLARE Actor IS ONE OF Borrower, Lender
+
+DECLARE RepaymentAction IS ONE OF
+    `repay loan` HAS amount IS A NUMBER
+
+GIVEN `loan amount` IS A NUMBER
+GIVETH A DEONTIC Actor RepaymentAction
+DECIDE `repayment obligation` IS
+    PARTY Borrower
+    MUST `repay loan` `loan amount`
+    WITHIN 30
+    HENCE FULFILLED
+    LEST BREACH BY Borrower BECAUSE "the loan was not repaid on time"
+
+§§ `Behaviour tests`
+
+-- The borrower repays on day 12: the obligation is fulfilled.
+#TRACE `repayment obligation` 10000 AT 0 WITH
+    PARTY Borrower DOES `repay loan` 10000 AT 12
+
+-- The wrong party, too late: the deadline passes and the LEST branch fires.
+#TRACE `repayment obligation` 10000 AT 0 WITH
+    PARTY Lender DOES `repay loan` 10000 AT 45
+</code></pre>
+<hr>
+<h2 id="the-test-directives">The test directives</h2>
+<p>Directives start with <code>#</code> and sit at the top level of a file. VS Code runs them as you type; on the command line, <code>l4 run</code> runs them.</p>
+<table>
+<thead>
+<tr>
+<th>Directive</th>
+<th>What it does</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>#EVAL</code></td>
+<td>Evaluates an expression and shows the result.</td>
+</tr>
+<tr>
+<td><code>#EVALTRACE</code></td>
+<td>Like <code>#EVAL</code>, and also shows each step of the evaluation.</td>
+</tr>
+<tr>
+<td><code>#ASSERT</code></td>
+<td>Evaluates a boolean expression and reports whether it is <code>TRUE</code>.</td>
+</tr>
+<tr>
+<td><code>#CHECK</code></td>
+<td>Type-checks an expression and reports its type. It evaluates nothing.</td>
+</tr>
+<tr>
+<td><code>#TRACE</code></td>
+<td>Runs a regulative rule against a timeline of <code>PARTY ... DOES ... AT</code> events.</td>
+</tr>
+</tbody>
+</table>
+<p>The <a href="/l4/reference/syntax#directives">syntax reference</a> has the exact form of each.</p>
+<hr>
+<h2 id="step-1-a-rule-and-its-test-data">Step 1: A rule and its test data</h2>
+<p>Create <code>loan-rules.l4</code>:</p>
+<pre><code class="language-l4">-- loan-rules.l4
+-- An eligibility rule and a repayment obligation, with tests.
+
+§ `Loan Rules`
+
+DECLARE Applicant
+    HAS `name`          IS A STRING
+        `age`           IS A NUMBER
+        `annual income` IS A NUMBER
+
+GIVEN applicant IS AN Applicant
+GIVETH A BOOLEAN
+DECIDE `is eligible for a loan` IF
+        applicant's `age` AT LEAST 21
+    AND applicant's `annual income` AT LEAST 30000
+
+§§ `Test data`
+
+`Alice` MEANS Applicant WITH
+    `name`          IS "Alice"
+    `age`           IS 34
+    `annual income` IS 55000
+
+`Bob` MEANS Applicant WITH
+    `name`          IS "Bob"
+    `age`           IS 19
+    `annual income` IS 42000
+</code></pre>
+<p>Alice should qualify. Bob is under 21 and should not.</p>
+<hr>
+<h2 id="step-2-see-results-with-eval">Step 2: See results with <code>#EVAL</code></h2>
+<p>Add these lines to the end of the file and run it:</p>
+<pre><code class="language-l4">§§ `Tests`
+
+#EVAL `is eligible for a loan` `Alice`
+#EVAL `is eligible for a loan` `Bob`
+</code></pre>
+<pre><code class="language-bash">l4 run loan-rules.l4
+</code></pre>
+<pre><code>Evaluation[1] @ loan-rules.l4:31:1-39
+
+Result:
+  TRUE
+...
+
+Evaluation[2] @ loan-rules.l4:32:1-37
+
+Result:
+  FALSE
+...
+</code></pre>
+<p><code>#EVAL</code> shows what a rule decides, but not whether that is the right answer. For that, use <code>#ASSERT</code>.</p>
+<hr>
+<h2 id="step-3-pin-down-outcomes-with-assert">Step 3: Pin down outcomes with <code>#ASSERT</code></h2>
+<p>An <code>#ASSERT</code> states the outcome you expect. It records the intended legal result and fails visibly when a later edit changes it:</p>
+<pre><code class="language-l4">#ASSERT `is eligible for a loan` `Alice`
+#ASSERT NOT `is eligible for a loan` `Bob`
+</code></pre>
+<p>Each prints <code>assertion satisfied</code>. To compare a value instead of a boolean, use <code>EQUALS</code> or <code>=</code>. A failing assertion looks like this:</p>
+<pre><code class="language-l4">GIVEN x IS A NUMBER
+GIVETH A NUMBER
+DECIDE `twice` IS x TIMES 2
+
+#ASSERT `twice` 21 EQUALS 40
+</code></pre>
+<pre><code>Evaluation[1] @ failing-assert.l4:5:1-29
+
+Result:
+  assertion failed
+</code></pre>
+<p><code>l4 run</code> exits with a non-zero code for type errors and for directives that fail while evaluating, but <strong>not</strong> for a failed assertion: the file is still valid L4, so the exit code is <code>0</code>. In CI, look for failures explicitly: grep the output for <code>assertion failed</code>, or run <code>l4 run --json</code> and check each result whose <code>"kind"</code> is <code>"assertion"</code> for <code>"value": false</code>. <a href="/l4/tutorials/getting-started/version-control-for-rules">Manage rules in git and CI</a> has a ready-made workflow.</p>
+<hr>
+<h2 id="step-4-type-check-with-check">Step 4: Type-check with <code>#CHECK</code></h2>
+<p><code>#CHECK</code> never evaluates anything. It only type-checks an expression and reports its type as an information message:</p>
+<pre><code class="language-l4">#CHECK `is eligible for a loan`
+</code></pre>
+<pre><code>Message:  FUNCTION FROM Applicant TO BOOLEAN
+</code></pre>
+<p>Use it to pin down a rule's inputs and output. If a later edit changes what <code>`is eligible for a loan`</code> accepts, a <code>#CHECK</code> that applies it to an example becomes a type error, before anything runs. With the <code>twice</code> rule from Step 3:</p>
+<pre><code class="language-l4">GIVEN x IS A NUMBER
+GIVETH A NUMBER
+DECIDE `twice` IS x TIMES 2
+
+#CHECK `twice` "twenty-one"
+</code></pre>
+<pre><code>The first argument of function
+
+  twice (defined at failing-check.l4:3:8-15)
+
+is expected to be of type
+
+  NUMBER
+
+but is here of type
+
+  STRING
+</code></pre>
+<p>Because <code>#CHECK</code> does not evaluate, it cannot tell you whether a rule gives the right answer. Use <code>#ASSERT</code> for that.</p>
+<hr>
+<h2 id="step-5-a-regulative-rule-to-simulate">Step 5: A regulative rule to simulate</h2>
+<p>Decisions are half of legal drafting; obligations are the other half. Add a repayment obligation to <code>loan-rules.l4</code>:</p>
+<pre><code class="language-l4">§§ `Repayment obligation`
+
+DECLARE Actor IS ONE OF Borrower, Lender
+
+DECLARE RepaymentAction IS ONE OF
+    `repay loan` HAS amount IS A NUMBER
+
+GIVEN `loan amount` IS A NUMBER
+GIVETH A DEONTIC Actor RepaymentAction
+DECIDE `repayment obligation` IS
+    PARTY Borrower
+    MUST `repay loan` `loan amount`
+    WITHIN 30
+    HENCE FULFILLED
+    LEST BREACH BY Borrower BECAUSE "the loan was not repaid on time"
+</code></pre>
+<p>The borrower must repay the loan amount within 30 time units. Doing so fulfils the obligation; not doing so is a breach.</p>
+<hr>
+<h2 id="step-6-simulate-timelines-with-trace">Step 6: Simulate timelines with <code>#TRACE</code></h2>
+<p><code>#TRACE</code> runs a regulative rule against a sequence of events: <code>#TRACE rule AT start-time WITH</code> followed by one <code>PARTY ... DOES ... AT time</code> line per event.</p>
+<p><strong>A compliant timeline:</strong></p>
+<pre><code class="language-l4">§§ `Behaviour tests`
+
+-- The borrower repays on day 12: the obligation is fulfilled.
+#TRACE `repayment obligation` 10000 AT 0 WITH
+    PARTY Borrower DOES `repay loan` 10000 AT 12
+</code></pre>
+<pre><code>Result:
+  FULFILLED
+</code></pre>
+<p><strong>A breaching timeline.</strong> An event discharges an obligation only if the right party does the right action in time. Here the lender acts, on day 45, after the 30-day deadline, so the <code>LEST</code> branch applies:</p>
+<pre><code class="language-l4">-- The wrong party, too late: the deadline passes and the LEST branch fires.
+#TRACE `repayment obligation` 10000 AT 0 WITH
+    PARTY Lender DOES `repay loan` 10000 AT 45
+</code></pre>
+<pre><code>Result:
+  DEONTIC BREACHED:
+    BREACH
+    BY Borrower
+    BECAUSE "the loan was not repaid on time"
+</code></pre>
+<p>The <code>BECAUSE</code> text in the rule appears in the breach report, so write it for the person who will read it.</p>
+<p>A trace can also end with neither result. If the events stop while an obligation is still open (the deadline has not passed and nothing discharged it), the result is the remaining obligation: what is still owed, by whom, and how long is left. That is not a failure; it means the timeline is incomplete.</p>
+<hr>
+<h2 id="keep-tests-next-to-the-rules">Keep tests next to the rules</h2>
+<p>Deployment publishes only the functions marked <code>@export</code>, so a <code>§§ Tests</code> section can stay in every rule file. A good minimum:</p>
+<ul>
+<li>one <code>#ASSERT</code> per legally meaningful outcome, positive and negative, and on both sides of each threshold;</li>
+<li>one <code>#TRACE</code> per obligation, for at least a compliant and a breaching timeline;</li>
+<li><code>#EVAL</code> for values a reviewer will want to see.</li>
+</ul>
+<p>Run the whole suite with <code>l4 run loan-rules.l4</code>.</p>
+<hr>
+<h2 id="next-steps">Next steps</h2>
+<ul>
+<li><a href="/l4/tutorials/getting-started/debugging-type-errors">Fix errors</a>: when the file does not type-check.</li>
+<li><a href="/l4/tutorials/getting-started/version-control-for-rules">Manage rules in git and CI</a>: run these tests on every change.</li>
+<li><a href="/l4/reference/regulative">Regulative rules</a>: <code>PARTY</code>, <code>MUST</code>, <code>MAY</code>, <code>SHANT</code> and <code>DEONTIC</code>.</li>
+</ul>
+0:{"rsc":["$","$1","c",{"children":[["$","$L2",null,{"navSections":[{"title":"","items":[{"title":"Overview","href":"tutorials"},{"title":"Install L4 and write your first rule","href":"tutorials/getting-started/first-l4-file"},{"title":"Draft rules with Legalese AI","href":"tutorials/llm-integration/composing-l4-with-ai"},{"title":"Test your rules","href":"tutorials/getting-started/testing-your-rules"},{"title":"Fix errors","href":"tutorials/getting-started/debugging-type-errors"},{"title":"Encode legislation","href":"tutorials/getting-started/encoding-legislation"},{"title":"Make rules read like law","href":"tutorials/natural-language-functions/optimising-natural-language-generation"},{"title":"Common patterns","href":"tutorials/getting-started/common-patterns"},{"title":"Deploy your rules","href":"tutorials/deploying-rules/exporting-rules-for-deployment"},{"title":"Choose an integration","href":"tutorials/legalese-cloud"},{"title":"Connect an AI agent","href":"tutorials/legalese-cloud/ai-agents"},{"title":"Chat with your rules","href":"tutorials/legalese-cloud/openai-compatible-api"},{"title":"Call rules over REST","href":"tutorials/legalese-cloud/openapi-spec"},{"title":"Embed rules in a website","href":"tutorials/legalese-cloud/webmcp-embed"},{"title":"Using the l4 CLI","href":"tutorials/getting-started/l4-cli"},{"title":"Manage rules in git and CI","href":"tutorials/getting-started/version-control-for-rules"}]}],"toc":[],"htmlContent":"$3","pager":{"prev":"$0:rsc:props:children:0:props:navSections:0:items:2","next":"$0:rsc:props:children:0:props:navSections:0:items:4"}}],["$L4"],"$L5"]}],"isPartial":false,"staleTime":300,"varyParams":null,"buildId":"iJUXAyHcmcW99cMci3ei9"}
+4:["$","script","script-0",{"src":"/_next/static/chunks/0fl~me.qwn48c.js","async":true}]
+5:["$","$L6",null,{"children":["$","$7",null,{"name":"Next.MetadataOutlet","children":"$@8"}]}]
+8:null

@@ -1,0 +1,398 @@
+1:"$Sreact.fragment"
+2:I[90160,["/_next/static/chunks/0ypf.t599.7y6.js","/_next/static/chunks/0t2xr05rlu96l.js","/_next/static/chunks/0uxaa7wo_wmcw.js","/_next/static/chunks/0fl~me.qwn48c.js"],"default"]
+6:I[97367,["/_next/static/chunks/0ypf.t599.7y6.js","/_next/static/chunks/0t2xr05rlu96l.js"],"OutletBoundary"]
+7:"$Sreact.suspense"
+3:T2c4a,<h1>daydate</h1>
+<p>Dates for deadlines and time-based rules: building dates, adding days, months and years, weekdays, ISO weeks and leap years. Import it with <code>IMPORT daydate</code>. Weeks start on Monday, following ISO 8601.</p>
+<p>Most functions take either a <code>DATE</code> or a day number (the date's serial number, as given by <code>Day</code>), so <code>`Weekday of` (Date 1 1 2024)</code> and <code>`Weekday of` 739250</code> give the same answer.</p>
+<p><strong>Example:</strong></p>
+<pre><code class="language-l4-file">-- Daydate Example: Date calculations and temporal logic
+IMPORT daydate
+
+-- Date construction from components
+DECIDE `Christmas 2024` IS Date 25 12 2024
+DECIDE `New Year 2025` IS Date 1 1 2025
+
+#EVAL `Christmas 2024`
+#EVAL `New Year 2025`
+
+-- Date from ISO string (returns MAYBE DATE, ignores time/timezone if present)
+DECIDE `from iso date` IS Date "2025-06-15"
+DECIDE `from iso datetime` IS Date "2025-06-15T10:30:00Z"
+#EVAL `from iso date`       -- JUST OF (DATE OF 15, 6, 2025)
+#EVAL `from iso datetime`   -- JUST OF (DATE OF 15, 6, 2025)
+
+-- Date arithmetic
+DECIDE `week later` IS `Christmas 2024` PLUS 7
+#EVAL `week later`  -- January 1, 2025
+
+DECIDE `week before` IS `Christmas 2024` MINUS 7
+#EVAL `week before`  -- December 18, 2024
+
+-- Date components
+#EVAL DATE_DAY `Christmas 2024`    -- 25
+#EVAL DATE_MONTH `Christmas 2024`  -- 12
+#EVAL DATE_YEAR `Christmas 2024`   -- 2024
+
+-- Weekday calculations
+DECIDE `day of week` IS `Weekday of` `Christmas 2024`
+#EVAL `day of week`  -- Wednesday (3)
+
+#EVAL `Name of weekday` `Christmas 2024`  -- "Wednesday"
+
+-- Weekend checks
+#EVAL `is weekend` `Christmas 2024`   -- FALSE
+#EVAL `is weekday` `Christmas 2024`   -- TRUE
+
+DECIDE `last Saturday in 2024` IS Date 28 12 2024
+#EVAL `is weekend` `last Saturday in 2024` -- TRUE
+
+-- Week of year
+#EVAL `Week of the year` `Christmas 2024`  -- 52
+
+-- Leap year
+#EVAL `is leap year` 2024  -- TRUE
+#EVAL `is leap year` 2023  -- FALSE
+
+-- Relative time phrases
+DECIDE `tomorrow` IS `the day after` `Christmas 2024`
+#EVAL `tomorrow`
+
+DECIDE `next week` IS `the week after` `Christmas 2024`
+#EVAL `next week`
+
+
+-- Date comparison (via operator overloads)
+#EVAL `Christmas 2024` &#x3C; `New Year 2025`   -- TRUE
+#EVAL `Christmas 2024` >= `New Year 2025`  -- FALSE
+
+-- Readable comparisons
+DECIDE `christmas is before new year` IS `Christmas 2024` `is before` `New Year 2025`
+DECIDE `new year is after christmas` IS `New Year 2025` `is after` `Christmas 2024`
+#EVAL `christmas is before new year`  -- TRUE
+#EVAL `new year is after christmas`   -- TRUE
+
+-- Month helpers
+DECIDE `July 4th` IS July 4 2024
+#EVAL `July 4th`
+#EVAL `Name of month` `July 4th`  -- "July"
+</code></pre>
+<h2 id="constants">Constants</h2>
+<table>
+<thead>
+<tr>
+<th>Constant</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>Monday</code> to <code>Saturday</code> (also <code>Mon</code> to <code>Sat</code>)</td>
+<td>1 to 6</td>
+</tr>
+<tr>
+<td><code>Sunday</code> (also <code>Sun</code>)</td>
+<td>0</td>
+</tr>
+<tr>
+<td><code>January</code> to <code>December</code> (also <code>Jan</code> to <code>Dec</code>)</td>
+<td>1 to 12</td>
+</tr>
+<tr>
+<td><code>Days in a week</code></td>
+<td>7</td>
+</tr>
+<tr>
+<td><code>Months in a year</code></td>
+<td>12</td>
+</tr>
+<tr>
+<td><code>Days in a year</code></td>
+<td>365.2425, the average over the 400-year leap cycle</td>
+</tr>
+<tr>
+<td><code>Days in a month</code></td>
+<td>30.436875, the average month</td>
+</tr>
+</tbody>
+</table>
+<p>The month names also build dates: <code>January 15 2024</code> is 15 January 2024.</p>
+<h2 id="building-a-date">Building a date</h2>
+<table>
+<thead>
+<tr>
+<th>Function</th>
+<th>Gives</th>
+<th>What it does</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>Date</code> day month year</td>
+<td>DATE</td>
+<td>The date from its parts: <code>Date 25 12 2024</code></td>
+</tr>
+<tr>
+<td><code>Date</code> days</td>
+<td>DATE</td>
+<td>The date with this day number</td>
+</tr>
+<tr>
+<td><code>Date</code> text</td>
+<td>MAYBE DATE</td>
+<td>Reads an ISO date such as <code>"2025-06-15"</code>; any time and time zone are ignored</td>
+</tr>
+<tr>
+<td><code>Date</code> datetime</td>
+<td>DATE</td>
+<td>The date part of a DATETIME, ignoring time and time zone</td>
+</tr>
+<tr>
+<td><code>Week</code> week year</td>
+<td>DATE</td>
+<td>The Monday of that ISO week</td>
+</tr>
+<tr>
+<td><code>Month</code> month year</td>
+<td>DATE</td>
+<td>The first day of that month</td>
+</tr>
+<tr>
+<td><code>Year</code> year</td>
+<td>DATE</td>
+<td>1 January of that year</td>
+</tr>
+<tr>
+<td><code>Month</code> date, <code>Week</code> date, <code>Year</code> date</td>
+<td>DATE</td>
+<td>The first day of the month, ISO week or year that contains <code>date</code></td>
+</tr>
+<tr>
+<td><code>January</code> day year, ...</td>
+<td>DATE</td>
+<td>The date in that month: <code>March 1 2025</code></td>
+</tr>
+</tbody>
+</table>
+<p><code>Date</code> rolls a day that does not exist in the month forward: <code>Date 29 2 2025</code> is 1 March 2025. <code>Days to date</code> is another name for <code>Date</code>.</p>
+<h2 id="reading-a-date">Reading a date</h2>
+<table>
+<thead>
+<tr>
+<th>Function</th>
+<th>Gives</th>
+<th>What it does</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>Day</code> date</td>
+<td>NUMBER</td>
+<td>The date's day number; <code>Date to days</code> is another name</td>
+</tr>
+<tr>
+<td><code>Weekday of</code> date</td>
+<td>NUMBER</td>
+<td>1 for Monday to 6 for Saturday, 0 for Sunday</td>
+</tr>
+<tr>
+<td><code>Week of the year</code> date</td>
+<td>NUMBER</td>
+<td>The ISO week number</td>
+</tr>
+<tr>
+<td><code>Month of the year</code> date</td>
+<td>NUMBER</td>
+<td>1 to 12</td>
+</tr>
+<tr>
+<td><code>Name of month</code> date</td>
+<td>STRING</td>
+<td><code>"February"</code></td>
+</tr>
+<tr>
+<td><code>Name of weekday</code> date</td>
+<td>STRING</td>
+<td><code>"Monday"</code></td>
+</tr>
+<tr>
+<td><code>is weekend</code> date</td>
+<td>BOOLEAN</td>
+<td>Saturday or Sunday</td>
+</tr>
+<tr>
+<td><code>is weekday</code> date</td>
+<td>BOOLEAN</td>
+<td>Monday to Friday</td>
+</tr>
+<tr>
+<td><code>is leap year</code> year (or date)</td>
+<td>BOOLEAN</td>
+<td>366 days in the year</td>
+</tr>
+<tr>
+<td><code>Days in month</code> month year (or date)</td>
+<td>NUMBER</td>
+<td>28 to 31</td>
+</tr>
+<tr>
+<td><code>Days in year</code> year (or date)</td>
+<td>NUMBER</td>
+<td>365 or 366</td>
+</tr>
+<tr>
+<td><code>Weeks in year</code> year (or date)</td>
+<td>NUMBER</td>
+<td>52 or 53 ISO weeks</td>
+</tr>
+<tr>
+<td><code>Weekday of 1st day of month</code> month year</td>
+<td>NUMBER</td>
+<td>The weekday of the 1st of the month</td>
+</tr>
+<tr>
+<td><code>Weekday of 1st day of year</code> year</td>
+<td>NUMBER</td>
+<td>The weekday of 1 January</td>
+</tr>
+<tr>
+<td><code>Months since year start to days</code> month year</td>
+<td>NUMBER</td>
+<td>The days in the year before that month begins</td>
+</tr>
+<tr>
+<td><code>Years to days</code> year</td>
+<td>NUMBER</td>
+<td>The day number of 1 January of that year</td>
+</tr>
+</tbody>
+</table>
+<p>To read the day, month or year of a date as a number, use the built-ins <code>DATE_DAY</code>, <code>DATE_MONTH</code> and <code>DATE_YEAR</code>, or <a href="#date-compat">date-compat</a>.</p>
+<h2 id="moving-a-date">Moving a date</h2>
+<table>
+<thead>
+<tr>
+<th>Function</th>
+<th>Gives</th>
+<th>What it does</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>date <code>PLUS</code> n, date <code>+</code> n</td>
+<td>DATE</td>
+<td><code>n</code> days later</td>
+</tr>
+<tr>
+<td>date <code>MINUS</code> n</td>
+<td>DATE</td>
+<td><code>n</code> days earlier</td>
+</tr>
+<tr>
+<td><code>add months</code> date months</td>
+<td>DATE</td>
+<td>The same day, whole months later (or earlier for a negative number)</td>
+</tr>
+<tr>
+<td><code>add years</code> date years</td>
+<td>DATE</td>
+<td>The same day, whole years later (or earlier)</td>
+</tr>
+<tr>
+<td><code>the day after</code> date</td>
+<td>DATE</td>
+<td>The next day</td>
+</tr>
+<tr>
+<td><code>the day before</code> date</td>
+<td>DATE</td>
+<td>The previous day</td>
+</tr>
+<tr>
+<td><code>the week after</code> date</td>
+<td>DATE</td>
+<td>The Monday of the following week</td>
+</tr>
+<tr>
+<td><code>the week before</code> date</td>
+<td>DATE</td>
+<td>The Monday of the previous week</td>
+</tr>
+<tr>
+<td><code>the month after</code> date</td>
+<td>DATE</td>
+<td>The 1st of the following month</td>
+</tr>
+<tr>
+<td><code>the month before</code> date</td>
+<td>DATE</td>
+<td>The 1st of the previous month</td>
+</tr>
+<tr>
+<td><code>the year after</code> date</td>
+<td>DATE</td>
+<td>1 January of the following year</td>
+</tr>
+<tr>
+<td><code>the year before</code> date</td>
+<td>DATE</td>
+<td>1 January of the previous year</td>
+</tr>
+<tr>
+<td><code>on day</code> n date</td>
+<td>DATE</td>
+<td>The <code>n</code>th day counting <code>date</code> as day 1: <code>`on day` 15 (Month 2 2024)</code> is 15 February 2024</td>
+</tr>
+</tbody>
+</table>
+<p><code>add months</code> and <code>add years</code> round a fractional number down. When the day does not exist in the month they land in, they use that month's last day, as Excel's <code>EDATE</code> does: 31 January plus one month is 29 February in 2024 and 28 February in 2023, and 29 February 2024 plus one year is 28 February 2025. Use <code>add years</code> for an anniversary, since <code>Date 29 2 2025</code> rolls forward to 1 March.</p>
+<h2 id="comparing-dates">Comparing dates</h2>
+<ul>
+<li><code>=</code>, <code>&#x3C;</code>, <code>&#x3C;=</code>, <code>></code>, <code>>=</code> and their word forms (<code>EQUALS</code>, <code>LESS THAN</code>, <code>AT MOST</code>, <code>GREATER THAN</code>, <code>AT LEAST</code>) compare two dates.</li>
+<li>date1 <code>MINUS</code> date2 is the number of days between them.</li>
+<li>d1 <code>`is before`</code> d2 and d1 <code>`is after`</code> d2 read as sentences. Put each date in parentheses: <code>(Date 10 1 2024) `is before` (Date 11 1 2024)</code>.</li>
+<li><code>`the earlier of`</code> d1 d2 and <code>`the later of`</code> d1 d2 pick one of two dates.</li>
+</ul>
+<h2 id="date-compat">date-compat</h2>
+<p><code>date-compat</code> is a separate library for files written before <code>DATE</code> became a built-in type. Import it with <code>IMPORT `date-compat` </code> (the backticks are needed because of the hyphen). <code>daydate</code> uses it internally, but importing <code>daydate</code> does not make its functions available to you.</p>
+<table>
+<thead>
+<tr>
+<th>Function</th>
+<th>Gives</th>
+<th>What it does</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>DATE</code> day month year</td>
+<td>DATE</td>
+<td>The older spelling of <code>Date day month year</code>: <code>DATE 15 3 1990</code></td>
+</tr>
+<tr>
+<td><code>DATE</code> days</td>
+<td>DATE</td>
+<td>The date with this day number</td>
+</tr>
+<tr>
+<td><code>Day of</code> date (or <code>day of</code>)</td>
+<td>NUMBER</td>
+<td>The day of the month, like <code>DATE_DAY</code></td>
+</tr>
+<tr>
+<td><code>Month of</code> date (or <code>month of</code>)</td>
+<td>NUMBER</td>
+<td>The month, like <code>DATE_MONTH</code></td>
+</tr>
+<tr>
+<td><code>Year of</code> date (or <code>year of</code>)</td>
+<td>NUMBER</td>
+<td>The year, like <code>DATE_YEAR</code></td>
+</tr>
+</tbody>
+</table>
+<p>New files should use <code>Date</code> from <code>daydate</code>, and <code>DATE_DAY</code>, <code>DATE_MONTH</code> and <code>DATE_YEAR</code>.</p>
+0:{"rsc":["$","$1","c",{"children":[["$","$L2",null,{"navSections":[{"title":"","items":[{"title":"Language Reference","href":"reference"},{"title":"Glossary","href":"reference/GLOSSARY"},{"title":"Cheat sheet","href":"reference/cheat-sheet"},{"title":"Types","href":"reference/types","children":[{"title":"DECLARE","href":"reference/types/DECLARE"},{"title":"ASSUME","href":"reference/types/ASSUME"},{"title":"FOR ALL","href":"reference/types/for-all"},{"title":"Coercions","href":"reference/types/coercions"}]},{"title":"Functions","href":"reference/functions","children":[{"title":"DECIDE","href":"reference/functions/DECIDE"},{"title":"GIVEN and GIVETH","href":"reference/functions/GIVEN"},{"title":"MEANS","href":"reference/functions/MEANS"},{"title":"LET and WHERE","href":"reference/functions/LET"},{"title":"YIELD","href":"reference/functions/YIELD"},{"title":"AKA","href":"reference/functions/AKA"}]},{"title":"Control flow","href":"reference/control-flow","children":[{"title":"IF","href":"reference/control-flow/IF"},{"title":"BRANCH","href":"reference/control-flow/BRANCH"},{"title":"CONSIDER","href":"reference/control-flow/CONSIDER"}]},{"title":"Operators","href":"reference/operators","children":[{"title":"AND, OR, NOT, IMPLIES","href":"reference/operators/logical"},{"title":"UNLESS","href":"reference/operators/UNLESS"},{"title":"Arithmetic","href":"reference/operators/arithmetic"},{"title":"Comparisons","href":"reference/operators/comparisons"}]},{"title":"Regulative rules","href":"reference/regulative","children":[{"title":"PARTY, MUST, MAY, SHANT","href":"reference/regulative/PARTY"},{"title":"Deadlines and consequences","href":"reference/regulative/consequences"},{"title":"BECAUSE","href":"reference/regulative/BECAUSE"},{"title":"DEONTIC","href":"reference/regulative/DEONTIC"},{"title":"EVENT","href":"reference/regulative/EVENT"}]},{"title":"Syntax and directives","href":"reference/syntax"},{"title":"Built-in functions","href":"reference/builtins","children":[{"title":"HTTP and JSON","href":"reference/builtins/http-json"}]},{"title":"Standard libraries","href":"reference/libraries","children":[{"title":"prelude","href":"reference/libraries/prelude"},{"title":"math","href":"reference/libraries/math"},{"title":"daydate","href":"reference/libraries/daydate"},{"title":"time","href":"reference/libraries/time"},{"title":"datetime","href":"reference/libraries/datetime"},{"title":"timezone","href":"reference/libraries/timezone"},{"title":"excel-date","href":"reference/libraries/excel-date"},{"title":"currency","href":"reference/libraries/currency"},{"title":"holdings","href":"reference/libraries/holdings"},{"title":"actus","href":"reference/libraries/actus"},{"title":"legal-persons","href":"reference/libraries/legal-persons"},{"title":"jurisdiction","href":"reference/libraries/jurisdiction"},{"title":"llm","href":"reference/libraries/llm"}]},{"title":"Error messages","href":"reference/errors"}]}],"toc":[],"htmlContent":"$3","pager":{"prev":"$0:rsc:props:children:0:props:navSections:0:items:10:children:1","next":"$0:rsc:props:children:0:props:navSections:0:items:10:children:3"}}],["$L4"],"$L5"]}],"isPartial":false,"staleTime":300,"varyParams":null,"buildId":"iJUXAyHcmcW99cMci3ei9"}
+4:["$","script","script-0",{"src":"/_next/static/chunks/0fl~me.qwn48c.js","async":true}]
+5:["$","$L6",null,{"children":["$","$7",null,{"name":"Next.MetadataOutlet","children":"$@8"}]}]
+8:null

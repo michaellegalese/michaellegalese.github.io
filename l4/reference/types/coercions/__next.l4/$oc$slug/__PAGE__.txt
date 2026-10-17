@@ -1,0 +1,200 @@
+1:"$Sreact.fragment"
+2:I[90160,["/_next/static/chunks/0ypf.t599.7y6.js","/_next/static/chunks/0t2xr05rlu96l.js","/_next/static/chunks/0uxaa7wo_wmcw.js","/_next/static/chunks/0fl~me.qwn48c.js"],"default"]
+6:I[97367,["/_next/static/chunks/0ypf.t599.7y6.js","/_next/static/chunks/0t2xr05rlu96l.js"],"OutletBoundary"]
+7:"$Sreact.suspense"
+3:T1dae,<h1>Coercions</h1>
+<p>These built-in functions convert values from one type to another. They need no <code>IMPORT</code>.
+Functions that parse text return a <code>MAYBE</code>: <code>JUST</code> the value, or <code>NOTHING</code> when the text cannot be read.</p>
+<h2 id="functions">Functions</h2>
+<h3 id="tostring">TOSTRING</h3>
+<p>Converts a value to its string representation.</p>
+<p><strong>Signature:</strong> <code>NUMBER | BOOLEAN | DATE | TIME | DATETIME | STRING → STRING</code></p>
+<p><strong>Behavior:</strong></p>
+<ul>
+<li>Numbers render with canonical decimal text (no trailing zeros)</li>
+<li>Booleans render as <code>TRUE</code> or <code>FALSE</code></li>
+<li>Dates render as <code>YYYY-MM-DD</code></li>
+<li>Times render as <code>HH:MM:SS</code></li>
+<li>DateTimes render as ISO-8601 with an offset (e.g., <code>2024-06-15T02:30:00+0000</code>)</li>
+<li>Strings pass through unchanged</li>
+</ul>
+<p><strong>Example:</strong></p>
+<pre><code class="language-l4-file">-- Type Coercion Example: Built-in conversion functions
+IMPORT daydate
+
+-- TOSTRING: Convert values to strings
+DECIDE numberText IS TOSTRING 1.20
+#EVAL numberText  -- "1.2" (no trailing zeros)
+
+DECIDE boolText IS TOSTRING TRUE
+#EVAL boolText  -- "TRUE"
+
+DECIDE dateText IS TOSTRING (Date 29 2 2024)
+#EVAL dateText  -- "2024-02-29"
+
+-- AS STRING: Inline syntax (same as TOSTRING)
+DECIDE boolAsString IS TRUE AS STRING
+#EVAL boolAsString  -- "TRUE"
+
+DECIDE dateAsString IS (Date 1 1 2024) AS STRING
+#EVAL dateAsString  -- "2024-01-01"
+
+-- TONUMBER: Parse strings to numbers
+DECIDE parsedGood IS TONUMBER "  -12.50 "
+#EVAL parsedGood  -- JUST -12.5
+
+DECIDE parsedSci IS TONUMBER "1.2E3"
+#EVAL parsedSci  -- JUST 1200
+
+DECIDE parsedBad IS TONUMBER "oops"
+#EVAL parsedBad  -- NOTHING
+
+-- TODATE: Parse strings to dates
+DECIDE parsedISODate IS TODATE "2024-02-29"
+#EVAL parsedISODate  -- JUST (Date 29 2 2024)
+
+DECIDE parsedSlashDate IS TODATE "15/01/2024"
+#EVAL parsedSlashDate  -- JUST (Date 15 1 2024)
+
+DECIDE parsedNamedDate IS TODATE "Feb 01, 2024"
+#EVAL parsedNamedDate  -- JUST (Date 1 2 2024)
+
+DECIDE parsedBadDate IS TODATE "31/02/2024"
+#EVAL parsedBadDate  -- NOTHING (Feb 31 doesn't exist)
+
+-- TRUNC: Truncate decimal places
+DECIDE truncWhole IS TRUNC 12.987 0
+#EVAL truncWhole  -- 12
+
+DECIDE truncDecimals IS TRUNC 12.987 2
+#EVAL truncDecimals  -- 12.98
+
+DECIDE truncNegativeDigits IS TRUNC 123.45 (0 MINUS 1)
+#EVAL truncNegativeDigits  -- 120
+
+DECIDE truncNegativeNumber IS TRUNC (0 MINUS 123.45) 1
+#EVAL truncNegativeNumber  -- -123.4
+
+-- Combining coercions with pattern matching
+GIVEN input IS A STRING
+GIVETH A STRING
+parseAndDouble input MEANS
+    CONSIDER TONUMBER input
+    WHEN NOTHING THEN "Invalid number"
+    WHEN JUST n THEN TOSTRING (n TIMES 2)
+
+#EVAL parseAndDouble "21"    -- "42"
+#EVAL parseAndDouble "abc"   -- "Invalid number"
+</code></pre>
+<hr>
+<h3 id="tonumber">TONUMBER</h3>
+<p>Parses a string to a number.</p>
+<p><strong>Signature:</strong> <code>STRING → MAYBE NUMBER</code></p>
+<p><strong>Behavior:</strong></p>
+<ul>
+<li>Accepts trimmed ASCII numeric literals</li>
+<li>Supports optional sign (<code>+</code> or <code>-</code>)</li>
+<li>Supports decimal point</li>
+<li>Supports scientific notation (e.g., <code>1.2E3</code>)</li>
+<li>Returns <code>NOTHING</code> on parse failure</li>
+</ul>
+<p><strong>Accepted formats:</strong></p>
+<ul>
+<li><code>"42"</code> → <code>JUST 42</code></li>
+<li><code>"-12.50"</code> → <code>JUST -12.5</code></li>
+<li><code>"  3.14  "</code> → <code>JUST 3.14</code> (whitespace trimmed)</li>
+<li><code>"1.2E3"</code> → <code>JUST 1200</code></li>
+<li><code>"oops"</code> → <code>NOTHING</code></li>
+</ul>
+<hr>
+<h3 id="todate">TODATE</h3>
+<p>Parses a string to a date.</p>
+<p><strong>Signature:</strong> <code>STRING → MAYBE DATE</code></p>
+<p><strong>Accepted formats:</strong></p>
+<ul>
+<li><code>YYYY-MM-DD</code> (ISO 8601): <code>"2024-02-29"</code></li>
+<li><code>YYYY/MM/DD</code>: <code>"2024/02/29"</code></li>
+<li><code>DD-MMM-YYYY</code>: <code>"29-Feb-2024"</code></li>
+<li><code>DD/MM/YYYY</code>: <code>"29/02/2024"</code></li>
+<li><code>MMM DD, YYYY</code>: <code>"Feb 29, 2024"</code></li>
+</ul>
+<p><strong>Behavior:</strong></p>
+<ul>
+<li>Month names are case-insensitive</li>
+<li>Rejects dates outside <code>0001-01-01</code> to <code>9999-12-31</code></li>
+<li>Returns <code>NOTHING</code> for invalid dates (e.g., <code>"31/02/2024"</code>)</li>
+</ul>
+<hr>
+<h3 id="totime">TOTIME</h3>
+<p>Parses a string to a time.</p>
+<p><strong>Signature:</strong> <code>STRING → MAYBE TIME</code></p>
+<p><strong>Accepted formats (24-hour clock only):</strong></p>
+<ul>
+<li><code>HH:MM:SS</code>: <code>"14:30:00"</code>, also with fractions of a second: <code>"14:30:00.5"</code></li>
+<li><code>HH:MM</code>: <code>"14:30"</code></li>
+</ul>
+<p><strong>Behavior:</strong></p>
+<ul>
+<li>Returns <code>NOTHING</code> for anything else, including 12-hour times such as <code>"2:30 PM"</code></li>
+</ul>
+<hr>
+<h3 id="todatetime">TODATETIME</h3>
+<p>Parses a string to a datetime.</p>
+<p><strong>Signature:</strong> <code>STRING → MAYBE DATETIME</code></p>
+<p><strong>Accepted formats:</strong></p>
+<ul>
+<li>ISO-8601 with an offset: <code>"2024-06-15T10:30:00+08:00"</code></li>
+<li>ISO-8601 with Z (UTC): <code>"2024-06-15T10:30:00Z"</code></li>
+<li>A space in place of the <code>T</code>: <code>"2024-06-15 10:30:00Z"</code></li>
+</ul>
+<p><strong>Behavior:</strong></p>
+<ul>
+<li>Returns <code>NOTHING</code> for invalid datetime strings</li>
+<li>The value is stored in UTC: <code>"2024-06-15T10:30:00+08:00"</code> becomes <code>2024-06-15T02:30:00+0000</code></li>
+</ul>
+<hr>
+<h3 id="trunc">TRUNC</h3>
+<p>Truncates a number toward zero.</p>
+<p><strong>Signature:</strong> <code>NUMBER, NUMBER → NUMBER</code></p>
+<p><strong>Parameters:</strong></p>
+<ul>
+<li><code>value</code> - The number to truncate</li>
+<li><code>digits</code> - Number of decimal places to keep (rounded to nearest integer)</li>
+</ul>
+<p><strong>Behavior:</strong></p>
+<ul>
+<li>Non-negative <code>digits</code> truncate fractional places</li>
+<li>Negative <code>digits</code> truncate to the left of the decimal point</li>
+<li>Truncates toward zero (not floor/ceiling)</li>
+</ul>
+<p><strong>Examples:</strong></p>
+<ul>
+<li><code>TRUNC 12.987 0</code> → <code>12</code></li>
+<li><code>TRUNC 12.987 2</code> → <code>12.98</code></li>
+<li><code>TRUNC 123.45 (-1)</code> → <code>120</code></li>
+<li><code>TRUNC (-12.987) 1</code> → <code>-12.9</code></li>
+</ul>
+<hr>
+<h3 id="as-string">AS STRING</h3>
+<p>Inline syntax for type conversion, equivalent to <code>TOSTRING</code>.</p>
+<p><strong>Syntax:</strong> <code>value AS STRING</code></p>
+<p><strong>Examples:</strong></p>
+<ul>
+<li><code>42 AS STRING</code> → <code>"42"</code></li>
+<li><code>TRUE AS STRING</code> → <code>"TRUE"</code></li>
+<li><code>(Date 1 1 2024) AS STRING</code> → <code>"2024-01-01"</code> (<code>Date</code> comes from <a href="/l4/reference/libraries/daydate">daydate</a>)</li>
+</ul>
+<hr>
+<h2 id="locale-independence">Locale independence</h2>
+<p>All coercion functions give the same result on every system: they do not depend on the locale.</p>
+<hr>
+<h2 id="related-pages">Related pages</h2>
+<ul>
+<li><a href="/l4/reference/types">Types</a></li>
+<li><a href="/l4/reference/builtins">Built-in functions</a></li>
+<li><a href="/l4/reference/libraries/daydate">daydate</a>, <a href="/l4/reference/libraries/time">time</a>, <a href="/l4/reference/libraries/datetime">datetime</a>: more on dates and times</li>
+</ul>
+0:{"rsc":["$","$1","c",{"children":[["$","$L2",null,{"navSections":[{"title":"","items":[{"title":"Language Reference","href":"reference"},{"title":"Glossary","href":"reference/GLOSSARY"},{"title":"Cheat sheet","href":"reference/cheat-sheet"},{"title":"Types","href":"reference/types","children":[{"title":"DECLARE","href":"reference/types/DECLARE"},{"title":"ASSUME","href":"reference/types/ASSUME"},{"title":"FOR ALL","href":"reference/types/for-all"},{"title":"Coercions","href":"reference/types/coercions"}]},{"title":"Functions","href":"reference/functions","children":[{"title":"DECIDE","href":"reference/functions/DECIDE"},{"title":"GIVEN and GIVETH","href":"reference/functions/GIVEN"},{"title":"MEANS","href":"reference/functions/MEANS"},{"title":"LET and WHERE","href":"reference/functions/LET"},{"title":"YIELD","href":"reference/functions/YIELD"},{"title":"AKA","href":"reference/functions/AKA"}]},{"title":"Control flow","href":"reference/control-flow","children":[{"title":"IF","href":"reference/control-flow/IF"},{"title":"BRANCH","href":"reference/control-flow/BRANCH"},{"title":"CONSIDER","href":"reference/control-flow/CONSIDER"}]},{"title":"Operators","href":"reference/operators","children":[{"title":"AND, OR, NOT, IMPLIES","href":"reference/operators/logical"},{"title":"UNLESS","href":"reference/operators/UNLESS"},{"title":"Arithmetic","href":"reference/operators/arithmetic"},{"title":"Comparisons","href":"reference/operators/comparisons"}]},{"title":"Regulative rules","href":"reference/regulative","children":[{"title":"PARTY, MUST, MAY, SHANT","href":"reference/regulative/PARTY"},{"title":"Deadlines and consequences","href":"reference/regulative/consequences"},{"title":"BECAUSE","href":"reference/regulative/BECAUSE"},{"title":"DEONTIC","href":"reference/regulative/DEONTIC"},{"title":"EVENT","href":"reference/regulative/EVENT"}]},{"title":"Syntax and directives","href":"reference/syntax"},{"title":"Built-in functions","href":"reference/builtins","children":[{"title":"HTTP and JSON","href":"reference/builtins/http-json"}]},{"title":"Standard libraries","href":"reference/libraries","children":[{"title":"prelude","href":"reference/libraries/prelude"},{"title":"math","href":"reference/libraries/math"},{"title":"daydate","href":"reference/libraries/daydate"},{"title":"time","href":"reference/libraries/time"},{"title":"datetime","href":"reference/libraries/datetime"},{"title":"timezone","href":"reference/libraries/timezone"},{"title":"excel-date","href":"reference/libraries/excel-date"},{"title":"currency","href":"reference/libraries/currency"},{"title":"holdings","href":"reference/libraries/holdings"},{"title":"actus","href":"reference/libraries/actus"},{"title":"legal-persons","href":"reference/libraries/legal-persons"},{"title":"jurisdiction","href":"reference/libraries/jurisdiction"},{"title":"llm","href":"reference/libraries/llm"}]},{"title":"Error messages","href":"reference/errors"}]}],"toc":[],"htmlContent":"$3","pager":{"prev":"$0:rsc:props:children:0:props:navSections:0:items:3:children:2","next":"$0:rsc:props:children:0:props:navSections:0:items:4"}}],["$L4"],"$L5"]}],"isPartial":false,"staleTime":300,"varyParams":null,"buildId":"iJUXAyHcmcW99cMci3ei9"}
+4:["$","script","script-0",{"src":"/_next/static/chunks/0fl~me.qwn48c.js","async":true}]
+5:["$","$L6",null,{"children":["$","$7",null,{"name":"Next.MetadataOutlet","children":"$@8"}]}]
+8:null

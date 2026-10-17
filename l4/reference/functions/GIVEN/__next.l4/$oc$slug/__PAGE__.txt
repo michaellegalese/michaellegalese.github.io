@@ -1,0 +1,263 @@
+1:"$Sreact.fragment"
+2:I[90160,["/_next/static/chunks/0ypf.t599.7y6.js","/_next/static/chunks/0t2xr05rlu96l.js","/_next/static/chunks/0uxaa7wo_wmcw.js","/_next/static/chunks/0fl~me.qwn48c.js"],"default"]
+6:I[97367,["/_next/static/chunks/0ypf.t599.7y6.js","/_next/static/chunks/0t2xr05rlu96l.js"],"OutletBoundary"]
+7:"$Sreact.suspense"
+3:T219b,<h1>GIVEN and GIVETH</h1>
+<p><code>GIVEN</code> declares the inputs of a function, each with a name and a type.
+<code>GIVETH</code> declares the type of its result.
+Both go on the lines above the definition.</p>
+<h2 id="syntax">Syntax</h2>
+<pre><code class="language-text">GIVEN name IS A Type
+GIVEN name1 IS A Type1, name2 IS A Type2
+GIVEN name1 IS A Type1
+      name2 IS A Type2
+GIVETH A Type
+</code></pre>
+<p>A function has one <code>GIVEN</code>. Further inputs go on the same line, separated by commas, or on the lines below, lined up under the first name.
+A second <code>GIVEN</code> line directly below the first is a syntax error.</p>
+<p><strong>Example files:</strong></p>
+<pre><code class="language-l4-file">-- GIVEN keyword examples
+
+-- Single Parameter Functions
+
+GIVEN x IS A NUMBER
+`double the value` x MEANS x TIMES 2
+
+GIVEN `person name` IS A STRING
+`greet the person` `person name` MEANS CONCAT "Hello, ", `person name`
+
+#EVAL `double the value` 21
+#EVAL `greet the person` "World"
+
+-- Multiple Parameters (Same Line)
+
+GIVEN a IS A NUMBER, b IS A NUMBER
+`add two numbers` a b MEANS a PLUS b
+
+GIVEN x IS A NUMBER, y IS A NUMBER
+`multiply two numbers` x y MEANS x TIMES y
+
+#EVAL `add two numbers` 10 32
+#EVAL `multiply two numbers` 6 7
+
+-- Multiple Parameters (Continuation with Indentation)
+
+GIVEN x1 IS A NUMBER
+      y1 IS A NUMBER
+      z1 IS A NUMBER
+`sum of three numbers` x1 y1 z1 MEANS x1 PLUS y1 PLUS z1
+
+#EVAL `sum of three numbers` 1 2 3
+
+-- Parameters with Complex Types
+
+DECLARE Point HAS x IS A NUMBER, y IS A NUMBER
+
+GIVEN p IS A Point
+`get x coordinate` p MEANS p's x
+
+GIVEN p1 IS A Point
+      p2 IS A Point
+`distance squared between points` p1 p2 MEANS
+  LET `delta x` IS p2's x MINUS p1's x
+      `delta y` IS p2's y MINUS p1's y
+  IN (`delta x` TIMES `delta x`) PLUS (`delta y` TIMES `delta y`)
+
+DECIDE `the origin` IS Point WITH x IS 0, y IS 0
+DECIDE `point one` IS Point WITH x IS 3, y IS 4
+
+#EVAL `get x coordinate` `point one`
+#EVAL `distance squared between points` `the origin` `point one`
+
+-- Type Parameters
+
+GIVEN a IS A TYPE, xs IS A LIST OF a
+GIVETH A NUMBER
+`length of list` xs MEANS
+  CONSIDER xs
+  WHEN EMPTY THEN 0
+  WHEN hd FOLLOWED BY tail THEN 1 PLUS `length of list` tail
+
+#EVAL `length of list` (LIST 1, 2, 3, 4, 5)
+#EVAL `length of list` (LIST "a", "b", "c")
+
+-- Combined with GIVETH
+
+GIVEN n IS A NUMBER
+GIVETH A BOOLEAN
+`is positive number` n MEANS n > 0
+
+GIVEN num IS A NUMBER
+GIVETH A STRING
+`sign of number` num MEANS
+  IF num > 0 THEN "positive"
+  ELSE IF num &#x3C; 0 THEN "negative"
+       ELSE "zero"
+
+#EVAL `is positive number` 5
+#EVAL `sign of number` (-3)
+</code></pre>
+<p>,</p>
+<pre><code class="language-l4-file">-- GIVETH keyword examples
+
+-- Basic Return Types
+
+GIVEN n IS A NUMBER
+GIVETH A NUMBER
+`the square of` n MEANS n TIMES n
+
+GIVEN a IS A NUMBER
+      b IS A NUMBER
+GIVETH A NUMBER
+`the larger of` a b MEANS IF a > b THEN a ELSE b
+
+#EVAL `the square of` 7
+#EVAL `the larger of` 10 25
+
+-- Boolean Return Types
+
+GIVEN age IS A NUMBER
+GIVETH A BOOLEAN
+`is an adult` age MEANS age >= 18
+
+GIVEN n IS A NUMBER
+GIVETH A BOOLEAN
+`is even` n MEANS (n MODULO 2) EQUALS 0
+
+#EVAL `is an adult` 21
+#EVAL `is even` 4
+
+-- String Return Types
+
+GIVEN name IS A STRING
+GIVETH A STRING
+`greeting for` name MEANS CONCAT "Hello, ", name
+
+GIVEN num IS A NUMBER
+GIVETH A STRING
+`description of` num MEANS
+  IF num > 0 THEN "positive"
+  ELSE IF num &#x3C; 0 THEN "negative"
+       ELSE "zero"
+
+#EVAL `greeting for` "Alice"
+#EVAL `description of` (-5)
+
+-- Complex Return Types
+
+-- Returning MAYBE
+GIVEN xs IS A LIST OF NUMBER
+GIVETH A MAYBE NUMBER
+`the first of` xs MEANS
+  CONSIDER xs
+  WHEN EMPTY THEN NOTHING
+
+  WHEN h FOLLOWED BY rest THEN JUST h
+
+#EVAL `the first of` (LIST 1, 2, 3)
+#EVAL `the first of` EMPTY
+
+-- Returning LIST
+GIVEN n IS A NUMBER
+GIVETH A LIST OF NUMBER
+`countdown from` n MEANS
+  IF n &#x3C;= 0 THEN EMPTY
+  ELSE n FOLLOWED BY `countdown from` (n MINUS 1)
+
+#EVAL `countdown from` 5
+
+-- GIVES as Synonym
+
+GIVEN x IS A NUMBER
+GIVES A NUMBER
+`three times` x MEANS x TIMES 3
+
+#EVAL `three times` 7
+
+-- Parameterized Return Types
+
+GIVEN a IS A TYPE, x IS AN a
+GIVETH A LIST OF a
+`list holding only` x MEANS x FOLLOWED BY EMPTY
+
+#EVAL `list holding only` 42
+#EVAL `list holding only` "hello"
+
+-- Record Return Types
+
+DECLARE Person HAS name IS A STRING, age IS A NUMBER
+
+GIVEN `person name` IS A STRING
+      `person age` IS A NUMBER
+GIVETH A Person
+`make a person` `person name` `person age` MEANS Person WITH name IS `person name`, age IS `person age`
+
+#EVAL `make a person` "Bob" 30
+</code></pre>
+<h2 id="given">GIVEN</h2>
+<pre><code class="language-l4">GIVEN amount IS A NUMBER
+      `days overdue` IS A NUMBER
+GIVETH A NUMBER
+`late fee` amount `days overdue` MEANS
+  IF `days overdue` > 30 THEN amount TIMES 0.05 ELSE 0
+</code></pre>
+<p>The names after the function name are the <code>GIVEN</code> inputs in order; they may be left out of the definition, but if they are written they must match.
+<code>A</code> and <code>AN</code> are interchangeable (<code>IS AN Invoice</code>); see <a href="/l4/reference/types/DECLARE#a-and-an">DECLARE</a>.</p>
+<h3 id="calling-with-named-inputs">Calling with named inputs</h3>
+<p>A call gives the inputs in the order of the <code>GIVEN</code>, or by name with <code>WITH</code>:</p>
+<pre><code class="language-l4">GIVEN amount IS A NUMBER
+      `days overdue` IS A NUMBER
+GIVETH A NUMBER
+`late fee` amount `days overdue` MEANS
+  IF `days overdue` > 30 THEN amount TIMES 0.05 ELSE 0
+
+#EVAL `late fee` 1000 45
+#EVAL `late fee` WITH amount IS 1000, `days overdue` IS 45
+#ASSERT (`late fee` WITH `days overdue` IS 10, amount IS 1000) EQUALS 0
+</code></pre>
+<p>With <code>WITH</code>, the inputs can be given in any order. Put the call in parentheses when an operator follows it, as in the <code>#ASSERT</code>. This works only for a function with a <code>GIVEN</code>; a value declared with <a href="/l4/reference/types/ASSUME">ASSUME</a> cannot be given a value this way.</p>
+<h3 id="type-parameters">Type parameters</h3>
+<p>An input of type <code>TYPE</code> makes the function work for any type:</p>
+<pre><code class="language-l4">GIVEN a IS A TYPE
+      xs IS A LIST OF a
+GIVETH A NUMBER
+`number of items in` xs MEANS
+  CONSIDER xs
+  WHEN EMPTY THEN 0
+  WHEN first FOLLOWED BY rest THEN 1 PLUS `number of items in` rest
+</code></pre>
+<p>A type parameter is not passed when the function is called: <code>`number of items in` (LIST 1, 2, 3)</code> gives <code>3</code>.
+<a href="/l4/reference/types/for-all">FOR ALL</a> writes the same kind of type for an <code>ASSUME</code>.</p>
+<h3 id="descriptions-of-inputs">Descriptions of inputs</h3>
+<p><code>@desc</code> after an input describes it. The description is shown when the function is deployed with <code>@export</code>:</p>
+<pre><code class="language-l4">@export Calculate the late fee for an overdue invoice
+GIVEN amount IS A NUMBER @desc The invoice amount
+      `days overdue` IS A NUMBER @desc How many days past the due date
+GIVETH A NUMBER
+`late fee` amount `days overdue` MEANS
+  IF `days overdue` > 30 THEN amount TIMES 0.05 ELSE 0
+</code></pre>
+<h3 id="anonymous-functions">Anonymous functions</h3>
+<p><code>GIVEN … YIELD</code> makes a function without a name; see <a href="/l4/reference/functions/YIELD">YIELD</a>.</p>
+<h2 id="giveth">GIVETH</h2>
+<p><code>GIVETH</code> names the type of the result. <code>GIVES</code> is a synonym, and the article is optional (<code>GIVETH NUMBER</code>).</p>
+<pre><code class="language-l4">GIVEN xs IS A LIST OF NUMBER
+GIVETH A MAYBE NUMBER
+`the first of` xs MEANS
+  CONSIDER xs
+  WHEN EMPTY THEN NOTHING
+  WHEN first FOLLOWED BY rest THEN JUST first
+</code></pre>
+<p><code>GIVETH</code> is optional: without it, L4 infers the result type.
+Writing it makes the rule easier to read and lets the type checker report a body that gives the wrong type.</p>
+<p>A rule that returns obligations has the result type <code>DEONTIC Party Action</code>; see <a href="/l4/reference/regulative/DEONTIC">DEONTIC</a>.</p>
+<h2 id="related-pages">Related pages</h2>
+<ul>
+<li><a href="/l4/reference/functions/DECIDE">DECIDE</a>: the definition that follows <code>GIVEN</code> and <code>GIVETH</code></li>
+<li><a href="/l4/reference/types">Types</a>: the types an input or result can have</li>
+<li><a href="/l4/reference/types/ASSUME">ASSUME</a>: a name with a type and no definition</li>
+</ul>
+0:{"rsc":["$","$1","c",{"children":[["$","$L2",null,{"navSections":[{"title":"","items":[{"title":"Language Reference","href":"reference"},{"title":"Glossary","href":"reference/GLOSSARY"},{"title":"Cheat sheet","href":"reference/cheat-sheet"},{"title":"Types","href":"reference/types","children":[{"title":"DECLARE","href":"reference/types/DECLARE"},{"title":"ASSUME","href":"reference/types/ASSUME"},{"title":"FOR ALL","href":"reference/types/for-all"},{"title":"Coercions","href":"reference/types/coercions"}]},{"title":"Functions","href":"reference/functions","children":[{"title":"DECIDE","href":"reference/functions/DECIDE"},{"title":"GIVEN and GIVETH","href":"reference/functions/GIVEN"},{"title":"MEANS","href":"reference/functions/MEANS"},{"title":"LET and WHERE","href":"reference/functions/LET"},{"title":"YIELD","href":"reference/functions/YIELD"},{"title":"AKA","href":"reference/functions/AKA"}]},{"title":"Control flow","href":"reference/control-flow","children":[{"title":"IF","href":"reference/control-flow/IF"},{"title":"BRANCH","href":"reference/control-flow/BRANCH"},{"title":"CONSIDER","href":"reference/control-flow/CONSIDER"}]},{"title":"Operators","href":"reference/operators","children":[{"title":"AND, OR, NOT, IMPLIES","href":"reference/operators/logical"},{"title":"UNLESS","href":"reference/operators/UNLESS"},{"title":"Arithmetic","href":"reference/operators/arithmetic"},{"title":"Comparisons","href":"reference/operators/comparisons"}]},{"title":"Regulative rules","href":"reference/regulative","children":[{"title":"PARTY, MUST, MAY, SHANT","href":"reference/regulative/PARTY"},{"title":"Deadlines and consequences","href":"reference/regulative/consequences"},{"title":"BECAUSE","href":"reference/regulative/BECAUSE"},{"title":"DEONTIC","href":"reference/regulative/DEONTIC"},{"title":"EVENT","href":"reference/regulative/EVENT"}]},{"title":"Syntax and directives","href":"reference/syntax"},{"title":"Built-in functions","href":"reference/builtins","children":[{"title":"HTTP and JSON","href":"reference/builtins/http-json"}]},{"title":"Standard libraries","href":"reference/libraries","children":[{"title":"prelude","href":"reference/libraries/prelude"},{"title":"math","href":"reference/libraries/math"},{"title":"daydate","href":"reference/libraries/daydate"},{"title":"time","href":"reference/libraries/time"},{"title":"datetime","href":"reference/libraries/datetime"},{"title":"timezone","href":"reference/libraries/timezone"},{"title":"excel-date","href":"reference/libraries/excel-date"},{"title":"currency","href":"reference/libraries/currency"},{"title":"holdings","href":"reference/libraries/holdings"},{"title":"actus","href":"reference/libraries/actus"},{"title":"legal-persons","href":"reference/libraries/legal-persons"},{"title":"jurisdiction","href":"reference/libraries/jurisdiction"},{"title":"llm","href":"reference/libraries/llm"}]},{"title":"Error messages","href":"reference/errors"}]}],"toc":[],"htmlContent":"$3","pager":{"prev":"$0:rsc:props:children:0:props:navSections:0:items:4:children:0","next":"$0:rsc:props:children:0:props:navSections:0:items:4:children:2"}}],["$L4"],"$L5"]}],"isPartial":false,"staleTime":300,"varyParams":null,"buildId":"iJUXAyHcmcW99cMci3ei9"}
+4:["$","script","script-0",{"src":"/_next/static/chunks/0fl~me.qwn48c.js","async":true}]
+5:["$","$L6",null,{"children":["$","$7",null,{"name":"Next.MetadataOutlet","children":"$@8"}]}]
+8:null

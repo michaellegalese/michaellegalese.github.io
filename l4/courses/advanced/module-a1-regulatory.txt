@@ -1,0 +1,865 @@
+1:"$Sreact.fragment"
+2:I[39756,["/_next/static/chunks/0ypf.t599.7y6.js","/_next/static/chunks/0t2xr05rlu96l.js"],"default"]
+3:I[37457,["/_next/static/chunks/0ypf.t599.7y6.js","/_next/static/chunks/0t2xr05rlu96l.js"],"default"]
+4:I[22016,["/_next/static/chunks/0ypf.t599.7y6.js","/_next/static/chunks/0t2xr05rlu96l.js","/_next/static/chunks/11.9ba59t4-it.js"],""]
+5:I[5500,["/_next/static/chunks/0ypf.t599.7y6.js","/_next/static/chunks/0t2xr05rlu96l.js","/_next/static/chunks/11.9ba59t4-it.js"],"Image"]
+10:I[68027,["/_next/static/chunks/0ypf.t599.7y6.js","/_next/static/chunks/0t2xr05rlu96l.js"],"default",1]
+:HL["/_next/static/chunks/0xhryq7f66rdk.css","style"]
+:HL["/_next/static/chunks/0s9wju.j1~_xn.css","style"]
+:HL["/_next/static/media/248e1dc0efc99276-s.p.0ft7o6kv5bp14.woff2","font",{"crossOrigin":"","type":"font/woff2"}]
+:HL["/_next/static/media/83afe278b6a6bb3c-s.p.0q-301v4kxxnr.woff2","font",{"crossOrigin":"","type":"font/woff2"}]
+0:{"P":null,"c":["","l4","courses","advanced","module-a1-regulatory"],"q":"","i":false,"f":[[["",{"children":["l4",{"children":[["slug","courses/advanced/module-a1-regulatory","oc",null],{"children":["__PAGE__",{}]}]}]},"$undefined","$undefined",16],[["$","$1","c",{"children":[[["$","link","0",{"rel":"stylesheet","href":"/_next/static/chunks/0xhryq7f66rdk.css","precedence":"next","crossOrigin":"$undefined","nonce":"$undefined"}],["$","script","script-0",{"src":"/_next/static/chunks/0ypf.t599.7y6.js","async":true,"nonce":"$undefined"}],["$","script","script-1",{"src":"/_next/static/chunks/0t2xr05rlu96l.js","async":true,"nonce":"$undefined"}]],["$","html",null,{"lang":"en","children":[["$","head",null,{"children":[["$","meta",null,{"httpEquiv":"Content-Security-Policy","content":"default-src 'self' https://legalese.com; script-src 'self' https://legalese.com 'unsafe-inline' https://cdnjs.cloudflare.com; style-src 'self' https://legalese.com 'unsafe-inline'; font-src 'self' https://legalese.com; img-src 'self' https://legalese.com https://workoscdn.com https://*.googleusercontent.com; connect-src 'self' https://legalese.com https://legalese.cloud https://ai.legalese.cloud https://*.workos.com; frame-src 'self' https://legalese.com https://jl4.legalese.com https://*.workos.com; object-src 'none'; base-uri 'self' https://legalese.com"}],["$","link",null,{"rel":"apple-touch-icon","sizes":"180x180","href":"/favicon/apple-touch-icon.png"}],["$","link",null,{"rel":"icon","type":"image/png","sizes":"32x32","href":"/favicon/favicon-32x32.png"}],["$","link",null,{"rel":"icon","type":"image/png","sizes":"16x16","href":"/favicon/favicon-16x16.png"}],["$","link",null,{"rel":"manifest","href":"/favicon/site.webmanifest"}],["$","link",null,{"rel":"shortcut icon","href":"/favicon/favicon.ico"}],["$","meta",null,{"name":"msapplication-TileColor","content":"#000000"}],["$","meta",null,{"name":"msapplication-config","content":"/favicon/browserconfig.xml"}],["$","meta",null,{"name":"theme-color","content":"#000"}],["$","link",null,{"rel":"alternate","type":"application/rss+xml","href":"/feed.xml"}]]}],["$","body",null,{"className":"inter_5901b7c6-module__ec5Qua__variable merriweather_b1e99710-module__84TlHG__variable","children":[["$","div",null,{"className":"min-h-screen","children":["$","$L2",null,{"parallelRouterKey":"children","error":"$undefined","errorStyles":"$undefined","errorScripts":"$undefined","template":["$","$L3",null,{}],"templateStyles":"$undefined","templateScripts":"$undefined","notFound":[["$","div",null,{"className":"min-h-screen flex flex-col","children":["$","div",null,{"className":"container mx-auto px-5 flex-1 flex flex-col","children":[["$","header",null,{"className":"flex flex-col md:flex-row items-center justify-between py-8 mb-6","children":["$","$L4",null,{"href":"/","className":"flex items-center gap-1 hover:opacity-80 transition-opacity","children":[["$","$L5",null,{"src":"/assets/logos/legalese-logo.png","alt":"§","width":42,"height":42,"className":"rounded"}],["$","span",null,{"className":"text-2xl font-bold tracking-tight font-merriweather","children":"Legalese"}]]}]}],["$","div",null,{"className":"flex-1 flex items-center justify-center","children":["$","div",null,{"className":"text-center px-6 py-16","children":[["$","h1",null,{"className":"text-8xl font-bold text-gray-200 mb-4","children":404}],["$","h2",null,{"className":"text-2xl font-semibold text-gray-900 mb-4 font-merriweather","children":"Not Found"}],["$","p",null,{"className":"text-gray-600 mb-8 max-w-md","children":"The page you're looking for doesn't exist or may have been moved."}],["$","$L4",null,{"href":"/","className":"inline-block px-6 py-2 bg-accent text-white rounded-md hover:bg-accent-hover transition-colors","children":"Go to Homepage"}]]}]}]]}]}],[]],"forbidden":"$undefined","unauthorized":"$undefined"}]}],["$","footer",null,{"className":"bg-gray-900 text-white","children":["$","div",null,{"className":"container mx-auto px-5","children":["$","div",null,{"className":"py-16","children":[["$","div",null,{"className":"grid grid-cols-1 md:grid-cols-4 gap-12 mb-12","children":[["$","div",null,{"className":"md:col-span-1","children":[["$","div",null,{"className":"flex items-center","children":[["$","$L5",null,{"src":"/assets/logos/legalese-logo.png","alt":"§","width":36,"height":36,"className":"rounded invert"}],["$","h3",null,{"className":"text-2xl font-bold tracking-tight ml-1","children":"Legalese"}]]}],"$L6"]}],"$L7","$L8","$L9"]}],"$La"]}]}]}]]}]]}]]}],{"children":["$Lb",{"children":["$Lc",{"children":["$Ld",{},null,false,null]},null,false,"$@e"]},null,false,null]},null,false,null],"$Lf",false]],"m":"$undefined","G":["$10",["$L11"]],"S":true,"h":null,"s":"$undefined","l":"$undefined","p":"$undefined","d":"$undefined","b":"iJUXAyHcmcW99cMci3ei9"}
+12:I[79520,["/_next/static/chunks/0ypf.t599.7y6.js","/_next/static/chunks/0t2xr05rlu96l.js","/_next/static/chunks/0uxaa7wo_wmcw.js"],""]
+13:I[85295,["/_next/static/chunks/0ypf.t599.7y6.js","/_next/static/chunks/0t2xr05rlu96l.js","/_next/static/chunks/0uxaa7wo_wmcw.js"],"default"]
+14:I[41529,["/_next/static/chunks/0ypf.t599.7y6.js","/_next/static/chunks/0t2xr05rlu96l.js","/_next/static/chunks/0uxaa7wo_wmcw.js"],"default"]
+16:I[97367,["/_next/static/chunks/0ypf.t599.7y6.js","/_next/static/chunks/0t2xr05rlu96l.js"],"OutletBoundary"]
+17:"$Sreact.suspense"
+1a:I[97367,["/_next/static/chunks/0ypf.t599.7y6.js","/_next/static/chunks/0t2xr05rlu96l.js"],"ViewportBoundary"]
+1c:I[97367,["/_next/static/chunks/0ypf.t599.7y6.js","/_next/static/chunks/0t2xr05rlu96l.js"],"MetadataBoundary"]
+6:["$","p",null,{"className":"text-gray-400 text-sm mb-4","children":"AI is eating law"}]
+7:["$","div",null,{"children":[["$","h4",null,{"className":"font-bold mb-4 text-gray-300","children":"Company"}],["$","ul",null,{"className":"space-y-2","children":[[["$","li","about",{"children":["$","$L4",null,{"href":"/about","className":"text-gray-400 hover:text-white transition-colors text-sm","children":"About us"}]}],["$","li","team",{"children":["$","$L4",null,{"href":"/team","className":"text-gray-400 hover:text-white transition-colors text-sm","children":"Team"}]}],["$","li","media",{"children":["$","$L4",null,{"href":"/media","className":"text-gray-400 hover:text-white transition-colors text-sm","children":"Press & Media"}]}]],[],["$","li",null,{"children":["$","$L4",null,{"href":"/posts","className":"text-gray-400 hover:text-white transition-colors text-sm","children":"Blog"}]}]]}]]}]
+8:["$","div",null,{"children":[["$","h4",null,{"className":"font-bold mb-4 text-gray-300","children":"Resources"}],["$","ul",null,{"className":"space-y-2","children":[["$","li","l4-documentation",{"children":["$","a",null,{"href":"https://legalese.com/l4","target":"_blank","rel":"noopener noreferrer","className":"text-gray-400 hover:text-white transition-colors text-sm","children":"L4 Documentation"}]}],["$","li","vscode-extension",{"children":["$","a",null,{"href":"https://marketplace.visualstudio.com/items?itemName=Legalese.l4-vscode","target":"_blank","rel":"noopener noreferrer","className":"text-gray-400 hover:text-white transition-colors text-sm","children":"L4 VS Code Extension"}]}],["$","li","l4-web-ide",{"children":["$","a",null,{"href":"https://jl4.legalese.com","target":"_blank","rel":"noopener noreferrer","className":"text-gray-400 hover:text-white transition-colors text-sm","children":"L4 Web IDE"}]}],["$","li","l4-console",{"children":["$","a",null,{"href":"https://legalese.com/console","target":"_blank","rel":"noopener noreferrer","className":"text-gray-400 hover:text-white transition-colors text-sm","children":"Cloud Console"}]}],["$","li","l4-console copy",{"children":["$","a",null,{"href":"https://legalese.com/compare","target":"_blank","rel":"noopener noreferrer","className":"text-gray-400 hover:text-white transition-colors text-sm","children":"Compare AI Legal Interpretations"}]}],["$","li","provable",{"children":["$","a",null,{"href":"https://provable.legalese.com","target":"_blank","rel":"noopener noreferrer","className":"text-gray-400 hover:text-white transition-colors text-sm","children":"Provable Skill Marketplace"}]}],["$","li","github",{"children":["$","a",null,{"href":"https://github.com/legalese/l4-ide","target":"_blank","rel":"noopener noreferrer","className":"text-gray-400 hover:text-white transition-colors text-sm","children":"GitHub"}]}]]}]]}]
+9:["$","div",null,{"children":[["$","h4",null,{"className":"font-bold mb-4 text-gray-300","children":"Contact"}],["$","ul",null,{"className":"space-y-2","children":[[["$","li","community",{"children":["$","$L4",null,{"href":"/community","className":"text-gray-400 hover:text-white transition-colors text-sm","children":"Community"}]}],["$","li","code-of-conduct",{"children":["$","$L4",null,{"href":"/code-of-conduct","className":"text-gray-400 hover:text-white transition-colors text-sm","children":"Code of Conduct"}]}]],[["$","li","discord",{"children":["$","a",null,{"href":"https://discord.gg/Q7a7NSEdNy","target":"_blank","rel":"noopener noreferrer","className":"text-gray-400 hover:text-white transition-colors text-sm","children":"Discord"}]}],["$","li","x-twitter",{"children":["$","a",null,{"href":"https://x.com/legalese","target":"_blank","rel":"noopener noreferrer","className":"text-gray-400 hover:text-white transition-colors text-sm","children":"Legalese on X"}]}]]]}]]}]
+a:["$","div",null,{"className":"border-t border-gray-800 pt-8 flex flex-col md:flex-row justify-between items-center gap-4","children":[["$","p",null,{"className":"text-gray-500 text-sm","children":["© ",2026," Legalese Pte. Ltd., Singapore. All rights reserved."]}],["$","div",null,{"className":"flex gap-6","children":[["$","$L4","terms",{"href":"/terms","className":"text-gray-500 hover:text-white transition-colors text-sm","children":"Terms of Use"}],["$","$L4","privacy",{"href":"/privacy","className":"text-gray-500 hover:text-white transition-colors text-sm","children":"Privacy & Cookies"}]]}]]}]
+b:["$","$1","c",{"children":[[["$","link","0",{"rel":"stylesheet","href":"/_next/static/chunks/0s9wju.j1~_xn.css","precedence":"next","crossOrigin":"$undefined","nonce":"$undefined"}],["$","script","script-0",{"src":"/_next/static/chunks/0uxaa7wo_wmcw.js","async":true,"nonce":"$undefined"}]],[["$","$L2",null,{"parallelRouterKey":"children","error":"$undefined","errorStyles":"$undefined","errorScripts":"$undefined","template":["$","$L3",null,{}],"templateStyles":"$undefined","templateScripts":"$undefined","notFound":"$undefined","forbidden":"$undefined","unauthorized":"$undefined"}],["$","$L12",null,{"src":"https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"}],["$","$L12",null,{"src":"/hljs-l4/l4.min.js"}],["$","$L13",null,{}],["$","$L14",null,{}],["$","style",null,{"dangerouslySetInnerHTML":{"__html":"\npre code.hljs{display:block;overflow-x:auto;padding:0.2rem 0.4rem;font-size:13px;color:#104e64;background:#fdfdfd}\ncode.hljs .hljs-keyword{color:#0000ff;font-weight:500}\ncode.hljs .hljs-literal{color:#0000ff}\ncode.hljs .hljs-built_in{color:#267f99}\ncode.hljs .hljs-string{color:#a31515}\ncode.hljs .hljs-number{color:#098658}\ncode.hljs .hljs-comment{color:#008000;font-style:italic}\ncode.hljs .hljs-title{color:#795e26;font-weight:600}\ncode.hljs .hljs-variable{color:#001080}\ncode.hljs .hljs-doctag{color:#ffbd33}\ncode.hljs .hljs-formula{color:#af00db;font-weight:500}\n"}}]]]}]
+c:["$","$1","c",{"children":[null,["$","$L2",null,{"parallelRouterKey":"children","error":"$undefined","errorStyles":"$undefined","errorScripts":"$undefined","template":["$","$L3",null,{}],"templateStyles":"$undefined","templateScripts":"$undefined","notFound":"$undefined","forbidden":"$undefined","unauthorized":"$undefined"}]]}]
+d:["$","$1","c",{"children":["$L15",[["$","script","script-0",{"src":"/_next/static/chunks/0fl~me.qwn48c.js","async":true,"nonce":"$undefined"}]],["$","$L16",null,{"children":["$","$17",null,{"name":"Next.MetadataOutlet","children":"$@18"}]}]]}]
+19:[]
+e:"$W19"
+f:["$","$1","h",{"children":[null,["$","$L1a",null,{"children":"$L1b"}],["$","div",null,{"hidden":true,"children":["$","$L1c",null,{"children":["$","$17",null,{"name":"Next.Metadata","children":"$L1d"}]}]}],["$","meta",null,{"name":"next-size-adjust","content":""}]]}]
+11:["$","link","0",{"rel":"stylesheet","href":"/_next/static/chunks/0xhryq7f66rdk.css","precedence":"next","crossOrigin":"$undefined","nonce":"$undefined"}]
+1e:I[90160,["/_next/static/chunks/0ypf.t599.7y6.js","/_next/static/chunks/0t2xr05rlu96l.js","/_next/static/chunks/0uxaa7wo_wmcw.js","/_next/static/chunks/0fl~me.qwn48c.js"],"default"]
+1f:T722b,<h1>Module A1: Real regulatory schemes</h1>
+<p>In this module, you'll learn how to model complete legislative frameworks using a systematic three-layer approach. Find a working example at the end.</p>
+<h2 id="learning-objectives">Learning Objectives</h2>
+<p>By the end of this module, you will be able to:</p>
+<ul>
+<li>Apply the three-layer approach to legislative encoding</li>
+<li>Extract type definitions from statutory text</li>
+<li>Model deontic rules with proper actors and triggers</li>
+<li>Track state transitions and register events</li>
+</ul>
+<hr>
+<h2 id="the-three-layer-approach">The Three-Layer Approach</h2>
+<p>When encoding legislation, we organize rules into three layers:</p>
+<table>
+<thead>
+<tr>
+<th>Layer</th>
+<th>What It Contains</th>
+<th>L4 Constructs</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>A: Structural</strong></td>
+<td>Definitions, types, enums</td>
+<td>DECLARE, glossary</td>
+</tr>
+<tr>
+<td><strong>B: Deontic</strong></td>
+<td>Obligations, permissions, prohibitions</td>
+<td>MUST, MAY, SHANT</td>
+</tr>
+<tr>
+<td><strong>C: Events</strong></td>
+<td>State transitions, register updates</td>
+<td>Actions, effects</td>
+</tr>
+</tbody>
+</table>
+<p>This mirrors how legislation is typically structured:</p>
+<ul>
+<li>Early sections define terms</li>
+<li>Middle sections create duties and powers</li>
+<li>Later sections specify procedures and consequences</li>
+</ul>
+<hr>
+<h2 id="case-study-charity-registration">Case Study: Charity Registration</h2>
+<p>We'll use the Jersey Charities Law as a running example. This real legislation covers:</p>
+<ul>
+<li>What qualifies as a charity</li>
+<li>Who can be a governor</li>
+<li>Filing requirements</li>
+<li>Enforcement powers</li>
+</ul>
+<h3 id="starting-point-the-legislation">Starting Point: The Legislation</h3>
+<p>From the Charities (Jersey) Law 2014:</p>
+<blockquote>
+<p><strong>Article 2 - Definitions</strong>
+"charitable purpose" means any of the purposes specified in Schedule 1
+"governor" means any person who is responsible for the control and management of the administration of a registered charity
+"misconduct" includes mismanagement or misapplication of charity property</p>
+</blockquote>
+<blockquote>
+<p><strong>Article 11 - Registration</strong>
+A charity may apply to the Commissioner for registration by providing:
+(a) its constitution
+(b) a statement of its charitable purposes
+(c) evidence of public benefit
+(d) core financial information</p>
+</blockquote>
+<hr>
+<h2 id="layer-a-structural-definitions">Layer A: Structural Definitions</h2>
+<p>First, encode the definitions and types:</p>
+<pre><code class="language-l4">§ `Structural Layer - Definitions`
+
+-- Article 2(10): "misconduct" includes mismanagement or misapplication
+DECLARE `Misconduct Type` IS ONE OF
+    Mismanagement
+    Misapplication
+    `other misconduct` HAS `the description` IS A STRING
+
+-- Schedule 1: Charitable purposes (13 statutory heads)
+DECLARE `Charitable Purpose` IS ONE OF
+    `prevention or relief of poverty`
+    `advancement of education`
+    `advancement of religion`
+    `advancement of health or saving of lives`
+    `advancement of citizenship or community development`
+    `advancement of arts, culture, heritage or science`
+    `advancement of amateur sport`
+    `advancement of human rights, conflict resolution, reconciliation`
+    `advancement of environmental protection or improvement`
+    `relief of those in need`
+    `advancement of animal welfare`
+    `purposes analogous to charitable purposes`
+    `other charitable purpose` HAS `the description` IS A STRING
+
+-- Article 2: Governor definition
+DECLARE Governor HAS
+    `the name` IS A STRING
+    `the date of birth` IS A DATE
+    `the address` IS A STRING
+    `is bankrupt` IS A BOOLEAN
+    `the convictions` IS A LIST OF Conviction
+
+-- Core financial information (Regulation 1, Core Info Regs 2018)
+DECLARE `Core Financial Information` HAS
+    `the income` IS A Money
+    `the expenditure` IS A Money
+    `the opening assets` IS A Money
+    `the closing assets` IS A Money
+    `the other assets` IS A LIST OF Asset
+
+-- Register sections
+DECLARE `Register Section` IS ONE OF
+    `the general section`
+    `the restricted section`
+
+-- Charity status
+DECLARE `Charity Status` IS ONE OF
+    Pending
+    Active
+    Suspended HAS
+        `the reason` IS A STRING
+        `the date` IS A DATE
+    Deregistered HAS
+        `the reason` IS A STRING
+        `the date` IS A DATE
+        `is retrospective` IS A BOOLEAN
+
+-- Main charity record
+DECLARE `Registered Charity` HAS
+    `the name` IS A STRING
+    `the registration number` IS A STRING
+    `the register section` IS A `Register Section`
+    `the status` IS A `Charity Status`
+    `the constitution` IS A STRING
+    `the purposes` IS A LIST OF `Charitable Purpose`
+    `the public benefit statement` IS A STRING
+    `the governors` IS A LIST OF Governor
+    `the financials` IS A `Core Financial Information`
+    `the registration date` IS A DATE
+</code></pre>
+<h3 id="key-principle-glossary-first">Key Principle: Glossary-First</h3>
+<p>Notice how we encode the statutory glossary (Article 2) as types. This:</p>
+<ol>
+<li><strong>Prevents ambiguity</strong> - <code>Misconduct Type</code> has exactly three variants</li>
+<li><strong>Enables validation</strong> - Can only use defined purposes</li>
+<li><strong>Documents the source</strong> - Comments link to legislation</li>
+</ol>
+<hr>
+<h2 id="layer-b-deontic-rules">Layer B: Deontic Rules</h2>
+<p>Now encode the obligations, permissions, and prohibitions:</p>
+<pre><code class="language-l4">§ `Deontic Layer - Rules`
+
+-- Actors in the regulatory system
+DECLARE Actor IS ONE OF
+    `the charity` HAS `the charity record` IS A `Registered Charity`
+    `the governor` HAS `the governor record` IS A Governor
+    `the Commissioner`
+    `the applicant` HAS `the applicant record` IS A Applicant
+
+-- Actions that can be performed
+DECLARE Action IS ONE OF
+    -- Charity obligations
+    `file annual return`
+    `report change of particulars`
+    `report reportable matter` HAS
+        `the matter` IS A `Reportable Matter`
+    -- Commissioner powers
+    `demand information`
+    `issue Required Steps Notice`
+    `suspend governor` HAS
+        `the reason` IS A STRING
+    `deregister charity` HAS
+        `the reason` IS A STRING
+    -- Governor obligations
+    `act in best interests`
+    `report conviction`
+    -- Appeal actions
+    `lodge appeal`
+</code></pre>
+<h3 id="encoding-individual-rules">Encoding Individual Rules</h3>
+<p>Each statutory rule becomes a function:</p>
+<pre><code class="language-l4">-- B-AR-01: Annual Return Obligation
+-- Article 13(7)-(10) + Timing Order 2019
+-- "A registered charity must file an annual return within 2 months of year end"
+
+GIVEN charity IS A `Registered Charity`
+GIVETH A DEONTIC Actor Action
+`annual return obligation` MEANS
+    IF charity's `the status` EQUALS Active
+    THEN
+        PARTY `the charity` charity
+        MUST `file annual return`
+        WITHIN 60  -- 2 months ≈ 60 days
+        HENCE FULFILLED
+        LEST `Commissioner may issue notice` charity
+    ELSE FULFILLED
+
+-- B-RSN-01: Commissioner's Power to Issue Notice
+-- Article 27(1)-(4)
+
+GIVEN charity IS A `Registered Charity`
+GIVETH A DEONTIC Actor Action
+`Commissioner may issue notice` MEANS
+    PARTY `the Commissioner`
+    MAY `issue Required Steps Notice`
+    HENCE `charity must comply with notice` charity
+</code></pre>
+<h3 id="rule-identification">Rule Identification</h3>
+<p>Use consistent identifiers for traceability:</p>
+<table>
+<thead>
+<tr>
+<th>ID</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>B-AR-01</td>
+<td>CONDUCT</td>
+<td>Annual return filing</td>
+</tr>
+<tr>
+<td>B-AR-02</td>
+<td>CONDUCT</td>
+<td>Commissioner publication</td>
+</tr>
+<tr>
+<td>B-RSN-01</td>
+<td>PROCEDURE</td>
+<td>Required Steps Notice</td>
+</tr>
+<tr>
+<td>B-GOV-01</td>
+<td>CONDUCT</td>
+<td>Governor best interests</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h2 id="layer-c-events-and-state-transitions">Layer C: Events and State Transitions</h2>
+<p>Track what happens when actions occur:</p>
+<pre><code class="language-l4">§ `Event Layer - State Transitions`
+
+-- Events that change the register
+DECLARE `Register Event` IS ONE OF
+    `charity registered` HAS
+        `the charity record` IS A `Registered Charity`
+        `the date` IS A DATE
+    `charity moved to restricted` HAS
+        `the charity record` IS A `Registered Charity`
+        `the date` IS A DATE
+    `charity deregistered` HAS
+        `the charity record` IS A `Registered Charity`
+        `the reason` IS A STRING
+        `the date` IS A DATE
+        `is retrospective` IS A BOOLEAN
+    `annual return filed` HAS
+        `the charity record` IS A `Registered Charity`
+        `the year` IS A NUMBER
+        `was late` IS A BOOLEAN
+    `Required Steps Notice issued` HAS
+        `the charity record` IS A `Registered Charity`
+        `the notice id` IS A STRING
+        `the deadline` IS A DATE
+    `governor suspended` HAS
+        `the governor record` IS A Governor
+        `the charity record` IS A `Registered Charity`
+        `the reason` IS A STRING
+        `the period` IS A NUMBER
+
+-- Effect of events on register
+GIVEN event IS A `Register Event`
+GIVETH A STRING  -- Describes the effect
+`event effect` MEANS
+    CONSIDER event
+    WHEN `charity registered` c d THEN
+        "New active entry created in register"
+    WHEN `charity deregistered` c r d retro THEN
+        IF retro
+        THEN "Entry moved to historic; registration void from earlier date"
+        ELSE "Entry moved to historic"
+    WHEN `annual return filed` c y late THEN
+        IF late
+        THEN "Annual return logged with late flag"
+        ELSE "Annual return logged"
+    WHEN `Required Steps Notice issued` c nid deadline THEN
+        "Notice reference stored under Art 8(3)(k)"
+    OTHERWISE "Register updated"
+</code></pre>
+<hr>
+<h2 id="handling-cross-references">Handling Cross-References</h2>
+<p>Legislation often cross-references between sections. Model these explicitly:</p>
+<pre><code class="language-l4">-- The charity test (Article 5) references:
+-- - Schedule 1 (purposes)
+-- - Article 7 (public benefit)
+-- - Regulations (core financial info)
+
+GIVEN charity IS A `Registered Charity`
+GIVETH A BOOLEAN
+DECIDE `meets charity test` IF
+    `has charitable purposes` charity              -- Schedule 1
+    AND `provides public benefit` charity          -- Article 7
+    AND `has valid constitution` charity           -- Article 11(2)(a)
+    AND `has complete financial info` charity      -- Core Info Regs
+
+-- Article 7: Public benefit factors
+GIVEN charity IS A `Registered Charity`
+GIVETH A BOOLEAN
+DECIDE `provides public benefit` IF
+    `has identifiable benefit` charity             -- Art 7(2)(a)
+    AND `benefit outweighs detriment` charity      -- Art 7(2)(b)
+    AND NOT `unduly restricts beneficiaries` charity  -- Art 7(3)
+</code></pre>
+<hr>
+<h2 id="handling-amendments">Handling Amendments</h2>
+<p>Legislation changes over time. Track versions:</p>
+<pre><code class="language-l4">-- Original Law 2014 had 12 charitable purposes
+-- R&#x26;O 27/2025 added "advancement of animal welfare"
+
+-- Model with effective dates:
+DECLARE `Dated Purpose` HAS
+    `the purpose` IS A `Charitable Purpose`
+    `effective from` IS A DATE
+
+-- Check if purpose was valid at a given date
+GIVEN purpose IS A `Charitable Purpose`
+      `the reference date` IS A DATE
+GIVETH A BOOLEAN
+DECIDE `purpose valid at date` IF
+    -- Animal welfare only valid from 2025
+    IF purpose EQUALS `advancement of animal welfare`
+    THEN `the reference date` >= Date 1 1 2025
+    ELSE TRUE  -- Other purposes valid from 2014
+</code></pre>
+<hr>
+<h2 id="exercise-encode-a-rule">Exercise: Encode a Rule</h2>
+<p>Encode this statutory requirement:</p>
+<blockquote>
+<p><strong>Article 19(1)</strong>: A governor must notify the Commissioner as soon as practicable if any of the following matters applies to them:
+(a) bankruptcy
+(b) disqualification as a company director
+(c) conviction for an offence involving dishonesty</p>
+</blockquote>
+<details>
+<summary>Solution</summary>
+<pre><code class="language-l4">-- Reportable matters under Article 19(1)
+DECLARE `Reportable Matter` IS ONE OF
+    Bankruptcy HAS
+        `the date` IS A DATE
+    `director disqualification` HAS
+        `the date` IS A DATE
+        `the jurisdiction` IS A STRING
+    `dishonest conviction` HAS
+        `the description` IS A STRING
+        `the date` IS A DATE
+
+-- B-GOV-02: Governor reporting obligation
+GIVEN governor IS A Governor
+      matter IS A `Reportable Matter`
+GIVETH A DEONTIC Actor Action
+`governor reporting obligation` MEANS
+    PARTY `the governor` governor
+    MUST `report reportable matter` matter
+    WITHIN 14  -- "as soon as practicable" interpreted as 14 days
+    HENCE FULFILLED
+    LEST `Commissioner may suspend` governor
+</code></pre>
+</details>
+<hr>
+<h2 id="full-example">Full Example</h2>
+<pre><code class="language-l4-file">-- Module A1: Real Regulatory Schemes - Complete Example
+-- Charity Registration System based on Jersey Charities Law 2014
+--
+-- This file demonstrates the three-layer approach to encoding legislation:
+--   Layer A: Structural Definitions (types from statutory glossary)
+--   Layer B: Deontic Rules (obligations, permissions, prohibitions)
+--   Layer C: Events and State Transitions
+
+IMPORT prelude
+IMPORT daydate
+
+-- ============================================================
+§ `Layer A: Structural Definitions`
+-- ============================================================
+
+-- Supporting types needed by the main definitions
+
+DECLARE Conviction HAS
+    `the offence` IS A STRING
+    `the date` IS A DATE
+    `involves dishonesty` IS A BOOLEAN
+
+DECLARE Money HAS
+    `the amount` IS A NUMBER
+    `the currency` IS A STRING
+
+DECLARE Asset HAS
+    `the description` IS A STRING
+    `the value` IS A Money
+
+DECLARE Applicant HAS
+    `the name` IS A STRING
+    `the contact` IS A STRING
+
+-- Article 2(10): "misconduct" includes mismanagement or misapplication
+DECLARE `Misconduct Type` IS ONE OF
+    Mismanagement
+    Misapplication
+    `other misconduct` HAS `the description` IS A STRING
+
+-- Schedule 1: Charitable purposes (13 statutory heads)
+DECLARE `Charitable Purpose` IS ONE OF
+    `prevention or relief of poverty`
+    `advancement of education`
+    `advancement of religion`
+    `advancement of health or saving of lives`
+    `advancement of citizenship or community development`
+    `advancement of arts, culture, heritage or science`
+    `advancement of amateur sport`
+    `advancement of human rights, conflict resolution, reconciliation`
+    `advancement of environmental protection or improvement`
+    `relief of those in need`
+    `advancement of animal welfare`
+    `purposes analogous to charitable purposes`
+    `other charitable purpose` HAS `the description` IS A STRING
+
+-- Article 2: Governor definition
+DECLARE Governor HAS
+    `the name` IS A STRING
+    `the date of birth` IS A DATE
+    `the address` IS A STRING
+    `is bankrupt` IS A BOOLEAN
+    `the convictions` IS A LIST OF Conviction
+
+-- Core financial information (Regulation 1, Core Info Regs 2018)
+DECLARE `Core Financial Information` HAS
+    `the income` IS A Money
+    `the expenditure` IS A Money
+    `the opening assets` IS A Money
+    `the closing assets` IS A Money
+    `the other assets` IS A LIST OF Asset
+
+-- Register sections
+DECLARE `Register Section` IS ONE OF
+    `the general section`
+    `the restricted section`
+
+-- Charity status
+DECLARE `Charity Status` IS ONE OF
+    Pending
+    Active
+    Suspended HAS
+        `the reason` IS A STRING
+        `the date` IS A DATE
+    Deregistered HAS
+        `the reason` IS A STRING
+        `the date` IS A DATE
+        `is retrospective` IS A BOOLEAN
+
+-- Main charity record
+DECLARE `Registered Charity` HAS
+    `the name` IS A STRING
+    `the registration number` IS A STRING
+    `the register section` IS A `Register Section`
+    `the status` IS A `Charity Status`
+    `the constitution` IS A STRING
+    `the purposes` IS A LIST OF `Charitable Purpose`
+    `the public benefit statement` IS A STRING
+    `the governors` IS A LIST OF Governor
+    `the financials` IS A `Core Financial Information`
+    `the registration date` IS A DATE
+
+-- Reportable matters under Article 19(1)
+DECLARE `Reportable Matter` IS ONE OF
+    Bankruptcy HAS
+        `the date` IS A DATE
+    `director disqualification` HAS
+        `the date` IS A DATE
+        `the jurisdiction` IS A STRING
+    `dishonest conviction` HAS
+        `the description` IS A STRING
+        `the date` IS A DATE
+
+-- ============================================================
+§ `Layer B: Deontic Definitions`
+-- ============================================================
+
+-- Actors in the regulatory system
+DECLARE Actor IS ONE OF
+    `the charity` HAS `the charity record` IS A `Registered Charity`
+    `the governor` HAS `the governor record` IS A Governor
+    `the Commissioner`
+    `the applicant` HAS `the applicant record` IS A Applicant
+
+-- Actions that can be performed
+DECLARE Action IS ONE OF
+    -- Charity obligations
+    `file annual return`
+    `report change of particulars`
+    `report reportable matter` HAS
+        `the matter` IS A `Reportable Matter`
+    -- Commissioner powers
+    `demand information`
+    `issue Required Steps Notice`
+    `suspend governor` HAS
+        `the reason` IS A STRING
+    `deregister charity` HAS
+        `the reason` IS A STRING
+    -- Governor obligations
+    `act in best interests`
+    `report conviction`
+    -- Appeal actions
+    `lodge appeal`
+
+-- ============================================================
+§ `Layer B: Deontic Rules`
+-- ============================================================
+
+-- B-AR-01: Annual Return Obligation
+-- Article 13(7)-(10) + Timing Order 2019
+-- "A registered charity must file an annual return within 2 months of year end"
+
+GIVEN charity IS A `Registered Charity`
+GIVETH A DEONTIC Actor Action
+`annual return obligation` MEANS
+    IF charity's `the status` EQUALS Active
+    THEN
+        PARTY `the charity` charity
+        MUST `file annual return`
+        WITHIN 60  -- 2 months approximately 60 days
+        HENCE FULFILLED
+        LEST `Commissioner may issue notice` charity
+    ELSE FULFILLED
+
+-- B-RSN-01: Commissioner's Power to Issue Notice
+-- Article 27(1)-(4)
+
+GIVEN charity IS A `Registered Charity`
+GIVETH A DEONTIC Actor Action
+`Commissioner may issue notice` MEANS
+    PARTY `the Commissioner`
+    MAY `issue Required Steps Notice`
+    HENCE `charity must comply with notice` charity
+
+-- B-RSN-02: Charity must comply with notice
+-- Article 27(5)
+
+GIVEN charity IS A `Registered Charity`
+GIVETH A DEONTIC Actor Action
+`charity must comply with notice` MEANS
+    PARTY `the charity` charity
+    MUST `file annual return`
+    WITHIN 30
+    HENCE FULFILLED
+    LEST BREACH BY `the charity` charity BECAUSE "Failed to comply with Required Steps Notice"
+
+-- B-GOV-02: Governor reporting obligation
+-- Article 19(1): A governor must notify the Commissioner as soon as practicable
+-- if any reportable matter applies to them
+
+GIVEN governor IS A Governor
+      matter IS A `Reportable Matter`
+GIVETH A DEONTIC Actor Action
+`governor reporting obligation` MEANS
+    PARTY `the governor` governor
+    MUST `report reportable matter` matter
+    WITHIN 14  -- "as soon as practicable" interpreted as 14 days
+    HENCE FULFILLED
+    LEST `Commissioner may suspend` governor
+
+-- B-GOV-03: Commissioner may suspend governor
+-- Article 29
+
+GIVEN governor IS A Governor
+GIVETH A DEONTIC Actor Action
+`Commissioner may suspend` MEANS
+    PARTY `the Commissioner`
+    MAY `suspend governor` "Failed to report reportable matter"
+    HENCE FULFILLED
+
+-- ============================================================
+§ `Layer C: Events and State Transitions`
+-- ============================================================
+
+-- Events that change the register
+DECLARE `Register Event` IS ONE OF
+    `charity registered` HAS
+        `the charity record` IS A `Registered Charity`
+        `the date` IS A DATE
+    `charity moved to restricted` HAS
+        `the charity record` IS A `Registered Charity`
+        `the date` IS A DATE
+    `charity deregistered` HAS
+        `the charity record` IS A `Registered Charity`
+        `the reason` IS A STRING
+        `the date` IS A DATE
+        `is retrospective` IS A BOOLEAN
+    `annual return filed` HAS
+        `the charity record` IS A `Registered Charity`
+        `the year` IS A NUMBER
+        `was late` IS A BOOLEAN
+    `Required Steps Notice issued` HAS
+        `the charity record` IS A `Registered Charity`
+        `the notice id` IS A STRING
+        `the deadline` IS A DATE
+    `governor suspended` HAS
+        `the governor record` IS A Governor
+        `the charity record` IS A `Registered Charity`
+        `the reason` IS A STRING
+        `the period` IS A NUMBER
+
+-- Effect of events on register
+GIVEN event IS A `Register Event`
+GIVETH A STRING  -- Describes the effect
+`event effect` MEANS
+    CONSIDER event
+    WHEN `charity registered` c d THEN
+        "New active entry created in register"
+    WHEN `charity deregistered` c r d retro THEN
+        IF retro
+        THEN "Entry moved to historic; registration void from earlier date"
+        ELSE "Entry moved to historic"
+    WHEN `annual return filed` c y late THEN
+        IF late
+        THEN "Annual return logged with late flag"
+        ELSE "Annual return logged"
+    WHEN `Required Steps Notice issued` c nid deadline THEN
+        "Notice reference stored under Art 8(3)(k)"
+    OTHERWISE "Register updated"
+
+-- ============================================================
+§ `Cross-References and Charity Test`
+-- ============================================================
+
+-- The charity test (Article 5) references:
+-- - Schedule 1 (purposes)
+-- - Article 7 (public benefit)
+-- - Regulations (core financial info)
+
+GIVEN charity IS A `Registered Charity`
+GIVETH A BOOLEAN
+DECIDE `meets charity test` IF
+    `has charitable purposes` charity              -- Schedule 1
+    AND `provides public benefit` charity          -- Article 7
+    AND `has valid constitution` charity           -- Article 11(2)(a)
+    AND `has complete financial info` charity      -- Core Info Regs
+
+-- Stub: Check if charity has at least one charitable purpose
+GIVEN charity IS A `Registered Charity`
+GIVETH A BOOLEAN
+DECIDE `has charitable purposes` IF
+    NOT (null (charity's `the purposes`))
+
+-- Article 7: Public benefit factors
+GIVEN charity IS A `Registered Charity`
+GIVETH A BOOLEAN
+DECIDE `provides public benefit` IF
+    `has identifiable benefit` charity             -- Art 7(2)(a)
+    AND `benefit outweighs detriment` charity      -- Art 7(2)(b)
+    AND NOT `unduly restricts beneficiaries` charity  -- Art 7(3)
+
+-- Stub implementations for public benefit factors
+GIVEN charity IS A `Registered Charity`
+GIVETH A BOOLEAN
+DECIDE `has identifiable benefit` IF
+    NOT (charity's `the public benefit statement` EQUALS "")
+
+GIVEN charity IS A `Registered Charity`
+GIVETH A BOOLEAN
+DECIDE `benefit outweighs detriment` IF
+    TRUE  -- Would need detailed analysis
+
+GIVEN charity IS A `Registered Charity`
+GIVETH A BOOLEAN
+DECIDE `unduly restricts beneficiaries` IF
+    FALSE  -- Would need detailed analysis
+
+GIVEN charity IS A `Registered Charity`
+GIVETH A BOOLEAN
+DECIDE `has valid constitution` IF
+    NOT (charity's `the constitution` EQUALS "")
+
+GIVEN charity IS A `Registered Charity`
+GIVETH A BOOLEAN
+DECIDE `has complete financial info` IF
+    charity's `the financials`'s `the income`'s `the amount` >= 0
+    AND charity's `the financials`'s `the expenditure`'s `the amount` >= 0
+
+-- ============================================================
+§ `Handling Amendments - Temporal Validity`
+-- ============================================================
+
+-- Original Law 2014 had 12 charitable purposes
+-- R&#x26;O 27/2025 added "advancement of animal welfare"
+
+-- Model with effective dates:
+DECLARE `Dated Purpose` HAS
+    `the purpose` IS A `Charitable Purpose`
+    `effective from` IS A DATE
+
+-- Check if purpose was valid at a given date
+GIVEN purpose IS A `Charitable Purpose`
+      `the reference date` IS A DATE
+GIVETH A BOOLEAN
+DECIDE `purpose valid at date` IF
+    -- Animal welfare only valid from 2025
+    IF purpose EQUALS `advancement of animal welfare`
+    THEN `the reference date` >= Date 1 1 2025
+    ELSE TRUE  -- Other purposes valid from 2014
+
+-- ============================================================
+§ `Test Data`
+-- ============================================================
+
+-- Sample governor
+`John Smith` MEANS Governor WITH
+    `the name` IS "John Smith"
+    `the date of birth` IS Date 15 6 1975
+    `the address` IS "123 Main Street, St Helier"
+    `is bankrupt` IS FALSE
+    `the convictions` IS EMPTY
+
+-- Sample financial info
+`sample financials` MEANS `Core Financial Information` WITH
+    `the income` IS Money WITH `the amount` IS 50000, `the currency` IS "GBP"
+    `the expenditure` IS Money WITH `the amount` IS 45000, `the currency` IS "GBP"
+    `the opening assets` IS Money WITH `the amount` IS 100000, `the currency` IS "GBP"
+    `the closing assets` IS Money WITH `the amount` IS 105000, `the currency` IS "GBP"
+    `the other assets` IS EMPTY
+
+-- Sample active charity
+`Acme Animal Shelter` MEANS `Registered Charity` WITH
+    `the name` IS "Acme Animal Shelter"
+    `the registration number` IS "JC-2024-001"
+    `the register section` IS `the general section`
+    `the status` IS Active
+    `the constitution` IS "Standard charitable constitution"
+    `the purposes` IS LIST `advancement of animal welfare`
+    `the public benefit statement` IS "Provides shelter and care for abandoned animals in Jersey"
+    `the governors` IS LIST `John Smith`
+    `the financials` IS `sample financials`
+    `the registration date` IS Date 15 1 2024
+
+-- ============================================================
+§ `Test Traces`
+-- ============================================================
+
+-- Test 1: Active charity files annual return on time
+#TRACE `annual return obligation` `Acme Animal Shelter` AT 0 WITH
+    PARTY `the charity` `Acme Animal Shelter` DOES `file annual return` AT 30
+
+-- Test 2: Active charity misses deadline, commissioner issues notice
+#TRACE `annual return obligation` `Acme Animal Shelter` AT 0 WITH
+    (`WAIT UNTIL` 70)
+
+-- Test 3: Governor reports bankruptcy promptly
+`bankruptcy matter` MEANS Bankruptcy (Date 1 7 2024)
+#TRACE `governor reporting obligation` `John Smith` `bankruptcy matter` AT 0 WITH
+    PARTY `the governor` `John Smith` DOES `report reportable matter` `bankruptcy matter` AT 10
+
+-- Test 4: Governor fails to report, commissioner may suspend
+#TRACE `governor reporting obligation` `John Smith` `bankruptcy matter` AT 0 WITH
+    (`WAIT UNTIL` 20)
+
+-- ============================================================
+§ `Evaluations`
+-- ============================================================
+
+-- Check if Acme Animal Shelter meets the charity test
+#EVAL `meets charity test` `Acme Animal Shelter`
+
+-- Check public benefit
+#EVAL `provides public benefit` `Acme Animal Shelter`
+
+-- Check if animal welfare purpose was valid in 2024
+#EVAL `purpose valid at date` `advancement of animal welfare` (Date 1 6 2024)
+
+-- Check if animal welfare purpose is valid in 2025
+#EVAL `purpose valid at date` `advancement of animal welfare` (Date 1 6 2025)
+
+-- Check effect of registration event
+`registration event` MEANS `charity registered` `Acme Animal Shelter` (Date 15 1 2024)
+#EVAL `event effect` `registration event`
+
+-- Check effect of late filing event
+`late filing event` MEANS `annual return filed` `Acme Animal Shelter` 2024 TRUE
+#EVAL `event effect` `late filing event`
+</code></pre>
+<hr>
+<h2 id="summary">Summary</h2>
+<table>
+<thead>
+<tr>
+<th>Layer</th>
+<th>Purpose</th>
+<th>L4 Approach</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>A: Structural</strong></td>
+<td>Definitions</td>
+<td>DECLARE types from glossary</td>
+</tr>
+<tr>
+<td><strong>B: Deontic</strong></td>
+<td>Rules</td>
+<td>MUST/MAY/SHANT functions</td>
+</tr>
+<tr>
+<td><strong>C: Events</strong></td>
+<td>Transitions</td>
+<td>Event types + effects</td>
+</tr>
+</tbody>
+</table>
+<p>Key practices:</p>
+<ul>
+<li>Start with the statutory glossary (definitions section)</li>
+<li>Assign rule IDs for traceability</li>
+<li>Model cross-references explicitly</li>
+<li>Track temporal validity for amendments</li>
+</ul>
+<hr>
+<p>Next, <a href="/l4/courses/advanced/module-a2-cross-cutting">Module A2: Cross-cutting concerns</a> covers timing, notices, appeals and other concerns that span many rules.</p>
+15:["$","$L1e",null,{"navSections":[{"title":"","items":[{"title":"Overview","href":"courses","children":"$undefined"},{"title":"Overview","href":"courses/foundation","children":"$undefined"},{"title":"0. Introduction to L4","href":"courses/foundation/module-0-introduction","children":"$undefined"},{"title":"1. Your first legal rule","href":"courses/foundation/module-1-first-rule","children":"$undefined"},{"title":"2. Legal entities and relationships","href":"courses/foundation/module-2-entities","children":"$undefined"},{"title":"3. Control flow","href":"courses/foundation/module-3-control-flow","children":"$undefined"},{"title":"4. Decision logic","href":"courses/foundation/module-4-decision-logic","children":"$undefined"},{"title":"5. Functions","href":"courses/foundation/module-5-functions","children":"$undefined"},{"title":"6. Regulative rules","href":"courses/foundation/module-6-regulative","children":"$undefined"},{"title":"7. Putting it together","href":"courses/foundation/module-7-capstone","children":"$undefined"},{"title":"Overview","href":"courses/advanced","children":"$undefined"},{"title":"A1. Real regulatory schemes","href":"courses/advanced/module-a1-regulatory","children":"$undefined"},{"title":"A2. Cross-cutting concerns","href":"courses/advanced/module-a2-cross-cutting","children":"$undefined"},{"title":"A3. Contracts in depth","href":"courses/advanced/module-a3-contracts","children":"$undefined"},{"title":"A4. Production patterns","href":"courses/advanced/module-a4-production","children":"$undefined"}]}],"toc":[],"htmlContent":"$1f","pager":{"prev":"$15:props:navSections:0:items:10","next":"$15:props:navSections:0:items:12"}}]
+1b:[["$","meta","0",{"charSet":"utf-8"}],["$","meta","1",{"name":"viewport","content":"width=device-width, initial-scale=1"}]]
+18:null
+1d:[["$","title","0",{"children":"Module A1: Real regulatory schemes | L4 Documentation"}],["$","meta","1",{"name":"description","content":"In this module, you'll learn how to model complete legislative frameworks using a systematic three-layer approach. Find a working example at the end."}],["$","meta","2",{"name":"robots","content":"index, follow"}],["$","link","3",{"rel":"canonical","href":"https://legalese.com/l4/courses/advanced/module-a1-regulatory"}],["$","meta","4",{"property":"og:title","content":"Module A1: Real regulatory schemes | L4 Documentation"}],["$","meta","5",{"property":"og:description","content":"In this module, you'll learn how to model complete legislative frameworks using a systematic three-layer approach. Find a working example at the end."}],["$","meta","6",{"property":"og:url","content":"https://legalese.com/l4/courses/advanced/module-a1-regulatory"}],["$","meta","7",{"property":"og:image","content":"https://legalese.com/opengraph/ai-is-eating-law-v2.jpg"}],["$","meta","8",{"name":"twitter:card","content":"summary_large_image"}],["$","meta","9",{"name":"twitter:title","content":"Module A1: Real regulatory schemes | L4 Documentation"}],["$","meta","10",{"name":"twitter:description","content":"In this module, you'll learn how to model complete legislative frameworks using a systematic three-layer approach. Find a working example at the end."}],["$","meta","11",{"name":"twitter:image","content":"https://legalese.com/opengraph/ai-is-eating-law-v2.jpg"}]]

@@ -1,0 +1,260 @@
+1:"$Sreact.fragment"
+2:I[90160,["/_next/static/chunks/0ypf.t599.7y6.js","/_next/static/chunks/0t2xr05rlu96l.js","/_next/static/chunks/0uxaa7wo_wmcw.js","/_next/static/chunks/0fl~me.qwn48c.js"],"default"]
+6:I[97367,["/_next/static/chunks/0ypf.t599.7y6.js","/_next/static/chunks/0t2xr05rlu96l.js"],"OutletBoundary"]
+7:"$Sreact.suspense"
+3:T25b7,<h1>HTTP and JSON</h1>
+<p>Built-in functions for calling web APIs and for turning L4 values into JSON and back. They need no <code>IMPORT</code>.</p>
+<p><strong>Example:</strong></p>
+<pre><code class="language-l4-file">-- HTTP and JSON Built-in Examples
+-- Demonstrates FETCH, POST, ENV, JSONENCODE, and JSONDECODE
+
+--------------------------------------------------------------------------------
+-- Record type for examples
+--------------------------------------------------------------------------------
+
+DECLARE Person HAS
+  name IS A STRING
+  age IS A NUMBER
+
+--------------------------------------------------------------------------------
+-- JSONENCODE Examples
+--------------------------------------------------------------------------------
+
+-- Encode a simple record
+DECIDE alice IS Person WITH name IS "Alice", age IS 30
+DECIDE aliceJson IS JSONENCODE alice
+#EVAL aliceJson  -- {"name":"Alice","age":30}
+
+-- Encode a list
+DECIDE numbers IS LIST 1, 2, 3, 4, 5
+DECIDE numbersJson IS JSONENCODE numbers
+#EVAL numbersJson  -- [1,2,3,4,5]
+
+-- Encode nested structures
+DECLARE Team HAS
+  teamName IS A STRING
+  members IS A LIST OF Person
+
+DECIDE bob IS Person WITH name IS "Bob", age IS 25
+
+DECIDE team IS Team WITH
+  teamName IS "Engineering"
+  members IS LIST alice, bob
+
+DECIDE teamJson IS JSONENCODE team
+#EVAL teamJson
+
+-- Encode MAYBE values
+DECIDE justValue IS JSONENCODE (JUST 42)
+#EVAL justValue  -- 42
+
+DECIDE nothingValue IS JSONENCODE NOTHING
+#EVAL nothingValue  -- null
+
+--------------------------------------------------------------------------------
+-- JSONDECODE Examples
+--------------------------------------------------------------------------------
+
+-- Decode JSON primitives - returns EITHER STRING value
+DECIDE decodeString IS JSONDECODE "\"hello\""
+DECIDE decodeNumber IS JSONDECODE "42"
+DECIDE decodeArray IS JSONDECODE "[1, 2, 3]"
+
+#EVAL decodeString   -- RIGHT "hello"
+#EVAL decodeNumber   -- RIGHT 42
+#EVAL decodeArray    -- RIGHT (LIST 1, 2, 3)
+
+-- Decode a JSON object into a record: say which type you expect
+GIVETH AN EITHER STRING Person
+decodeObject MEANS JSONDECODE "{\"name\":\"Charlie\",\"age\":28}"
+#EVAL decodeObject   -- RIGHT (Person OF "Charlie", 28)
+
+-- Pattern match to extract values from EITHER
+DECIDE extractedValue IS
+  CONSIDER decodeNumber
+  WHEN RIGHT n THEN n
+  WHEN LEFT err THEN 0
+
+#EVAL extractedValue  -- 42
+
+-- Handle decode errors gracefully
+
+DECIDE badDecodeResult IS JSONDECODE "not valid json"
+
+DECIDE handleError IS
+  CONSIDER badDecodeResult
+  WHEN RIGHT val THEN "Success"
+  WHEN LEFT err THEN CONCAT "Error: ", err
+
+#EVAL handleError  -- "Error: ..."
+
+--------------------------------------------------------------------------------
+-- ENV: read an environment variable (gives a MAYBE STRING)
+--------------------------------------------------------------------------------
+
+DECIDE `the API key is set` IS
+  CONSIDER ENV "API_KEY"
+  WHEN JUST key THEN TRUE
+  WHEN NOTHING THEN FALSE
+
+--------------------------------------------------------------------------------
+-- FETCH and POST (need network access, so these lines are commented out)
+--------------------------------------------------------------------------------
+
+-- Simple GET request
+-- DECIDE uuid IS FETCH "https://www.uuidtools.com/api/generate/v4"
+
+-- Fetch and decode JSON
+-- GIVETH AN EITHER STRING Person
+-- `user data` MEANS JSONDECODE (FETCH "https://api.example.com/user/1")
+
+-- POST with JSON body; headers are "Name: value" lines
+-- DECIDE response IS POST
+--   "https://api.example.com/users"
+--   "content-type: application/json"
+--   (JSONENCODE (Person WITH name IS "New User", age IS 21))
+
+--------------------------------------------------------------------------------
+-- Combined Pattern: Safe API Call with Fallback
+--------------------------------------------------------------------------------
+
+GIVEN jsonStr IS A STRING
+GIVETH A BOOLEAN
+`can decode` jsonStr MEANS
+  CONSIDER JSONDECODE jsonStr
+  WHEN RIGHT val THEN TRUE
+  WHEN LEFT err THEN FALSE
+
+#EVAL `can decode` "{\"name\":\"Test\",\"age\":99}"  -- TRUE
+#EVAL `can decode` "not valid json"                   -- FALSE
+</code></pre>
+<h2 id="where-http-requests-are-allowed">Where HTTP requests are allowed</h2>
+<p><code>FETCH</code> and <code>POST</code> make a real request every time they are evaluated, and only when their result is needed. They accept <code>https://</code> addresses only. Where L4 runs in safe mode, as it does in the browser, both give an error instead of making a request.</p>
+<h2 id="fetch">FETCH</h2>
+<p><code>FETCH url</code> sends a GET request and gives the response body as a STRING.</p>
+<pre><code class="language-l4">DECIDE uuid IS FETCH "https://www.uuidtools.com/api/generate/v4"
+</code></pre>
+<p>Query parameters can be written in the address: <code>"https://api.example.com/search?q=lease"</code>.</p>
+<h2 id="post">POST</h2>
+<p><code>POST url headers body</code> sends a POST request and gives the response body as a STRING. All three inputs are STRINGs.</p>
+<ul>
+<li><code>headers</code> holds one header per line, each written <code>Name: value</code>. Separate the lines with <code>\n</code>: <code>"content-type: application/json\nauthorization: Bearer abc"</code>. Use <code>""</code> for no headers.</li>
+<li><code>body</code> is sent as it is; build JSON with <code>JSONENCODE</code>.</li>
+</ul>
+<pre><code class="language-l4">DECIDE response IS
+  POST
+    "https://api.example.com/data"
+    "content-type: application/json"
+    "{\"name\": \"test\"}"
+</code></pre>
+<h2 id="env">ENV</h2>
+<p><code>ENV name</code> reads an environment variable of the process that evaluates the file. It gives <code>JUST</code> the value, or <code>NOTHING</code> when the variable is not set. Use it to keep API keys out of your files.</p>
+<pre><code class="language-l4">DECIDE `the API key` IS
+  CONSIDER ENV "API_KEY"
+  WHEN JUST key THEN key
+  WHEN NOTHING THEN ""
+</code></pre>
+<h2 id="jsonencode">JSONENCODE</h2>
+<p><code>JSONENCODE value</code> gives the JSON text for any value.</p>
+<table>
+<thead>
+<tr>
+<th>L4 value</th>
+<th>JSON</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>NUMBER</td>
+<td>a number</td>
+</tr>
+<tr>
+<td>STRING</td>
+<td>a string, with escapes</td>
+</tr>
+<tr>
+<td>BOOLEAN</td>
+<td><code>true</code> or <code>false</code></td>
+</tr>
+<tr>
+<td>LIST</td>
+<td>an array</td>
+</tr>
+<tr>
+<td>record (<code>DECLARE ... HAS</code>)</td>
+<td>an object with one entry per field</td>
+</tr>
+<tr>
+<td>constructor without fields, such as <code>Red</code></td>
+<td>its name as a string: <code>"Red"</code></td>
+</tr>
+<tr>
+<td>constructor with fields</td>
+<td>an object of its fields; the constructor's name is not included</td>
+</tr>
+<tr>
+<td><code>NOTHING</code></td>
+<td><code>null</code></td>
+</tr>
+<tr>
+<td><code>JUST x</code></td>
+<td>the JSON for <code>x</code></td>
+</tr>
+</tbody>
+</table>
+<pre><code class="language-l4">DECLARE Person HAS
+  name IS A STRING
+  age IS A NUMBER
+
+DECIDE alice IS Person WITH name IS "Alice", age IS 30
+
+-- {"name":"Alice","age":30}
+DECIDE `alice as JSON` IS JSONENCODE alice
+</code></pre>
+<h2 id="jsondecode">JSONDECODE</h2>
+<p><code>JSONDECODE text</code> reads JSON text. It gives <code>RIGHT value</code>, or <code>LEFT message</code> when the text is not valid JSON. JSON that is valid but does not fit the expected type, such as a record with a field missing or a string where a number belongs, stops the evaluation with an error naming the problem.</p>
+<p>The type you expect guides the decoding, so say it, with <code>GIVETH</code> or by the way the result is used:</p>
+<ul>
+<li>A JSON object decodes to a record whose field names match its keys. Keys the record does not declare are ignored.</li>
+<li>An array decodes to a LIST, a number to a NUMBER, a string to a STRING, <code>true</code> and <code>false</code> to a BOOLEAN.</li>
+<li><code>null</code> decodes to <code>NOTHING</code> for a MAYBE type; any other value decodes to <code>JUST</code> it.</li>
+<li>A string with a constructor's name decodes to that constructor of an enumeration.</li>
+<li>A type declared as another name for a type (<code>DECLARE Year IS A NUMBER</code>) decodes as that type, and so does one for a MAYBE: with <code>DECLARE MaybeYear IS A MAYBE NUMBER</code>, <code>null</code> decodes to <code>NOTHING</code> and <code>2026</code> to <code>JUST 2026</code>.</li>
+</ul>
+<pre><code class="language-l4">DECLARE Person HAS
+  name IS A STRING
+  age IS A NUMBER
+
+GIVETH AN EITHER STRING Person
+parsed MEANS JSONDECODE "{\"name\":\"Bob\",\"age\":25}"
+
+DECIDE person IS
+  CONSIDER parsed
+  WHEN RIGHT p THEN p
+  WHEN LEFT problem THEN Person WITH name IS "Unknown", age IS 0
+</code></pre>
+<h2 id="example-an-authenticated-request">Example: an authenticated request</h2>
+<pre><code class="language-l4">DECLARE `payment request` HAS
+  amount   IS A NUMBER
+  currency IS A STRING
+
+GIVEN `the request` IS A `payment request`
+GIVETH A STRING
+`send` `the request` MEANS
+  CONSIDER ENV "PAYMENTS_API_KEY"
+  WHEN JUST key THEN
+    POST
+      "https://api.example.com/payments"
+      (CONCAT "content-type: application/json\nauthorization: Bearer ", key)
+      (JSONENCODE `the request`)
+  WHEN NOTHING THEN "PAYMENTS_API_KEY is not set"
+</code></pre>
+<h2 id="see-also">See also</h2>
+<ul>
+<li><a href="/l4/reference/libraries/llm">llm</a>: calls to Anthropic, OpenAI and OpenRouter built on <code>POST</code>.</li>
+<li><a href="/l4/reference/types/coercions">Coercions</a>: <code>TOSTRING</code>, <code>TONUMBER</code> and other conversions.</li>
+</ul>
+0:{"rsc":["$","$1","c",{"children":[["$","$L2",null,{"navSections":[{"title":"","items":[{"title":"Language Reference","href":"reference"},{"title":"Glossary","href":"reference/GLOSSARY"},{"title":"Cheat sheet","href":"reference/cheat-sheet"},{"title":"Types","href":"reference/types","children":[{"title":"DECLARE","href":"reference/types/DECLARE"},{"title":"ASSUME","href":"reference/types/ASSUME"},{"title":"FOR ALL","href":"reference/types/for-all"},{"title":"Coercions","href":"reference/types/coercions"}]},{"title":"Functions","href":"reference/functions","children":[{"title":"DECIDE","href":"reference/functions/DECIDE"},{"title":"GIVEN and GIVETH","href":"reference/functions/GIVEN"},{"title":"MEANS","href":"reference/functions/MEANS"},{"title":"LET and WHERE","href":"reference/functions/LET"},{"title":"YIELD","href":"reference/functions/YIELD"},{"title":"AKA","href":"reference/functions/AKA"}]},{"title":"Control flow","href":"reference/control-flow","children":[{"title":"IF","href":"reference/control-flow/IF"},{"title":"BRANCH","href":"reference/control-flow/BRANCH"},{"title":"CONSIDER","href":"reference/control-flow/CONSIDER"}]},{"title":"Operators","href":"reference/operators","children":[{"title":"AND, OR, NOT, IMPLIES","href":"reference/operators/logical"},{"title":"UNLESS","href":"reference/operators/UNLESS"},{"title":"Arithmetic","href":"reference/operators/arithmetic"},{"title":"Comparisons","href":"reference/operators/comparisons"}]},{"title":"Regulative rules","href":"reference/regulative","children":[{"title":"PARTY, MUST, MAY, SHANT","href":"reference/regulative/PARTY"},{"title":"Deadlines and consequences","href":"reference/regulative/consequences"},{"title":"BECAUSE","href":"reference/regulative/BECAUSE"},{"title":"DEONTIC","href":"reference/regulative/DEONTIC"},{"title":"EVENT","href":"reference/regulative/EVENT"}]},{"title":"Syntax and directives","href":"reference/syntax"},{"title":"Built-in functions","href":"reference/builtins","children":[{"title":"HTTP and JSON","href":"reference/builtins/http-json"}]},{"title":"Standard libraries","href":"reference/libraries","children":[{"title":"prelude","href":"reference/libraries/prelude"},{"title":"math","href":"reference/libraries/math"},{"title":"daydate","href":"reference/libraries/daydate"},{"title":"time","href":"reference/libraries/time"},{"title":"datetime","href":"reference/libraries/datetime"},{"title":"timezone","href":"reference/libraries/timezone"},{"title":"excel-date","href":"reference/libraries/excel-date"},{"title":"currency","href":"reference/libraries/currency"},{"title":"holdings","href":"reference/libraries/holdings"},{"title":"actus","href":"reference/libraries/actus"},{"title":"legal-persons","href":"reference/libraries/legal-persons"},{"title":"jurisdiction","href":"reference/libraries/jurisdiction"},{"title":"llm","href":"reference/libraries/llm"}]},{"title":"Error messages","href":"reference/errors"}]}],"toc":[],"htmlContent":"$3","pager":{"prev":"$0:rsc:props:children:0:props:navSections:0:items:9","next":"$0:rsc:props:children:0:props:navSections:0:items:10"}}],["$L4"],"$L5"]}],"isPartial":false,"staleTime":300,"varyParams":null,"buildId":"iJUXAyHcmcW99cMci3ei9"}
+4:["$","script","script-0",{"src":"/_next/static/chunks/0fl~me.qwn48c.js","async":true}]
+5:["$","$L6",null,{"children":["$","$7",null,{"name":"Next.MetadataOutlet","children":"$@8"}]}]
+8:null

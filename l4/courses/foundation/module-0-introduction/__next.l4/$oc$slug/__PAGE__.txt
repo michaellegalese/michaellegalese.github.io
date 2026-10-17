@@ -1,0 +1,276 @@
+1:"$Sreact.fragment"
+2:I[90160,["/_next/static/chunks/0ypf.t599.7y6.js","/_next/static/chunks/0t2xr05rlu96l.js","/_next/static/chunks/0uxaa7wo_wmcw.js","/_next/static/chunks/0fl~me.qwn48c.js"],"default"]
+6:I[97367,["/_next/static/chunks/0ypf.t599.7y6.js","/_next/static/chunks/0t2xr05rlu96l.js"],"OutletBoundary"]
+7:"$Sreact.suspense"
+3:T2891,<h1>Module 0: Introduction to L4</h1>
+<p>This module introduces the language and gets you set up.</p>
+<h2 id="learning-objectives">Learning Objectives</h2>
+<p>By the end of this module, you will be able to:</p>
+<ul>
+<li>Explain what L4 is and what it is designed for</li>
+<li>Recognize the main building blocks of an L4 file</li>
+<li>Set up an L4 environment (VS Code, web editor, or command line)</li>
+<li>Create and run your first L4 file</li>
+</ul>
+<hr>
+<h2 id="what-is-l4">What is L4?</h2>
+<p><strong>L4 is a programming language designed specifically for law.</strong> It lets you translate legal documents into precise, executable code that computers can understand, verify, and run.</p>
+<h3 id="why-l4">Why L4?</h3>
+<p>Traditional legal documents have problems:</p>
+<table>
+<thead>
+<tr>
+<th>Problem</th>
+<th>Example</th>
+<th>L4 Solution</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Ambiguity</strong></td>
+<td>"reasonable time"</td>
+<td>Explicit deadlines: <code>WITHIN 30</code></td>
+</tr>
+<tr>
+<td><strong>Inconsistency</strong></td>
+<td>Same term defined differently</td>
+<td>Single source of truth</td>
+</tr>
+<tr>
+<td><strong>Complexity</strong></td>
+<td>Nested conditions hard to follow</td>
+<td>Visual logic diagrams</td>
+</tr>
+<tr>
+<td><strong>Testing</strong></td>
+<td>Can't simulate scenarios</td>
+<td><code>#TRACE</code> runs simulations</td>
+</tr>
+<tr>
+<td><strong>Maintenance</strong></td>
+<td>Changes ripple unpredictably</td>
+<td>Type system catches errors</td>
+</tr>
+</tbody>
+</table>
+<h3 id="what-l4-is-for">What L4 Is For</h3>
+<p>L4 excels at:</p>
+<ul>
+<li><strong>Regulatory compliance</strong> - Encode legislation as executable rules</li>
+<li><strong>Contract automation</strong> - Model obligations, deadlines, and consequences</li>
+<li><strong>Decision support</strong> - Build systems that explain their reasoning</li>
+<li><strong>Legal analysis</strong> - Find edge cases and contradictions</li>
+</ul>
+<h3 id="what-l4-is-not">What L4 Is Not</h3>
+<p>L4 is not:</p>
+<ul>
+<li>A replacement for lawyers (it's a tool for lawyers)</li>
+<li>Natural language processing (you write structured code)</li>
+<li>A document generator (though it can feed into one)</li>
+</ul>
+<hr>
+<h2 id="how-l4-works">How L4 Works</h2>
+<p>L4 code looks like a hybrid of legal text and programming. Here's a complete example of a charity's legal obligation:</p>
+<p><strong>Example:</strong></p>
+<pre><code class="language-l4-file">-- Example: A charity's obligation to file annual returns
+-- From Module 0: Introduction to L4
+
+-- First, define what a charity looks like
+DECLARE `Charity Status` IS ONE OF
+    Active
+    Suspended
+    Dissolved
+
+DECLARE `Registered Charity`
+    HAS `the name` IS A STRING
+        `the registration number` IS A STRING
+        `the status` IS A `Charity Status`
+
+-- Define the actors and actions for our obligation
+DECLARE Party IS ONE OF
+    `the charity`
+    `the Commissioner`
+
+DECLARE Action IS ONE OF
+    `file the annual return`
+    `issue a Required Steps Notice`
+
+-- The legal obligation: active charities must file annual returns
+GIVEN charity IS A `Registered Charity`
+GIVETH A DEONTIC Party Action
+`the charity must file its annual return` MEANS
+    IF charity's `the status` EQUALS Active
+    THEN PARTY `the charity`
+         MUST `file the annual return`
+         WITHIN 60
+         HENCE FULFILLED
+         LEST PARTY `the Commissioner`
+              MAY `issue a Required Steps Notice`
+              HENCE FULFILLED
+    ELSE FULFILLED
+
+-- Create a test charity
+`Acme Animal Shelter` MEANS `Registered Charity` "Acme Animal Shelter" "JC-2024-001" Active
+
+-- Test the obligation
+#TRACE `the charity must file its annual return` `Acme Animal Shelter` AT 0 WITH
+    PARTY `the charity` DOES `file the annual return` AT 30
+</code></pre>
+<p>This may be a lot right now, but notice how it reads almost like English, but with precise meaning:</p>
+<ul>
+<li><strong>DECLARE</strong> - Defines what things look like (types)</li>
+<li><strong>GIVEN</strong> - Declares what entities are involved</li>
+<li><strong>IF</strong> - States conditions that must be true</li>
+<li><strong>PARTY</strong> - Identifies who has the obligation</li>
+<li><strong>MUST</strong> - Creates a legal obligation</li>
+<li><strong>WITHIN</strong> - Sets a deadline (in days)</li>
+<li><strong>HENCE</strong> - What happens on compliance</li>
+<li><strong>LEST</strong> - What happens on non-compliance</li>
+<li><strong>#TRACE</strong> - Simulates how the contract plays out</li>
+</ul>
+<hr>
+<h2 id="key-concepts">Key Concepts</h2>
+<h3 id="1-types-define-structure">1. Types Define Structure</h3>
+<p>L4 uses types to define what things look like:</p>
+<p><strong>Example:</strong></p>
+<pre><code class="language-l4-file">-- Example: Defining types in L4
+-- From Module 0: Introduction to L4
+
+-- A simple record type describing a registered charity
+DECLARE `Registered Charity`
+    HAS `the name` IS A STRING
+        `the registration number` IS A STRING
+        `the annual income` IS A NUMBER
+
+-- Create an example charity using positional arguments
+`Example Charity` MEANS `Registered Charity` "Jersey Wildlife Trust" "JC-2024-042" 75000
+
+-- Access its fields
+#EVAL `Example Charity`'s `the name`
+#EVAL `Example Charity`'s `the annual income`
+</code></pre>
+<p>This prevents errors—you can't accidentally use a person where you need a charity.</p>
+<h3 id="2-rules-define-logic">2. Rules Define Logic</h3>
+<p>Rules capture legal reasoning using natural language:</p>
+<p><strong>Example:</strong></p>
+<pre><code class="language-l4-file">-- Example: A simple eligibility rule
+-- From Module 0: Introduction to L4
+
+-- Define what an applicant looks like
+DECLARE Applicant
+    HAS `the applicant's name` IS A STRING
+        `the applicant's age` IS A NUMBER
+        `the applicant has valid ID` IS A BOOLEAN
+
+-- Define the eligibility rule in natural language
+GIVEN applicant IS A Applicant
+GIVETH A BOOLEAN
+DECIDE `the applicant is eligible` IF
+    `the applicant is at least 18 years old` applicant
+    AND `the applicant has shown valid identification` applicant
+
+-- Break down the conditions into readable sub-rules
+GIVEN applicant IS A Applicant
+GIVETH A BOOLEAN
+`the applicant is at least 18 years old` MEANS
+    applicant's `the applicant's age` >= 18
+
+GIVEN applicant IS A Applicant
+GIVETH A BOOLEAN
+`the applicant has shown valid identification` MEANS
+    applicant's `the applicant has valid ID` EQUALS TRUE
+
+-- Create test applicants
+`Alice the adult` MEANS Applicant "Alice" 25 TRUE
+`Bob without ID` MEANS Applicant "Bob" 30 FALSE
+`Young Charlie` MEANS Applicant "Charlie" 16 TRUE
+
+-- Test the rule
+#EVAL `the applicant is eligible` `Alice the adult`
+#EVAL `the applicant is eligible` `Bob without ID`
+#EVAL `the applicant is eligible` `Young Charlie`
+</code></pre>
+<p>Notice how the rule reads like English: "the applicant is eligible if the applicant is at least 18 years old and the applicant has shown valid identification."</p>
+<h3 id="3-contracts-define-obligations">3. Contracts Define Obligations</h3>
+<p>Regulative rules capture who must do what, with deadlines and consequences:</p>
+<p><strong>Example:</strong></p>
+<pre><code class="language-l4-file">-- Example: A simple sale contract with chained obligations
+-- From Module 0: Introduction to L4
+
+-- Define who can be a party to the contract
+DECLARE Party IS ONE OF
+    `the seller`
+    `the buyer`
+
+-- Define what actions can be performed
+DECLARE `Contract Action` IS ONE OF
+    `deliver the goods`
+    `pay the invoice`
+    `cancel the order`
+
+-- The sale contract: seller delivers, then buyer pays
+GIVETH A DEONTIC Party `Contract Action`
+`the sale contract` MEANS
+    PARTY `the seller`
+    MUST `deliver the goods`
+    WITHIN 14
+    HENCE
+        PARTY `the buyer`
+        MUST `pay the invoice`
+        WITHIN 30
+        HENCE FULFILLED
+        LEST BREACH
+    LEST
+        PARTY `the seller`
+        MAY `cancel the order`
+        HENCE FULFILLED
+
+-- Simulate: seller delivers on day 10, buyer pays on day 35
+#TRACE `the sale contract` AT 0 WITH
+    PARTY `the seller` DOES `deliver the goods` AT 10
+    PARTY `the buyer` DOES `pay the invoice` AT 35
+</code></pre>
+<p>This models a simple sale: the seller must deliver within 14 days, then the buyer must pay within 30 days.</p>
+<hr>
+<h2 id="setting-up-your-environment">Setting Up Your Environment</h2>
+<p>You can write L4 in three places:</p>
+<ul>
+<li><strong>VS Code</strong> (recommended): install the <a href="https://marketplace.visualstudio.com/items?itemName=Legalese.l4-vscode">L4 extension</a> and create a file ending in <code>.l4</code>. You get syntax highlighting, errors as you type, hover documentation and visualisations.</li>
+<li><strong>The web editor</strong>: <a href="https://jl4.legalese.com/">jl4.legalese.com</a> runs L4 in your browser, with nothing to install.</li>
+<li><strong>The command line</strong>: <code>l4 run myfile.l4</code> checks a file and prints its results.</li>
+</ul>
+<p><a href="/l4/tutorials/getting-started/first-l4-file">Install L4 and write your first rule</a> walks through each option step by step.</p>
+<hr>
+<h2 id="your-first-l4-file">Your First L4 File</h2>
+<p>Create a file called <code>hello.l4</code>:</p>
+<pre><code class="language-l4-file">-- This is a comment (starts with --)
+
+-- Define a simple type
+DECLARE Person
+    HAS name IS A STRING
+        age IS A NUMBER
+
+-- Create a person
+alice MEANS Person "Alice" 30
+
+-- Define a rule
+GIVEN p IS A Person
+GIVETH A BOOLEAN
+DECIDE `is adult` IF p's age >= 18
+
+-- Test it
+#EVAL `is adult` alice
+</code></pre>
+<p>Save the file. If you're using VS Code with the L4 extension, you'll see:</p>
+<ul>
+<li>Syntax highlighting</li>
+<li>The <code>#EVAL</code> result shown inline</li>
+</ul>
+<hr>
+<h2 id="l4-design-philosophy">L4 Design Philosophy</h2>
+<p>L4 is built so that code mirrors the structure of the legal text it encodes, can be read by lawyers, and has one precise, checkable meaning. <a href="/l4/concepts/language-design/principles">Design principles</a> explains these choices and the trade-offs between them.</p>
+<p>Next, <a href="/l4/courses/foundation/module-1-first-rule">Module 1: Your first legal rule</a> writes a complete legal obligation with a condition, a deadline and consequences.</p>
+0:{"rsc":["$","$1","c",{"children":[["$","$L2",null,{"navSections":[{"title":"","items":[{"title":"Overview","href":"courses"},{"title":"Overview","href":"courses/foundation"},{"title":"0. Introduction to L4","href":"courses/foundation/module-0-introduction"},{"title":"1. Your first legal rule","href":"courses/foundation/module-1-first-rule"},{"title":"2. Legal entities and relationships","href":"courses/foundation/module-2-entities"},{"title":"3. Control flow","href":"courses/foundation/module-3-control-flow"},{"title":"4. Decision logic","href":"courses/foundation/module-4-decision-logic"},{"title":"5. Functions","href":"courses/foundation/module-5-functions"},{"title":"6. Regulative rules","href":"courses/foundation/module-6-regulative"},{"title":"7. Putting it together","href":"courses/foundation/module-7-capstone"},{"title":"Overview","href":"courses/advanced"},{"title":"A1. Real regulatory schemes","href":"courses/advanced/module-a1-regulatory"},{"title":"A2. Cross-cutting concerns","href":"courses/advanced/module-a2-cross-cutting"},{"title":"A3. Contracts in depth","href":"courses/advanced/module-a3-contracts"},{"title":"A4. Production patterns","href":"courses/advanced/module-a4-production"}]}],"toc":[],"htmlContent":"$3","pager":{"prev":"$0:rsc:props:children:0:props:navSections:0:items:1","next":"$0:rsc:props:children:0:props:navSections:0:items:3"}}],["$L4"],"$L5"]}],"isPartial":false,"staleTime":300,"varyParams":null,"buildId":"iJUXAyHcmcW99cMci3ei9"}
+4:["$","script","script-0",{"src":"/_next/static/chunks/0fl~me.qwn48c.js","async":true}]
+5:["$","$L6",null,{"children":["$","$7",null,{"name":"Next.MetadataOutlet","children":"$@8"}]}]
+8:null

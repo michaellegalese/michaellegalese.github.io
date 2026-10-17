@@ -1,0 +1,234 @@
+1:"$Sreact.fragment"
+2:I[90160,["/_next/static/chunks/0ypf.t599.7y6.js","/_next/static/chunks/0t2xr05rlu96l.js","/_next/static/chunks/0uxaa7wo_wmcw.js","/_next/static/chunks/0fl~me.qwn48c.js"],"default"]
+6:I[97367,["/_next/static/chunks/0ypf.t599.7y6.js","/_next/static/chunks/0t2xr05rlu96l.js"],"OutletBoundary"]
+7:"$Sreact.suspense"
+3:T1b62,<h1>UNLESS</h1>
+<p><code>UNLESS</code> states an exception: <code>A UNLESS B</code> means <code>A AND NOT B</code>.
+It binds more loosely than <code>AND</code> and <code>OR</code>, so the exception applies to the whole condition before it, as "unless" does in legal text.</p>
+<h2 id="syntax">Syntax</h2>
+<pre><code class="language-text">condition UNLESS exception
+</code></pre>
+<p><strong>Example file:</strong></p>
+<pre><code class="language-l4-file">-- UNLESS Keyword Examples
+-- UNLESS is syntactic sugar for AND NOT, with precedence lower than OR.
+
+--------------------------------------------------------------------------------
+-- Basic UNLESS Tests
+--------------------------------------------------------------------------------
+
+-- TRUE UNLESS TRUE = TRUE AND NOT TRUE = FALSE
+DECIDE basic1 IF TRUE UNLESS TRUE
+#ASSERT NOT basic1
+
+-- TRUE UNLESS FALSE = TRUE AND NOT FALSE = TRUE
+DECIDE basic2 IF TRUE UNLESS FALSE
+#ASSERT basic2
+
+-- FALSE UNLESS TRUE = FALSE AND NOT TRUE = FALSE
+DECIDE basic3 IF FALSE UNLESS TRUE
+#ASSERT NOT basic3
+
+-- FALSE UNLESS FALSE = FALSE AND NOT FALSE = FALSE
+DECIDE basic4 IF FALSE UNLESS FALSE
+#ASSERT NOT basic4
+
+--------------------------------------------------------------------------------
+-- Legal Exception Pattern
+--------------------------------------------------------------------------------
+
+-- "The applicant is eligible if they meet all requirements,
+--  UNLESS they have been disqualified"
+
+ASSUME `is a citizen` IS A BOOLEAN
+ASSUME `has resided for 5 years` IS A BOOLEAN
+ASSUME `has valid identification` IS A BOOLEAN
+ASSUME `has been disqualified` IS A BOOLEAN
+
+DECIDE `is eligible for benefits` IF
+      `is a citizen`
+  AND `has resided for 5 years`
+  AND `has valid identification`
+  UNLESS `has been disqualified`
+
+--------------------------------------------------------------------------------
+-- UNLESS with AND (multi-line)
+--------------------------------------------------------------------------------
+
+-- All conditions must be true, unless the exception applies
+DECIDE and_unless_example IF
+         TRUE
+  AND    TRUE
+  AND    TRUE
+  UNLESS TRUE
+
+#ASSERT NOT and_unless_example  -- (T AND T AND T) AND NOT T = FALSE
+
+DECIDE and_unless_example2 IF
+         TRUE
+  AND    TRUE
+  AND    TRUE
+  UNLESS FALSE
+
+#ASSERT and_unless_example2  -- (T AND T AND T) AND NOT F = TRUE
+
+--------------------------------------------------------------------------------
+-- UNLESS with OR (demonstrates precedence)
+--------------------------------------------------------------------------------
+
+-- UNLESS binds LOOSER than OR, so:
+-- (FALSE OR TRUE OR TRUE) UNLESS TRUE = (TRUE) AND NOT TRUE = FALSE
+
+DECIDE or_unless_example IF
+         FALSE
+  OR     TRUE
+  OR     TRUE
+  UNLESS TRUE
+
+#ASSERT NOT or_unless_example
+
+-- Another OR example
+DECIDE or_unless_example2 IF
+         FALSE
+  OR     TRUE
+  UNLESS FALSE
+
+#ASSERT or_unless_example2  -- (FALSE OR TRUE) AND NOT FALSE = TRUE
+
+--------------------------------------------------------------------------------
+-- Single-line variants (same semantics)
+--------------------------------------------------------------------------------
+
+DECIDE single_and IF TRUE AND TRUE AND TRUE UNLESS TRUE
+DECIDE single_or IF FALSE OR TRUE OR TRUE UNLESS TRUE
+
+#ASSERT NOT single_and
+#ASSERT NOT single_or
+
+--------------------------------------------------------------------------------
+-- Precedence Verification
+--------------------------------------------------------------------------------
+
+-- This test proves UNLESS binds looser than OR:
+-- If UNLESS bound tighter: TRUE OR FALSE UNLESS TRUE = TRUE OR (FALSE AND NOT TRUE) = TRUE
+-- With correct precedence: TRUE OR FALSE UNLESS TRUE = (TRUE OR FALSE) AND NOT TRUE = FALSE
+
+DECIDE precedence_test IF TRUE OR FALSE UNLESS TRUE
+#ASSERT NOT precedence_test  -- Proves UNLESS binds looser than OR
+
+--------------------------------------------------------------------------------
+-- Real-world Legal Examples
+--------------------------------------------------------------------------------
+
+-- Contract validity
+ASSUME `signed by both parties` IS A BOOLEAN
+ASSUME `consideration exchanged` IS A BOOLEAN
+ASSUME `signed under duress` IS A BOOLEAN
+
+DECIDE `contract is valid` IF
+      `signed by both parties`
+  AND `consideration exchanged`
+  UNLESS `signed under duress`
+
+-- Building access
+ASSUME `has valid badge` IS A BOOLEAN
+ASSUME `during business hours` IS A BOOLEAN
+ASSUME `building is closed` IS A BOOLEAN
+
+DECIDE `can enter building` IF
+      `has valid badge`
+  AND `during business hours`
+  UNLESS `building is closed`
+
+-- Employment eligibility
+ASSUME `is employee` IS A BOOLEAN
+ASSUME `is contractor` IS A BOOLEAN
+ASSUME `has been terminated` IS A BOOLEAN
+
+DECIDE `has system access` IF
+         `is employee`
+  OR     `is contractor`
+  UNLESS `has been terminated`
+</code></pre>
+<h2 id="truth-table">Truth table</h2>
+<table>
+<thead>
+<tr>
+<th>A</th>
+<th>B</th>
+<th>A UNLESS B</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>TRUE</td>
+<td>TRUE</td>
+<td>FALSE</td>
+</tr>
+<tr>
+<td>TRUE</td>
+<td>FALSE</td>
+<td>TRUE</td>
+</tr>
+<tr>
+<td>FALSE</td>
+<td>TRUE</td>
+<td>FALSE</td>
+</tr>
+<tr>
+<td>FALSE</td>
+<td>FALSE</td>
+<td>FALSE</td>
+</tr>
+</tbody>
+</table>
+<h2 id="example">Example</h2>
+<p>"The applicant is eligible if they are a citizen and have resided here for 5 years, unless they have been disqualified."</p>
+<pre><code class="language-l4">ASSUME `is a citizen` IS A BOOLEAN
+ASSUME `has resided for 5 years` IS A BOOLEAN
+ASSUME `has been disqualified` IS A BOOLEAN
+
+DECIDE `is eligible` IF
+      `is a citizen`
+  AND `has resided for 5 years`
+  UNLESS `has been disqualified`
+</code></pre>
+<p>This means <code>(`is a citizen` AND `has resided for 5 years`) AND NOT `has been disqualified`</code>.</p>
+<h2 id="precedence">Precedence</h2>
+<table>
+<thead>
+<tr>
+<th>Written</th>
+<th>Means</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>a AND b UNLESS c</code></td>
+<td><code>(a AND b) AND NOT c</code></td>
+</tr>
+<tr>
+<td><code>a OR b UNLESS c</code></td>
+<td><code>(a OR b) AND NOT c</code></td>
+</tr>
+<tr>
+<td><code>a IMPLIES b UNLESS c</code></td>
+<td><code>a IMPLIES (b AND NOT c)</code></td>
+</tr>
+<tr>
+<td><code>a UNLESS b IMPLIES c</code></td>
+<td><code>a AND NOT (b IMPLIES c)</code></td>
+</tr>
+</tbody>
+</table>
+<p><code>UNLESS</code> and <code>IMPLIES</code> share the lowest precedence and group to the right, so put parentheses around the part you mean when both appear.
+Without <code>UNLESS</code>, the first two rows need parentheses: <code>(a OR b) AND NOT c</code>.</p>
+<h2 id="related-pages">Related pages</h2>
+<ul>
+<li><a href="/l4/reference/operators/logical">AND, OR, NOT, IMPLIES</a></li>
+<li><a href="/l4/reference/operators#precedence">Operators: Precedence</a></li>
+<li><a href="/l4/concepts/legal-modeling/default-reasoning">Exceptions and defaults</a>: modelling exceptions in legal rules</li>
+</ul>
+0:{"rsc":["$","$1","c",{"children":[["$","$L2",null,{"navSections":[{"title":"","items":[{"title":"Language Reference","href":"reference"},{"title":"Glossary","href":"reference/GLOSSARY"},{"title":"Cheat sheet","href":"reference/cheat-sheet"},{"title":"Types","href":"reference/types","children":[{"title":"DECLARE","href":"reference/types/DECLARE"},{"title":"ASSUME","href":"reference/types/ASSUME"},{"title":"FOR ALL","href":"reference/types/for-all"},{"title":"Coercions","href":"reference/types/coercions"}]},{"title":"Functions","href":"reference/functions","children":[{"title":"DECIDE","href":"reference/functions/DECIDE"},{"title":"GIVEN and GIVETH","href":"reference/functions/GIVEN"},{"title":"MEANS","href":"reference/functions/MEANS"},{"title":"LET and WHERE","href":"reference/functions/LET"},{"title":"YIELD","href":"reference/functions/YIELD"},{"title":"AKA","href":"reference/functions/AKA"}]},{"title":"Control flow","href":"reference/control-flow","children":[{"title":"IF","href":"reference/control-flow/IF"},{"title":"BRANCH","href":"reference/control-flow/BRANCH"},{"title":"CONSIDER","href":"reference/control-flow/CONSIDER"}]},{"title":"Operators","href":"reference/operators","children":[{"title":"AND, OR, NOT, IMPLIES","href":"reference/operators/logical"},{"title":"UNLESS","href":"reference/operators/UNLESS"},{"title":"Arithmetic","href":"reference/operators/arithmetic"},{"title":"Comparisons","href":"reference/operators/comparisons"}]},{"title":"Regulative rules","href":"reference/regulative","children":[{"title":"PARTY, MUST, MAY, SHANT","href":"reference/regulative/PARTY"},{"title":"Deadlines and consequences","href":"reference/regulative/consequences"},{"title":"BECAUSE","href":"reference/regulative/BECAUSE"},{"title":"DEONTIC","href":"reference/regulative/DEONTIC"},{"title":"EVENT","href":"reference/regulative/EVENT"}]},{"title":"Syntax and directives","href":"reference/syntax"},{"title":"Built-in functions","href":"reference/builtins","children":[{"title":"HTTP and JSON","href":"reference/builtins/http-json"}]},{"title":"Standard libraries","href":"reference/libraries","children":[{"title":"prelude","href":"reference/libraries/prelude"},{"title":"math","href":"reference/libraries/math"},{"title":"daydate","href":"reference/libraries/daydate"},{"title":"time","href":"reference/libraries/time"},{"title":"datetime","href":"reference/libraries/datetime"},{"title":"timezone","href":"reference/libraries/timezone"},{"title":"excel-date","href":"reference/libraries/excel-date"},{"title":"currency","href":"reference/libraries/currency"},{"title":"holdings","href":"reference/libraries/holdings"},{"title":"actus","href":"reference/libraries/actus"},{"title":"legal-persons","href":"reference/libraries/legal-persons"},{"title":"jurisdiction","href":"reference/libraries/jurisdiction"},{"title":"llm","href":"reference/libraries/llm"}]},{"title":"Error messages","href":"reference/errors"}]}],"toc":[],"htmlContent":"$3","pager":{"prev":"$0:rsc:props:children:0:props:navSections:0:items:6:children:0","next":"$0:rsc:props:children:0:props:navSections:0:items:6:children:2"}}],["$L4"],"$L5"]}],"isPartial":false,"staleTime":300,"varyParams":null,"buildId":"iJUXAyHcmcW99cMci3ei9"}
+4:["$","script","script-0",{"src":"/_next/static/chunks/0fl~me.qwn48c.js","async":true}]
+5:["$","$L6",null,{"children":["$","$7",null,{"name":"Next.MetadataOutlet","children":"$@8"}]}]
+8:null

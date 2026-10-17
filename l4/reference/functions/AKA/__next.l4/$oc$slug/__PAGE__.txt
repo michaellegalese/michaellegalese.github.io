@@ -1,0 +1,129 @@
+1:"$Sreact.fragment"
+2:I[90160,["/_next/static/chunks/0ypf.t599.7y6.js","/_next/static/chunks/0t2xr05rlu96l.js","/_next/static/chunks/0uxaa7wo_wmcw.js","/_next/static/chunks/0fl~me.qwn48c.js"],"default"]
+6:I[97367,["/_next/static/chunks/0ypf.t599.7y6.js","/_next/static/chunks/0t2xr05rlu96l.js"],"OutletBoundary"]
+7:"$Sreact.suspense"
+3:Tc9b,<h1>AKA</h1>
+<p><code>AKA</code> ("also known as") gives a function, a value, a type or a section more than one name. Every name refers to the same thing.</p>
+<h2 id="syntax">Syntax</h2>
+<pre><code class="language-text">name AKA alias1, alias2 MEANS expression
+DECLARE TypeName AKA Alias HAS ...
+DECLARE TypeName AKA Alias IS ...
+§ `Section name` AKA alias
+</code></pre>
+<p><strong>Example file:</strong></p>
+<pre><code class="language-l4-file">-- AKA keyword examples
+
+-- Value Aliases
+
+-- Define a value with multiple names
+x AKA y, z MEANS TRUE
+
+-- All names evaluate to the same value
+#EVAL x
+#EVAL y
+#EVAL z
+
+-- Type Aliases
+
+-- Create an alias for BOOLEAN
+DECLARE B AKA `Yes or no` IS BOOLEAN
+
+-- Use either name in type signatures
+GIVETH B
+example1 MEANS TRUE
+
+GIVETH `Yes or no`
+example2 MEANS FALSE
+
+#EVAL example1
+#EVAL example2
+
+-- Record Type with Alias
+
+GIVEN a IS A TYPE
+      b IS A TYPE
+DECLARE Pair OF a, b AKA `2-tuple`
+  HAS
+    px IS AN a
+    py IS A b
+
+-- Use the primary name
+GIVETH Pair OF NUMBER, NUMBER
+`first pair` MEANS Pair WITH px IS 3, py IS 5
+
+-- Use the alias
+GIVETH `2-tuple` OF NUMBER, NUMBER
+`second pair` MEANS Pair WITH px IS 10, py IS 20
+
+#EVAL `first pair`
+#EVAL `second pair`
+
+-- Legal Terminology Example
+
+-- Primary legal term with common alias
+DECLARE `Authorized Representative` AKA Agent
+  HAS
+    name IS A STRING
+    `licence number` IS A STRING
+
+-- Can construct using either name
+DECIDE `the agent` IS `Authorized Representative` WITH
+  name IS "John Smith",
+  `licence number` IS "A12345"
+
+-- Access works with both names
+#EVAL `the agent`'s name
+
+-- Function with Alias
+
+GIVEN n IS A NUMBER
+double AKA twice MEANS n TIMES 2
+
+-- Both names work
+#EVAL double 5
+#EVAL twice 5
+
+-- Multiple Aliases
+
+GIVEN amount IS A NUMBER
+tax AKA VAT, `sales tax`, GST MEANS amount TIMES 0.1
+
+#EVAL tax 100
+#EVAL VAT 100
+#EVAL `sales tax` 100
+#EVAL GST 100
+</code></pre>
+<h2 id="values">Values</h2>
+<pre><code class="language-l4">`the borrower` AKA `the debtor` MEANS "Acme Ltd"
+
+#EVAL `the debtor`
+</code></pre>
+<h2 id="types">Types</h2>
+<p>A statute and the people who apply it often use different words for the same thing:</p>
+<pre><code class="language-l4">DECLARE `Authorised Representative` AKA Agent
+  HAS
+    name IS A STRING
+    `licence number` IS A STRING
+
+GIVEN agent IS AN Agent
+GIVETH A STRING
+`licence of` agent MEANS agent's `licence number`
+</code></pre>
+<p>A type synonym can have aliases too: <code>DECLARE `Value Added Tax rate` AKA `VAT rate` IS NUMBER</code>.</p>
+<h2 id="sections">Sections</h2>
+<p>An alias on a section heading gives a shorter name for qualified references:</p>
+<pre><code class="language-l4">§ `Definitions for Part VII` AKA defs
+`taxable income` MEANS 50000
+
+#EVAL defs's `taxable income`
+</code></pre>
+<p>See <a href="/l4/reference/syntax#sections">Syntax and directives: Sections</a>.</p>
+<h2 id="related-pages">Related pages</h2>
+<ul>
+<li><a href="/l4/reference/types/DECLARE">DECLARE</a>: type declarations</li>
+<li><a href="/l4/reference/functions/DECIDE">DECIDE</a> and <a href="/l4/reference/functions/MEANS">MEANS</a>: value definitions</li>
+</ul>
+0:{"rsc":["$","$1","c",{"children":[["$","$L2",null,{"navSections":[{"title":"","items":[{"title":"Language Reference","href":"reference"},{"title":"Glossary","href":"reference/GLOSSARY"},{"title":"Cheat sheet","href":"reference/cheat-sheet"},{"title":"Types","href":"reference/types","children":[{"title":"DECLARE","href":"reference/types/DECLARE"},{"title":"ASSUME","href":"reference/types/ASSUME"},{"title":"FOR ALL","href":"reference/types/for-all"},{"title":"Coercions","href":"reference/types/coercions"}]},{"title":"Functions","href":"reference/functions","children":[{"title":"DECIDE","href":"reference/functions/DECIDE"},{"title":"GIVEN and GIVETH","href":"reference/functions/GIVEN"},{"title":"MEANS","href":"reference/functions/MEANS"},{"title":"LET and WHERE","href":"reference/functions/LET"},{"title":"YIELD","href":"reference/functions/YIELD"},{"title":"AKA","href":"reference/functions/AKA"}]},{"title":"Control flow","href":"reference/control-flow","children":[{"title":"IF","href":"reference/control-flow/IF"},{"title":"BRANCH","href":"reference/control-flow/BRANCH"},{"title":"CONSIDER","href":"reference/control-flow/CONSIDER"}]},{"title":"Operators","href":"reference/operators","children":[{"title":"AND, OR, NOT, IMPLIES","href":"reference/operators/logical"},{"title":"UNLESS","href":"reference/operators/UNLESS"},{"title":"Arithmetic","href":"reference/operators/arithmetic"},{"title":"Comparisons","href":"reference/operators/comparisons"}]},{"title":"Regulative rules","href":"reference/regulative","children":[{"title":"PARTY, MUST, MAY, SHANT","href":"reference/regulative/PARTY"},{"title":"Deadlines and consequences","href":"reference/regulative/consequences"},{"title":"BECAUSE","href":"reference/regulative/BECAUSE"},{"title":"DEONTIC","href":"reference/regulative/DEONTIC"},{"title":"EVENT","href":"reference/regulative/EVENT"}]},{"title":"Syntax and directives","href":"reference/syntax"},{"title":"Built-in functions","href":"reference/builtins","children":[{"title":"HTTP and JSON","href":"reference/builtins/http-json"}]},{"title":"Standard libraries","href":"reference/libraries","children":[{"title":"prelude","href":"reference/libraries/prelude"},{"title":"math","href":"reference/libraries/math"},{"title":"daydate","href":"reference/libraries/daydate"},{"title":"time","href":"reference/libraries/time"},{"title":"datetime","href":"reference/libraries/datetime"},{"title":"timezone","href":"reference/libraries/timezone"},{"title":"excel-date","href":"reference/libraries/excel-date"},{"title":"currency","href":"reference/libraries/currency"},{"title":"holdings","href":"reference/libraries/holdings"},{"title":"actus","href":"reference/libraries/actus"},{"title":"legal-persons","href":"reference/libraries/legal-persons"},{"title":"jurisdiction","href":"reference/libraries/jurisdiction"},{"title":"llm","href":"reference/libraries/llm"}]},{"title":"Error messages","href":"reference/errors"}]}],"toc":[],"htmlContent":"$3","pager":{"prev":"$0:rsc:props:children:0:props:navSections:0:items:4:children:4","next":"$0:rsc:props:children:0:props:navSections:0:items:5"}}],["$L4"],"$L5"]}],"isPartial":false,"staleTime":300,"varyParams":null,"buildId":"iJUXAyHcmcW99cMci3ei9"}
+4:["$","script","script-0",{"src":"/_next/static/chunks/0fl~me.qwn48c.js","async":true}]
+5:["$","$L6",null,{"children":["$","$7",null,{"name":"Next.MetadataOutlet","children":"$@8"}]}]
+8:null

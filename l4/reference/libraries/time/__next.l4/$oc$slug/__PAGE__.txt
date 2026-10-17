@@ -1,0 +1,238 @@
+1:"$Sreact.fragment"
+2:I[90160,["/_next/static/chunks/0ypf.t599.7y6.js","/_next/static/chunks/0t2xr05rlu96l.js","/_next/static/chunks/0uxaa7wo_wmcw.js","/_next/static/chunks/0fl~me.qwn48c.js"],"default"]
+6:I[97367,["/_next/static/chunks/0ypf.t599.7y6.js","/_next/static/chunks/0t2xr05rlu96l.js"],"OutletBoundary"]
+7:"$Sreact.suspense"
+3:T16e6,<h1>time</h1>
+<p>Time of day, with no date and no time zone, for rules about opening hours, cut-off times and the like. Import it with <code>IMPORT time</code>. Times are kept in 24-hour form; arithmetic wraps around midnight.</p>
+<p><strong>Example:</strong></p>
+<pre><code class="language-l4-file">-- Time Example: Wall-clock time operations
+IMPORT time
+
+-- Time construction (24-hour format)
+DECIDE `office start` IS Time 9 0 0
+DECIDE `lunch break` IS Time 12 30
+DECIDE `end of day` IS Time 17
+
+#EVAL `office start`   -- 09:00:00
+#EVAL `lunch break`    -- 12:30:00
+#EVAL `end of day`     -- 17:00:00
+
+-- Time from string (JSON interop) - returns MAYBE TIME
+DECIDE `from string` IS Time "14:30:00"
+#EVAL `from string`  -- JUST OF (TIME OF 14, 30, 0.0)
+
+-- AM/PM construction
+DECIDE `early meeting` IS Time 7 30 am
+DECIDE `dinner time` IS Time 7 pm
+
+#EVAL `early meeting`  -- 07:30:00
+#EVAL `dinner time`    -- 19:00:00
+
+-- Extracting components
+#EVAL `the hour of` `office start`    -- 9
+#EVAL `the minute of` `lunch break`   -- 30
+
+-- Time predicates
+DECIDE `morning check` IS `office start` `is morning`
+DECIDE `afternoon check` IS `lunch break` `is afternoon`
+#EVAL `morning check`     -- TRUE
+#EVAL `afternoon check`   -- TRUE
+
+-- Time arithmetic (wraps at midnight)
+DECIDE `plus two hours` IS `office start` `plus hours` 2
+#EVAL `plus two hours`  -- 11:00:00
+
+DECIDE `minus one hour` IS `office start` `minus hours` 1
+#EVAL `minus one hour`  -- 08:00:00
+
+-- Time comparisons
+DECIDE `start before lunch` IS `office start` LESS THAN `lunch break`
+#EVAL `start before lunch`  -- TRUE
+
+DECIDE `start is before lunch` IS `office start` `is before` `lunch break`
+DECIDE `lunch is after start` IS `lunch break` `is after` `office start`
+#EVAL `start is before lunch`  -- TRUE
+#EVAL `lunch is after start`   -- TRUE
+
+#EVAL `the earlier of` `office start` `lunch break`  -- 09:00:00
+#EVAL `the later of` `office start` `lunch break`    -- 12:30:00
+
+-- Serial conversion (fraction of day)
+#EVAL (Time 12 0 0) `Time to serial`  -- 0.5 (noon = half day)
+#EVAL 0.5 `Serial to time`            -- 12:00:00
+</code></pre>
+<h2 id="constants">Constants</h2>
+<table>
+<thead>
+<tr>
+<th>Constant</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>Midnight</code></td>
+<td>00:00:00</td>
+</tr>
+<tr>
+<td><code>Noon</code></td>
+<td>12:00:00</td>
+</tr>
+<tr>
+<td><code>Seconds in a minute</code>, <code>Minutes in an hour</code></td>
+<td>60</td>
+</tr>
+<tr>
+<td><code>Hours in a day</code></td>
+<td>24</td>
+</tr>
+<tr>
+<td><code>Seconds in an hour</code></td>
+<td>3600</td>
+</tr>
+<tr>
+<td><code>Seconds in a day</code></td>
+<td>86400</td>
+</tr>
+</tbody>
+</table>
+<p><code>Meridiem Indicator</code> is an enumeration with the values <code>am</code> and <code>pm</code>.</p>
+<h2 id="building-a-time">Building a time</h2>
+<table>
+<thead>
+<tr>
+<th>Function</th>
+<th>Gives</th>
+<th>What it does</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>Time</code> h m s</td>
+<td>TIME</td>
+<td>From hours (0 to 23), minutes and seconds</td>
+</tr>
+<tr>
+<td><code>Time</code> h m</td>
+<td>TIME</td>
+<td>Seconds are 0</td>
+</tr>
+<tr>
+<td><code>Time</code> h</td>
+<td>TIME</td>
+<td>Minutes and seconds are 0</td>
+</tr>
+<tr>
+<td><code>Time</code> h m s <code>am</code> (or <code>pm</code>)</td>
+<td>TIME</td>
+<td>12-hour form; also <code>Time h m am</code> and <code>Time h pm</code></td>
+</tr>
+<tr>
+<td><code>Time</code> text</td>
+<td>MAYBE TIME</td>
+<td>Reads <code>"HH:MM:SS"</code> or <code>"HH:MM"</code></td>
+</tr>
+<tr>
+<td><code>Time</code> datetime</td>
+<td>TIME</td>
+<td>The time part of a DATETIME, ignoring date and time zone</td>
+</tr>
+<tr>
+<td>serial <code>`Serial to time`</code></td>
+<td>TIME</td>
+<td>From a fraction of a day: 0 is midnight, 0.5 is noon</td>
+</tr>
+</tbody>
+</table>
+<h2 id="reading-a-time">Reading a time</h2>
+<table>
+<thead>
+<tr>
+<th>Function</th>
+<th>Gives</th>
+<th>What it does</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>the hour of</code> t</td>
+<td>NUMBER</td>
+<td>0 to 23</td>
+</tr>
+<tr>
+<td><code>the minute of</code> t</td>
+<td>NUMBER</td>
+<td>0 to 59</td>
+</tr>
+<tr>
+<td><code>the second of</code> t</td>
+<td>NUMBER</td>
+<td>0 to 59</td>
+</tr>
+<tr>
+<td>t <code>`Time to serial`</code></td>
+<td>NUMBER</td>
+<td>The time as a fraction of a day</td>
+</tr>
+<tr>
+<td>t <code>`is morning`</code></td>
+<td>BOOLEAN</td>
+<td>Before 12:00</td>
+</tr>
+<tr>
+<td>t <code>`is afternoon`</code></td>
+<td>BOOLEAN</td>
+<td>12:00 to 17:59</td>
+</tr>
+<tr>
+<td>t <code>`is evening`</code></td>
+<td>BOOLEAN</td>
+<td>18:00 or later</td>
+</tr>
+<tr>
+<td>t <code>`is before noon`</code></td>
+<td>BOOLEAN</td>
+<td>Before 12:00</td>
+</tr>
+<tr>
+<td>t <code>`is after noon`</code></td>
+<td>BOOLEAN</td>
+<td>12:00 or later</td>
+</tr>
+</tbody>
+</table>
+<h2 id="moving-a-time">Moving a time</h2>
+<p>Each of these wraps around midnight: <code>(Time 23 0 0) `plus hours` 2</code> is 01:00. Put a time built with <code>Time</code> in parentheses, as here, before a word written after it.</p>
+<table>
+<thead>
+<tr>
+<th>Function</th>
+<th>Gives</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>t <code>`plus hours`</code> n, t <code>`minus hours`</code> n</td>
+<td>TIME</td>
+</tr>
+<tr>
+<td>t <code>`plus minutes`</code> n, t <code>`minus minutes`</code> n</td>
+<td>TIME</td>
+</tr>
+<tr>
+<td>t <code>`plus seconds`</code> n, t <code>`minus seconds`</code> n</td>
+<td>TIME</td>
+</tr>
+</tbody>
+</table>
+<h2 id="comparing-times">Comparing times</h2>
+<ul>
+<li><code>=</code>, <code>&#x3C;</code>, <code>&#x3C;=</code>, <code>></code>, <code>>=</code> and their word forms compare two times.</li>
+<li>t1 <code>MINUS</code> t2 is the difference in seconds.</li>
+<li>t1 <code>`is before`</code> t2 and t1 <code>`is after`</code> t2 read as sentences.</li>
+<li><code>`the earlier of`</code> t1 t2 and <code>`the later of`</code> t1 t2 pick one of two times.</li>
+</ul>
+0:{"rsc":["$","$1","c",{"children":[["$","$L2",null,{"navSections":[{"title":"","items":[{"title":"Language Reference","href":"reference"},{"title":"Glossary","href":"reference/GLOSSARY"},{"title":"Cheat sheet","href":"reference/cheat-sheet"},{"title":"Types","href":"reference/types","children":[{"title":"DECLARE","href":"reference/types/DECLARE"},{"title":"ASSUME","href":"reference/types/ASSUME"},{"title":"FOR ALL","href":"reference/types/for-all"},{"title":"Coercions","href":"reference/types/coercions"}]},{"title":"Functions","href":"reference/functions","children":[{"title":"DECIDE","href":"reference/functions/DECIDE"},{"title":"GIVEN and GIVETH","href":"reference/functions/GIVEN"},{"title":"MEANS","href":"reference/functions/MEANS"},{"title":"LET and WHERE","href":"reference/functions/LET"},{"title":"YIELD","href":"reference/functions/YIELD"},{"title":"AKA","href":"reference/functions/AKA"}]},{"title":"Control flow","href":"reference/control-flow","children":[{"title":"IF","href":"reference/control-flow/IF"},{"title":"BRANCH","href":"reference/control-flow/BRANCH"},{"title":"CONSIDER","href":"reference/control-flow/CONSIDER"}]},{"title":"Operators","href":"reference/operators","children":[{"title":"AND, OR, NOT, IMPLIES","href":"reference/operators/logical"},{"title":"UNLESS","href":"reference/operators/UNLESS"},{"title":"Arithmetic","href":"reference/operators/arithmetic"},{"title":"Comparisons","href":"reference/operators/comparisons"}]},{"title":"Regulative rules","href":"reference/regulative","children":[{"title":"PARTY, MUST, MAY, SHANT","href":"reference/regulative/PARTY"},{"title":"Deadlines and consequences","href":"reference/regulative/consequences"},{"title":"BECAUSE","href":"reference/regulative/BECAUSE"},{"title":"DEONTIC","href":"reference/regulative/DEONTIC"},{"title":"EVENT","href":"reference/regulative/EVENT"}]},{"title":"Syntax and directives","href":"reference/syntax"},{"title":"Built-in functions","href":"reference/builtins","children":[{"title":"HTTP and JSON","href":"reference/builtins/http-json"}]},{"title":"Standard libraries","href":"reference/libraries","children":[{"title":"prelude","href":"reference/libraries/prelude"},{"title":"math","href":"reference/libraries/math"},{"title":"daydate","href":"reference/libraries/daydate"},{"title":"time","href":"reference/libraries/time"},{"title":"datetime","href":"reference/libraries/datetime"},{"title":"timezone","href":"reference/libraries/timezone"},{"title":"excel-date","href":"reference/libraries/excel-date"},{"title":"currency","href":"reference/libraries/currency"},{"title":"holdings","href":"reference/libraries/holdings"},{"title":"actus","href":"reference/libraries/actus"},{"title":"legal-persons","href":"reference/libraries/legal-persons"},{"title":"jurisdiction","href":"reference/libraries/jurisdiction"},{"title":"llm","href":"reference/libraries/llm"}]},{"title":"Error messages","href":"reference/errors"}]}],"toc":[],"htmlContent":"$3","pager":{"prev":"$0:rsc:props:children:0:props:navSections:0:items:10:children:2","next":"$0:rsc:props:children:0:props:navSections:0:items:10:children:4"}}],["$L4"],"$L5"]}],"isPartial":false,"staleTime":300,"varyParams":null,"buildId":"iJUXAyHcmcW99cMci3ei9"}
+4:["$","script","script-0",{"src":"/_next/static/chunks/0fl~me.qwn48c.js","async":true}]
+5:["$","$L6",null,{"children":["$","$7",null,{"name":"Next.MetadataOutlet","children":"$@8"}]}]
+8:null

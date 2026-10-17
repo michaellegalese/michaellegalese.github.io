@@ -1,0 +1,382 @@
+1:"$Sreact.fragment"
+2:I[90160,["/_next/static/chunks/0ypf.t599.7y6.js","/_next/static/chunks/0t2xr05rlu96l.js","/_next/static/chunks/0uxaa7wo_wmcw.js","/_next/static/chunks/0fl~me.qwn48c.js"],"default"]
+6:I[97367,["/_next/static/chunks/0ypf.t599.7y6.js","/_next/static/chunks/0t2xr05rlu96l.js"],"OutletBoundary"]
+7:"$Sreact.suspense"
+3:T6e8a,<h1>Using the l4 CLI</h1>
+<p>Run, check, format, render, and deploy L4 files from the command line.</p>
+<p><strong>Prerequisites:</strong> <a href="/l4/tutorials/getting-started/first-l4-file">Install L4 and write your first rule</a></p>
+<hr>
+<h2 id="what-youll-learn">What You'll Learn</h2>
+<p>The <code>l4</code> command-line tool is the fastest way to validate and evaluate L4 files outside VS Code — in a terminal, a script, or a CI pipeline. This tutorial tours every subcommand using a small example file you create yourself.</p>
+<hr>
+<h2 id="step-1-get-the-binary">Step 1: Get the Binary</h2>
+<h3 id="option-a-from-the-vs-code-extension">Option A: From the VS Code extension</h3>
+<p>If you have the <a href="https://marketplace.visualstudio.com/items?itemName=Legalese.l4-vscode">L4 VS Code extension</a> installed, it ships with a bundled <code>l4</code> binary and offers to put it on your PATH ("Install the L4 CLI? This lets you run <code>l4 run file.l4</code>, etc. from any terminal."). You can also trigger this any time with the <strong>L4: Install L4 CLI</strong> command from the command palette.</p>
+<h3 id="option-b-build-from-source">Option B: Build from source</h3>
+<p>Clone the <a href="https://github.com/legalese/l4-ide">l4-ide repository</a> and build with Cabal (requires GHC 9.10.2 and Cabal 3.10+):</p>
+<pre><code class="language-bash">cabal build jl4:l4          # build just the CLI
+cabal list-bin jl4:l4       # print the path to the built binary
+</code></pre>
+<p>Add the printed path to your PATH, or run it in place. You can also run it through Cabal without installing:</p>
+<pre><code class="language-bash">cabal run l4 -- run myfile.l4
+</code></pre>
+<h3 id="check-it-works">Check it works</h3>
+<pre><code class="language-bash">l4 --help
+</code></pre>
+<pre><code>l4 — the L4 computational-law CLI
+
+Usage: l4 [--version]
+          (COMMAND | FILE [--json] [-t|--trace MODE] [--fixed-now ISO8601])
+
+Available commands:
+  run                      Typecheck and evaluate an L4 file (prints diagnostics
+                           + #EVAL results)
+  check                    Typecheck an L4 file only (fast path; no evaluation)
+  format                   Reformat an L4 file and print to stdout
+  ast                      Dump the parsed AST of an L4 file
+  batch                    Evaluate an @export function against many input rows
+                           (json|yaml|csv in, NDJSON streaming out)
+  trace                    Render #EVALTRACE evaluation traces as GraphViz
+                           (dot|png|svg)
+  state-graph              Extract regulative-rule state transition graphs as
+                           GraphViz DOT
+  render                   Render an L4 file to a formatted document
+                           (html|text|json|plan)
+  deploy                   Deploy an L4 file and its imports as a new deployment
+                           (Legalese Cloud, or --server)
+  redeploy                 Update an existing deployment; refuses breaking
+                           changes unless --force
+  undeploy                 Delete a deployment
+  deployments              List deployments
+  install                  Install a companion tool: `l4 install legalese` (the
+                           Legalese Cloud CLI)
+</code></pre>
+<p>Run <code>l4 &#x3C;command> --help</code> for the options of any subcommand.</p>
+<h3 id="which-build-is-this">Which build is this?</h3>
+<pre><code class="language-bash">l4 --version
+</code></pre>
+<p>This prints one line that names the build you are running, so you can say which one you have when you report a problem, or check that an upgrade took:</p>
+<pre><code>1.6.91 (main, a1b2c3d, 2026-10-14)
+</code></pre>
+<p>The line is the release, then in brackets the branch it was built from, the commit, and the day it was built.</p>
+<p>A build that someone made from a working copy of the source is not a release, and says just <code>dev</code>.</p>
+<p><code>jl4-lsp --version</code>, the language server that the editor runs, prints the same line. The server also sends it to the editor as its <code>serverInfo</code> when the editor connects, and writes it to its log when it starts.</p>
+<hr>
+<h2 id="step-2-create-a-file-to-work-with">Step 2: Create a File to Work With</h2>
+<p>Create <code>late-fee.l4</code>:</p>
+<pre><code class="language-l4">-- late-fee.l4
+-- A small policy: 2% late fee up to 30 days overdue, 5% beyond that.
+
+§ `Late Fee Policy`
+
+DECLARE Invoice
+    HAS `amount`       IS A NUMBER
+        `days overdue` IS A NUMBER
+
+GIVEN invoice IS AN Invoice
+GIVETH A NUMBER
+DECIDE `late fee` IS
+    IF invoice's `days overdue` AT MOST 0
+    THEN 0
+    ELSE IF invoice's `days overdue` AT MOST 30
+         THEN invoice's `amount` TIMES 0.02
+         ELSE invoice's `amount` TIMES 0.05
+
+`a slightly late invoice` MEANS Invoice WITH
+    `amount`       IS 1000
+    `days overdue` IS 12
+
+`a very late invoice` MEANS Invoice WITH
+    `amount`       IS 1000
+    `days overdue` IS 45
+
+#EVAL `late fee` `a slightly late invoice`
+#EVAL `late fee` `a very late invoice`
+</code></pre>
+<hr>
+<h2 id="step-3-l4-run-evaluate-a-file">Step 3: <code>l4 run</code> — Evaluate a File</h2>
+<p><code>l4 run</code> typechecks the file and evaluates every <code>#EVAL</code> (and <code>#EVALTRACE</code>) directive:</p>
+<pre><code class="language-bash">l4 run late-fee.l4
+</code></pre>
+<pre><code>Evaluation[1] @ late-fee.l4:27:1-43
+
+Result:
+  20
+
+
+Evaluation[2] @ late-fee.l4:28:1-39
+
+Result:
+  50
+</code></pre>
+<p>Each <code>Evaluation[n]</code> block corresponds to one <code>#EVAL</code> directive, in file order, with the source range it came from. Diagnostics (errors, warnings) are printed to stderr; results go to stdout. The exit code is <code>0</code> when the file typechecks and every directive evaluates without crashing; type errors and runtime evaluation errors (such as a <code>CONSIDER</code> with no matching branch) exit non-zero. Warnings alone do not change the exit code — a file with warnings still evaluates.</p>
+<p>As a convenience, <code>l4 late-fee.l4</code> (no subcommand) is shorthand for <code>l4 run late-fee.l4</code>.</p>
+<h3 id="machine-readable-output">Machine-readable output</h3>
+<p>Add <code>--json</code> for a single JSON envelope, useful for editors, CI, and other tools:</p>
+<pre><code class="language-bash">l4 run late-fee.l4 --json
+</code></pre>
+<pre><code class="language-json">{
+  "file": "late-fee.l4",
+  "ok": true,
+  "diagnostics": ["..."],
+  "results": [
+    { "kind": "value", "range": "late-fee.l4:27:1-43", "value": "20" },
+    { "kind": "value", "range": "late-fee.l4:28:1-39", "value": "50" }
+  ]
+}
+</code></pre>
+<h3 id="pinning-the-clock">Pinning the clock</h3>
+<p>If your rules use <code>NOW</code> or <code>TODAY</code>, pin the evaluation clock so results are reproducible:</p>
+<pre><code class="language-bash">l4 run --fixed-now 2025-01-31T15:45:30Z myfile.l4
+</code></pre>
+<hr>
+<h2 id="step-4-l4-check-typecheck-without-running">Step 4: <code>l4 check</code> — Typecheck Without Running</h2>
+<p><code>l4 check</code> runs the parser and typechecker but skips evaluation entirely, so even files with expensive <code>#EVAL</code> bodies check quickly. It is the right command for CI lint jobs and pre-commit hooks:</p>
+<pre><code class="language-bash">l4 check late-fee.l4
+</code></pre>
+<pre><code>Check succeeded.
+</code></pre>
+<p>Exit code <code>0</code> means the file is valid L4; non-zero means there were errors (printed as diagnostics). <code>--json</code> and <code>--fixed-now</code> work here too.</p>
+<hr>
+<h2 id="step-5-libraries-and-jl4_library_path">Step 5: Libraries and <code>JL4_LIBRARY_PATH</code></h2>
+<p>When a file says <code>IMPORT daydate</code> (or <code>time</code>, <code>currency</code>, ...), the tools resolve the library module by checking, in order:</p>
+<ol>
+<li>The <code>JL4_LIBRARY_PATH</code> environment variable (user/operator override)</li>
+<li>The project root directory</li>
+<li>The directory of the importing file</li>
+<li>The standard library built into the <code>l4</code> you are running</li>
+<li>The XDG data directory (<code>~/.local/share/jl4/libraries/</code>)</li>
+<li>The libraries bundled with the VS Code extension</li>
+</ol>
+<p>When <code>JL4_LIBRARY_PATH</code> is set, it takes explicit control: the built-in standard library is skipped. This matters when you work from a source checkout and want the CLI to use the checkout's libraries rather than a previously installed copy:</p>
+<pre><code class="language-bash">JL4_LIBRARY_PATH=jl4-core/libraries l4 run myfile.l4
+</code></pre>
+<p>Try it with a file that needs an import. Create <code>library-tour.l4</code>:</p>
+<pre><code class="language-l4">-- library-tour.l4
+IMPORT daydate
+
+`the closing date` MEANS Date 15 1 2025
+
+#EVAL `the closing date`
+</code></pre>
+<pre><code class="language-bash">l4 run library-tour.l4
+</code></pre>
+<pre><code>Evaluation[1] @ library-tour.l4:6:1-25
+
+Result:
+  DATE OF 15, 1, 2025
+</code></pre>
+<p>See the <a href="/l4/reference/libraries">library reference</a> for what each library provides.</p>
+<hr>
+<h2 id="step-6-the-other-subcommands">Step 6: The Other Subcommands</h2>
+<h3 id="l4-format-canonical-formatting"><code>l4 format</code> — canonical formatting</h3>
+<p>Reformats a file and prints the result to stdout (like <code>gofmt</code>):</p>
+<pre><code class="language-bash">l4 format late-fee.l4
+</code></pre>
+<h3 id="l4-render-a-readable-document"><code>l4 render</code> — a readable document</h3>
+<p>Renders the rules as a formatted document for non-programmer review:</p>
+<pre><code class="language-bash">l4 render late-fee.l4 --format text
+</code></pre>
+<pre><code>Late Fee Policy
+===============
+
+
+Definitions
+
+• Invoice means a record with:
+    - amount — NUMBER
+    - days overdue — NUMBER
+
+
+Provisions
+
+• Late fee means:
+    - if the invoice's days overdue is at most 0: 0
+    - otherwise, if the invoice's days overdue is at most 30: the invoice's amount × 0.02
+    - otherwise: the invoice's amount × 0.05
+</code></pre>
+<p>Options: <code>--format html|text|json|plan</code>, <code>-o/--output FILE</code>, <code>--toc</code> (table of contents), <code>--number-sections</code>, <code>--number-clauses</code>, and <code>--include-unused</code>.</p>
+<h3 id="l4-batch-many-cases-at-once"><code>l4 batch</code> — many cases at once</h3>
+<p>Evaluates one <code>@export</code> function against many input rows, streaming one NDJSON result line per row. Given this exported rule:</p>
+<pre><code class="language-l4">@export Calculate the late fee for an overdue invoice
+GIVEN amount IS A NUMBER @desc The invoice amount
+      days_overdue IS A NUMBER @desc How many days past due
+GIVETH A NUMBER
+DECIDE fee IS
+    IF days_overdue AT MOST 0
+    THEN 0
+    ELSE IF days_overdue AT MOST 30
+         THEN amount TIMES 0.02
+         ELSE amount TIMES 0.05
+</code></pre>
+<p>and a JSON file of cases (<code>invoices.json</code>):</p>
+<pre><code class="language-json">[
+  { "amount": 1000, "days_overdue": 12 },
+  { "amount": 1000, "days_overdue": 45 },
+  { "amount": 2500, "days_overdue": 0 }
+]
+</code></pre>
+<pre><code class="language-bash">l4 batch late-fee-export.l4 --inputs invoices.json
+</code></pre>
+<pre><code>{"diagnostics":[],"input":{"amount":1000,"days_overdue":12},"output":[{"result":20,"trace":null}],"status":"success"}
+{"diagnostics":[],"input":{"amount":1000,"days_overdue":45},"output":[{"result":50,"trace":null}],"status":"success"}
+{"diagnostics":[],"input":{"amount":2500,"days_overdue":0},"output":[{"result":0,"trace":null}],"status":"success"}
+</code></pre>
+<p><code>--inputs</code> accepts <code>.json</code>, <code>.yaml</code>, or <code>.csv</code> (use <code>--input-format</code> when reading from stdin with <code>-</code>); <code>--entrypoint FUNCTION</code> selects which exported function to run when there is more than one.</p>
+<p>Natural-language names work too: exported functions and parameters written with backticks and spaces (<code>`the base rate`</code>) are matched by input keys spelled the same way (<code>"the base rate": 100</code>).
+A value is read as the type its parameter declares, whichever kind of file the case comes from.
+A parameter declared as <code>NUMBER</code> or <code>BOOLEAN</code> that is given as text is read as the number or boolean the text spells: a CSV cell is always text, so a <code>100</code> or <code>true</code> cell arrives as a number or boolean, and so does <code>"100"</code> or <code>"true"</code> in a JSON or YAML file.
+Text that does not spell one is left as it is, and the line is an error that names the text.
+A parameter declared through a synonym, such as <code>DECLARE Year IS A NUMBER</code>, is read as the type the synonym stands for, and so is a synonym for a <code>MAYBE</code>.
+A synonym that takes a type, such as <code>DECLARE Optional OF a IS A MAYBE a</code> used as <code>Optional OF NUMBER</code>, is not read this way from a CSV cell or from text: a cell <code>2020</code> or the text <code>"2020"</code> is refused, so give such a parameter a plain number in a JSON file.
+Every other kind of parameter keeps a non-blank CSV cell exactly as written, however much it looks like a number or a boolean.
+A <code>STRING</code> receives <code>123456</code>, <code>018956</code> and <code>1.50</code> as the codes they are, a choice such as <code>DECLARE Answer IS ONE OF True, False, Unknown</code> receives the name <code>True</code> and not a boolean, and a <code>DATE</code> receives <code>2026-10-13</code> as text, so a cell that is not a date, such as <code>20261013</code>, is an error that names it.
+A number given for a <code>STRING</code> parameter in a JSON or YAML file is an error, because those files already say which values are strings.
+A blank CSV cell is not text, for a <code>STRING</code> parameter as for any other: an empty cell, a cell holding only spaces and a quoted <code>""</code> all leave the fact out, exactly as a column missing from the file does. A fact that has to be given is then missing, which makes the line an error that says <code>Missing required field</code> and names it; a <code>MAYBE</code> fact is <code>NOTHING</code>.
+So a line of nothing but empty cells, such as <code>,,</code>, is an error when the rules need any fact, and the run stops there unless you pass <code>--continue-on-error</code>.
+A CSV file cannot carry empty text, or text of only spaces, as a value: to give a fact that value, use a JSON or YAML file (<code>"note": ""</code>).
+A line with nothing on it, or only spaces or tabs, is not a case at all, while a quoted <code>""</code> or <code>"   "</code> is a case whose cell is blank.
+A byte-order mark at the start of the file, which Excel's CSV UTF-8 export writes, is ignored.
+A line with more or fewer cells than the header is refused and counted as an error, and the message gives its line number.
+A CSV cell for any other kind of parameter is typed by its content: <code>true</code> or <code>false</code> (any case) is a boolean, a plain number such as <code>3.5</code> is a number (a cell containing <code>e</code> or <code>E</code> stays text), and anything else is a string.</p>
+<p><code>--format ndjson|json|csv|yaml</code> and <code>--output FILE</code> choose the result format and destination; the run stops at the first failing row unless you pass <code>--continue-on-error</code>, and <code>--validate-only</code> checks rows against the function's inputs without evaluating them.</p>
+<h4 id="what-each-line-says">What each line says</h4>
+<p>Every case that is run produces one line, or one item with <code>--format json</code> or <code>yaml</code>, with four keys:</p>
+<ul>
+<li><code>input</code> is the case as the rules read it: a CSV cell is shown as the number, boolean or text it was read as, and a blank cell that was left out is not shown.</li>
+<li><code>output</code> is what the rules came to for the case: a list holding one <code>result</code>, or <code>null</code> when no answer could be reached at all.</li>
+<li><code>status</code> says how the case went, as below.</li>
+<li><code>diagnostics</code> is the list of messages for a case that did not succeed, and <code>[]</code> for one that did.</li>
+</ul>
+<p><code>status</code> is one of two words:</p>
+<ul>
+<li><code>success</code>: the rules gave an answer.</li>
+<li><code>error</code>: the rules could not be run on the case, or raised an error. A fact is missing, a value cannot be read as the type the fact declares, a CSV line has a different number of cells from the header, or the rules themselves failed (the <code>result</code> is then an object holding the message); <code>diagnostics</code> says which. The batch stops after the first such case unless you pass <code>--continue-on-error</code>.</li>
+</ul>
+<p>The command exits with status 0 when every case was <code>success</code>, and 1 when any case was <code>error</code>, once every case that was going to run has run.</p>
+<h4 id="checking-cases-without-running-them">Checking cases without running them</h4>
+<p><code>--validate-only</code> checks each case against the facts the rules need, and runs nothing. Its lines have three keys, not four: <code>input</code>, <code>status</code> (<code>valid</code> or <code>invalid</code>) and <code>errors</code>, the list of problems, which is <code>[]</code> for a valid case. The command exits with status 1 when any case is <code>invalid</code>, and <code>--continue-on-error</code> works as it does in a run.</p>
+<p>It checks that every fact the rules need, other than a <code>MAYBE</code>, is in the case and is not <code>null</code>, and that a value given for a <code>NUMBER</code>, <code>BOOLEAN</code> or <code>STRING</code> fact, or a <code>MAYBE</code> of one, is of that type, counting text that spells a number or a boolean as a run does. A fact declared through a synonym (<code>DECLARE Year IS A NUMBER</code>) is judged as the type the synonym stands for, and so is a synonym for a <code>MAYBE</code>. A synonym that takes a type (<code>Optional OF NUMBER</code>) is not: a case can be <code>valid</code> that a run refuses, and <code>invalid</code> that a run answers.</p>
+<p><strong>It judges those three types only.</strong> For any other type, such as a <code>DATE</code>, a list, a record or a list of choices, whatever is given is let through, and a bad value fails only when the case is run. With this rule:</p>
+<pre><code class="language-l4">@export Echo a date
+GIVEN d IS A DATE
+GIVETH A DATE
+`echo date` MEANS d
+</code></pre>
+<p>and the cases <code>[{"d": "2024-01-15"}, {"d": "not a date"}]</code>, validation passes both, and a run fails the second:</p>
+<pre><code>$ l4 batch echo-date.l4 --inputs dates.json --validate-only
+{"errors":[],"input":{"d":"2024-01-15"},"status":"valid"}
+{"errors":[],"input":{"d":"not a date"},"status":"valid"}
+
+$ l4 batch echo-date.l4 --inputs dates.json --continue-on-error
+{"diagnostics":[],"input":{"d":"2024-01-15"},"output":[{"result":"2024-01-15","trace":null}],"status":"success"}
+{"diagnostics":["Could not parse date string 'not a date'. Expected format: YYYY-MM-DD"],"input":{"d":"not a date"},"output":[{"result":{"error":"Could not parse date string 'not a date'. Expected format: YYYY-MM-DD\n"},"trace":null}],"status":"error"}
+</code></pre>
+<p>So <code>valid</code> means a case has the right shape, not that the rules will accept every value in it.</p>
+<h4 id="what-the-rules-and-the-file-have-to-be">What the rules and the file have to be</h4>
+<p><code>l4 batch</code> does not run your rules file as it stands. It checks the file, prints the checked module back as source with its directives taken out, and for each case adds a small wrapper that reads the case and applies the exported function; then it checks and runs that text. Four things follow.</p>
+<ul>
+<li><strong>The printed module has to be valid source.</strong> If it is not, every case is an <code>error</code> line with the parser's message, and the cause is the rules file and not the cases. One shape that does this is a bare quoted string used as a condition inside a boolean expression, such as <code>a AND "and also" AND TRUE</code>.</li>
+<li><strong>An exported function whose <code>MAYBE</code> input is followed by another input cannot be run.</strong> The wrapper it needs is not valid, and every case is an <code>error</code> line. Put the <code>MAYBE</code> input last.</li>
+<li><strong>Every case checks the whole module again,</strong> and the modules it imports, so a large rules file with many cases takes time.</li>
+<li><strong>A CSV file has to be UTF-8</strong> (in Excel, save as "CSV UTF-8"). A file in another encoding stops the command at the first bad byte, with an error message from the Haskell runtime and a backtrace, exit status 1, and no <code>Error:</code> line; in the default streaming output, the cases before the bad byte have already run and printed.</li>
+</ul>
+<h4 id="when-the-command-cannot-start">When the command cannot start</h4>
+<p>If <code>l4 batch</code> cannot read the cases or the rules, it prints no line for any case and exits with status 1. It says why in one plain line that starts <code>Error:</code>, on standard output, which is where the case lines go, so a script that reads the output as JSON should look at the exit status before it parses:</p>
+<ul>
+<li><code>Error: failed to parse inputs: …</code> for a cases file that is not valid JSON, YAML or CSV; for a CSV file it names the line, as in <code>line 2 of the CSV file is not valid CSV, near `"c` </code>, an empty CSV file is said to be empty, and a quote that opens a cell and is never closed is refused at the line where it opens;</li>
+<li><code>Error: --input-format is required when the extension can't be inferred (e.g. reading from stdin)</code>;</li>
+<li><code>Error: type checking failed</code> for rules that do not type-check, with the type errors themselves on standard error;</li>
+<li><code>Error: no @export functions found in module</code>, or <code>Error: no @export function named 'name' found</code> when <code>--entrypoint</code> names one that is not there.</li>
+</ul>
+<p>A cases file or a rules file that does not exist ends the command with the operating system's message on standard error instead.</p>
+<h3 id="l4-trace-and-l4-state-graph-visualization"><code>l4 trace</code> and <code>l4 state-graph</code> — visualization</h3>
+<ul>
+<li><code>l4 trace myfile.l4</code> renders every <code>#EVALTRACE</code> in the file as GraphViz DOT (<code>--format dot|png|svg</code>, <code>-o DIR</code> for image output; PNG/SVG need GraphViz installed).</li>
+<li><code>l4 state-graph myfile.l4</code> extracts the state transition graph of regulative rules (<code>PARTY ... MUST ...</code>) as GraphViz DOT.</li>
+</ul>
+<h3 id="l4-ast-the-parsed-syntax-tree"><code>l4 ast</code> — the parsed syntax tree</h3>
+<p><code>l4 ast myfile.l4</code> dumps the parsed AST. You will rarely need it unless you are debugging L4 tooling itself.</p>
+<hr>
+<h2 id="step-7-deploy-as-an-api">Step 7: Deploy as an API</h2>
+<p><code>l4 deploy</code> turns a file into a live REST API on <a href="https://legalese.cloud">Legalese Cloud</a>, as the VS Code extension's <strong>Deploy</strong> tab does. Only rules marked <code>@export</code> become endpoints; <a href="/l4/tutorials/deploying-rules/exporting-rules-for-deployment">Exporting Rules for Deployment</a> explains how to mark them.</p>
+<h3 id="sign-in">Sign in</h3>
+<p><code>l4</code> gets your Legalese Cloud credentials from the <code>legalese</code> CLI, so you sign in once and <code>l4</code> never stores a token:</p>
+<pre><code class="language-bash">l4 install legalese    # downloads it (checksum-verified) to /usr/local/bin or ~/.local/bin
+legalese login         # signs you in through the browser and picks your organization
+</code></pre>
+<p><code>l4 install legalese</code> runs on macOS and Linux. Run it again to upgrade.</p>
+<h3 id="deploy-update-list-remove">Deploy, update, list, remove</h3>
+<pre><code class="language-bash">l4 deploy late-fee.l4 --description "Late fees for overdue invoices"
+</code></pre>
+<pre><code>Deploying 'late-fee' to Legalese Cloud org 'acme' (as you@example.com): late-fee.l4
+Compiling…
+Deployed 'late-fee' (version 1.0.0) with 1 function:
+  fee
+API: https://api.legalese.cloud/acme/late-fee
+</code></pre>
+<p>The deployment is named after the file unless you pass <code>--name</code>. <code>l4</code> typechecks the file first, then uploads it with the files it imports. The standard libraries are not uploaded: a deployment finds <code>prelude</code>, <code>daydate</code> and the others in the copy built into the service.</p>
+<table>
+<thead>
+<tr>
+<th>Command</th>
+<th>What it does</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>l4 deploy FILE</code></td>
+<td>Creates a deployment. Refuses if the name is taken.</td>
+</tr>
+<tr>
+<td><code>l4 redeploy FILE</code></td>
+<td>Updates an existing deployment. If the update would break existing integrations (a rule removed, a parameter changed), it is rejected; <code>--force</code> applies it anyway.</td>
+</tr>
+<tr>
+<td><code>l4 deployments</code></td>
+<td>Lists your organization's deployments.</td>
+</tr>
+<tr>
+<td><code>l4 undeploy NAME</code></td>
+<td>Deletes a deployment after you type its name to confirm. In scripts, pass <code>--yes</code>.</td>
+</tr>
+</tbody>
+</table>
+<p><code>--json</code> prints machine-readable results, and <code>--no-wait</code> returns as soon as the upload is accepted instead of waiting for it to compile.</p>
+<h3 id="your-own-jl4-service">Your own jl4-service</h3>
+<p>To deploy to a jl4-service you run yourself, name it with <code>--server</code>:</p>
+<pre><code class="language-bash">l4 deploy late-fee.l4 --server http://localhost:8080
+</code></pre>
+<p>If it needs an API key, put the key in the <code>L4_API_KEY</code> environment variable or in a file passed with <code>--api-key-file</code>. <code>l4</code> won't send a key over plain <code>http</code> to anything but <code>localhost</code>.</p>
+<hr>
+<h2 id="step-8-the-repl">Step 8: The REPL</h2>
+<p>For interactive exploration there is a separate REPL executable. From a source checkout:</p>
+<pre><code class="language-bash">cabal run jl4-repl -- late-fee.l4
+</code></pre>
+<p>Then evaluate expressions live:</p>
+<pre><code>> `late fee` `a very late invoice`
+50
+</code></pre>
+<p>Useful REPL commands: <code>:help</code>, <code>:load &#x3C;file></code> / <code>:reload</code>, <code>:type &#x3C;expr></code>, <code>:info &#x3C;name></code> / <code>:env</code>, <code>:decides</code> and <code>:queryplan</code> (query planning), and <code>:trace</code> / <code>:traceascii</code> / <code>:tracefile</code> (evaluation traces). See <a href="https://github.com/legalese/l4-ide/tree/main/jl4-repl">jl4-repl's README</a> for the full list.</p>
+<hr>
+<h2 id="what-you-learned">What You Learned</h2>
+<ul>
+<li>How to install or build the <code>l4</code> binary</li>
+<li><code>l4 run</code> evaluates <code>#EVAL</code> directives; <code>l4 check</code> typechecks fast for CI</li>
+<li><code>--json</code> gives machine-readable output; <code>--fixed-now</code> pins the clock</li>
+<li><code>JL4_LIBRARY_PATH</code> controls where <code>IMPORT</code>ed libraries come from</li>
+<li><code>format</code>, <code>render</code>, <code>batch</code>, <code>trace</code>, <code>state-graph</code>, and <code>ast</code> round out the toolset</li>
+<li><code>l4 deploy</code>, <code>redeploy</code>, <code>deployments</code>, and <code>undeploy</code> manage live APIs on Legalese Cloud or your own jl4-service</li>
+<li><code>cabal run jl4-repl</code> starts an interactive session</li>
+</ul>
+<hr>
+<h2 id="next-steps">Next Steps</h2>
+<ul>
+<li><a href="/l4/tutorials/getting-started/testing-your-rules">Testing Your Rules</a> — assertions and contract simulation with <code>#ASSERT</code> and <code>#TRACE</code></li>
+<li><a href="/l4/tutorials/getting-started/debugging-type-errors">Debugging Type Errors</a> — reading and fixing the errors <code>l4 check</code> reports</li>
+<li><a href="/l4/tutorials/deploying-rules/exporting-rules-for-deployment">Exporting Rules for Deployment</a> — turn a file into a live API</li>
+</ul>
+0:{"rsc":["$","$1","c",{"children":[["$","$L2",null,{"navSections":[{"title":"","items":[{"title":"Overview","href":"tutorials"},{"title":"Install L4 and write your first rule","href":"tutorials/getting-started/first-l4-file"},{"title":"Draft rules with Legalese AI","href":"tutorials/llm-integration/composing-l4-with-ai"},{"title":"Test your rules","href":"tutorials/getting-started/testing-your-rules"},{"title":"Fix errors","href":"tutorials/getting-started/debugging-type-errors"},{"title":"Encode legislation","href":"tutorials/getting-started/encoding-legislation"},{"title":"Make rules read like law","href":"tutorials/natural-language-functions/optimising-natural-language-generation"},{"title":"Common patterns","href":"tutorials/getting-started/common-patterns"},{"title":"Deploy your rules","href":"tutorials/deploying-rules/exporting-rules-for-deployment"},{"title":"Choose an integration","href":"tutorials/legalese-cloud"},{"title":"Connect an AI agent","href":"tutorials/legalese-cloud/ai-agents"},{"title":"Chat with your rules","href":"tutorials/legalese-cloud/openai-compatible-api"},{"title":"Call rules over REST","href":"tutorials/legalese-cloud/openapi-spec"},{"title":"Embed rules in a website","href":"tutorials/legalese-cloud/webmcp-embed"},{"title":"Using the l4 CLI","href":"tutorials/getting-started/l4-cli"},{"title":"Manage rules in git and CI","href":"tutorials/getting-started/version-control-for-rules"}]}],"toc":[],"htmlContent":"$3","pager":{"prev":"$0:rsc:props:children:0:props:navSections:0:items:13","next":"$0:rsc:props:children:0:props:navSections:0:items:15"}}],["$L4"],"$L5"]}],"isPartial":false,"staleTime":300,"varyParams":null,"buildId":"iJUXAyHcmcW99cMci3ei9"}
+4:["$","script","script-0",{"src":"/_next/static/chunks/0fl~me.qwn48c.js","async":true}]
+5:["$","$L6",null,{"children":["$","$7",null,{"name":"Next.MetadataOutlet","children":"$@8"}]}]
+8:null

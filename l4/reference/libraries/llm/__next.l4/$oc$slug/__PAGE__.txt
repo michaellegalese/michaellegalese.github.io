@@ -1,0 +1,198 @@
+1:"$Sreact.fragment"
+2:I[90160,["/_next/static/chunks/0ypf.t599.7y6.js","/_next/static/chunks/0t2xr05rlu96l.js","/_next/static/chunks/0uxaa7wo_wmcw.js","/_next/static/chunks/0fl~me.qwn48c.js"],"default"]
+6:I[97367,["/_next/static/chunks/0ypf.t599.7y6.js","/_next/static/chunks/0t2xr05rlu96l.js"],"OutletBoundary"]
+7:"$Sreact.suspense"
+3:T2099,<h1>llm</h1>
+<p>Calls large language models from L4: Anthropic's Claude, OpenAI, or any model on OpenRouter. Import it with <code>IMPORT llm</code>.</p>
+<p>Each call sends one user message and gives back the provider's reply exactly as it arrives: the response body, a JSON text in a STRING. Take the answer out of it with <code>JSONDECODE</code> (see <a href="#reading-the-reply">Reading the reply</a>).</p>
+<p><strong>Example:</strong></p>
+<pre><code class="language-l4-file">-- llm example: a model answers a question of judgment, an L4 rule decides.
+IMPORT prelude
+IMPORT llm
+
+-- The part of an Anthropic reply this file needs.
+-- JSONDECODE ignores the other fields.
+DECLARE `reply block` HAS
+  text IS A STRING
+
+DECLARE `Anthropic reply` HAS
+  content IS A LIST OF `reply block`
+
+GIVEN `raw reply` IS A STRING
+GIVETH A MAYBE STRING
+`the text of` `raw reply` MEANS
+  CONSIDER `decoded reply`
+  WHEN RIGHT reply THEN
+    CONSIDER reply's content
+    WHEN EMPTY THEN NOTHING
+    WHEN block FOLLOWED BY rest THEN JUST (block's text)
+  WHEN LEFT problem THEN NOTHING
+  WHERE
+    GIVETH AN EITHER STRING `Anthropic reply`
+    `decoded reply` MEANS JSONDECODE `raw reply`
+
+-- The question put to the model.
+GIVEN `the notice` IS A STRING
+GIVETH A STRING
+`the question about` `the notice` MEANS
+  CONCAT "Answer YES or NO and nothing else. Is this notice written in a professional tone? ", `the notice`
+
+-- Asks Claude. This needs ANTHROPIC_API_KEY and network access,
+-- so the file defines it but does not evaluate it.
+GIVEN `the notice` IS A STRING
+GIVETH A MAYBE STRING
+`the verdict of the model on` `the notice` MEANS
+  CONSIDER ENV "ANTHROPIC_API_KEY"
+  WHEN JUST key THEN `the text of` (callClaude key (`the question about` `the notice`))
+  WHEN NOTHING THEN NOTHING
+
+-- The rule takes the model's answer as an input,
+-- so it can be tested without calling a model.
+GIVEN `the notice was given in time` IS A BOOLEAN
+      `the verdict of the model` IS A MAYBE STRING
+GIVETH A BOOLEAN
+DECIDE `the notice is valid` IF
+      `the notice was given in time`
+  AND `the verdict of the model` EQUALS JUST "YES"
+
+#EVAL `the text of` "{\"id\":\"msg_1\",\"content\":[{\"type\":\"text\",\"text\":\"YES\"}]}"
+#EVAL `the notice is valid` TRUE (JUST "YES")
+#EVAL `the notice is valid` TRUE NOTHING
+</code></pre>
+<h2 id="configuration">Configuration</h2>
+<ul>
+<li><strong>API keys.</strong> The <code>call...</code> functions take the key as their first input; read it with the built-in <code>ENV</code> so it stays out of your file. <code>queryLLM</code> and <code>queryLLMWithDefaults</code> read the environment variables <code>OPENROUTER_API_KEY</code>, <code>OPENAI_API_KEY</code> and <code>ANTHROPIC_API_KEY</code> themselves.</li>
+<li><strong>Network.</strong> The calls use the built-in <code>POST</code>, so every evaluation makes a real HTTPS request and needs network access. Where L4 runs in safe mode, as it does in the browser, the request is refused with an error. See <a href="/l4/reference/builtins/http-json">HTTP and JSON</a>.</li>
+</ul>
+<h2 id="functions">Functions</h2>
+<table>
+<thead>
+<tr>
+<th>Function</th>
+<th>Inputs</th>
+<th>Gives</th>
+<th>What it does</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>callAnthropic</code></td>
+<td><code>apiKey</code>, <code>model</code>, <code>prompt</code>: STRING, <code>maxTokens</code>: NUMBER</td>
+<td>STRING</td>
+<td>Calls Anthropic's Messages API</td>
+</tr>
+<tr>
+<td><code>callOpenAI</code></td>
+<td><code>apiKey</code>, <code>model</code>, <code>prompt</code>: STRING, <code>maxTokens</code>: NUMBER</td>
+<td>STRING</td>
+<td>Calls OpenAI's Chat Completions API</td>
+</tr>
+<tr>
+<td><code>callOpenRouter</code></td>
+<td><code>apiKey</code>, <code>model</code>, <code>prompt</code>: STRING, <code>maxTokens</code>: NUMBER</td>
+<td>STRING</td>
+<td>Calls OpenRouter's chat completions API</td>
+</tr>
+<tr>
+<td><code>callClaude</code></td>
+<td><code>apiKey</code>, <code>prompt</code>: STRING</td>
+<td>STRING</td>
+<td><code>callAnthropic</code> with the model <code>claude-sonnet-4-5-20250929</code> and 1000 tokens</td>
+</tr>
+<tr>
+<td><code>callGPT4</code></td>
+<td><code>apiKey</code>, <code>prompt</code>: STRING</td>
+<td>STRING</td>
+<td><code>callOpenAI</code> with the model <code>gpt-4</code> and 1000 tokens</td>
+</tr>
+<tr>
+<td><code>queryLLM</code></td>
+<td><code>model</code>, <code>prompt</code>: STRING, <code>maxTokens</code>: NUMBER</td>
+<td>STRING</td>
+<td>Calls the first provider whose key is set, trying OpenRouter, then OpenAI, then Anthropic</td>
+</tr>
+<tr>
+<td><code>queryLLMWithDefaults</code></td>
+<td><code>prompt</code>: STRING</td>
+<td>STRING</td>
+<td>The same order, with each provider's default model and 1000 tokens</td>
+</tr>
+<tr>
+<td><code>parseResponse</code></td>
+<td><code>jsonString</code>: STRING</td>
+<td>EITHER STRING a</td>
+<td><code>JSONDECODE</code> of the text</td>
+</tr>
+<tr>
+<td><code>createMessage</code></td>
+<td><code>role</code>, <code>content</code>: STRING</td>
+<td><code>Message</code></td>
+<td>A <code>Message</code> record, as sent in the request</td>
+</tr>
+</tbody>
+</table>
+<p><code>queryLLM</code> passes the same model name to whichever provider it calls, and the providers name models differently (OpenRouter writes <code>anthropic/claude-3.5-sonnet</code>), so give it a name the provider you expect will accept.</p>
+<p>When no key is set, <code>queryLLM</code> and <code>queryLLMWithDefaults</code> do not fail: they give a STRING that begins <code>ERROR: No LLM API keys configured</code>.</p>
+<p>The defaults of <code>queryLLMWithDefaults</code> are <code>anthropic/claude-3.5-sonnet</code> on OpenRouter, <code>gpt-4</code> on OpenAI and <code>claude-sonnet-4-5-20250929</code> on Anthropic.</p>
+<h2 id="model-names">Model names</h2>
+<p>These constants name models the way OpenRouter does, for <code>callOpenRouter</code>. They name older models; you can pass any current model name as a STRING instead.</p>
+<table>
+<thead>
+<tr>
+<th>Constant</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>claudeOpusModel</code></td>
+<td><code>"anthropic/claude-3-opus"</code></td>
+</tr>
+<tr>
+<td><code>claudeSonnetModel</code></td>
+<td><code>"anthropic/claude-3.5-sonnet"</code></td>
+</tr>
+<tr>
+<td><code>gpt4Model</code></td>
+<td><code>"openai/gpt-4"</code></td>
+</tr>
+<tr>
+<td><code>gpt4TurboModel</code></td>
+<td><code>"openai/gpt-4-turbo"</code></td>
+</tr>
+<tr>
+<td><code>gpt35Model</code></td>
+<td><code>"openai/gpt-3.5-turbo"</code></td>
+</tr>
+<tr>
+<td><code>llama3Model</code></td>
+<td><code>"meta-llama/llama-3.1-70b-instruct"</code></td>
+</tr>
+<tr>
+<td><code>llama3FreeModel</code></td>
+<td><code>"meta-llama/llama-3.1-70b-instruct:free"</code></td>
+</tr>
+<tr>
+<td><code>geminiProModel</code></td>
+<td><code>"google/gemini-pro"</code></td>
+</tr>
+</tbody>
+</table>
+<h2 id="reading-the-reply">Reading the reply</h2>
+<p>The reply is the provider's JSON. Declare records for the fields you need and decode into them with <code>JSONDECODE</code>; fields you do not declare are ignored.</p>
+<ul>
+<li>Anthropic puts the text in <code>content</code>, a list of blocks that each have a <code>text</code> field: <code>{"content": [{"type": "text", "text": "..."}]}</code>.</li>
+<li>OpenAI and OpenRouter put it in <code>choices</code>, a list whose items have a <code>message</code> with a <code>content</code> field: <code>{"choices": [{"message": {"content": "..."}}]}</code>.</li>
+</ul>
+<p>The example file decodes an Anthropic reply in <code>`the text of`</code>.</p>
+<h2 id="keeping-judgment-and-rules-apart">Keeping judgment and rules apart</h2>
+<p>A model is good at questions of judgment, such as whether a notice is written in a professional tone. L4 is good at applying rules to the answers. Keep the two apart:</p>
+<ul>
+<li>Write the rule with the model's answer as an input (<code>GIVEN</code>), not as a call inside it. The rule can then be tested with <code>#EVAL</code> by passing answers directly, and it reads the same whoever, or whatever, supplies the answer.</li>
+<li>Ask for an answer in a fixed form, such as <code>YES</code> or <code>NO</code>, so the rule can compare it.</li>
+<li>A model can give different answers to the same prompt. If decisions must be audited, keep the prompt, the model name, the reply and the time of the call alongside the decision.</li>
+</ul>
+0:{"rsc":["$","$1","c",{"children":[["$","$L2",null,{"navSections":[{"title":"","items":[{"title":"Language Reference","href":"reference"},{"title":"Glossary","href":"reference/GLOSSARY"},{"title":"Cheat sheet","href":"reference/cheat-sheet"},{"title":"Types","href":"reference/types","children":[{"title":"DECLARE","href":"reference/types/DECLARE"},{"title":"ASSUME","href":"reference/types/ASSUME"},{"title":"FOR ALL","href":"reference/types/for-all"},{"title":"Coercions","href":"reference/types/coercions"}]},{"title":"Functions","href":"reference/functions","children":[{"title":"DECIDE","href":"reference/functions/DECIDE"},{"title":"GIVEN and GIVETH","href":"reference/functions/GIVEN"},{"title":"MEANS","href":"reference/functions/MEANS"},{"title":"LET and WHERE","href":"reference/functions/LET"},{"title":"YIELD","href":"reference/functions/YIELD"},{"title":"AKA","href":"reference/functions/AKA"}]},{"title":"Control flow","href":"reference/control-flow","children":[{"title":"IF","href":"reference/control-flow/IF"},{"title":"BRANCH","href":"reference/control-flow/BRANCH"},{"title":"CONSIDER","href":"reference/control-flow/CONSIDER"}]},{"title":"Operators","href":"reference/operators","children":[{"title":"AND, OR, NOT, IMPLIES","href":"reference/operators/logical"},{"title":"UNLESS","href":"reference/operators/UNLESS"},{"title":"Arithmetic","href":"reference/operators/arithmetic"},{"title":"Comparisons","href":"reference/operators/comparisons"}]},{"title":"Regulative rules","href":"reference/regulative","children":[{"title":"PARTY, MUST, MAY, SHANT","href":"reference/regulative/PARTY"},{"title":"Deadlines and consequences","href":"reference/regulative/consequences"},{"title":"BECAUSE","href":"reference/regulative/BECAUSE"},{"title":"DEONTIC","href":"reference/regulative/DEONTIC"},{"title":"EVENT","href":"reference/regulative/EVENT"}]},{"title":"Syntax and directives","href":"reference/syntax"},{"title":"Built-in functions","href":"reference/builtins","children":[{"title":"HTTP and JSON","href":"reference/builtins/http-json"}]},{"title":"Standard libraries","href":"reference/libraries","children":[{"title":"prelude","href":"reference/libraries/prelude"},{"title":"math","href":"reference/libraries/math"},{"title":"daydate","href":"reference/libraries/daydate"},{"title":"time","href":"reference/libraries/time"},{"title":"datetime","href":"reference/libraries/datetime"},{"title":"timezone","href":"reference/libraries/timezone"},{"title":"excel-date","href":"reference/libraries/excel-date"},{"title":"currency","href":"reference/libraries/currency"},{"title":"holdings","href":"reference/libraries/holdings"},{"title":"actus","href":"reference/libraries/actus"},{"title":"legal-persons","href":"reference/libraries/legal-persons"},{"title":"jurisdiction","href":"reference/libraries/jurisdiction"},{"title":"llm","href":"reference/libraries/llm"}]},{"title":"Error messages","href":"reference/errors"}]}],"toc":[],"htmlContent":"$3","pager":{"prev":"$0:rsc:props:children:0:props:navSections:0:items:10:children:11","next":"$0:rsc:props:children:0:props:navSections:0:items:11"}}],["$L4"],"$L5"]}],"isPartial":false,"staleTime":300,"varyParams":null,"buildId":"iJUXAyHcmcW99cMci3ei9"}
+4:["$","script","script-0",{"src":"/_next/static/chunks/0fl~me.qwn48c.js","async":true}]
+5:["$","$L6",null,{"children":["$","$7",null,{"name":"Next.MetadataOutlet","children":"$@8"}]}]
+8:null

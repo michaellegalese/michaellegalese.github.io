@@ -1,0 +1,363 @@
+1:"$Sreact.fragment"
+2:I[90160,["/_next/static/chunks/0ypf.t599.7y6.js","/_next/static/chunks/0t2xr05rlu96l.js","/_next/static/chunks/0uxaa7wo_wmcw.js","/_next/static/chunks/0fl~me.qwn48c.js"],"default"]
+6:I[97367,["/_next/static/chunks/0ypf.t599.7y6.js","/_next/static/chunks/0t2xr05rlu96l.js"],"OutletBoundary"]
+7:"$Sreact.suspense"
+3:T33cb,<h1>DECLARE</h1>
+<p><code>DECLARE</code> introduces a new type: a record, an enumeration, or a synonym for another type.</p>
+<h2 id="syntax">Syntax</h2>
+<pre><code class="language-text">DECLARE Name HAS field1 IS A Type1, field2 IS A Type2
+DECLARE Name IS ONE OF Value1, Value2, Value3
+DECLARE Name IS A Type
+DECLARE Name OF a, b HAS ...
+</code></pre>
+<p><strong>Example files:</strong></p>
+<pre><code class="language-l4-file">-- DECLARE keyword examples
+
+-- Record Types (Product Types)
+
+-- Basic record with multiple fields
+DECLARE Person
+  HAS
+    `full name` IS A STRING
+    age         IS A NUMBER
+
+-- Record with single line syntax
+DECLARE Point HAS x IS A NUMBER, y IS A NUMBER
+
+-- Enum Types (Sum Types)
+
+-- Simple enum with value constructors
+DECLARE Colour IS ONE OF `bright red`, `forest green`, `ocean blue`
+
+-- Enum with constructors that have fields
+DECLARE Shape IS ONE OF
+  Circle HAS radius IS A NUMBER
+  Rectangle HAS width IS A NUMBER, height IS A NUMBER
+  Point
+
+-- Type Synonyms
+
+DECLARE Age IS NUMBER
+DECLARE `Person name` IS STRING
+
+-- Parameterised Types
+
+-- The type parameter written after the name ...
+DECLARE Box OF a HAS contents IS AN a
+
+-- ... or declared with GIVEN above the DECLARE
+GIVEN a IS A TYPE, b IS A TYPE
+DECLARE `Pair of values` HAS first IS AN a, second IS A b
+
+-- Usage Examples
+
+-- Create record instances
+DECIDE `the applicant` IS Person WITH `full name` IS "John", age IS 30
+DECIDE `the origin` IS Point WITH x IS 0, y IS 0
+
+-- Use enum constructors
+DECIDE `my favourite colour` IS `bright red`
+DECIDE `my shape` IS Circle WITH radius IS 5
+
+-- Use parameterised types
+GIVETH A Box OF NUMBER
+DECIDE `box with number` IS Box WITH contents IS 42
+GIVETH A Box OF STRING
+DECIDE `box with text` IS Box WITH contents IS "hello"
+GIVETH A `Pair of values` OF NUMBER, STRING
+DECIDE `a pair` IS `Pair of values` WITH first IS 1, second IS "one"
+
+-- Evaluate examples
+#EVAL `the applicant`'s `full name`
+#EVAL `the applicant`'s age
+#EVAL `my favourite colour`
+#EVAL `box with text`'s contents
+#EVAL `a pair`'s second
+</code></pre>
+<p>,</p>
+<pre><code class="language-l4-file">-- Example: Record type declaration
+-- Demonstrates product types with named fields
+
+DECLARE Person
+  HAS `full name` IS A STRING
+      age         IS A NUMBER
+
+-- Example: Creating a person record
+`the applicant` MEANS Person WITH
+  `full name` IS "John Doe"
+  age         IS 30
+
+#EVAL `the applicant`'s `full name`
+#EVAL `the applicant`'s age
+</code></pre>
+<p>,</p>
+<pre><code class="language-l4-file">-- Example: Enum type declaration
+-- Demonstrates sum types with named constructors
+
+DECLARE Color IS ONE OF
+  Red
+  Green
+  Blue
+
+-- Example usage
+`my favorite color` MEANS Red
+
+`name of the color` MEANS
+  CONSIDER `my favorite color`
+  WHEN Red   THEN "red"
+  WHEN Green THEN "green"
+  WHEN Blue  THEN "blue"
+
+#EVAL `name of the color`
+</code></pre>
+<h2 id="records">Records</h2>
+<p>A record has named fields. Write them after <code>HAS</code>, one per line or separated by commas:</p>
+<pre><code class="language-l4">DECLARE Person
+  HAS
+    name IS A STRING
+    age IS A NUMBER
+
+DECLARE Point HAS x IS A NUMBER, y IS A NUMBER
+</code></pre>
+<p>A field can also be written <code>name: STRING</code> or <code>name: A STRING</code>.</p>
+<p><strong>Making a record.</strong> Give every field by name with <code>WITH</code>, or give the values in the order the fields are declared, with <code>OF</code> and commas or with spaces:</p>
+<pre><code class="language-l4">DECLARE Person HAS
+  name IS A STRING
+  age IS A NUMBER
+
+`the buyer` MEANS Person WITH name IS "Kim", age IS 30
+`the seller` MEANS Person OF "Lee", 45
+`the agent` MEANS Person "Jo" 28
+
+#EVAL `the buyer`'s age
+</code></pre>
+<p><strong>Reading a field.</strong> Use the genitive <code>'s</code>: <code>`the buyer`'s age</code>. See <a href="/l4/reference/syntax#genitive">Syntax and directives: Genitive</a>.</p>
+<h2 id="computed-fields">Computed fields</h2>
+<p>A field followed by <code>MEANS</code> is computed from the record's other fields. It is read with <code>'s</code> like any other field, and it is not given when the record is made.</p>
+<pre><code class="language-l4">DECLARE Employee HAS
+    `name`          IS A STRING
+    `year of birth` IS A NUMBER
+    `current year`  IS A NUMBER
+    `age`           IS A NUMBER
+        MEANS `current year` - `year of birth`
+    `adult`         IS A BOOLEAN
+        MEANS `age` >= 18
+
+`the employee` MEANS Employee WITH
+    `name`          IS "Lim"
+    `year of birth` IS 1990
+    `current year`  IS 2026
+
+#EVAL `the employee`'s `adult`
+</code></pre>
+<ul>
+<li>The body can use the record's other fields by name, including other computed fields, and call functions defined elsewhere.</li>
+<li>It can use <code>WHERE</code> and <code>LET … IN</code>.</li>
+<li>It takes no inputs of its own: there is no <code>GIVEN</code> for a computed field. Its only input is the record.</li>
+<li>Computed fields that depend on each other in a cycle are an error ("Circular dependency detected between computed fields").</li>
+</ul>
+<p>Putting the stored fields first and the computed fields after them makes a declaration easier to read.</p>
+<p><strong>Example file:</strong></p>
+<pre><code class="language-l4-file">-- Computed Fields Example
+-- Demonstrates "methods" on records: fields with MEANS clauses
+-- whose values are automatically derived from other fields.
+
+IMPORT prelude
+
+-- ─────────────────────────────────────────────────────────
+-- Basic computed fields (methods)
+-- ─────────────────────────────────────────────────────────
+-- Style: stored fields first, then computed/derived fields.
+
+DECLARE Employee HAS
+    -- stored fields (primary attributes)
+    `name`               IS A STRING
+    `date of birth`      IS A NUMBER
+    `date of employment` IS A NUMBER
+    `monthly salary`     IS A NUMBER
+    `current year`       IS A NUMBER
+    -- computed fields (derived attributes / methods)
+    `age`                IS A NUMBER
+        MEANS `current year` - `date of birth`
+    `years of service`   IS A NUMBER
+        MEANS `current year` - `date of employment`
+    `senior`             IS A BOOLEAN
+        MEANS `years of service` >= 10
+    `eligible`           IS A BOOLEAN
+        MEANS `senior`
+          AND `monthly salary` &#x3C;= 6000
+
+-- Construction: only stored fields are supplied.
+-- Computed fields are derived automatically.
+veteran MEANS Employee WITH
+    `name`               IS "Lim"
+    `date of birth`      IS 1960
+    `date of employment` IS 1990
+    `monthly salary`     IS 3000
+    `current year`       IS 2026
+
+-- Access computed fields with 's, just like stored fields.
+#EVAL veteran's `age`            -- 66
+#EVAL veteran's `years of service` -- 36
+#EVAL veteran's `senior`         -- TRUE
+#EVAL veteran's `eligible`       -- TRUE
+
+-- ─────────────────────────────────────────────────────────
+-- Calling external functions from computed fields
+-- ─────────────────────────────────────────────────────────
+-- Multi-argument calls can use juxtaposition, OF, or mixfix:
+--   `apply rate` `balance` `rate`         -- juxtaposition
+--   `apply rate` OF `balance`, `rate`     -- OF (comma-separated)
+--   `apply` `balance` `at rate` `rate`    -- mixfix (natural language)
+-- All are equivalent. Choose whichever reads best in context.
+
+GIVEN `base` IS A NUMBER
+      `rate` IS A NUMBER
+GIVETH A NUMBER
+`apply rate` MEANS `base` * `rate` / 100
+
+DECLARE Account HAS
+    `balance`   IS A NUMBER
+    `rate`      IS A NUMBER
+    `interest`  IS A NUMBER
+        MEANS `apply rate` `balance` `rate`
+    `projected` IS A NUMBER
+        MEANS `balance` + `interest`
+
+savings MEANS Account WITH
+    `balance` IS 10000
+    `rate`    IS 5
+
+#EVAL savings's `interest`   -- 500.0
+#EVAL savings's `projected`  -- 10500.0
+
+-- ─────────────────────────────────────────────────────────
+-- WHERE and LET/IN inside computed fields
+-- ─────────────────────────────────────────────────────────
+
+GIVEN `x` IS A NUMBER
+GIVETH A NUMBER
+`square` MEANS `x` * `x`
+
+DECLARE Shape HAS
+    `width`   IS A NUMBER
+    `height`  IS A NUMBER
+    `area`    IS A NUMBER
+        MEANS `width` * `height`
+    `diag sq` IS A NUMBER
+        MEANS `result`
+          WHERE
+            `w2` MEANS `square` `width`
+            `h2` MEANS `square` `height`
+            `result` MEANS `w2` + `h2`
+    `scaled`  IS A NUMBER
+        MEANS LET `factor` MEANS 2 IN `area` * `factor`
+
+rect MEANS Shape WITH
+    `width`  IS 3
+    `height` IS 4
+
+#EVAL rect's `area`     -- 12
+#EVAL rect's `diag sq`  -- 25
+#EVAL rect's `scaled`   -- 24
+</code></pre>
+<h2 id="enumerations">Enumerations</h2>
+<p><code>IS ONE OF</code> lists the values a type can have:</p>
+<pre><code class="language-l4">DECLARE Colour IS ONE OF Red, Green, Blue
+</code></pre>
+<p>A value can carry fields of its own:</p>
+<pre><code class="language-l4">DECLARE Shape IS ONE OF
+  Circle HAS radius IS A NUMBER
+  Rectangle HAS width IS A NUMBER, height IS A NUMBER
+  Point
+
+`the plot` MEANS Rectangle WITH width IS 20, height IS 30
+`the pond` MEANS Circle 4
+</code></pre>
+<p>Use <a href="/l4/reference/control-flow/CONSIDER">CONSIDER</a> to tell the values apart.</p>
+<h2 id="type-synonyms">Type synonyms</h2>
+<p><code>DECLARE Name IS Type</code> gives another name to an existing type. The two names are the same type.</p>
+<pre><code class="language-l4">DECLARE Age IS A NUMBER
+
+GIVEN age IS AN Age
+GIVETH A BOOLEAN
+`is an adult` age MEANS age >= 18
+</code></pre>
+<ul>
+<li>A synonym can take type parameters: <code>DECLARE Optional OF a IS A MAYBE a</code>.</li>
+<li>A synonym cannot refer to itself, directly or through other synonyms; L4 reports a circular dependency between them.</li>
+<li>L4 follows a chain of synonyms for at most 1000 steps. For a longer chain, declare the first synonym as the type the chain ends in.</li>
+</ul>
+<h2 id="parameterised-types">Parameterised types</h2>
+<p>A type can take type parameters, so that the same declaration works for numbers, text or any other type.
+Write the parameters after the name, with <code>OF</code> and commas, or declare them with <code>GIVEN … IS A TYPE</code> above the <code>DECLARE</code>:</p>
+<pre><code class="language-l4">DECLARE Box OF a HAS contents IS AN a
+
+GIVEN a IS A TYPE
+      b IS A TYPE
+DECLARE `Pair of values` HAS first IS AN a, second IS A b
+
+GIVETH A Box OF NUMBER
+`a box of 42` MEANS Box WITH contents IS 42
+</code></pre>
+<p>The parameter can also follow the name without <code>OF</code> (<code>DECLARE Box a HAS …</code>).
+A use of the type gives the parameters with <code>OF</code>: <code>Box OF NUMBER</code>, <code>`Pair of values` OF NUMBER, STRING</code>.</p>
+<h2 id="a-and-an">A and AN</h2>
+<p><code>A</code> and <code>AN</code> before a type are for readability only. They are interchangeable and can be left out: <code>IS A NUMBER</code>, <code>IS AN Account</code> and <code>IS NUMBER</code> mean the same.</p>
+<pre><code class="language-l4">DECLARE Account HAS balance IS A NUMBER
+
+GIVEN account IS AN Account
+GIVETH NUMBER
+`balance of` account MEANS account's balance
+</code></pre>
+<h2 id="type-expressions">Type expressions</h2>
+<p>Wherever a type is expected (after <code>IS A</code>, <code>GIVETH</code>, in a field):</p>
+<table>
+<thead>
+<tr>
+<th>Type expression</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>NUMBER</code>, <code>STRING</code>, <code>BOOLEAN</code>, <code>DATE</code></td>
+<td>a built-in type (<a href="/l4/reference/types">Types</a>)</td>
+</tr>
+<tr>
+<td><code>LIST OF Type</code></td>
+<td>a list</td>
+</tr>
+<tr>
+<td><code>MAYBE Type</code></td>
+<td>a value that may be missing</td>
+</tr>
+<tr>
+<td><code>EITHER Type1 Type2</code></td>
+<td>one of two types</td>
+</tr>
+<tr>
+<td><code>Name OF Type1, Type2</code></td>
+<td>a parameterised type, given its parameters</td>
+</tr>
+<tr>
+<td><code>FUNCTION FROM Type1 AND Type2 TO Type3</code></td>
+<td>a function</td>
+</tr>
+<tr>
+<td><code>TYPE</code></td>
+<td>a type parameter</td>
+</tr>
+</tbody>
+</table>
+<h2 id="related-pages">Related pages</h2>
+<ul>
+<li><a href="/l4/reference/types">Types</a>: built-in types</li>
+<li><a href="/l4/reference/types/ASSUME">ASSUME</a>: a name with a type and no definition</li>
+<li><a href="/l4/reference/types/for-all">FOR ALL</a>: polymorphic types for <code>ASSUME</code></li>
+<li><a href="/l4/reference/functions/AKA">AKA</a>: other names for a type</li>
+</ul>
+0:{"rsc":["$","$1","c",{"children":[["$","$L2",null,{"navSections":[{"title":"","items":[{"title":"Language Reference","href":"reference"},{"title":"Glossary","href":"reference/GLOSSARY"},{"title":"Cheat sheet","href":"reference/cheat-sheet"},{"title":"Types","href":"reference/types","children":[{"title":"DECLARE","href":"reference/types/DECLARE"},{"title":"ASSUME","href":"reference/types/ASSUME"},{"title":"FOR ALL","href":"reference/types/for-all"},{"title":"Coercions","href":"reference/types/coercions"}]},{"title":"Functions","href":"reference/functions","children":[{"title":"DECIDE","href":"reference/functions/DECIDE"},{"title":"GIVEN and GIVETH","href":"reference/functions/GIVEN"},{"title":"MEANS","href":"reference/functions/MEANS"},{"title":"LET and WHERE","href":"reference/functions/LET"},{"title":"YIELD","href":"reference/functions/YIELD"},{"title":"AKA","href":"reference/functions/AKA"}]},{"title":"Control flow","href":"reference/control-flow","children":[{"title":"IF","href":"reference/control-flow/IF"},{"title":"BRANCH","href":"reference/control-flow/BRANCH"},{"title":"CONSIDER","href":"reference/control-flow/CONSIDER"}]},{"title":"Operators","href":"reference/operators","children":[{"title":"AND, OR, NOT, IMPLIES","href":"reference/operators/logical"},{"title":"UNLESS","href":"reference/operators/UNLESS"},{"title":"Arithmetic","href":"reference/operators/arithmetic"},{"title":"Comparisons","href":"reference/operators/comparisons"}]},{"title":"Regulative rules","href":"reference/regulative","children":[{"title":"PARTY, MUST, MAY, SHANT","href":"reference/regulative/PARTY"},{"title":"Deadlines and consequences","href":"reference/regulative/consequences"},{"title":"BECAUSE","href":"reference/regulative/BECAUSE"},{"title":"DEONTIC","href":"reference/regulative/DEONTIC"},{"title":"EVENT","href":"reference/regulative/EVENT"}]},{"title":"Syntax and directives","href":"reference/syntax"},{"title":"Built-in functions","href":"reference/builtins","children":[{"title":"HTTP and JSON","href":"reference/builtins/http-json"}]},{"title":"Standard libraries","href":"reference/libraries","children":[{"title":"prelude","href":"reference/libraries/prelude"},{"title":"math","href":"reference/libraries/math"},{"title":"daydate","href":"reference/libraries/daydate"},{"title":"time","href":"reference/libraries/time"},{"title":"datetime","href":"reference/libraries/datetime"},{"title":"timezone","href":"reference/libraries/timezone"},{"title":"excel-date","href":"reference/libraries/excel-date"},{"title":"currency","href":"reference/libraries/currency"},{"title":"holdings","href":"reference/libraries/holdings"},{"title":"actus","href":"reference/libraries/actus"},{"title":"legal-persons","href":"reference/libraries/legal-persons"},{"title":"jurisdiction","href":"reference/libraries/jurisdiction"},{"title":"llm","href":"reference/libraries/llm"}]},{"title":"Error messages","href":"reference/errors"}]}],"toc":[],"htmlContent":"$3","pager":{"prev":"$0:rsc:props:children:0:props:navSections:0:items:3","next":"$0:rsc:props:children:0:props:navSections:0:items:3:children:1"}}],["$L4"],"$L5"]}],"isPartial":false,"staleTime":300,"varyParams":null,"buildId":"iJUXAyHcmcW99cMci3ei9"}
+4:["$","script","script-0",{"src":"/_next/static/chunks/0fl~me.qwn48c.js","async":true}]
+5:["$","$L6",null,{"children":["$","$7",null,{"name":"Next.MetadataOutlet","children":"$@8"}]}]
+8:null

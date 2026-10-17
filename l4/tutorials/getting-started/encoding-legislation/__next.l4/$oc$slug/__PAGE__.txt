@@ -1,0 +1,434 @@
+1:"$Sreact.fragment"
+2:I[90160,["/_next/static/chunks/0ypf.t599.7y6.js","/_next/static/chunks/0t2xr05rlu96l.js","/_next/static/chunks/0uxaa7wo_wmcw.js","/_next/static/chunks/0fl~me.qwn48c.js"],"default"]
+6:I[97367,["/_next/static/chunks/0ypf.t599.7y6.js","/_next/static/chunks/0t2xr05rlu96l.js"],"OutletBoundary"]
+7:"$Sreact.suspense"
+3:T580b,<h1>Encode legislation</h1>
+<p>Turn a legal provision into L4 that mirrors the text, test it, and use an AI assistant to draft larger pieces.</p>
+<p><strong>Before you start:</strong> <a href="/l4/tutorials/getting-started/first-l4-file">Install L4 and write your first rule</a> and <a href="/l4/tutorials/getting-started/testing-your-rules">Test your rules</a>.</p>
+<p><strong>Complete example:</strong></p>
+<pre><code class="language-l4-file">-- encoding-legislation-example.l4
+-- Section 3 of the (imaginary) Alcohol Act 2024: who must not sell alcohol.
+
+§ `Imaginary Alcohol Act 2024, section 3`
+
+{-
+Section 3. A person must not sell alcohol if:
+(a) the person is a body corporate;
+(b) the person engages in business for profit;
+(c) the person is not a public house or hotel; and
+(d) any of the following applies:
+    (i)   the person has an unspent conviction for fraud;
+    (ii)  the person has an unspent conviction for providing misleading information; or
+    (iii) the person has an alcohol banning order.
+-}
+
+GIVEN `the person is a body corporate`                                            IS A BOOLEAN
+      `the person engages in business for profit`                                 IS A BOOLEAN
+      `the person is a public house`                                              IS A BOOLEAN
+      `the person is a hotel`                                                     IS A BOOLEAN
+      `the person has an unspent conviction for fraud`                            IS A BOOLEAN
+      `the person has an unspent conviction for providing misleading information` IS A BOOLEAN
+      `the person has an alcohol banning order`                                   IS A BOOLEAN
+GIVETH A BOOLEAN
+DECIDE `the person must not sell alcohol` IF
+        `is a commercial enterprise`          -- (a) and (b)
+    AND NOT `is an exempt establishment`      -- (c)
+    AND `has a disqualifying factor`          -- (d)
+    WHERE
+        `is a commercial enterprise` MEANS
+                `the person is a body corporate`
+            AND `the person engages in business for profit`
+
+        `is an exempt establishment` MEANS
+                `the person is a public house`
+            OR  `the person is a hotel`
+
+        `has a disqualifying factor` MEANS
+                `the person has an unspent conviction for fraud`
+            OR  `the person has an unspent conviction for providing misleading information`
+            OR  `the person has an alcohol banning order`
+
+§§ `Tests`
+
+-- A corporate pub is exempt under (c), even with a fraud conviction.
+#ASSERT NOT `the person must not sell alcohol` WITH
+    `the person is a body corporate`                                            IS TRUE
+    `the person engages in business for profit`                                 IS TRUE
+    `the person is a public house`                                              IS TRUE
+    `the person is a hotel`                                                     IS FALSE
+    `the person has an unspent conviction for fraud`                            IS TRUE
+    `the person has an unspent conviction for providing misleading information` IS FALSE
+    `the person has an alcohol banning order`                                   IS FALSE
+
+-- A company with a banning order is prohibited.
+#ASSERT `the person must not sell alcohol` WITH
+    `the person is a body corporate`                                            IS TRUE
+    `the person engages in business for profit`                                 IS TRUE
+    `the person is a public house`                                              IS FALSE
+    `the person is a hotel`                                                     IS FALSE
+    `the person has an unspent conviction for fraud`                            IS FALSE
+    `the person has an unspent conviction for providing misleading information` IS FALSE
+    `the person has an alcohol banning order`                                   IS TRUE
+
+-- A company with no disqualifying factor under (d) is not prohibited.
+#ASSERT NOT `the person must not sell alcohol` WITH
+    `the person is a body corporate`                                            IS TRUE
+    `the person engages in business for profit`                                 IS TRUE
+    `the person is a public house`                                              IS FALSE
+    `the person is a hotel`                                                     IS FALSE
+    `the person has an unspent conviction for fraud`                            IS FALSE
+    `the person has an unspent conviction for providing misleading information` IS FALSE
+    `the person has an alcohol banning order`                                   IS FALSE
+
+-- A natural person is not covered by (a).
+#EVAL `the person must not sell alcohol` WITH
+    `the person is a body corporate`                                            IS FALSE
+    `the person engages in business for profit`                                 IS TRUE
+    `the person is a public house`                                              IS FALSE
+    `the person is a hotel`                                                     IS FALSE
+    `the person has an unspent conviction for fraud`                            IS TRUE
+    `the person has an unspent conviction for providing misleading information` IS FALSE
+    `the person has an alcohol banning order`                                   IS FALSE
+</code></pre>
+<hr>
+<h2 id="the-provision">The provision</h2>
+<p>We will encode this section of an imaginary Alcohol Act:</p>
+<blockquote>
+<p><strong>Section 3.</strong> A person must not sell alcohol if:
+(a) the person is a body corporate;
+(b) the person engages in business for profit;
+(c) the person is not a public house or hotel; and
+(d) any of the following applies:
+(i) the person has an unspent conviction for fraud;
+(ii) the person has an unspent conviction for providing misleading information; or
+(iii) the person has an alcohol banning order.</p>
+</blockquote>
+<hr>
+<h2 id="step-1-analyse-the-structure">Step 1: Analyse the structure</h2>
+<p>Before writing code, find:</p>
+<ol>
+<li><strong>The outcome</strong>: "must not sell alcohol".</li>
+<li><strong>The conditions</strong>: (a), (b), (c) and (d), which must all hold.</li>
+<li><strong>The alternatives</strong>: (d)(i), (d)(ii) and (d)(iii), of which any one is enough.</li>
+</ol>
+<p>The logical shape is:</p>
+<pre><code>(a) AND (b) AND (c) AND ((d)(i) OR (d)(ii) OR (d)(iii))
+</code></pre>
+<hr>
+<h2 id="step-2-write-the-rule">Step 2: Write the rule</h2>
+<p>Each fact the section depends on becomes an input, named in the words of the statute. Each condition becomes one line, with a comment pointing to its paragraph:</p>
+<pre><code class="language-l4">§ `Imaginary Alcohol Act 2024, section 3`
+
+GIVEN `the person is a body corporate`                                            IS A BOOLEAN
+      `the person engages in business for profit`                                 IS A BOOLEAN
+      `the person is a public house`                                              IS A BOOLEAN
+      `the person is a hotel`                                                     IS A BOOLEAN
+      `the person has an unspent conviction for fraud`                            IS A BOOLEAN
+      `the person has an unspent conviction for providing misleading information` IS A BOOLEAN
+      `the person has an alcohol banning order`                                   IS A BOOLEAN
+GIVETH A BOOLEAN
+DECIDE `the person must not sell alcohol` IF
+        `the person is a body corporate`                                              -- (a)
+    AND `the person engages in business for profit`                                   -- (b)
+    AND NOT (`the person is a public house` OR `the person is a hotel`)               -- (c)
+    AND (    `the person has an unspent conviction for fraud`                         -- (d)(i)
+         OR  `the person has an unspent conviction for providing misleading information` -- (d)(ii)
+         OR  `the person has an alcohol banning order`)                               -- (d)(iii)
+</code></pre>
+<table>
+<thead>
+<tr>
+<th>Legal text</th>
+<th>L4</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>"the person is a body corporate"</td>
+<td><code>`the person is a body corporate`</code></td>
+</tr>
+<tr>
+<td>"the person is not a public house or hotel"</td>
+<td><code>NOT (`the person is a public house` OR `the person is a hotel`)</code></td>
+</tr>
+<tr>
+<td>"any of the following applies"</td>
+<td><code>( ... OR ... OR ... )</code></td>
+</tr>
+</tbody>
+</table>
+<p>The facts are <code>GIVEN</code> inputs, so a caller, a test or a deployed API supplies them. If you prefer to declare them once at the top of a file, see <a href="/l4/reference/types/ASSUME">ASSUME</a>.</p>
+<hr>
+<h2 id="step-3-test-it">Step 3: Test it</h2>
+<p>Add tests that state the expected outcome. A rule can be called with its inputs named, <code>rule WITH `input` IS value</code>, one input per line, which keeps long test cases readable:</p>
+<pre><code class="language-l4">-- A corporate pub is exempt under (c), even with a fraud conviction.
+#ASSERT NOT `the person must not sell alcohol` WITH
+    `the person is a body corporate`                                            IS TRUE
+    `the person engages in business for profit`                                 IS TRUE
+    `the person is a public house`                                              IS TRUE
+    `the person is a hotel`                                                     IS FALSE
+    `the person has an unspent conviction for fraud`                            IS TRUE
+    `the person has an unspent conviction for providing misleading information` IS FALSE
+    `the person has an alcohol banning order`                                   IS FALSE
+
+-- A company with a banning order is prohibited.
+#ASSERT `the person must not sell alcohol` WITH
+    `the person is a body corporate`                                            IS TRUE
+    `the person engages in business for profit`                                 IS TRUE
+    `the person is a public house`                                              IS FALSE
+    `the person is a hotel`                                                     IS FALSE
+    `the person has an unspent conviction for fraud`                            IS FALSE
+    `the person has an unspent conviction for providing misleading information` IS FALSE
+    `the person has an alcohol banning order`                                   IS TRUE
+</code></pre>
+<p><code>l4 run</code> prints <code>assertion satisfied</code> for each. Use <code>#ASSERT</code> (or <code>#EVAL</code> and compare the result yourself), not <code>#CHECK</code>: <code>#CHECK</code> only type-checks and never evaluates the rule.</p>
+<p>Cover at least:</p>
+<ul>
+<li>each exemption on its own;</li>
+<li>each disqualifying factor on its own;</li>
+<li>the case where nothing in (d) applies;</li>
+<li>a person outside the section altogether, for example not a body corporate.</li>
+</ul>
+<hr>
+<h2 id="step-4-name-the-parts">Step 4: Name the parts</h2>
+<p>For longer provisions, give each part of the test a name. <code>WHERE</code> defines the parts after the rule, so the main condition reads like a summary of the section:</p>
+<pre><code class="language-l4">GIVEN `the person is a body corporate`                                            IS A BOOLEAN
+      `the person engages in business for profit`                                 IS A BOOLEAN
+      `the person is a public house`                                              IS A BOOLEAN
+      `the person is a hotel`                                                     IS A BOOLEAN
+      `the person has an unspent conviction for fraud`                            IS A BOOLEAN
+      `the person has an unspent conviction for providing misleading information` IS A BOOLEAN
+      `the person has an alcohol banning order`                                   IS A BOOLEAN
+GIVETH A BOOLEAN
+DECIDE `the person must not sell alcohol` IF
+        `is a commercial enterprise`          -- (a) and (b)
+    AND NOT `is an exempt establishment`      -- (c)
+    AND `has a disqualifying factor`          -- (d)
+    WHERE
+        `is a commercial enterprise` MEANS
+                `the person is a body corporate`
+            AND `the person engages in business for profit`
+
+        `is an exempt establishment` MEANS
+                `the person is a public house`
+            OR  `the person is a hotel`
+
+        `has a disqualifying factor` MEANS
+                `the person has an unspent conviction for fraud`
+            OR  `the person has an unspent conviction for providing misleading information`
+            OR  `the person has an alcohol banning order`
+</code></pre>
+<p>The inputs and the tests stay the same, so the tests from Step 3 confirm that the refactored rule still means the same thing.</p>
+<hr>
+<h2 id="tips">Tips</h2>
+<p><strong>Keep the statute's words.</strong> <code>`the person is a body corporate`</code> lets a lawyer check the rule against the text; <code>isCompany</code> does not.</p>
+<p><strong>Read "or" carefully.</strong> In legislation, "A, B or C" usually means any one or more of them: <code>A OR B OR C</code>.</p>
+<p><strong>Watch negations.</strong> "Not a public house or hotel" normally means neither: <code>NOT (pub OR hotel)</code>. The other reading, <code>NOT pub OR NOT hotel</code>, is true for almost everyone and is rarely intended. When the text is ambiguous, write down which reading you chose, in a comment or a test.</p>
+<p><strong>Keep the source next to the code.</strong> The complete example puts the text of section 3 in a <code>{- ... -}</code> comment above the rule and marks each condition with its paragraph number.</p>
+<hr>
+<h2 id="drafting-with-an-ai-assistant">Drafting with an AI assistant</h2>
+<p>An AI assistant can draft L4 from legislation quickly, but it can also misread the law. Use it for the first draft, and let the type checker and a human reviewer decide whether the draft is right. In VS Code, Legalese AI already knows L4 syntax and sees the type checker's errors after every edit; see <a href="/l4/tutorials/llm-integration/composing-l4-with-ai">Draft rules with Legalese AI</a>. The prompts below work with any assistant.</p>
+<h3 id="the-workflow">The workflow</h3>
+<ol>
+<li><strong>Segment.</strong> Split the legislation into self-contained pieces: one article or section each, with its number, and with the definitions it uses.</li>
+<li><strong>Extract.</strong> Ask the assistant for the types and inputs the piece needs.</li>
+<li><strong>Draft.</strong> Ask for the L4 rule.</li>
+<li><strong>Check.</strong> Run <code>l4 check</code>, then the tests, then review the draft against the text.</li>
+<li><strong>Iterate.</strong> Give the errors and your review notes back to the assistant.</li>
+</ol>
+<h3 id="prompt-extract-types">Prompt: extract types</h3>
+<pre><code>You are analysing legislation to encode it in L4, a programming language
+for law.
+
+Legislation:
+"""
+Article 2 - Interpretation
+In this Law -
+"charitable purpose" means any of the purposes specified in Schedule 1;
+"charity" means an entity that is established for charitable purposes only;
+"governor" means any person who is responsible for the control and
+management of the administration of a registered charity;
+"""
+
+List every defined term that should become a type. For each, say:
+1. its name;
+2. whether it is a fixed list of choices or a record with fields;
+3. its choices or fields, with their types;
+4. which other types or provisions it refers to.
+</code></pre>
+<h3 id="prompt-draft-the-rule">Prompt: draft the rule</h3>
+<pre><code>Write L4 for the provision below.
+
+L4 basics:
+- Records: DECLARE Charity HAS `purposes` IS A LIST OF Purpose
+- Choices: DECLARE Purpose IS ONE OF `relief of poverty`, `advancement of education`
+- Rules: GIVEN `the entity` IS A Charity
+         GIVETH A BOOLEAN
+         DECIDE `meets the charity test` IF ... AND ...
+- Names with spaces go in backticks; fields are read with 's.
+- List functions such as all, any, map and filter need IMPORT prelude.
+
+Provision:
+"""
+Article 5 - Charity test
+An entity meets the charity test if -
+(a) all of its purposes are charitable purposes; and
+(b) it satisfies the public benefit requirement.
+"""
+
+Types already defined:
+- Charity, with `purposes` (a LIST OF Purpose)
+- Purpose, a list of the charitable purposes
+
+Use the words of the provision as names. Mark each condition with a
+comment giving its paragraph, and add #ASSERT tests for each paragraph.
+</code></pre>
+<h3 id="prompt-fix-an-error">Prompt: fix an error</h3>
+<p>Paste the checker's message exactly as <code>l4 check</code> printed it:</p>
+<pre><code>l4 check reported this error:
+
+    I could not find a definition for the identifier
+
+      Purpose
+
+The types defined in the file are CharitablePurpose and Charity.
+Fix the draft and explain the change.
+</code></pre>
+<h3 id="problems-to-look-for">Problems to look for</h3>
+<table>
+<thead>
+<tr>
+<th>In the draft</th>
+<th>Problem</th>
+<th>Fix</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>purposes IS A Purpose</code></td>
+<td>Should be a list</td>
+<td><code>purposes IS A LIST OF Purpose</code></td>
+</tr>
+<tr>
+<td><code>entity purposes</code></td>
+<td>Field access without <code>'s</code></td>
+<td><code>entity's purposes</code></td>
+</tr>
+<tr>
+<td><code>IF x = TRUE</code></td>
+<td>Redundant comparison</td>
+<td><code>IF x</code></td>
+</tr>
+<tr>
+<td><code>x == 5</code></td>
+<td>Not L4</td>
+<td><code>x = 5</code> or <code>x EQUALS 5</code></td>
+</tr>
+<tr>
+<td><code>any</code>, <code>all</code>, <code>map</code> without <code>IMPORT prelude</code></td>
+<td>Unknown name</td>
+<td>Add <code>IMPORT prelude</code> at the top</td>
+</tr>
+<tr>
+<td><code>#CHECK rule WITH ...</code> used as a test</td>
+<td><code>#CHECK</code> only type-checks</td>
+<td><code>#ASSERT rule WITH ...</code></td>
+</tr>
+<tr>
+<td>An exception the text does not contain</td>
+<td>Invented law</td>
+<td>Remove it, or record why it is there</td>
+</tr>
+</tbody>
+</table>
+<h3 id="review-checklist">Review checklist</h3>
+<ul>
+<li>Types and names match the definitions in the legislation.</li>
+<li>Every condition in the text appears in the rule, and nothing else does.</li>
+<li>Cross-references point to the right provisions.</li>
+<li>There are tests for each paragraph and for the edges (thresholds, empty lists, exemptions).</li>
+<li><code>l4 check</code> passes and every <code>#ASSERT</code> is satisfied.</li>
+</ul>
+<p><strong>Example:</strong> a reviewed draft of a governor-disqualification article, with its tests:</p>
+<pre><code class="language-l4-file">-- governor-disqualification-example.l4
+-- A reviewed AI draft of Article 19(1) of the Charities (Jersey) Law 2014.
+
+IMPORT prelude
+
+§ `Article 19 - Disqualification of governors`
+
+{-
+(1) A person is disqualified from acting as a governor of a charity if -
+    (a) the person is an undischarged bankrupt;
+    (b) the person has an unspent conviction for an offence involving
+        dishonesty or deception;
+    (c) the person is disqualified from acting as a company director; or
+    (d) the person is subject to a disqualification order under Article 23.
+-}
+
+DECLARE Conviction
+    HAS `offence`                               IS A STRING
+        `is spent`                              IS A BOOLEAN
+        `involves dishonesty or deception`      IS A BOOLEAN
+
+DECLARE Person
+    HAS `name`                                  IS A STRING
+        `is an undischarged bankrupt`           IS A BOOLEAN
+        `convictions`                           IS A LIST OF Conviction
+        `is disqualified as a company director` IS A BOOLEAN
+        `disqualification orders`               IS A LIST OF STRING
+
+-- Article 19(1)(b)
+GIVEN `the person` IS A Person
+GIVETH A BOOLEAN
+`has an unspent conviction for dishonesty` MEANS
+    any (GIVEN `the conviction` YIELD
+                `the conviction`'s `involves dishonesty or deception`
+            AND NOT `the conviction`'s `is spent`)
+        (`the person`'s `convictions`)
+
+-- Article 19(1)
+GIVEN `the person` IS A Person
+GIVETH A BOOLEAN
+DECIDE `is disqualified from acting as a governor` IF
+        `the person`'s `is an undischarged bankrupt`              -- (a)
+    OR  `has an unspent conviction for dishonesty` `the person`   -- (b)
+    OR  `the person`'s `is disqualified as a company director`    -- (c)
+    OR  NOT null (`the person`'s `disqualification orders`)       -- (d)
+
+§§ `Tests`
+
+`Dana` MEANS Person WITH
+    `name`                                  IS "Dana"
+    `is an undischarged bankrupt`           IS FALSE
+    `convictions`                           IS LIST Conviction "theft" FALSE TRUE
+    `is disqualified as a company director` IS FALSE
+    `disqualification orders`               IS EMPTY
+
+`Eli` MEANS Person WITH
+    `name`                                  IS "Eli"
+    `is an undischarged bankrupt`           IS FALSE
+    `convictions`                           IS LIST Conviction "theft" TRUE TRUE
+    `is disqualified as a company director` IS FALSE
+    `disqualification orders`               IS EMPTY
+
+-- (b): an unspent conviction for theft disqualifies.
+#ASSERT `is disqualified from acting as a governor` `Dana`
+
+-- A spent conviction does not.
+#ASSERT NOT `is disqualified from acting as a governor` `Eli`
+</code></pre>
+<h3 id="keep-a-record">Keep a record</h3>
+<p>Commit the source text, the prompts and the L4 together, and note which assistant produced the draft. <a href="/l4/tutorials/getting-started/version-control-for-rules">Manage rules in git and CI</a> shows how.</p>
+<p>An assistant can misread a legal structure, miss a cross-reference, or invent an interpretation. A draft that type-checks can still be wrong: only the tests and the review show whether it says what the law says.</p>
+<hr>
+<h2 id="next-steps">Next steps</h2>
+<ul>
+<li><a href="/l4/tutorials/getting-started/common-patterns">Common patterns</a>: more ways to structure rules.</li>
+<li><a href="/l4/tutorials/natural-language-functions/optimising-natural-language-generation">Make rules read like law</a>: names and shapes that render as readable prose.</li>
+<li><a href="/l4/courses/advanced/module-a1-regulatory">Real regulatory schemes</a>: a longer encoding exercise in the Advanced course.</li>
+</ul>
+0:{"rsc":["$","$1","c",{"children":[["$","$L2",null,{"navSections":[{"title":"","items":[{"title":"Overview","href":"tutorials"},{"title":"Install L4 and write your first rule","href":"tutorials/getting-started/first-l4-file"},{"title":"Draft rules with Legalese AI","href":"tutorials/llm-integration/composing-l4-with-ai"},{"title":"Test your rules","href":"tutorials/getting-started/testing-your-rules"},{"title":"Fix errors","href":"tutorials/getting-started/debugging-type-errors"},{"title":"Encode legislation","href":"tutorials/getting-started/encoding-legislation"},{"title":"Make rules read like law","href":"tutorials/natural-language-functions/optimising-natural-language-generation"},{"title":"Common patterns","href":"tutorials/getting-started/common-patterns"},{"title":"Deploy your rules","href":"tutorials/deploying-rules/exporting-rules-for-deployment"},{"title":"Choose an integration","href":"tutorials/legalese-cloud"},{"title":"Connect an AI agent","href":"tutorials/legalese-cloud/ai-agents"},{"title":"Chat with your rules","href":"tutorials/legalese-cloud/openai-compatible-api"},{"title":"Call rules over REST","href":"tutorials/legalese-cloud/openapi-spec"},{"title":"Embed rules in a website","href":"tutorials/legalese-cloud/webmcp-embed"},{"title":"Using the l4 CLI","href":"tutorials/getting-started/l4-cli"},{"title":"Manage rules in git and CI","href":"tutorials/getting-started/version-control-for-rules"}]}],"toc":[],"htmlContent":"$3","pager":{"prev":"$0:rsc:props:children:0:props:navSections:0:items:4","next":"$0:rsc:props:children:0:props:navSections:0:items:6"}}],["$L4"],"$L5"]}],"isPartial":false,"staleTime":300,"varyParams":null,"buildId":"iJUXAyHcmcW99cMci3ei9"}
+4:["$","script","script-0",{"src":"/_next/static/chunks/0fl~me.qwn48c.js","async":true}]
+5:["$","$L6",null,{"children":["$","$7",null,{"name":"Next.MetadataOutlet","children":"$@8"}]}]
+8:null

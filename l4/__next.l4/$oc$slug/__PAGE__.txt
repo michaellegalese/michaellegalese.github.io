@@ -1,0 +1,62 @@
+1:"$Sreact.fragment"
+2:I[90160,["/_next/static/chunks/0ypf.t599.7y6.js","/_next/static/chunks/0t2xr05rlu96l.js","/_next/static/chunks/0uxaa7wo_wmcw.js","/_next/static/chunks/0fl~me.qwn48c.js"],"default"]
+6:I[97367,["/_next/static/chunks/0ypf.t599.7y6.js","/_next/static/chunks/0t2xr05rlu96l.js"],"OutletBoundary"]
+7:"$Sreact.suspense"
+3:Taa5,<p><img src="/doc-images/l4.svg" alt="L4 Logo"></p>
+<h1>L4 documentation</h1>
+<p>L4 is a programming language for law. You write contracts, legislation and regulations as rules that a computer can check, run and explain.</p>
+<h2 id="get-l4">Get L4</h2>
+<ul>
+<li><strong><a href="https://marketplace.visualstudio.com/items?itemName=Legalese.l4-vscode">VS Code extension</a></strong>: the editor, the <code>l4</code> command, Legalese AI and deployment in one install.</li>
+<li><strong><a href="https://jl4.legalese.com">Web editor</a></strong>: try L4 in the browser, nothing to install.</li>
+</ul>
+<h2 id="where-to-start">Where to start</h2>
+<ul>
+<li><strong>Learn the language:</strong> take the <a href="/l4/courses/foundation">Foundation course</a>. No programming experience needed.</li>
+<li><strong>Write a rule now:</strong> <a href="/l4/tutorials/getting-started/first-l4-file">Install L4 and write your first rule</a> takes about 15 minutes.</li>
+<li><strong>Let AI draft it:</strong> <a href="/l4/tutorials/llm-integration/composing-l4-with-ai">Draft rules with Legalese AI</a> turns prose into L4.</li>
+<li><strong>Put rules to work:</strong> <a href="/l4/tutorials/deploying-rules/exporting-rules-for-deployment">Deploy your rules</a> as an API that apps and AI agents can call.</li>
+</ul>
+<h2 id="the-documentation">The documentation</h2>
+<table>
+<thead>
+<tr>
+<th>Section</th>
+<th>What it is for</th>
+<th>Read it when you ask</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong><a href="/l4/courses">Courses</a></strong></td>
+<td>A learning path, step by step</td>
+<td>"Teach me L4"</td>
+</tr>
+<tr>
+<td><strong><a href="/l4/tutorials">Tutorials</a></strong></td>
+<td>Guides for one task each</td>
+<td>"How do I do X?"</td>
+</tr>
+<tr>
+<td><strong><a href="/l4/reference">Reference</a></strong></td>
+<td>Exact description of L4</td>
+<td>"What is X?"</td>
+</tr>
+<tr>
+<td><strong><a href="/l4/concepts">Concepts</a></strong></td>
+<td>The ideas behind L4</td>
+<td>"Why does X work this way?"</td>
+</tr>
+</tbody>
+</table>
+<h2 id="community-and-support">Community and support</h2>
+<ul>
+<li><strong><a href="https://discord.gg/Q7a7NSEdNy">Discord</a></strong>: chat with the community.</li>
+<li><strong><a href="https://github.com/legalese/l4-ide/issues">GitHub issues</a></strong>: report bugs and request features.</li>
+<li><strong><a href="https://legalese.com">Legalese</a></strong>: professional implementation services.</li>
+<li><strong><a href="https://github.com/legalese/l4-ide/releases">Releases</a></strong> and <strong><a href="https://github.com/legalese/l4-ide">source code</a></strong>: L4 is open source under the <a href="https://github.com/legalese/l4-ide/blob/main/LICENSE">Apache-2.0 License</a>.</li>
+</ul>
+0:{"rsc":["$","$1","c",{"children":[["$","$L2",null,{"navSections":[{"title":"","items":[{"title":"Language Reference","href":"reference"},{"title":"Glossary","href":"reference/GLOSSARY"},{"title":"Types","href":"reference/types"},{"title":"Functions","href":"reference/functions"},{"title":"Control Flow","href":"reference/control-flow"},{"title":"Operators","href":"reference/operators"},{"title":"Syntax","href":"reference/syntax"},{"title":"Regulative","href":"reference/regulative"},{"title":"Built-ins","href":"reference/builtins"},{"title":"Libraries","href":"reference/libraries"},{"title":"Patterns","href":"tutorials/getting-started/common-patterns"},{"title":"Errors and Troubleshooting","href":"reference/errors"},{"title":"Foundation Course","href":"courses/foundation"},{"title":"Advanced Course","href":"courses/advanced"}]}],"toc":[],"htmlContent":"$3","pager":{}}],["$L4"],"$L5"]}],"isPartial":false,"staleTime":300,"varyParams":null,"buildId":"iJUXAyHcmcW99cMci3ei9"}
+4:["$","script","script-0",{"src":"/_next/static/chunks/0fl~me.qwn48c.js","async":true}]
+5:["$","$L6",null,{"children":["$","$7",null,{"name":"Next.MetadataOutlet","children":"$@8"}]}]
+8:null

@@ -1,0 +1,559 @@
+1:"$Sreact.fragment"
+2:I[90160,["/_next/static/chunks/0ypf.t599.7y6.js","/_next/static/chunks/0t2xr05rlu96l.js","/_next/static/chunks/0uxaa7wo_wmcw.js","/_next/static/chunks/0fl~me.qwn48c.js"],"default"]
+6:I[97367,["/_next/static/chunks/0ypf.t599.7y6.js","/_next/static/chunks/0t2xr05rlu96l.js"],"OutletBoundary"]
+7:"$Sreact.suspense"
+3:T3879,<h1>Built-in functions</h1>
+<p>Built-in functions are part of the language, so they work in every file without an <code>IMPORT</code>. Functions that come from a library, such as <code>map</code>, <code>sum</code> or <code>Date</code>, are listed under <a href="/l4/reference/libraries">Standard libraries</a>.</p>
+<p>Operators (<code>+</code>, <code>AND</code>, <code>EQUALS</code>, <code>UNLESS</code>, <code>FOLLOWED BY</code> and the rest) are described under <a href="/l4/reference/operators">Operators</a>. The conversions <code>TOSTRING</code>, <code>TONUMBER</code>, <code>TODATE</code>, <code>TOTIME</code>, <code>TODATETIME</code> and <code>AS STRING</code> are described under <a href="/l4/reference/types/coercions">Coercions</a>.</p>
+<h2 id="numbers">Numbers</h2>
+<table>
+<thead>
+<tr>
+<th>Function</th>
+<th>Inputs</th>
+<th>Gives</th>
+<th>What it does</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>IS INTEGER</code></td>
+<td>NUMBER</td>
+<td>BOOLEAN</td>
+<td>TRUE if the number has no fractional part</td>
+</tr>
+<tr>
+<td><code>FLOOR</code></td>
+<td>NUMBER</td>
+<td>NUMBER</td>
+<td>Rounds down to a whole number</td>
+</tr>
+<tr>
+<td><code>CEILING</code></td>
+<td>NUMBER</td>
+<td>NUMBER</td>
+<td>Rounds up to a whole number</td>
+</tr>
+<tr>
+<td><code>ROUND</code></td>
+<td>NUMBER</td>
+<td>NUMBER</td>
+<td>Rounds to the nearest whole number; a half goes to the even number, so 2.5 gives 2 and 3.5 gives 4</td>
+</tr>
+<tr>
+<td><code>TRUNC</code></td>
+<td>NUMBER, NUMBER</td>
+<td>NUMBER</td>
+<td><code>TRUNC x n</code> cuts <code>x</code> toward zero to <code>n</code> decimal places: <code>TRUNC 12.987 2</code> is 12.98. A negative <code>n</code> cuts to tens, hundreds and so on: <code>TRUNC 123.45 (-1)</code> is 120</td>
+</tr>
+<tr>
+<td><code>EXPONENT</code></td>
+<td>NUMBER, NUMBER</td>
+<td>NUMBER</td>
+<td><code>EXPONENT base power</code>: <code>EXPONENT 2 10</code> is 1024</td>
+</tr>
+<tr>
+<td><code>SQRT</code></td>
+<td>NUMBER</td>
+<td>NUMBER</td>
+<td>Square root</td>
+</tr>
+<tr>
+<td><code>LN</code></td>
+<td>NUMBER</td>
+<td>NUMBER</td>
+<td>Natural logarithm; an error for 0 or less</td>
+</tr>
+<tr>
+<td><code>LOG10</code></td>
+<td>NUMBER</td>
+<td>NUMBER</td>
+<td>Base-10 logarithm; an error for 0 or less</td>
+</tr>
+<tr>
+<td><code>SIN</code>, <code>COS</code>, <code>TAN</code></td>
+<td>NUMBER</td>
+<td>NUMBER</td>
+<td>Trigonometry, in radians</td>
+</tr>
+<tr>
+<td><code>ASIN</code>, <code>ACOS</code></td>
+<td>NUMBER</td>
+<td>NUMBER</td>
+<td>Inverse sine and cosine; an error outside -1 to 1</td>
+</tr>
+<tr>
+<td><code>ATAN</code></td>
+<td>NUMBER</td>
+<td>NUMBER</td>
+<td>Inverse tangent</td>
+</tr>
+</tbody>
+</table>
+<p>The <a href="/l4/reference/libraries/math">math</a> library has lowercase versions (<code>ln</code>, <code>sqrt</code>, <code>asin</code>, ...) that give <code>NOTHING</code> instead of an error.</p>
+<h2 id="text">Text</h2>
+<p>Positions in a STRING count from 0.</p>
+<table>
+<thead>
+<tr>
+<th>Function</th>
+<th>Inputs</th>
+<th>Gives</th>
+<th>What it does</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>CONCAT</code></td>
+<td>STRING, STRING, ...</td>
+<td>STRING</td>
+<td>Joins any number of strings: <code>CONCAT "Hello, ", name, "!"</code></td>
+</tr>
+<tr>
+<td><code>STRINGLENGTH</code></td>
+<td>STRING</td>
+<td>NUMBER</td>
+<td>The number of characters</td>
+</tr>
+<tr>
+<td><code>TOUPPER</code></td>
+<td>STRING</td>
+<td>STRING</td>
+<td>Upper case</td>
+</tr>
+<tr>
+<td><code>TOLOWER</code></td>
+<td>STRING</td>
+<td>STRING</td>
+<td>Lower case</td>
+</tr>
+<tr>
+<td><code>TRIM</code></td>
+<td>STRING</td>
+<td>STRING</td>
+<td>Without spaces at the start and end</td>
+</tr>
+<tr>
+<td><code>CONTAINS</code></td>
+<td>STRING, STRING</td>
+<td>BOOLEAN</td>
+<td><code>CONTAINS text part</code>: TRUE if <code>part</code> occurs in <code>text</code></td>
+</tr>
+<tr>
+<td><code>STARTSWITH</code></td>
+<td>STRING, STRING</td>
+<td>BOOLEAN</td>
+<td><code>STARTSWITH text start</code></td>
+</tr>
+<tr>
+<td><code>ENDSWITH</code></td>
+<td>STRING, STRING</td>
+<td>BOOLEAN</td>
+<td><code>ENDSWITH text end</code></td>
+</tr>
+<tr>
+<td><code>INDEXOF</code></td>
+<td>STRING, STRING</td>
+<td>NUMBER</td>
+<td><code>INDEXOF text part</code>: the position of the first <code>part</code>, or -1</td>
+</tr>
+<tr>
+<td><code>SPLIT</code></td>
+<td>STRING, STRING</td>
+<td>LIST OF STRING</td>
+<td><code>SPLIT text separator</code>: <code>SPLIT "a,b" ","</code> is <code>LIST "a", "b"</code></td>
+</tr>
+<tr>
+<td><code>CHARAT</code></td>
+<td>STRING, NUMBER</td>
+<td>STRING</td>
+<td><code>CHARAT text position</code>: one character</td>
+</tr>
+<tr>
+<td><code>SUBSTRING</code></td>
+<td>STRING, NUMBER, NUMBER</td>
+<td>STRING</td>
+<td><code>SUBSTRING text start length</code>: <code>SUBSTRING "hello" 1 3</code> is <code>"ell"</code></td>
+</tr>
+<tr>
+<td><code>REPLACE</code></td>
+<td>STRING, STRING, STRING</td>
+<td>STRING</td>
+<td><code>REPLACE text old new</code>: every <code>old</code> replaced by <code>new</code></td>
+</tr>
+</tbody>
+</table>
+<p><code>STARTSWITH</code> and <code>ENDSWITH</code> are written as one word.</p>
+<h2 id="dates">Dates</h2>
+<table>
+<thead>
+<tr>
+<th>Function</th>
+<th>Inputs</th>
+<th>Gives</th>
+<th>What it does</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>DATE_FROM_DMY</code></td>
+<td>NUMBER, NUMBER, NUMBER</td>
+<td>DATE</td>
+<td>The date from day, month and year</td>
+</tr>
+<tr>
+<td><code>DATE_FROM_SERIAL</code></td>
+<td>NUMBER</td>
+<td>DATE</td>
+<td>The date with this serial number</td>
+</tr>
+<tr>
+<td><code>DATE_SERIAL</code></td>
+<td>DATE</td>
+<td>NUMBER</td>
+<td>The date's serial number (a count of days)</td>
+</tr>
+<tr>
+<td><code>DATE_DAY</code></td>
+<td>DATE</td>
+<td>NUMBER</td>
+<td>The day of the month</td>
+</tr>
+<tr>
+<td><code>DATE_MONTH</code></td>
+<td>DATE</td>
+<td>NUMBER</td>
+<td>The month</td>
+</tr>
+<tr>
+<td><code>DATE_YEAR</code></td>
+<td>DATE</td>
+<td>NUMBER</td>
+<td>The year</td>
+</tr>
+<tr>
+<td><code>DATEVALUE</code></td>
+<td>STRING</td>
+<td>EITHER STRING DATE</td>
+<td>Reads date text such as <code>"2024-02-01"</code>; <code>LEFT</code> holds the error</td>
+</tr>
+<tr>
+<td><code>TODAY</code></td>
+<td>none</td>
+<td>DATE</td>
+<td>Today's date in the document's time zone; needs <code>TIMEZONE IS</code></td>
+</tr>
+</tbody>
+</table>
+<p>The <a href="/l4/reference/libraries/daydate">daydate</a> library builds on these with <code>Date</code>, weekdays, months and more.</p>
+<h2 id="times-of-day">Times of day</h2>
+<table>
+<thead>
+<tr>
+<th>Function</th>
+<th>Inputs</th>
+<th>Gives</th>
+<th>What it does</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>TIME_FROM_HMS</code></td>
+<td>NUMBER, NUMBER, NUMBER</td>
+<td>TIME</td>
+<td>The time from hour, minute and second</td>
+</tr>
+<tr>
+<td><code>TIME_FROM_SERIAL</code></td>
+<td>NUMBER</td>
+<td>TIME</td>
+<td>The time from a fraction of a day (0.5 is noon)</td>
+</tr>
+<tr>
+<td><code>TIME_SERIAL</code></td>
+<td>TIME</td>
+<td>NUMBER</td>
+<td>The time as a fraction of a day</td>
+</tr>
+<tr>
+<td><code>TIME_HOUR</code></td>
+<td>TIME</td>
+<td>NUMBER</td>
+<td>0 to 23</td>
+</tr>
+<tr>
+<td><code>TIME_MINUTE</code></td>
+<td>TIME</td>
+<td>NUMBER</td>
+<td>0 to 59</td>
+</tr>
+<tr>
+<td><code>TIME_SECOND</code></td>
+<td>TIME</td>
+<td>NUMBER</td>
+<td>0 to 59</td>
+</tr>
+<tr>
+<td><code>TIMEVALUE</code></td>
+<td>STRING</td>
+<td>EITHER STRING NUMBER</td>
+<td>Reads time text such as <code>"12:00"</code> as a fraction of a day; <code>LEFT</code> holds the error</td>
+</tr>
+<tr>
+<td><code>CURRENTTIME</code></td>
+<td>none</td>
+<td>TIME</td>
+<td>The current time in the document's time zone; needs <code>TIMEZONE IS</code></td>
+</tr>
+</tbody>
+</table>
+<h2 id="date-and-time-together">Date and time together</h2>
+<table>
+<thead>
+<tr>
+<th>Function</th>
+<th>Inputs</th>
+<th>Gives</th>
+<th>What it does</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>DATETIME_FROM_DTZ</code></td>
+<td>DATE, TIME, STRING</td>
+<td>DATETIME</td>
+<td>A DATETIME from a date, a time and an IANA time zone name</td>
+</tr>
+<tr>
+<td><code>DATETIME_DATE</code></td>
+<td>DATETIME</td>
+<td>DATE</td>
+<td>The local date</td>
+</tr>
+<tr>
+<td><code>DATETIME_TIME</code></td>
+<td>DATETIME</td>
+<td>TIME</td>
+<td>The local time of day</td>
+</tr>
+<tr>
+<td><code>DATETIME_TZ</code></td>
+<td>DATETIME</td>
+<td>STRING</td>
+<td>The IANA time zone name</td>
+</tr>
+<tr>
+<td><code>DATETIME_SERIAL</code></td>
+<td>DATETIME</td>
+<td>NUMBER</td>
+<td>A serial number counted in UTC</td>
+</tr>
+<tr>
+<td><code>NOW</code></td>
+<td>none</td>
+<td>DATETIME</td>
+<td>The current moment; in UTC when the file has no <code>TIMEZONE IS</code></td>
+</tr>
+<tr>
+<td><code>TIMEZONE</code></td>
+<td>none</td>
+<td>STRING</td>
+<td>The document's time zone name; needs <code>TIMEZONE IS</code></td>
+</tr>
+</tbody>
+</table>
+<p><code>TIMEZONE IS</code> is a line of its own at the top level of a file that sets the document's time zone, such as <code>TIMEZONE IS "Asia/Singapore"</code>. The <a href="/l4/reference/libraries/timezone">timezone</a> library has constants for common zones, and <a href="/l4/reference/libraries/datetime">datetime</a> builds on these functions.</p>
+<h2 id="looking-across-days">Looking across days</h2>
+<p>These functions change the date at which an expression is evaluated. While a predicate is checked for a day, the valid time and the date the rules are in effect are both set to that day. Ranges include both ends.</p>
+<p><strong>Example:</strong></p>
+<pre><code class="language-l4-file">-- Temporal built-ins: looking at a predicate over a range of days,
+-- and advancing contract time in a trace.
+IMPORT daydate
+
+GIVEN d IS A DATE
+GIVETH A BOOLEAN
+`falls on a weekend` d MEANS `is weekend` d
+
+-- 5 to 7 January 2024 runs Friday to Sunday
+#EVAL `EVER BETWEEN` (Date 5 1 2024) (Date 7 1 2024) `falls on a weekend`
+#EVAL `ALWAYS BETWEEN` (Date 5 1 2024) (Date 7 1 2024) `falls on a weekend`
+#EVAL `WHEN NEXT` (Date 10 1 2024) `falls on a weekend`
+#EVAL `WHEN LAST` (Date 10 1 2024) `falls on a weekend`
+#EVAL `VALUE AT` (Date 4 7 1776) (GIVEN d YIELD d)
+
+-- WAIT UNTIL in a trace: the seller delivers at time 2, then nothing
+-- happens until time 10. The buyer has not paid by time 5, so the
+-- trace ends in a breach.
+DECLARE Party IS ONE OF Seller, Buyer
+DECLARE Action IS ONE OF `deliver the goods`, `pay`
+
+GIVETH A DEONTIC Party Action
+`the sale` MEANS
+  PARTY Seller
+  MUST `deliver the goods`
+  WITHIN 5
+  HENCE
+    PARTY Buyer
+    MUST `pay`
+    WITHIN 3
+    HENCE FULFILLED
+    LEST BREACH
+  LEST BREACH
+
+#TRACE `the sale` AT 0 WITH
+  PARTY Seller DOES `deliver the goods` AT 2
+  (`WAIT UNTIL` 10)
+</code></pre>
+<table>
+<thead>
+<tr>
+<th>Function</th>
+<th>Inputs</th>
+<th>Gives</th>
+<th>What it does</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>EVER BETWEEN</code></td>
+<td>DATE, DATE, FUNCTION FROM DATE TO BOOLEAN</td>
+<td>BOOLEAN</td>
+<td>TRUE if the predicate holds on any day from the start to the end; FALSE if the start is after the end</td>
+</tr>
+<tr>
+<td><code>ALWAYS BETWEEN</code></td>
+<td>DATE, DATE, FUNCTION FROM DATE TO BOOLEAN</td>
+<td>BOOLEAN</td>
+<td>TRUE if the predicate holds on every day from the start to the end; TRUE if the start is after the end</td>
+</tr>
+<tr>
+<td><code>WHEN LAST</code></td>
+<td>DATE, FUNCTION FROM DATE TO BOOLEAN</td>
+<td>MAYBE DATE</td>
+<td>The latest day on or before the date on which the predicate holds, or <code>NOTHING</code></td>
+</tr>
+<tr>
+<td><code>WHEN NEXT</code></td>
+<td>DATE, FUNCTION FROM DATE TO BOOLEAN</td>
+<td>MAYBE DATE</td>
+<td>The earliest day on or after the date on which the predicate holds (up to 31 December 9999), or <code>NOTHING</code></td>
+</tr>
+<tr>
+<td><code>VALUE AT</code></td>
+<td>DATE, FUNCTION FROM DATE TO a</td>
+<td>a</td>
+<td>The function evaluated at the date, with the valid time and rules date set to it</td>
+</tr>
+</tbody>
+</table>
+<p>The <code>EVAL ...</code> functions evaluate an expression in a different temporal setting and then restore the original one. The first input is a serial number (see <code>DATE_SERIAL</code> and <code>DATETIME_SERIAL</code>); the second is the expression.</p>
+<table>
+<thead>
+<tr>
+<th>Function</th>
+<th>Inputs</th>
+<th>Gives</th>
+<th>What it does</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>EVAL AS OF SYSTEM TIME</code></td>
+<td>NUMBER, a</td>
+<td>a</td>
+<td>Evaluates as if the system time were the given moment</td>
+</tr>
+<tr>
+<td><code>EVAL UNDER VALID TIME</code></td>
+<td>NUMBER, a</td>
+<td>a</td>
+<td>Evaluates with the valid time set to the given date</td>
+</tr>
+<tr>
+<td><code>EVAL UNDER RULES EFFECTIVE AT</code></td>
+<td>NUMBER, a</td>
+<td>a</td>
+<td>Evaluates under the version of the rules in effect on the given date</td>
+</tr>
+<tr>
+<td><code>EVAL UNDER RULES ENCODED AT</code></td>
+<td>NUMBER, a</td>
+<td>a</td>
+<td>Evaluates under the rules as they were written at the given moment</td>
+</tr>
+</tbody>
+</table>
+<h2 id="regulative-traces">Regulative traces</h2>
+<table>
+<thead>
+<tr>
+<th>Function</th>
+<th>Inputs</th>
+<th>Gives</th>
+<th>What it does</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>WAIT UNTIL</code></td>
+<td>NUMBER</td>
+<td>EVENT a b</td>
+<td>An event that matches no party and no action; in a <code>#TRACE</code> it moves time forward to the given time</td>
+</tr>
+<tr>
+<td><code>EVALTRACE</code></td>
+<td>DEONTIC a b, NUMBER, LIST OF EVENT a b</td>
+<td>DEONTIC a b</td>
+<td>The function behind <code>#TRACE</code>: what remains of a rule after the events, starting at the given time</td>
+</tr>
+</tbody>
+</table>
+<p>See <a href="/l4/reference/regulative/EVENT">EVENT</a> and <a href="/l4/reference/regulative">Regulative rules</a>.</p>
+<h2 id="http-and-json">HTTP and JSON</h2>
+<table>
+<thead>
+<tr>
+<th>Function</th>
+<th>Inputs</th>
+<th>Gives</th>
+<th>What it does</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>FETCH</code></td>
+<td>STRING</td>
+<td>STRING</td>
+<td>Sends an HTTPS GET request and gives the response body</td>
+</tr>
+<tr>
+<td><code>POST</code></td>
+<td>STRING, STRING, STRING</td>
+<td>STRING</td>
+<td>Sends an HTTPS POST request: URL, headers, body</td>
+</tr>
+<tr>
+<td><code>ENV</code></td>
+<td>STRING</td>
+<td>MAYBE STRING</td>
+<td>The value of an environment variable, or <code>NOTHING</code></td>
+</tr>
+<tr>
+<td><code>JSONENCODE</code></td>
+<td>a</td>
+<td>STRING</td>
+<td>Any value as JSON text</td>
+</tr>
+<tr>
+<td><code>JSONDECODE</code></td>
+<td>STRING</td>
+<td>EITHER STRING a</td>
+<td>JSON text as a value of the expected type; <code>LEFT</code> holds the error</td>
+</tr>
+</tbody>
+</table>
+<p>Details, including the header format and how records are encoded, are under <a href="/l4/reference/builtins/http-json">HTTP and JSON</a>.</p>
+0:{"rsc":["$","$1","c",{"children":[["$","$L2",null,{"navSections":[{"title":"","items":[{"title":"Language Reference","href":"reference"},{"title":"Glossary","href":"reference/GLOSSARY"},{"title":"Cheat sheet","href":"reference/cheat-sheet"},{"title":"Types","href":"reference/types","children":[{"title":"DECLARE","href":"reference/types/DECLARE"},{"title":"ASSUME","href":"reference/types/ASSUME"},{"title":"FOR ALL","href":"reference/types/for-all"},{"title":"Coercions","href":"reference/types/coercions"}]},{"title":"Functions","href":"reference/functions","children":[{"title":"DECIDE","href":"reference/functions/DECIDE"},{"title":"GIVEN and GIVETH","href":"reference/functions/GIVEN"},{"title":"MEANS","href":"reference/functions/MEANS"},{"title":"LET and WHERE","href":"reference/functions/LET"},{"title":"YIELD","href":"reference/functions/YIELD"},{"title":"AKA","href":"reference/functions/AKA"}]},{"title":"Control flow","href":"reference/control-flow","children":[{"title":"IF","href":"reference/control-flow/IF"},{"title":"BRANCH","href":"reference/control-flow/BRANCH"},{"title":"CONSIDER","href":"reference/control-flow/CONSIDER"}]},{"title":"Operators","href":"reference/operators","children":[{"title":"AND, OR, NOT, IMPLIES","href":"reference/operators/logical"},{"title":"UNLESS","href":"reference/operators/UNLESS"},{"title":"Arithmetic","href":"reference/operators/arithmetic"},{"title":"Comparisons","href":"reference/operators/comparisons"}]},{"title":"Regulative rules","href":"reference/regulative","children":[{"title":"PARTY, MUST, MAY, SHANT","href":"reference/regulative/PARTY"},{"title":"Deadlines and consequences","href":"reference/regulative/consequences"},{"title":"BECAUSE","href":"reference/regulative/BECAUSE"},{"title":"DEONTIC","href":"reference/regulative/DEONTIC"},{"title":"EVENT","href":"reference/regulative/EVENT"}]},{"title":"Syntax and directives","href":"reference/syntax"},{"title":"Built-in functions","href":"reference/builtins","children":[{"title":"HTTP and JSON","href":"reference/builtins/http-json"}]},{"title":"Standard libraries","href":"reference/libraries","children":[{"title":"prelude","href":"reference/libraries/prelude"},{"title":"math","href":"reference/libraries/math"},{"title":"daydate","href":"reference/libraries/daydate"},{"title":"time","href":"reference/libraries/time"},{"title":"datetime","href":"reference/libraries/datetime"},{"title":"timezone","href":"reference/libraries/timezone"},{"title":"excel-date","href":"reference/libraries/excel-date"},{"title":"currency","href":"reference/libraries/currency"},{"title":"holdings","href":"reference/libraries/holdings"},{"title":"actus","href":"reference/libraries/actus"},{"title":"legal-persons","href":"reference/libraries/legal-persons"},{"title":"jurisdiction","href":"reference/libraries/jurisdiction"},{"title":"llm","href":"reference/libraries/llm"}]},{"title":"Error messages","href":"reference/errors"}]}],"toc":[],"htmlContent":"$3","pager":{"prev":"$0:rsc:props:children:0:props:navSections:0:items:8","next":"$0:rsc:props:children:0:props:navSections:0:items:9:children:0"}}],["$L4"],"$L5"]}],"isPartial":false,"staleTime":300,"varyParams":null,"buildId":"iJUXAyHcmcW99cMci3ei9"}
+4:["$","script","script-0",{"src":"/_next/static/chunks/0fl~me.qwn48c.js","async":true}]
+5:["$","$L6",null,{"children":["$","$7",null,{"name":"Next.MetadataOutlet","children":"$@8"}]}]
+8:null

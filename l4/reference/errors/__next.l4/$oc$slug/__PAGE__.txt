@@ -1,0 +1,682 @@
+1:"$Sreact.fragment"
+2:I[90160,["/_next/static/chunks/0ypf.t599.7y6.js","/_next/static/chunks/0t2xr05rlu96l.js","/_next/static/chunks/0uxaa7wo_wmcw.js","/_next/static/chunks/0fl~me.qwn48c.js"],"default"]
+6:I[97367,["/_next/static/chunks/0ypf.t599.7y6.js","/_next/static/chunks/0t2xr05rlu96l.js"],"OutletBoundary"]
+7:"$Sreact.suspense"
+3:Tb155,<h1>Error messages</h1>
+<p>This page lists the messages L4 gives when a file does not parse, does not type-check or stops while it runs, and the warnings it gives about code that probably does not do what you meant. Each entry quotes the message, says what causes it and how to fix it. Search the page for a phrase from your message.</p>
+<ul>
+<li>An <strong>error</strong> stops the file: it is not checked further, and its <code>#EVAL</code> lines do not run.</li>
+<li>A <strong>warning</strong> does not stop anything. The file still runs, but the code it points at is likely to be wrong.</li>
+<li>A parse error shows the line and the column where L4 stopped reading, then <code>unexpected ...</code> and a list of what it expected. The mistake is often just before that point.</li>
+</ul>
+<p>Coming from another language? The <a href="/l4/reference/cheat-sheet">Cheat sheet</a> shows the L4 spelling of familiar constructs. The tutorial <a href="/l4/tutorials/getting-started/debugging-type-errors">Fix errors</a> walks through the errors beginners meet most.</p>
+<h2 id="entries">Entries</h2>
+<p><strong>Layout and syntax</strong></p>
+<ul>
+<li><a href="#incorrect-indentation">Incorrect indentation</a></li>
+<li><a href="#if-without-else">IF without ELSE</a></li>
+<li><a href="#arguments-on-the-lines-below-a-function">Arguments on the lines below a function</a></li>
+<li><a href="#field-access-as-an-argument">Field access as an argument</a></li>
+<li><a href="#double-equals-sign">Double equals sign</a></li>
+</ul>
+<p><strong>Types</strong></p>
+<ul>
+<li><a href="#pipes-in-sum-types">Pipes in sum types</a></li>
+<li><a href="#bare-positional-payload-in-sum-types">Bare positional payload in sum types</a></li>
+<li><a href="#branch-type-mismatch">Branch type mismatch</a></li>
+<li><a href="#wrong-number-of-arguments">Wrong number of arguments</a></li>
+<li><a href="#argument-of-the-wrong-type">Argument of the wrong type</a></li>
+<li><a href="#several-definitions-with-the-same-name">Several definitions with the same name</a></li>
+</ul>
+<p><strong>Names and imports</strong></p>
+<ul>
+<li><a href="#i-could-not-find-a-definition-for-the-identifier">I could not find a definition for the identifier</a></li>
+<li><a href="#module-not-found">Module not found</a></li>
+</ul>
+<p><strong>Definitions and clauses</strong></p>
+<ul>
+<li><a href="#a-clause-written-like-a-rule-with-a-word-between-its-inputs">A clause written like a rule with a word between its inputs</a></li>
+<li><a href="#clauses-with-more-or-fewer-patterns-than-the-given-names">Clauses with more or fewer patterns than the GIVEN names</a></li>
+<li><a href="#multi-clause-decide-does-not-cover-all-cases">Multi-clause DECIDE does not cover all cases</a></li>
+<li><a href="#clause-that-is-never-used">Clause that is never used</a></li>
+<li><a href="#annotation-above-a-later-clause">Annotation above a later clause</a></li>
+<li><a href="#a-definition-after-clauses-that-is-not-another-clause">A definition after clauses that is not another clause</a></li>
+<li><a href="#infinite-loop-detected">Infinite loop detected</a></li>
+</ul>
+<p><strong>Pattern matching</strong></p>
+<ul>
+<li><a href="#non-exhaustive-pattern-match">Non-exhaustive pattern match</a></li>
+<li><a href="#redundant-pattern-match-branch">Redundant pattern match branch</a></li>
+<li><a href="#non-exhaustive-patterns-at-runtime">Non-exhaustive patterns at runtime</a></li>
+</ul>
+<p><strong>Regulative rules</strong></p>
+<ul>
+<li><a href="#eval-shows-the-rule-instead-of-an-outcome">#EVAL shows the rule instead of an outcome</a></li>
+</ul>
+<p><strong>Export</strong></p>
+<ul>
+<li><a href="#an-export-of-clauses-with-no-given">An @export of clauses with no GIVEN</a></li>
+</ul>
+<hr>
+<h2 id="layout-and-syntax">Layout and syntax</h2>
+<p>L4 is layout-sensitive, like Python: indentation decides what belongs to what. Use spaces, not tabs, and indent a continuation line further than the line it continues.</p>
+<h3 id="incorrect-indentation">Incorrect indentation</h3>
+<p><strong>Error:</strong> <code>incorrect indentation (got 5, should be greater than 9)</code></p>
+<p>The line named is not indented far enough for the place it is in. Two common causes:</p>
+<p><strong>The body of a definition starts left of the definition.</strong></p>
+<pre><code class="language-l4">GIVEN x IS A NUMBER
+      y IS A NUMBER
+GIVETH A NUMBER
+        result x y MEANS
+    x + y
+</code></pre>
+<p>Indent the body further than the line that defines the name:</p>
+<pre><code class="language-l4">GIVEN x IS A NUMBER
+      y IS A NUMBER
+GIVETH A NUMBER
+result x y MEANS
+    x + y
+</code></pre>
+<p><strong>A chain of <code>ELSE IF</code> lined up under the first <code>IF</code>.</strong></p>
+<pre><code class="language-l4">GIVEN a IS A BOOLEAN
+      b IS A BOOLEAN
+      c IS A BOOLEAN
+GIVETH A NUMBER
+result a b c MEANS
+    IF a THEN 1
+    ELSE IF b THEN 2
+    ELSE IF c THEN 3
+    ELSE 4
+</code></pre>
+<p>Each <code>IF</code> after an <code>ELSE</code> starts a new expression that must be indented further than the one before. Use <code>BRANCH</code> for a list of conditions instead:</p>
+<pre><code class="language-l4">GIVEN a IS A BOOLEAN
+      b IS A BOOLEAN
+      c IS A BOOLEAN
+GIVETH A NUMBER
+result a b c MEANS
+    BRANCH
+        IF a THEN 1
+        IF b THEN 2
+        IF c THEN 3
+        OTHERWISE 4
+</code></pre>
+<p>BRANCH takes the first condition that is TRUE, and OTHERWISE covers the rest. See <a href="/l4/reference/control-flow/BRANCH">BRANCH</a>.</p>
+<hr>
+<h3 id="if-without-else">IF without ELSE</h3>
+<p><strong>Error:</strong> <code>unexpected ...</code> followed by <code>expecting %, ELSE, or space token</code> (at the end of a file, <code>unexpected end of input</code>)</p>
+<pre><code class="language-l4">GIVEN condition IS A BOOLEAN
+GIVETH A NUMBER
+result condition MEANS IF condition THEN 1
+</code></pre>
+<p>IF is an expression: it has to give a value whether the condition is TRUE or FALSE, so the ELSE is required.</p>
+<p><strong>How to fix it:</strong> Add the ELSE:</p>
+<pre><code class="language-l4">GIVEN condition IS A BOOLEAN
+GIVETH A NUMBER
+result condition MEANS IF condition THEN 1 ELSE 0
+</code></pre>
+<hr>
+<h3 id="arguments-on-the-lines-below-a-function">Arguments on the lines below a function</h3>
+<p><strong>Error:</strong> <code>unexpected 100</code> (the first argument), followed by a list of what was expected</p>
+<pre><code class="language-l4">GIVEN a IS A NUMBER
+      b IS A NUMBER
+      c IS A NUMBER
+GIVETH A NUMBER
+triple a b c MEANS a + b + c
+
+r MEANS triple
+    100
+    200
+    300
+</code></pre>
+<p>Arguments written on their own lines below a function name are not read as its arguments.</p>
+<p><strong>How to fix it:</strong> Write the arguments on the same line, or use <code>OF</code> with commas:</p>
+<pre><code class="language-l4">GIVEN a IS A NUMBER
+      b IS A NUMBER
+      c IS A NUMBER
+GIVETH A NUMBER
+triple a b c MEANS a + b + c
+
+r MEANS triple OF 100, 200, 300
+s MEANS triple 100 200 300
+</code></pre>
+<hr>
+<h3 id="field-access-as-an-argument">Field access as an argument</h3>
+<p><strong>Error:</strong> <code>unexpected 's</code></p>
+<pre><code class="language-l4">IMPORT prelude
+
+DECLARE Person HAS age IS A NUMBER
+DECLARE Charity HAS governors IS A LIST OF Person
+
+GIVEN charity IS A Charity
+GIVETH A BOOLEAN
+`all governors are adults` charity MEANS
+  all (GIVEN g YIELD g's age >= 18) charity's governors
+</code></pre>
+<p>When a field access such as <code>charity's governors</code> is an argument to a function, L4 cannot tell where the argument ends.</p>
+<p><strong>How to fix it:</strong> Put the field access in parentheses:</p>
+<pre><code class="language-l4">IMPORT prelude
+
+DECLARE Person HAS age IS A NUMBER
+DECLARE Charity HAS governors IS A LIST OF Person
+
+GIVEN charity IS A Charity
+GIVETH A BOOLEAN
+`all governors are adults` charity MEANS
+  all (GIVEN g YIELD g's age >= 18) (charity's governors)
+</code></pre>
+<hr>
+<h3 id="double-equals-sign">Double equals sign</h3>
+<p><strong>Error:</strong> <code>unexpected ==</code></p>
+<pre><code class="language-l4">GIVEN x IS A NUMBER
+GIVETH A BOOLEAN
+result x MEANS x == 5
+</code></pre>
+<p>L4 writes equality with a single <code>=</code>, or <code>EQUALS</code>. There is no assignment in L4, so <code>=</code> is never ambiguous.</p>
+<p><strong>How to fix it:</strong></p>
+<pre><code class="language-l4">GIVEN x IS A NUMBER
+GIVETH A BOOLEAN
+result x MEANS x = 5
+</code></pre>
+<hr>
+<h2 id="types">Types</h2>
+<h3 id="pipes-in-sum-types">Pipes in sum types</h3>
+<p><strong>Error:</strong> <code>expecting operator char</code>, pointing at the first <code>|</code></p>
+<pre><code class="language-l4">DECLARE Colour IS ONE OF
+    Red | Green | Blue
+</code></pre>
+<p>L4 does not separate the alternatives of a type with <code>|</code>.</p>
+<p><strong>How to fix it:</strong> Use commas, or one alternative per line:</p>
+<pre><code class="language-l4">DECLARE Colour IS ONE OF Red, Green, Blue
+
+DECLARE Shape IS ONE OF
+    Circle HAS radius IS A NUMBER
+    Square HAS side IS A NUMBER
+</code></pre>
+<p>See <a href="/l4/reference/types/DECLARE">DECLARE</a>.</p>
+<hr>
+<h3 id="bare-positional-payload-in-sum-types">Bare positional payload in sum types</h3>
+<p><strong>Error:</strong> <code>unexpected NUMBER</code> followed by <code>expecting ,, ;, HAS, end of input, or space token</code></p>
+<pre><code class="language-l4">DECLARE Shape IS ONE OF
+    Circle NUMBER
+</code></pre>
+<p>An alternative that carries data names each field with <code>HAS</code>. L4 has no unnamed fields.</p>
+<p><strong>How to fix it:</strong> Name the field:</p>
+<pre><code class="language-l4">DECLARE Shape IS ONE OF
+    Circle HAS radius IS A NUMBER
+</code></pre>
+<hr>
+<h3 id="branch-type-mismatch">Branch type mismatch</h3>
+<p><strong>Error:</strong> <code>Both the THEN and the ELSE branch of an IF-THEN-ELSE and BRANCH-IF-THEN-OTHERWISE constructs must have the same type.</code>, followed by the type expected and the type found</p>
+<pre><code class="language-l4">GIVEN x IS A NUMBER
+GIVETH A STRING
+result x MEANS
+    BRANCH
+        IF x &#x3C; 0 THEN "negative"
+        IF x = 0 THEN 0
+        OTHERWISE "positive"
+</code></pre>
+<p>Every branch of an IF, a BRANCH or a CONSIDER must give a value of the same type. Here two give a STRING and one a NUMBER.</p>
+<p><strong>How to fix it:</strong></p>
+<pre><code class="language-l4">GIVEN x IS A NUMBER
+GIVETH A STRING
+result x MEANS
+    BRANCH
+        IF x &#x3C; 0 THEN "negative"
+        IF x = 0 THEN "zero"
+        OTHERWISE "positive"
+</code></pre>
+<hr>
+<h3 id="wrong-number-of-arguments">Wrong number of arguments</h3>
+<p><strong>Error:</strong> <code>The function add (defined at ...) expects 2 arguments, but you are applying it to 3 arguments here.</code></p>
+<p>A call gives a function more or fewer arguments than its <code>GIVEN</code> names.</p>
+<p><strong>How to fix it:</strong> Check the function's <code>GIVEN</code> and give one argument for each input, in the same order:</p>
+<pre><code class="language-l4">GIVEN a IS A NUMBER
+      b IS A NUMBER
+GIVETH A NUMBER
+add a b MEANS a + b
+
+#EVAL add 1 2
+</code></pre>
+<hr>
+<h3 id="argument-of-the-wrong-type">Argument of the wrong type</h3>
+<p><strong>Error:</strong> <code>The first argument of function append (defined at ...) is expected to be of type LIST OF a but is here of type STRING</code></p>
+<p>A function was given a value of a type it does not take. A common case is mixing up two prelude functions with similar names:</p>
+<table>
+<thead>
+<tr>
+<th>Function</th>
+<th>Written</th>
+<th>Works on</th>
+<th>Example</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>APPEND</code></td>
+<td>between its inputs</td>
+<td>STRING</td>
+<td><code>"hello" APPEND " world"</code></td>
+</tr>
+<tr>
+<td><code>append</code></td>
+<td>before its inputs</td>
+<td>LIST</td>
+<td><code>append (LIST 1, 2) (LIST 3, 4)</code></td>
+</tr>
+</tbody>
+</table>
+<p><strong>How to fix it:</strong> Use the function for the type you have. <code>CONCAT</code> also joins strings, and needs no import:</p>
+<pre><code class="language-l4">IMPORT prelude
+
+DECIDE greeting IS "hello" APPEND " world"
+DECIDE numbers IS append (LIST 1, 2) (LIST 3, 4)
+DECIDE `the same greeting` IS CONCAT "hello", " world"
+</code></pre>
+<hr>
+<h3 id="several-definitions-with-the-same-name">Several definitions with the same name</h3>
+<p><strong>Error:</strong> <code>There are multiple definitions for the identifier Date and I do not have sufficient information to make a choice between them.</code>, followed by the candidates and their types</p>
+<p>Some names have several definitions told apart by their types, such as <code>Date</code> and <code>Time</code> in the date and time libraries. When L4 cannot tell from the context which one is meant, it asks. This often happens when such a call is followed by a word written between two inputs, as in <code>Date 10 1 2024 `is before` Date 11 1 2024</code>.</p>
+<p><strong>How to fix it:</strong> Put each call in parentheses, or say the expected type with <code>GIVETH</code>:</p>
+<pre><code class="language-l4">IMPORT daydate
+
+#EVAL (Date 10 1 2024) `is before` (Date 11 1 2024)
+</code></pre>
+<hr>
+<h2 id="names-and-imports">Names and imports</h2>
+<h3 id="i-could-not-find-a-definition-for-the-identifier">I could not find a definition for the identifier</h3>
+<p><strong>Error:</strong> <code>I could not find a definition for the identifier</code>, then the name, then <code>which I have inferred to be of type:</code> and the type L4 expected it to have</p>
+<p>L4 met a name that nothing in scope defines. The usual causes:</p>
+<ul>
+<li><strong>A library is not imported.</strong> <code>map</code>, <code>filter</code>, <code>all</code>, <code>any</code>, <code>sum</code>, <code>fromMaybe</code> and <code>APPEND</code> come from the prelude, which is never loaded automatically. Add <code>IMPORT prelude</code>. The same goes for <code>Date</code> (<code>IMPORT daydate</code>) and the other <a href="/l4/reference/libraries">standard libraries</a>.</li>
+<li><strong>A typo or a different spelling</strong>, in a function name or a field name: <code>person's fullname</code> where the record declares <code>full name</code>. The type L4 shows helps: for a field it is <code>FUNCTION FROM Person TO ...</code>.</li>
+<li><strong>The wrong case.</strong> Keywords and built-in values are upper case: <code>TRUE</code> and <code>FALSE</code>, not <code>True</code> or <code>true</code>; <code>NOTHING</code>, <code>JUST</code>, <code>LEFT</code>, <code>RIGHT</code>.</li>
+<li><strong>An <code>IMPORT</code> below a section heading.</strong> <code>IMPORT</code> lines count only before the first <code>§</code>; one placed after it is ignored, so the names it should bring in are not defined. Move it to the top of the file.</li>
+<li><strong>A name defined somewhere it cannot be seen.</strong> A name defined in the <code>WHERE</code> or <code>LET</code> of one definition exists only inside that definition.</li>
+</ul>
+<p><strong>How to fix it:</strong> Correct the spelling, or add the <code>IMPORT</code>:</p>
+<pre><code class="language-l4">IMPORT prelude
+
+DECIDE total IS sum (LIST 1, 2, 3)
+DECIDE `is ready` IS TRUE
+</code></pre>
+<hr>
+<h3 id="module-not-found">Module not found</h3>
+<p><strong>Error:</strong> <code>I could not find a module with this name: helpers</code>, then <code>I have tried the following locations:</code> and the places that were tried. The list ends with the standard library built into <code>l4</code>, for example <code>the stdlib embedded in this binary (20 modules, not among them)</code>, or <code>the stdlib embedded in this binary (skipped: JL4_LIBRARY_PATH is set)</code> when that variable is set. On the command line, <code>l4</code> also prints <code>Warning | [Import Resolution] Module not found: helpers</code>.</p>
+<p>An <code>IMPORT</code> names a module that is neither a standard library nor a file <code>helpers.l4</code> in your project's root folder or beside the importing file.</p>
+<p><strong>How to fix it:</strong></p>
+<ul>
+<li>Check the name. A name with a hyphen needs backticks: <code>IMPORT `legal-persons` </code>. <code>IMPORT</code> takes a module name, not a path: a folder in front of the name is ignored.</li>
+<li>Put your own module in the project's root folder or beside the file that imports it.</li>
+<li>If <code>JL4_LIBRARY_PATH</code> is set, the built-in standard library is not used at all, so that folder must hold every library you import, <code>prelude.l4</code> included.</li>
+</ul>
+<p><a href="/l4/reference/libraries#import">IMPORT</a> describes module names and where they are found; <a href="/l4/reference/libraries/resolution">How IMPORT finds libraries</a> gives the full search order for operators and library developers.</p>
+<hr>
+<h2 id="definitions-and-clauses">Definitions and clauses</h2>
+<h3 id="a-clause-written-like-a-rule-with-a-word-between-its-inputs">A clause written like a rule with a word between its inputs</h3>
+<p><strong>Error:</strong></p>
+<pre><code>This clause is written the way a rule with a word between its inputs is written, like this one:
+
+  c `costs` n
+
+A rule written that way is one definition, so it cannot be split into clauses.
+Write it once and tell the cases apart inside it with CONSIDER, or write the clauses with a name of their own first, one pattern for each input, as in DECIDE price Red 0 IS ...
+</code></pre>
+<p><strong>What you wrote:</strong></p>
+<pre><code class="language-l4">DECLARE Colour IS ONE OF Red, Green, Blue
+
+GIVEN c IS A Colour
+      n IS A NUMBER
+GIVETH A NUMBER
+c `costs` n MEANS n
+Red `costs` 0 MEANS 1
+</code></pre>
+<p><strong>What went wrong:</strong> A rule can be written with a word between its inputs, so that a call reads like a sentence: <code>c `costs` n</code> defines a rule, and <code>Red `costs` 0</code> calls it. This is called a <strong>"mixfix"</strong> rule. It is one definition, and L4 finds it by its word wherever it is called.
+It has no clauses.
+The last line looks like one more case of it, "when the colour is Red and the number is 0, the answer is 1", but it is not one.
+A list of clauses is a different way of writing a rule: the rule's name comes first, then one pattern for each input (<code>DECIDE price Red 0 IS 1</code>).
+A line with the word in the middle is the first kind, so L4 refuses it, once, at its first word, rather than read it as a clause of a rule named <code>Red</code>.</p>
+<p>The same error appears when every line of the rule is written that way, with no one-definition form to compare with:</p>
+<pre><code class="language-l4">c `costs` 0 MEANS 0
+c `costs` n MEANS n
+</code></pre>
+<p>There L4 recognises the form from the first word of the line being one of the <code>GIVEN</code> inputs (<code>c</code>), followed by a word that is none (<code>costs</code>).
+That is how a rule with a word between its inputs begins. A clause begins with the rule's name instead, and a rule cannot be named like one of its own inputs.
+This message begins "This clause begins with c, an input of the GIVEN, and then the word <code>costs</code>."</p>
+<p>A line in the same form with a bare name for every input, and no literal, is not read as a clause, because nothing in it tells cases apart; it is read as a definition:</p>
+<pre><code class="language-l4">c `costs` n MEANS n
+Red `costs` n MEANS 1
+</code></pre>
+<p>and is refused too, for the same reason. Its message begins "This definition is written the way the rule", shows the rule, and says which name in the line (<code>Red</code>) the <code>GIVEN</code> does not name.</p>
+<p><strong>How to fix it:</strong> Two ways, whichever reads better.</p>
+<p>Write the rule once, and tell its cases apart inside it with <code>CONSIDER</code>:</p>
+<pre><code class="language-l4">DECLARE Colour IS ONE OF Red, Green, Blue
+
+GIVEN c IS A Colour
+      n IS A NUMBER
+GIVETH A NUMBER
+c `costs` n MEANS
+  CONSIDER c
+  WHEN Red THEN IF n EQUALS 0 THEN 1 ELSE n
+  OTHERWISE n
+
+#EVAL Red `costs` 0
+</code></pre>
+<p>or write the cases as clauses with a name of their own in front, one pattern for each input, in the order of the <code>GIVEN</code>:</p>
+<pre><code class="language-l4">DECLARE Colour IS ONE OF Red, Green, Blue
+
+GIVEN c IS A Colour
+      n IS A NUMBER
+GIVETH A NUMBER
+DECIDE price Red 0 IS 1
+DECIDE price c n IS n
+
+#EVAL price Red 0
+</code></pre>
+<p>The second way is called as <code>price Red 0</code>, not as <code>Red `costs` 0</code>. Do not reuse the word of a rule that is written with a word between its inputs as the name of the clauses: in a file with both <code>c `costs` n</code> and a rule of clauses named <code>costs</code>, the call <code>costs Red 0</code> finds the one-definition rule.</p>
+<p><strong>What this does not catch:</strong> The check has to be able to see the rule. It sees a rule written with a word between its inputs when the file, or a file it imports, defines it in one piece; and it sees a line that begins with one of the <code>GIVEN</code> inputs followed by a word that is none.
+Two shapes are not recognised.
+A rule whose every line begins with a constructor, <code>Red `costs` 0</code> and <code>Green `costs` n</code> with no <code>c `costs` n</code> anywhere, is accepted as clauses of rules named <code>Red</code> and <code>Green</code>, and a call written <code>Red `costs` 0</code> does not find them.
+A rule whose words come first, <code>`tax on` x `item costing` y</code>, written as clauses is still refused as having more patterns than the <code>GIVEN</code> names inputs (<a href="#clauses-with-more-or-fewer-patterns-than-the-given-names">Clauses with more or fewer patterns than the GIVEN names</a>), in several messages.</p>
+<p><strong>What is not refused:</strong> a line whose <code>GIVEN</code> names an input where the rule has its word is an ordinary rule, however much it looks like the mixfix one.
+Beside <code>a `plus` b</code>, a rule <code>total plus y</code> with the <code>GIVEN</code> <code>plus</code> and <code>y</code> is a rule called <code>total</code> that takes two inputs, and so is <code>decision `is eligible` </code> when <code>`is eligible`</code> is one of its <code>GIVEN</code> inputs; the same goes for the clauses <code>DECIDE fee costs 0 IS 0</code> and <code>DECIDE fee costs n IS n</code> when the <code>GIVEN</code> names <code>costs</code>.
+The definition lines are left alone, and the rules they define are called as usual, <code>total 3 4</code>.
+A use of the word inside another rule is still read as a use of the mixfix rule: with <code>a `plus` b</code> in the file, the body <code>total plus y</code> of a rule whose inputs are <code>plus</code> and <code>y</code> is read as <code>total `plus` y</code>, and fails to check ("The first argument of function <code>plus</code> is expected to be of type NUMBER but is here of type FUNCTION FROM NUMBER AND NUMBER TO NUMBER").
+Give that input another name, and the body means what it says.</p>
+<hr>
+<h3 id="clauses-with-more-or-fewer-patterns-than-the-given-names">Clauses with more or fewer patterns than the GIVEN names</h3>
+<p><strong>Error:</strong></p>
+<pre><code>Each clause of `g` has 2 patterns, but its GIVEN names 1 input.
+A clause needs one pattern for each input the GIVEN names, in the same order.
+</code></pre>
+<p><strong>What you wrote:</strong></p>
+<pre><code class="language-l4">DECLARE Colour IS ONE OF Red, Green, Blue
+
+GIVEN c IS A Colour
+GIVETH A NUMBER
+DECIDE g Red   Red IS 1
+DECIDE g Green c   IS 2
+</code></pre>
+<p><strong>What went wrong:</strong> A rule written as a list of clauses takes its inputs from the <code>GIVEN</code> above the clauses, in order.
+The first pattern in each clause is matched against the first input the <code>GIVEN</code> names, the second pattern against the second input, and so on.
+Here each clause has two patterns, but the <code>GIVEN</code> names only one input, <code>c</code>, so L4 cannot tell which input each pattern is about.
+The error appears once, at the first clause.
+A clause body may still read an input the <code>GIVEN</code> names; L4 checks it against the type the <code>GIVEN</code> declares, so only a body that uses it as something else draws a second error.
+L4 says nothing about missing or unused clauses until the counts agree.</p>
+<p>A <code>GIVEN</code> that declares only a type, such as <code>GIVEN a IS A TYPE</code>, names no inputs, so clauses with patterns under it draw the same error, ending "its GIVEN names no inputs".</p>
+<p><strong>How to fix it:</strong> Name one input in the <code>GIVEN</code> for each pattern, in the order the patterns appear:</p>
+<pre><code class="language-l4">DECLARE Colour IS ONE OF Red, Green, Blue
+
+GIVEN c IS A Colour
+      d IS A Colour
+GIVETH A NUMBER
+DECIDE g Red   Red IS 1
+DECIDE g Green d   IS 2
+</code></pre>
+<p>or give every clause one pattern for each input the <code>GIVEN</code> names.</p>
+<p>A list of clauses with no <code>GIVEN</code> at all is allowed.
+L4 then works out the type of each input from the patterns and the clause bodies, and where it has to name an input, as <code>l4 render</code> does, it calls them <code>input 1</code>, <code>input 2</code>, and so on.
+Such clauses cannot be published with <code>@export</code>, even a single one; see <a href="#an-export-of-clauses-with-no-given">An @export of clauses with no GIVEN</a>.</p>
+<hr>
+<h3 id="multi-clause-decide-does-not-cover-all-cases">Multi-clause DECIDE does not cover all cases</h3>
+<p><strong>Warning:</strong></p>
+<pre><code>This multi-clause definition does not cover all cases. The following clauses are still needed:
+
+  DECIDE `price` Blue IS
+</code></pre>
+<p><strong>What you wrote:</strong></p>
+<pre><code class="language-l4">DECLARE Colour IS ONE OF Red, Green, Blue
+
+GIVEN c IS A Colour
+GIVETH A NUMBER
+DECIDE price Red   IS 1
+DECIDE price Green IS 2
+</code></pre>
+<p><strong>What went wrong:</strong> The clauses of <code>price</code> match <code>Red</code> and <code>Green</code> but no clause matches <code>Blue</code>, so <code>price Blue</code> would stop evaluation with an error. This is a <strong>compile-time warning</strong> (not an error); an editor underlines it from the first clause's name to the last's.</p>
+<p><strong>How to fix it:</strong> Add each listed clause and write its result after <code>IS</code>:</p>
+<pre><code class="language-l4">DECIDE price Blue IS 3
+</code></pre>
+<p>Or end the group with a clause that matches anything, written with the <code>GIVEN</code> name:</p>
+<pre><code class="language-l4">DECIDE price c IS 0
+</code></pre>
+<p>When the rule has only one clause, the first line reads "This clause does not cover all cases." instead.</p>
+<p><strong>Note:</strong> Rules whose clauses match enumeration values or <code>TRUE</code>/<code>FALSE</code> are checked, and so are rules whose clauses match particular numbers or texts.
+A number or a piece of text is one value of its input, and there is no end of the others, so such a rule is complete only with a clause written with the input's name, and the warning suggests that clause: <code>DECIDE `describe` n IS</code> for <code>DECIDE describe 0 IS "zero"</code> and <code>DECIDE describe 1 IS "one"</code>.
+The other inputs of the same rule are still analysed, the gaps under each number first and then the clause for every other number.
+Rules that match lists or <code>MAYBE</code> values, or an enumeration declared in another file, get no warning where the check would have to tell such values apart, not even for a number nested inside one; where the other inputs settle the question first it still warns, and when every clause of such a rule has a number or a piece of text in it, the warning suggests the one clause with every input's name and nothing finer.
+<code>EXACTLY</code> of a number, a piece of text or a value of an enumeration is read as that value, and <code>EXACTLY</code> of the input's own name matches every input; any other <code>EXACTLY</code> counts for nothing on a number, text or date input, and in such a field of a record, stops the check on an enumeration input, and stops it on any input when its expression mentions the input itself.
+An input or a field declared under another name for a number (<code>DECLARE Age IS A NUMBER</code>) is a number to the check.
+When a clause counts for nothing that way, the warning lists only what the clauses without a number or a piece of text leave open, since a keyed gap could be one that clause covers.
+A suggested number prints as the clauses spelled it, and a suggested piece of text as L4 writes it, with <code>"</code> and <code>\</code> escaped.
+A rule whose clauses match enumeration values only gets no warning when it would need more than 64 clauses listed, or more than 10000 steps to find them; when its clauses match numbers or texts, the warning lists instead only the clauses that the clauses without a number or a piece of text leave open, which, when every clause names a number or a text, is the clause with every input's name alone.
+<a href="/l4/reference/functions/DECIDE#several-clauses">Several clauses</a>, under DECIDE, gives an example of each.
+A rule of one clause that is not checked keeps whatever warning a CONSIDER would give (see <a href="#non-exhaustive-pattern-match">Non-exhaustive pattern match</a>), listing WHEN branches, now at the clause; a CONSIDER reads numbers, texts and <code>EXACTLY</code> the same way, so a missing case over them is reported in either spelling; the two can differ for a repeated value, and where a branch or clause names a constructor of a <code>MAYBE</code>, an <code>EITHER</code>, a list or a type from another file (see <a href="/l4/reference/control-flow/CONSIDER">CONSIDER</a>).
+See <a href="/l4/reference/functions/DECIDE#several-clauses">Several clauses</a>.</p>
+<hr>
+<h3 id="clause-that-is-never-used">Clause that is never used</h3>
+<p><strong>Warning:</strong></p>
+<pre><code>This clause of `describe` is never used, and neither is the clause after it.
+The clause above it matches every input, so `describe` never gets this far.
+Move these clauses above that one, or remove them.
+</code></pre>
+<p><strong>What you wrote:</strong></p>
+<pre><code class="language-l4">DECLARE Status IS ONE OF Active, Suspended, Closed
+
+GIVEN status IS A Status
+GIVETH A STRING
+DECIDE describe status IS "some status"
+DECIDE describe Active IS "running"
+DECIDE describe Closed IS "stopped"
+</code></pre>
+<p><strong>What went wrong:</strong> A rule written as a list of clauses tries them from the top, and the first clause that matches is the one that applies. The first clause here matches every status, because its pattern is <code>status</code>, the name of the input itself. So <code>describe Active</code> is <code>"some status"</code>, and the two clauses below it are never reached. The warning appears once, at the first clause that cannot be reached, and says how many more follow it.</p>
+<p>A clause that is never used is still checked against the rule's <code>GIVEN</code> and <code>GIVETH</code>, so a mistake inside it, such as a misspelt name or an answer of the wrong type, is still reported.</p>
+<p>Only the clauses after one that matches every input are warned about: a clause whose every pattern is its input's own name, <code>_</code>, or a new name.
+A pattern that is not a value of its input's type is a new name, such as <code>other</code>, or <code>Gren</code> where <code>Green</code> was meant, and a new name matches anything.
+The warning then names it:</p>
+<pre><code>This clause of `colour` is never used, because the clause above it with the new name `Gren` matches every input.
+`Gren` is not a value of its input's type, so it is a new name, and a new name matches anything.
+If you meant a value, correct the spelling; if you meant to match anything, move that clause below the others.
+</code></pre>
+<p>This holds in rules that match numbers or text too.
+It is not given when a pattern of the rule does not fit its input's type, since the rule is then an error.
+A new name inside a larger pattern draws no warning: after <code>(JUST Gren)</code>, a clause for <code>(JUST Blue)</code> is never used, and nothing says so.
+There is no warning for a clause that repeats one above it.</p>
+<p><strong>How to fix it:</strong> Put the clauses for particular cases first and the clause that matches anything last, or remove the clause that can never be reached.</p>
+<hr>
+<h3 id="annotation-above-a-later-clause">Annotation above a later clause</h3>
+<p><strong>Warning:</strong></p>
+<pre><code>This @export is above the second clause of `colour code`, where it is not used.
+A rule written as clauses takes its @export from above its GIVEN only.
+Move it there, or remove it.
+</code></pre>
+<p><strong>What you wrote:</strong></p>
+<pre><code class="language-l4">DECLARE Colour IS ONE OF Red, Green
+
+GIVEN c IS A Colour
+GIVETH A NUMBER
+DECIDE `colour code` Red IS 1
+@export the green code
+DECIDE `colour code` Green IS 2
+</code></pre>
+<p><strong>What went wrong:</strong> A rule written as clauses is one rule, and its annotations are written once, where a rule written as one definition has them.
+An <code>@export</code> between two clauses does not publish the rule, a <code>@desc</code> there does not describe it, and an <code>@nlg</code> there is not used when the rule is put into words.
+The warning appears once at each such annotation.</p>
+<p>Definitions that share a name but are told apart by their types, such as <code>DECIDE show n IS n + 1</code> followed by <code>DECIDE show b IS b AND TRUE</code>, are separate definitions rather than one rule, and each keeps the annotations above it, so they draw no warning.</p>
+<p><strong>How to fix it:</strong> Move the annotation to where the rule's own annotations go, or remove it.
+An <code>@desc</code> or <code>@export</code> goes above the rule's <code>GIVEN</code>, or above its first clause if it has no <code>GIVEN</code>.
+An <code>@nlg</code> goes on the line above the first clause.</p>
+<hr>
+<h3 id="a-definition-after-clauses-that-is-not-another-clause">A definition after clauses that is not another clause</h3>
+<p><strong>Warning:</strong></p>
+<pre><code>This definition of `f` is not another clause of the clauses above it.
+Each of those has 1 pattern, and this one has 2 inputs, `Red` and `Blue`, so it is a separate rule, and what follows its name is the names it gives its inputs, not patterns.
+If it is meant as another clause, give it as many patterns as the others have; if it is a rule of its own, give it a GIVEN of its own.
+</code></pre>
+<p><strong>What you wrote:</strong></p>
+<pre><code class="language-l4">DECLARE Colour IS ONE OF Red, Green, Blue
+
+GIVEN c IS A Colour
+GIVETH A NUMBER
+DECIDE f Red IS 1
+DECIDE f c IS 2
+DECIDE f Red Blue IS 3
+</code></pre>
+<p><strong>What went wrong:</strong> Clauses that follow one another are gathered into one rule when they have the same name and the same number of patterns after it.
+The first two clauses have one pattern each, so they are one rule.
+The third has two, so it is not a clause of that rule: it is a rule of its own that takes two inputs and calls them <code>Red</code> and <code>Blue</code>, whatever else those words mean elsewhere.
+It checks, and <code>f Green Red</code> gives 3, where a reader of the three lines might have expected L4 to be looking for the colour Red and the colour Blue.
+The warning appears once, at the name in the definition, and only for a definition that has no <code>GIVEN</code> of its own and follows a rule written as clauses directly.</p>
+<p><strong>How to fix it:</strong> If the line was meant as another clause of the rule above, give it as many patterns as the clauses above have (here, one).
+If it is a rule of its own, say so with a <code>GIVEN</code> of its own, which also gives its inputs their types:</p>
+<pre><code class="language-l4">DECLARE Colour IS ONE OF Red, Green, Blue
+
+GIVEN c IS A Colour
+      d IS A Colour
+GIVETH A NUMBER
+f c d MEANS 3
+</code></pre>
+<hr>
+<h3 id="infinite-loop-detected">Infinite loop detected</h3>
+<p><strong>Error:</strong> <code>Infinite loop detected while trying to evaluate: x PLUS 1</code></p>
+<pre><code class="language-l4">x MEANS x + 1
+#EVAL x
+</code></pre>
+<p>To find <code>x</code>, L4 needs <code>x + 1</code>, which needs <code>x</code> again. L4 notices this for a value defined in terms of itself and stops with this error.</p>
+<p>A function that calls itself with new inputs, and never reaches a case that stops, is not caught: its <code>#EVAL</code> keeps running and never answers.</p>
+<p><strong>How to fix it:</strong> If you meant recursion, give it a case that stops:</p>
+<pre><code class="language-l4">GIVEN n IS A NUMBER
+GIVETH A NUMBER
+factorial n MEANS
+    IF n &#x3C;= 1 THEN 1
+    ELSE n * factorial (n - 1)
+
+#EVAL factorial 5
+</code></pre>
+<p>If you did not, you probably meant another name on the right-hand side.</p>
+<hr>
+<h2 id="pattern-matching">Pattern matching</h2>
+<h3 id="non-exhaustive-pattern-match">Non-exhaustive pattern match</h3>
+<p><strong>Warning:</strong></p>
+<pre><code>The following branches still need to be considered:
+
+  WHEN Suspended THEN
+</code></pre>
+<pre><code class="language-l4">DECLARE Status IS ONE OF Active, Suspended, Closed
+
+GIVEN status IS A Status
+GIVETH A STRING
+describe status MEANS
+    CONSIDER status
+    WHEN Active THEN "running"
+    WHEN Closed THEN "stopped"
+</code></pre>
+<p>The branches of the CONSIDER do not cover every value of its type. The file still runs, but evaluating the CONSIDER on a value with no branch stops with an error (see <a href="#non-exhaustive-patterns-at-runtime">Non-exhaustive patterns at runtime</a>).</p>
+<p><strong>How to fix it:</strong> Add the branches the warning lists, or an OTHERWISE for everything else:</p>
+<pre><code class="language-l4">DECLARE Status IS ONE OF Active, Suspended, Closed
+
+GIVEN status IS A Status
+GIVETH A STRING
+describe status MEANS
+    CONSIDER status
+    WHEN Active THEN "running"
+    WHEN Closed THEN "stopped"
+    OTHERWISE "unknown"
+</code></pre>
+<p>What the check covers:</p>
+<ul>
+<li>Enumerations declared in the same file, records and BOOLEAN are checked, including inside <code>WHERE</code> and <code>LET</code> definitions.</li>
+<li>A NUMBER, a STRING or a DATE has no end of values, so a CONSIDER over one is complete only with an OTHERWISE, and the warning suggests it. A WHEN with a number or a piece of text, and an <code>EXACTLY</code> of one or of a value of an enumeration, matches that value, as in a <a href="#multi-clause-decide-does-not-cover-all-cases">rule written as clauses</a>.</li>
+<li>The contents of MAYBE, EITHER and LIST values are checked: <code>WHEN JUST Red</code> over a <code>MAYBE Colour</code> asks for <code>WHEN JUST Green</code> and <code>WHEN JUST Blue</code>. A missing <code>NOTHING</code> or <code>EMPTY</code> branch is not reported, so a CONSIDER with only <code>WHEN JUST x</code> gets no warning.</li>
+<li>A CONSIDER over an enumeration declared in an imported file gives no missing-case warning at all.</li>
+</ul>
+<p><a href="/l4/reference/control-flow/CONSIDER#missing-and-redundant-branches">CONSIDER</a> gives the full rules, and <a href="/l4/concepts/type-system/exhaustiveness">Exhaustiveness</a> explains why the check works this way.</p>
+<hr>
+<h3 id="redundant-pattern-match-branch">Redundant pattern match branch</h3>
+<p><strong>Warning:</strong> <code>The following CONSIDER branch is redundant:</code>, followed by the branch</p>
+<pre><code class="language-l4">DECLARE Colour IS ONE OF Red, Green, Blue
+
+GIVEN c IS A Colour
+GIVETH A STRING
+label c MEANS
+    CONSIDER c
+    WHEN Red THEN "r"
+    OTHERWISE "x"
+    WHEN Blue THEN "b"
+</code></pre>
+<p>A branch can never be reached, because the branches above it, here the OTHERWISE, already cover every value it could match. A number repeated in another spelling (<code>WHEN 1.0</code> after <code>WHEN 1</code>) is also redundant.</p>
+<p><strong>How to fix it:</strong> Delete the branch, or move it above the more general one.</p>
+<hr>
+<h3 id="non-exhaustive-patterns-at-runtime">Non-exhaustive patterns at runtime</h3>
+<p><strong>Error:</strong></p>
+<pre><code>The value
+  Withdrawn
+reached a CONSIDER that has no branch for it.
+Add a WHEN branch for this case, or a catch-all OTHERWISE branch.
+The typechecker's exhaustiveness warning lists all missing branches.
+</code></pre>
+<p><strong>What went wrong:</strong> Evaluation reached a CONSIDER whose branches do not cover the actual value of the scrutinee (shown in the message). Either the <a href="#non-exhaustive-pattern-match">warning</a> was ignored, or the check could not see the gap: a missing <code>NOTHING</code> or <code>EMPTY</code> branch, or a missing value of an enumeration declared in another file, gets no warning. A directive that stops this way makes <code>l4 run</code> exit with an error.</p>
+<p><strong>How to fix it:</strong> Add branches for the missing cases, or an OTHERWISE branch for everything else. A CONSIDER over a NUMBER, a STRING or a DATE always needs an OTHERWISE.</p>
+<p>When the rule was written as a list of clauses rather than with a CONSIDER, the message talks about its clauses instead:</p>
+<pre><code>No clause of `label` matches these inputs.
+The value that the last clause could not match is
+  Suspended
+Add a clause for this case, or end the clauses with one that matches every input.
+</code></pre>
+<p>Here <code>label</code> has a clause for <code>Active</code> and one for <code>Closed</code>, and was asked about <code>Suspended</code>. Add a clause for the missing case (the warning <a href="#multi-clause-decide-does-not-cover-all-cases">Multi-clause DECIDE does not cover all cases</a> lists the clauses still needed), or end the list with a clause whose pattern matches anything. A rule with only one clause says "The only clause of <code>label</code> does not match these inputs." instead.</p>
+<hr>
+<h2 id="regulative-rules">Regulative rules</h2>
+<h3 id="eval-shows-the-rule-instead-of-an-outcome">#EVAL shows the rule instead of an outcome</h3>
+<p><strong>Symptom:</strong> <code>#EVAL</code> of a regulative rule prints the rule back (<code>PARTY Seller MUST ...</code>) instead of saying whether it was complied with.</p>
+<p>A regulative rule is a <code>DEONTIC</code> value: it says what is owed, not what happened. To see an outcome, run it against events with <code>#TRACE</code>, giving a start time and what each party did and when:</p>
+<pre><code class="language-l4">DECLARE Party IS ONE OF Seller, Buyer
+DECLARE Action IS ONE OF `deliver the goods`, `pay`
+
+GIVETH A DEONTIC Party Action
+`the delivery duty` MEANS
+    PARTY Seller
+    MUST `deliver the goods`
+    WITHIN 14
+    HENCE FULFILLED
+    LEST BREACH
+
+#TRACE `the delivery duty` AT 0 WITH
+    PARTY Seller DOES `deliver the goods` AT 3
+</code></pre>
+<p>This gives <code>FULFILLED</code>. See <a href="/l4/reference/regulative">Regulative rules</a> and <a href="/l4/reference/regulative/EVENT">EVENT</a>.</p>
+<hr>
+<h2 id="export">Export</h2>
+<h3 id="an-export-of-clauses-with-no-given">An @export of clauses with no GIVEN</h3>
+<p><strong>Error:</strong></p>
+<pre><code>`size` is published with @export, but its inputs have no names: add a GIVEN that names and types each one.
+</code></pre>
+<p><strong>What you wrote:</strong></p>
+<pre><code class="language-l4">DECLARE Colour IS ONE OF Red, Green, Blue
+
+@export
+DECIDE size Red   n IS n
+DECIDE size Green n IS n + 1
+DECIDE size Blue  n IS 0
+</code></pre>
+<p><strong>What went wrong:</strong> <code>@export</code> publishes a rule as a web endpoint, and a request to it supplies each input by name, as a value of that input's type.
+A rule written as clauses with patterns and no <code>GIVEN</code>, whether one clause or several, has neither.
+L4 names its inputs itself, <code>input 1</code>, <code>input 2</code> and so on, and works out their types from the patterns and the clause bodies, so a request could not say which input a value is for, and there is no declared type to check the value against.
+So an <code>@export</code> of such a rule is an error, reported at the <code>@export</code> line, because that is where the missing <code>GIVEN</code> goes.
+The error stops the whole file from checking: <code>l4 run</code>, the REPL and <code>l4 batch</code> refuse the file, the <code>#EVAL</code>s of its other rules included, and jl4-service will not deploy it, until you add the <code>GIVEN</code> or remove the <code>@export</code>.
+<code>@export default</code> is refused the same way.
+Without <code>@export</code>, clauses with no <code>GIVEN</code> are fine.</p>
+<p><strong>How to fix it:</strong> Add a <code>GIVEN</code> below <code>@export</code> that names and types each input, in the order the patterns appear, and say what the rule gives back with <code>GIVETH</code>:</p>
+<pre><code class="language-l4">DECLARE Colour IS ONE OF Red, Green, Blue
+
+@export
+GIVEN c IS A Colour
+      n IS A NUMBER
+GIVETH A NUMBER
+DECIDE size Red   n IS n
+DECIDE size Green n IS n + 1
+DECIDE size Blue  n IS 0
+</code></pre>
+<p>The rule is then published with the inputs <code>c</code> and <code>n</code>.
+Or remove the <code>@export</code>, if the rule is not meant to be published.</p>
+0:{"rsc":["$","$1","c",{"children":[["$","$L2",null,{"navSections":[{"title":"","items":[{"title":"Language Reference","href":"reference"},{"title":"Glossary","href":"reference/GLOSSARY"},{"title":"Cheat sheet","href":"reference/cheat-sheet"},{"title":"Types","href":"reference/types","children":[{"title":"DECLARE","href":"reference/types/DECLARE"},{"title":"ASSUME","href":"reference/types/ASSUME"},{"title":"FOR ALL","href":"reference/types/for-all"},{"title":"Coercions","href":"reference/types/coercions"}]},{"title":"Functions","href":"reference/functions","children":[{"title":"DECIDE","href":"reference/functions/DECIDE"},{"title":"GIVEN and GIVETH","href":"reference/functions/GIVEN"},{"title":"MEANS","href":"reference/functions/MEANS"},{"title":"LET and WHERE","href":"reference/functions/LET"},{"title":"YIELD","href":"reference/functions/YIELD"},{"title":"AKA","href":"reference/functions/AKA"}]},{"title":"Control flow","href":"reference/control-flow","children":[{"title":"IF","href":"reference/control-flow/IF"},{"title":"BRANCH","href":"reference/control-flow/BRANCH"},{"title":"CONSIDER","href":"reference/control-flow/CONSIDER"}]},{"title":"Operators","href":"reference/operators","children":[{"title":"AND, OR, NOT, IMPLIES","href":"reference/operators/logical"},{"title":"UNLESS","href":"reference/operators/UNLESS"},{"title":"Arithmetic","href":"reference/operators/arithmetic"},{"title":"Comparisons","href":"reference/operators/comparisons"}]},{"title":"Regulative rules","href":"reference/regulative","children":[{"title":"PARTY, MUST, MAY, SHANT","href":"reference/regulative/PARTY"},{"title":"Deadlines and consequences","href":"reference/regulative/consequences"},{"title":"BECAUSE","href":"reference/regulative/BECAUSE"},{"title":"DEONTIC","href":"reference/regulative/DEONTIC"},{"title":"EVENT","href":"reference/regulative/EVENT"}]},{"title":"Syntax and directives","href":"reference/syntax"},{"title":"Built-in functions","href":"reference/builtins","children":[{"title":"HTTP and JSON","href":"reference/builtins/http-json"}]},{"title":"Standard libraries","href":"reference/libraries","children":[{"title":"prelude","href":"reference/libraries/prelude"},{"title":"math","href":"reference/libraries/math"},{"title":"daydate","href":"reference/libraries/daydate"},{"title":"time","href":"reference/libraries/time"},{"title":"datetime","href":"reference/libraries/datetime"},{"title":"timezone","href":"reference/libraries/timezone"},{"title":"excel-date","href":"reference/libraries/excel-date"},{"title":"currency","href":"reference/libraries/currency"},{"title":"holdings","href":"reference/libraries/holdings"},{"title":"actus","href":"reference/libraries/actus"},{"title":"legal-persons","href":"reference/libraries/legal-persons"},{"title":"jurisdiction","href":"reference/libraries/jurisdiction"},{"title":"llm","href":"reference/libraries/llm"}]},{"title":"Error messages","href":"reference/errors"}]}],"toc":[],"htmlContent":"$3","pager":{"prev":"$0:rsc:props:children:0:props:navSections:0:items:10:children:12"}}],["$L4"],"$L5"]}],"isPartial":false,"staleTime":300,"varyParams":null,"buildId":"iJUXAyHcmcW99cMci3ei9"}
+4:["$","script","script-0",{"src":"/_next/static/chunks/0fl~me.qwn48c.js","async":true}]
+5:["$","$L6",null,{"children":["$","$7",null,{"name":"Next.MetadataOutlet","children":"$@8"}]}]
+8:null

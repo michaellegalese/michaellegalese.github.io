@@ -1,0 +1,122 @@
+1:"$Sreact.fragment"
+2:I[90160,["/_next/static/chunks/0ypf.t599.7y6.js","/_next/static/chunks/0t2xr05rlu96l.js","/_next/static/chunks/0uxaa7wo_wmcw.js","/_next/static/chunks/0fl~me.qwn48c.js"],"default"]
+6:I[97367,["/_next/static/chunks/0ypf.t599.7y6.js","/_next/static/chunks/0t2xr05rlu96l.js"],"OutletBoundary"]
+7:"$Sreact.suspense"
+3:T1e01,<h1>Fix errors</h1>
+<p>Read an L4 error message, find the cause, and fix it. The <a href="/l4/reference/errors">error message reference</a> lists the errors one by one; this page shows how to work through them.</p>
+<hr>
+<h2 id="read-a-diagnostic">Read a diagnostic</h2>
+<p>Run <code>l4 check myfile.l4</code>, or open the file in VS Code, which shows the same messages as red underlines. Each problem is printed as a block:</p>
+<pre><code>File:     err-layout.l4
+  Range:    4:1-4:1
+  Source:   parser
+  Severity: DiagnosticSeverity_Error
+  Message:
+      |
+    4 | x TIMES 2
+      | ^
+    incorrect indentation (got 1, should be greater than 1)
+</code></pre>
+<p>Read three things, in this order:</p>
+<ol>
+<li><strong>Range</strong>: <code>line:column-line:column</code> of the code at fault. Go there first.</li>
+<li><strong>Source</strong>: <code>parser</code> means the file could not be read as L4 at all, usually because of layout or a misplaced keyword. <code>check</code> means it was read but the types do not fit together.</li>
+<li><strong>Message</strong>: the explanation, in plain words. Read all of it before guessing.</li>
+</ol>
+<p>When there are several errors, fix the first one and check again: later errors are often caused by the first. <code>l4 check</code> exits with <code>0</code> when the file is valid and <code>1</code> otherwise.</p>
+<hr>
+<h2 id="a-debugging-routine">A debugging routine</h2>
+<ol>
+<li>Run <code>l4 check file.l4</code> after every few edits. It is fast because it evaluates nothing.</li>
+<li>Read the <strong>first</strong> diagnostic only. Note its source (<code>parser</code> or <code>check</code>) and go to its range.</li>
+<li>For a <code>parser</code> error, look at the line above as well: a layout problem is often caused by the construct before it.</li>
+<li>For a <code>check</code> error, find the pair "expected X … but is here of type Y" and decide which side is wrong.</li>
+<li>Still can't see it? Comment out half of the file (<code>--</code> per line, or <code>{- ... -}</code> around a block), check again, and narrow it down.</li>
+<li>Search the <a href="/l4/reference/errors">error message reference</a> for a phrase from the message.</li>
+</ol>
+<hr>
+<h2 id="common-errors">Common errors</h2>
+<h3 id="indentation">Indentation</h3>
+<p>L4 is layout-sensitive: the body of a definition must be indented further than the line that introduces it. The diagnostic above comes from this file:</p>
+<pre><code class="language-l4">GIVEN x IS A NUMBER
+GIVETH A NUMBER
+DECIDE `twice` IS
+x TIMES 2
+</code></pre>
+<p>Indent the body (<code>    x TIMES 2</code>) or keep it on the same line. Any <code>parser</code> error that says "incorrect indentation" or "unexpected …" is usually a layout problem. See <a href="/l4/reference/errors#incorrect-indentation">Incorrect indentation</a>.</p>
+<h3 id="type-mismatch">Type mismatch</h3>
+<p>The <code>GIVETH</code> type is a promise that the body has to keep:</p>
+<pre><code class="language-l4">GIVEN x IS A NUMBER
+GIVETH A BOOLEAN
+DECIDE `is large` IS x PLUS 1
+</code></pre>
+<pre><code>The type of this definition must match its type signature at err-mismatch.l4:2:8-17, namely
+
+  BOOLEAN
+
+but is here of type
+
+  NUMBER
+</code></pre>
+<p>Decide which side is wrong. Here it is the body: <code>DECIDE `is large` IF x GREATER THAN 1000</code>. L4 never converts types for you; when you need a conversion, write it (see <a href="/l4/reference/types/coercions">Coercions</a>). See <a href="/l4/reference/errors#types">Types</a>.</p>
+<h3 id="unknown-name">Unknown name</h3>
+<p>A file defines <code>`is an adult`</code> for a <code>Person</code>, and a test misspells it as <code>#EVAL `is an adutl` `Alice`</code>:</p>
+<pre><code>I could not find a definition for the identifier
+
+  `is an adutl`
+
+which I have inferred to be of type:
+
+  FUNCTION FROM Person TO res11
+</code></pre>
+<p>The second half shows how the unknown name is used: here, as a function from <code>Person</code> to something not yet known (<code>res11</code>). Use that to find the definition you meant. In order of likelihood:</p>
+<ul>
+<li><strong>Spelling</strong>, including spaces inside backticks: <code>`is an adult`</code> and <code>`is an adult `</code> are different names.</li>
+<li><strong>Missing backticks</strong>: <code>is an adult</code> without backticks is three separate words.</li>
+<li><strong>The definition does not exist</strong>: order does not matter for top-level definitions, but the name must be defined in the file or in an imported module.</li>
+</ul>
+<h3 id="missing-import">Missing IMPORT</h3>
+<p>A library name such as <code>Date</code> only exists after you import the library that defines it. Without <code>IMPORT daydate</code>, the line <code>`the closing date` MEANS Date 15 1 2025</code> gives "I could not find a definition for the identifier <code>Date</code>", the same message as a typo. Add the import:</p>
+<pre><code class="language-l4">IMPORT daydate
+
+`the closing date` MEANS Date 15 1 2025
+
+#EVAL `the closing date`
+</code></pre>
+<p>If an unknown name is one you did not define yourself, check the <a href="/l4/reference/libraries">library reference</a> for the library that provides it. See <a href="/l4/reference/errors#i-could-not-find-a-definition-for-the-identifier">I could not find a definition for the identifier</a> and <a href="/l4/reference/errors#module-not-found">Module not found</a>.</p>
+<h3 id="ambiguous-operator-mixed-types-in-a-comparison">Ambiguous operator: mixed types in a comparison</h3>
+<p>Comparison operators such as <code>AT LEAST</code> work on numbers, strings and booleans, as long as both sides have the same type. Compare a number with a string and L4 cannot choose:</p>
+<pre><code class="language-l4">DECLARE Person
+    HAS `name` IS A STRING
+        `age`  IS A NUMBER
+
+GIVEN person IS A Person
+GIVETH A BOOLEAN
+DECIDE `is an adult` IF
+    person's `age` AT LEAST "18"
+</code></pre>
+<pre><code>There are multiple definitions for the identifier
+
+  `__GEQ__`
+
+and I do not have sufficient information to make a choice between them.
+The options are:
+
+  `__GEQ__` (predefined) of type FUNCTION FROM NUMBER AND NUMBER TO BOOLEAN
+  `__GEQ__` (predefined) of type FUNCTION FROM STRING AND STRING TO BOOLEAN
+  `__GEQ__` (predefined) of type FUNCTION FROM BOOLEAN AND BOOLEAN TO BOOLEAN
+</code></pre>
+<p><code>__GEQ__</code> is the internal name of <code>AT LEAST</code> (<code>>=</code>). None of the listed versions takes a <code>NUMBER</code> and a <code>STRING</code>, which is the problem. Make both sides the same type: <code>person's `age` AT LEAST 18</code>.</p>
+<p>The same "multiple definitions" message appears with <code>__PLUS__</code> and other operators when an imported library adds versions of them (<code>daydate</code> adds <code>PLUS</code> for dates) and the operands do not show which one you mean. Fix a mistyped literal, or give one operand a known type.</p>
+<h3 id="export-with-a-function-typed-input"><code>@export</code> with a function-typed input</h3>
+<p>A rule marked <code>@export</code> cannot take a function as an input, because a function cannot be sent as JSON. The error is "Function type inputs are not supported for @export". See <a href="/l4/reference/types/ASSUME#function-typed-inputs-are-not-supported-for-export">ASSUME and <code>@export</code></a>.</p>
+<hr>
+<h2 id="next-steps">Next steps</h2>
+<ul>
+<li><a href="/l4/reference/errors">Error message reference</a>: every error message, with fixes.</li>
+<li><a href="/l4/tutorials/getting-started/testing-your-rules">Test your rules</a>: once the file type-checks, check that it gives the right answers.</li>
+</ul>
+0:{"rsc":["$","$1","c",{"children":[["$","$L2",null,{"navSections":[{"title":"","items":[{"title":"Overview","href":"tutorials"},{"title":"Install L4 and write your first rule","href":"tutorials/getting-started/first-l4-file"},{"title":"Draft rules with Legalese AI","href":"tutorials/llm-integration/composing-l4-with-ai"},{"title":"Test your rules","href":"tutorials/getting-started/testing-your-rules"},{"title":"Fix errors","href":"tutorials/getting-started/debugging-type-errors"},{"title":"Encode legislation","href":"tutorials/getting-started/encoding-legislation"},{"title":"Make rules read like law","href":"tutorials/natural-language-functions/optimising-natural-language-generation"},{"title":"Common patterns","href":"tutorials/getting-started/common-patterns"},{"title":"Deploy your rules","href":"tutorials/deploying-rules/exporting-rules-for-deployment"},{"title":"Choose an integration","href":"tutorials/legalese-cloud"},{"title":"Connect an AI agent","href":"tutorials/legalese-cloud/ai-agents"},{"title":"Chat with your rules","href":"tutorials/legalese-cloud/openai-compatible-api"},{"title":"Call rules over REST","href":"tutorials/legalese-cloud/openapi-spec"},{"title":"Embed rules in a website","href":"tutorials/legalese-cloud/webmcp-embed"},{"title":"Using the l4 CLI","href":"tutorials/getting-started/l4-cli"},{"title":"Manage rules in git and CI","href":"tutorials/getting-started/version-control-for-rules"}]}],"toc":[],"htmlContent":"$3","pager":{"prev":"$0:rsc:props:children:0:props:navSections:0:items:3","next":"$0:rsc:props:children:0:props:navSections:0:items:5"}}],["$L4"],"$L5"]}],"isPartial":false,"staleTime":300,"varyParams":null,"buildId":"iJUXAyHcmcW99cMci3ei9"}
+4:["$","script","script-0",{"src":"/_next/static/chunks/0fl~me.qwn48c.js","async":true}]
+5:["$","$L6",null,{"children":["$","$7",null,{"name":"Next.MetadataOutlet","children":"$@8"}]}]
+8:null

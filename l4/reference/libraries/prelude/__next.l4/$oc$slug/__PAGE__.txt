@@ -1,0 +1,816 @@
+1:"$Sreact.fragment"
+2:I[90160,["/_next/static/chunks/0ypf.t599.7y6.js","/_next/static/chunks/0t2xr05rlu96l.js","/_next/static/chunks/0uxaa7wo_wmcw.js","/_next/static/chunks/0fl~me.qwn48c.js"],"default"]
+6:I[97367,["/_next/static/chunks/0ypf.t599.7y6.js","/_next/static/chunks/0t2xr05rlu96l.js"],"OutletBoundary"]
+7:"$Sreact.suspense"
+3:T5cda,<h1>prelude</h1>
+<p>General-purpose functions for lists, MAYBE and EITHER values, pairs and dictionaries. Import it with <code>IMPORT prelude</code>; it is not loaded automatically.</p>
+<p>In the tables, <code>a</code>, <code>b</code>, <code>c</code>, <code>k</code>, <code>v</code> and <code>r</code> stand for any type, as in <code>GIVEN a IS A TYPE</code>. The inputs are listed in the order the function takes them.</p>
+<p><strong>Example:</strong></p>
+<pre><code class="language-l4-file">-- Prelude Example: Demonstrating core list and Maybe patterns
+-- Everything below is core syntax and built-ins, so this file needs no IMPORT.
+-- The prelude itself is NOT automatic: reach for one of its functions and you
+-- must write `IMPORT prelude` first, exactly as for any other library.
+
+-- List construction using FOLLOWED BY (cons) and EMPTY
+DECIDE `first few numbers` IS 1 FOLLOWED BY 2 FOLLOWED BY 3 FOLLOWED BY EMPTY
+#EVAL `first few numbers`  -- LIST 1, 2, 3
+
+-- Alternative: LIST syntax
+DECIDE `more numbers` IS LIST 4, 5, 6
+#EVAL `more numbers`  -- LIST 4, 5, 6
+
+-- Pattern matching on lists with CONSIDER
+GIVEN list IS A LIST OF NUMBER
+GIVETH A NUMBER
+`length of list` list MEANS
+  CONSIDER list
+  WHEN EMPTY THEN 0
+  WHEN x FOLLOWED BY xs THEN 1 PLUS `length of list` xs
+
+#EVAL `length of list` `first few numbers`  -- 3
+
+-- Map: Apply function to each element
+GIVEN list IS A LIST OF NUMBER
+GIVETH A LIST OF NUMBER
+`double all values` list MEANS
+  CONSIDER list
+  WHEN EMPTY THEN EMPTY
+  WHEN x FOLLOWED BY xs THEN (x TIMES 2) FOLLOWED BY `double all values` xs
+
+#EVAL `double all values` `first few numbers`  -- LIST 2, 4, 6
+
+-- Filter: Keep elements matching predicate
+GIVEN list IS A LIST OF NUMBER
+GIVETH A LIST OF NUMBER
+`keep only even numbers` list MEANS
+  CONSIDER list
+  WHEN EMPTY THEN EMPTY
+  WHEN x FOLLOWED BY xs THEN
+    IF x MODULO 2 EQUALS 0
+    THEN x FOLLOWED BY `keep only even numbers` xs
+    ELSE `keep only even numbers` xs
+
+#EVAL `keep only even numbers` (LIST 1, 2, 3, 4, 5, 6)  -- LIST 2, 4, 6
+
+-- Fold: Reduce list to single value (sum)
+GIVEN list IS A LIST OF NUMBER
+GIVETH A NUMBER
+`sum of all values` list MEANS
+  CONSIDER list
+  WHEN EMPTY THEN 0
+  WHEN x FOLLOWED BY xs THEN x PLUS `sum of all values` xs
+
+#EVAL `sum of all values` `first few numbers`  -- 6
+
+-- Maybe type: JUST for present values, NOTHING for absent
+DECIDE `maybe has value` IS JUST 42
+DECIDE `no value present` IS NOTHING
+
+#EVAL `maybe has value`  -- JUST 42
+#EVAL `no value present`     -- NOTHING
+
+-- Pattern matching on Maybe
+GIVEN maybe IS A MAYBE NUMBER
+GIVETH A NUMBER
+`get value or default to zero` maybe MEANS
+  CONSIDER maybe
+  WHEN NOTHING THEN 0
+  WHEN JUST x THEN x
+
+#EVAL `get value or default to zero` `maybe has value`  -- 42
+#EVAL `get value or default to zero` `no value present`     -- 0
+
+-- Either type: LEFT or RIGHT
+DECIDE `successful result` IS RIGHT 100
+DECIDE `error result` IS LEFT "error"
+
+#EVAL `successful result`  -- RIGHT 100
+#EVAL `error result`  -- LEFT "error"
+
+-- Element membership check
+GIVEN x IS A NUMBER
+      list IS A LIST OF NUMBER
+GIVETH A BOOLEAN
+`is element in list` x list MEANS
+  CONSIDER list
+  WHEN EMPTY THEN FALSE
+  WHEN y FOLLOWED BY ys THEN
+    IF x EQUALS y THEN TRUE ELSE `is element in list` x ys
+
+#EVAL `is element in list` 2 `first few numbers`  -- TRUE
+#EVAL `is element in list` 9 `first few numbers`  -- FALSE
+</code></pre>
+<h2 id="lists">Lists</h2>
+<h3 id="building-and-reshaping">Building and reshaping</h3>
+<table>
+<thead>
+<tr>
+<th>Function</th>
+<th>Inputs</th>
+<th>Gives</th>
+<th>What it does</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>append</code></td>
+<td><code>list1</code>, <code>list2</code>: LIST OF a</td>
+<td>LIST OF a</td>
+<td><code>list1</code> followed by <code>list2</code></td>
+</tr>
+<tr>
+<td><code>concat</code></td>
+<td><code>lists</code>: LIST OF LIST OF a</td>
+<td>LIST OF a</td>
+<td>All the lists joined into one</td>
+</tr>
+<tr>
+<td><code>reverse</code></td>
+<td><code>list</code>: LIST OF a</td>
+<td>LIST OF a</td>
+<td>The list in reverse order</td>
+</tr>
+<tr>
+<td><code>replicate</code></td>
+<td><code>n</code>: NUMBER, <code>x</code>: a</td>
+<td>LIST OF a</td>
+<td><code>n</code> copies of <code>x</code></td>
+</tr>
+<tr>
+<td><code>range</code></td>
+<td><code>low</code>, <code>high</code>: NUMBER</td>
+<td>LIST OF NUMBER</td>
+<td>The whole numbers from <code>low</code> to <code>high</code>, both included</td>
+</tr>
+<tr>
+<td><code>map</code></td>
+<td><code>f</code>: FUNCTION FROM a TO b, <code>list</code>: LIST OF a</td>
+<td>LIST OF b</td>
+<td><code>f</code> applied to each item</td>
+</tr>
+<tr>
+<td><code>filter</code></td>
+<td><code>f</code>: FUNCTION FROM a TO BOOLEAN, <code>list</code>: LIST OF a</td>
+<td>LIST OF a</td>
+<td>The items for which <code>f</code> holds</td>
+</tr>
+<tr>
+<td><code>take</code></td>
+<td><code>n</code>: NUMBER, <code>list</code>: LIST OF a</td>
+<td>LIST OF a</td>
+<td>The first <code>n</code> items</td>
+</tr>
+<tr>
+<td><code>drop</code></td>
+<td><code>n</code>: NUMBER, <code>list</code>: LIST OF a</td>
+<td>LIST OF a</td>
+<td>The list without its first <code>n</code> items</td>
+</tr>
+<tr>
+<td><code>takeWhile</code></td>
+<td><code>f</code>: FUNCTION FROM a TO BOOLEAN, <code>list</code>: LIST OF a</td>
+<td>LIST OF a</td>
+<td>The leading items for which <code>f</code> holds</td>
+</tr>
+<tr>
+<td><code>dropWhile</code></td>
+<td><code>f</code>: FUNCTION FROM a TO BOOLEAN, <code>list</code>: LIST OF a</td>
+<td>LIST OF a</td>
+<td>The list from the first item for which <code>f</code> does not hold</td>
+</tr>
+<tr>
+<td><code>zip</code></td>
+<td><code>list1</code>: LIST OF a, <code>list2</code>: LIST OF b</td>
+<td>LIST OF PAIR OF a, b</td>
+<td>The two lists paired item by item</td>
+</tr>
+<tr>
+<td><code>zipWith</code></td>
+<td><code>op</code>: FUNCTION FROM a AND b TO c, <code>list1</code>: LIST OF a, <code>list2</code>: LIST OF b</td>
+<td>LIST OF c</td>
+<td>The two lists combined item by item with <code>op</code></td>
+</tr>
+<tr>
+<td><code>partition</code></td>
+<td><code>f</code>: FUNCTION FROM a TO BOOLEAN, <code>list</code>: LIST OF a</td>
+<td>PAIR OF LIST OF a, LIST OF a</td>
+<td>The items for which <code>f</code> holds, and the rest</td>
+</tr>
+<tr>
+<td><code>sort</code></td>
+<td><code>list</code>: LIST OF NUMBER</td>
+<td>LIST OF NUMBER</td>
+<td>Sorted, smallest first</td>
+</tr>
+<tr>
+<td><code>sortBy</code></td>
+<td><code>cmp</code>: FUNCTION FROM a AND a TO BOOLEAN, <code>list</code>: LIST OF a</td>
+<td>LIST OF a</td>
+<td>Sorted so that <code>cmp x y</code> holds when <code>x</code> comes before <code>y</code></td>
+</tr>
+<tr>
+<td><code>insertBy</code></td>
+<td><code>cmp</code>: FUNCTION FROM a AND a TO BOOLEAN, <code>x</code>: a, <code>list</code>: LIST OF a</td>
+<td>LIST OF a</td>
+<td><code>x</code> inserted into a list already sorted by <code>cmp</code></td>
+</tr>
+<tr>
+<td><code>nub</code></td>
+<td><code>list</code>: LIST OF a</td>
+<td>LIST OF a</td>
+<td>The list with duplicates removed</td>
+</tr>
+<tr>
+<td><code>nubBy</code></td>
+<td><code>op</code>: FUNCTION FROM a AND a TO BOOLEAN, <code>list</code>: LIST OF a</td>
+<td>LIST OF a</td>
+<td>Duplicates, as judged by <code>op</code>, removed</td>
+</tr>
+<tr>
+<td><code>delete</code></td>
+<td><code>x</code>: a, <code>list</code>: LIST OF a</td>
+<td>LIST OF a</td>
+<td>The list without the first item equal to <code>x</code></td>
+</tr>
+<tr>
+<td><code>deleteBy</code></td>
+<td><code>op</code>: FUNCTION FROM a AND a TO BOOLEAN, <code>x</code>: a, <code>list</code>: LIST OF a</td>
+<td>LIST OF a</td>
+<td>The list without the first item that matches <code>x</code> by <code>op</code></td>
+</tr>
+</tbody>
+</table>
+<h3 id="questions-about-a-list">Questions about a list</h3>
+<table>
+<thead>
+<tr>
+<th>Function</th>
+<th>Inputs</th>
+<th>Gives</th>
+<th>What it does</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>null</code></td>
+<td><code>list</code>: LIST OF a</td>
+<td>BOOLEAN</td>
+<td>TRUE if the list is empty</td>
+</tr>
+<tr>
+<td><code>count</code></td>
+<td><code>list</code>: LIST OF a</td>
+<td>NUMBER</td>
+<td>The number of items</td>
+</tr>
+<tr>
+<td><code>at</code></td>
+<td><code>list</code>: LIST OF a, <code>i</code>: NUMBER</td>
+<td>a</td>
+<td>The item at position <code>i</code>, counting from 0</td>
+</tr>
+<tr>
+<td><code>elem</code></td>
+<td><code>x</code>: a, <code>list</code>: LIST OF a</td>
+<td>BOOLEAN</td>
+<td>TRUE if <code>x</code> is one of the items</td>
+</tr>
+<tr>
+<td><code>all</code></td>
+<td><code>f</code>: FUNCTION FROM a TO BOOLEAN, <code>list</code>: LIST OF a</td>
+<td>BOOLEAN</td>
+<td>TRUE if <code>f</code> holds for every item (TRUE for an empty list)</td>
+</tr>
+<tr>
+<td><code>any</code></td>
+<td><code>f</code>: FUNCTION FROM a TO BOOLEAN, <code>list</code>: LIST OF a</td>
+<td>BOOLEAN</td>
+<td>TRUE if <code>f</code> holds for at least one item</td>
+</tr>
+<tr>
+<td><code>and</code></td>
+<td><code>list</code>: LIST OF BOOLEAN</td>
+<td>BOOLEAN</td>
+<td>TRUE if every item is TRUE</td>
+</tr>
+<tr>
+<td><code>or</code></td>
+<td><code>list</code>: LIST OF BOOLEAN</td>
+<td>BOOLEAN</td>
+<td>TRUE if at least one item is TRUE</td>
+</tr>
+<tr>
+<td><code>lookup</code></td>
+<td><code>key</code>: a, <code>list</code>: LIST OF PAIR OF a, b</td>
+<td>MAYBE b</td>
+<td>The value paired with the first matching key, or <code>NOTHING</code></td>
+</tr>
+</tbody>
+</table>
+<p><code>at</code> stops with an error past the end of the list.</p>
+<h3 id="folds">Folds</h3>
+<table>
+<thead>
+<tr>
+<th>Function</th>
+<th>Inputs</th>
+<th>Gives</th>
+<th>What it does</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>foldr</code></td>
+<td><code>cons</code>: FUNCTION FROM a AND r TO r, <code>nil</code>: r, <code>list</code>: LIST OF a</td>
+<td>r</td>
+<td>Combines the items from the right, starting from <code>nil</code></td>
+</tr>
+<tr>
+<td><code>foldl</code></td>
+<td><code>op</code>: FUNCTION FROM r AND a TO r, <code>ini</code>: r, <code>list</code>: LIST OF a</td>
+<td>r</td>
+<td>Combines the items from the left, starting from <code>ini</code></td>
+</tr>
+</tbody>
+</table>
+<h2 id="numbers">Numbers</h2>
+<table>
+<thead>
+<tr>
+<th>Function</th>
+<th>Inputs</th>
+<th>Gives</th>
+<th>What it does</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>sum</code></td>
+<td><code>list</code>: LIST OF NUMBER</td>
+<td>NUMBER</td>
+<td>The total (0 for an empty list)</td>
+</tr>
+<tr>
+<td><code>product</code></td>
+<td><code>list</code>: LIST OF NUMBER</td>
+<td>NUMBER</td>
+<td>The product (1 for an empty list)</td>
+</tr>
+<tr>
+<td><code>max</code></td>
+<td><code>x</code>, <code>y</code>: NUMBER</td>
+<td>NUMBER</td>
+<td>The greater of the two</td>
+</tr>
+<tr>
+<td><code>min</code></td>
+<td><code>x</code>, <code>y</code>: NUMBER</td>
+<td>NUMBER</td>
+<td>The lesser of the two</td>
+</tr>
+<tr>
+<td><code>maximum</code></td>
+<td><code>list</code>: LIST OF NUMBER</td>
+<td>NUMBER</td>
+<td>The largest item; an error for an empty list</td>
+</tr>
+<tr>
+<td><code>minimum</code></td>
+<td><code>list</code>: LIST OF NUMBER</td>
+<td>NUMBER</td>
+<td>The smallest item; an error for an empty list</td>
+</tr>
+<tr>
+<td><code>maximum1</code></td>
+<td><code>x</code>: NUMBER, <code>list</code>: LIST OF NUMBER</td>
+<td>NUMBER</td>
+<td>The largest of <code>x</code> and the items</td>
+</tr>
+<tr>
+<td><code>minimum1</code></td>
+<td><code>x</code>: NUMBER, <code>list</code>: LIST OF NUMBER</td>
+<td>NUMBER</td>
+<td>The smallest of <code>x</code> and the items</td>
+</tr>
+<tr>
+<td><code>even</code></td>
+<td><code>x</code>: NUMBER</td>
+<td>BOOLEAN</td>
+<td>TRUE if <code>x</code> is even</td>
+</tr>
+<tr>
+<td><code>odd</code></td>
+<td><code>x</code>: NUMBER</td>
+<td>BOOLEAN</td>
+<td>TRUE if <code>x</code> is odd</td>
+</tr>
+</tbody>
+</table>
+<p><code>max</code>, <code>min</code>, <code>maximum</code>, <code>minimum</code>, <code>maximum1</code> and <code>minimum1</code> also accept MAYBE NUMBER values. <code>NOTHING</code> counts as absent: the other value wins, and only when every value is <code>NOTHING</code>, or the list is empty, is the result <code>NOTHING</code>.</p>
+<p>With the prelude imported, <code>&#x3C;</code>, <code>&#x3C;=</code>, <code>></code> and <code>>=</code> (and <code>LESS THAN</code>, <code>AT MOST</code>, <code>GREATER THAN</code>, <code>AT LEAST</code>) also compare two MAYBE NUMBER values. The comparison is FALSE when either side is <code>NOTHING</code>.</p>
+<h2 id="maybe-values">MAYBE values</h2>
+<table>
+<thead>
+<tr>
+<th>Function</th>
+<th>Inputs</th>
+<th>Gives</th>
+<th>What it does</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>fromMaybe</code></td>
+<td><code>default</code>: a, <code>x</code>: MAYBE a</td>
+<td>a</td>
+<td>The value inside <code>x</code>, or <code>default</code> if <code>x</code> is <code>NOTHING</code></td>
+</tr>
+<tr>
+<td><code>maybe</code></td>
+<td><code>just</code>: FUNCTION FROM a TO b, <code>nothing</code>: b, <code>x</code>: MAYBE a</td>
+<td>b</td>
+<td><code>just</code> applied to the value inside <code>x</code>, or <code>nothing</code></td>
+</tr>
+<tr>
+<td><code>orElse</code></td>
+<td><code>x</code>, <code>y</code>: MAYBE a</td>
+<td>MAYBE a</td>
+<td><code>x</code> if it holds a value, otherwise <code>y</code></td>
+</tr>
+<tr>
+<td><code>isJust</code></td>
+<td><code>x</code>: MAYBE a</td>
+<td>BOOLEAN</td>
+<td>TRUE if <code>x</code> holds a value</td>
+</tr>
+<tr>
+<td><code>isNothing</code></td>
+<td><code>x</code>: MAYBE a</td>
+<td>BOOLEAN</td>
+<td>TRUE if <code>x</code> is <code>NOTHING</code></td>
+</tr>
+<tr>
+<td><code>asum</code></td>
+<td><code>list</code>: LIST OF MAYBE a</td>
+<td>MAYBE a</td>
+<td>The first item that holds a value; <code>firstJust</code> is the same</td>
+</tr>
+<tr>
+<td><code>catMaybes</code></td>
+<td><code>list</code>: LIST OF MAYBE a</td>
+<td>LIST OF a</td>
+<td>The values of the items that hold one</td>
+</tr>
+<tr>
+<td><code>mapMaybe</code></td>
+<td><code>f</code>: FUNCTION FROM a TO MAYBE b, <code>list</code>: LIST OF a</td>
+<td>LIST OF b</td>
+<td><code>f</code> applied to each item, keeping the results that hold a value</td>
+</tr>
+<tr>
+<td><code>maybeToList</code></td>
+<td><code>x</code>: MAYBE a</td>
+<td>LIST OF a</td>
+<td>An empty list or a list of one</td>
+</tr>
+<tr>
+<td><code>listToMaybe</code></td>
+<td><code>list</code>: LIST OF a</td>
+<td>MAYBE a</td>
+<td>The first item, or <code>NOTHING</code> for an empty list</td>
+</tr>
+</tbody>
+</table>
+<h2 id="either-values">EITHER values</h2>
+<table>
+<thead>
+<tr>
+<th>Function</th>
+<th>Inputs</th>
+<th>Gives</th>
+<th>What it does</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>either</code></td>
+<td><code>left</code>: FUNCTION FROM a TO c, <code>right</code>: FUNCTION FROM b TO c, <code>x</code>: EITHER a b</td>
+<td>c</td>
+<td><code>left</code> applied to a <code>LEFT</code> value, <code>right</code> to a <code>RIGHT</code> value</td>
+</tr>
+</tbody>
+</table>
+<h2 id="pairs">Pairs</h2>
+<p>The prelude declares <code>PAIR OF a, b</code> with the fields <code>fst</code> and <code>snd</code>. Build one with <code>PAIR OF x, y</code> and read it with <code>p's fst</code> and <code>p's snd</code>.</p>
+<table>
+<thead>
+<tr>
+<th>Function</th>
+<th>Inputs</th>
+<th>Gives</th>
+<th>What it does</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>pmap</code></td>
+<td><code>f</code>: FUNCTION FROM b TO c, <code>p</code>: PAIR OF a, b</td>
+<td>PAIR OF a, c</td>
+<td><code>f</code> applied to the second value; <code>mapSnd</code> is the same</td>
+</tr>
+<tr>
+<td><code>fmap</code></td>
+<td><code>f</code>: FUNCTION FROM b TO c, <code>list</code>: LIST OF PAIR OF a, b</td>
+<td>LIST OF PAIR OF a, c</td>
+<td><code>f</code> applied to the second value of each pair; <code>mapPairs</code> is the same</td>
+</tr>
+</tbody>
+</table>
+<h2 id="dictionaries">Dictionaries</h2>
+<p><code>Dictionary k v</code> maps keys of type <code>k</code> to values of type <code>v</code>. It is a record whose <code>contents</code> field is a list of <code>PAIR OF k, v</code>, with one pair for each key.</p>
+<h3 id="building-a-dictionary">Building a dictionary</h3>
+<table>
+<thead>
+<tr>
+<th>Function</th>
+<th>Inputs</th>
+<th>Gives</th>
+<th>What it does</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>emptyDict</code></td>
+<td>none</td>
+<td>Dictionary k v</td>
+<td>A dictionary with no entries</td>
+</tr>
+<tr>
+<td><code>singleToDict</code></td>
+<td><code>k</code>: a, <code>v</code>: b</td>
+<td>Dictionary a b</td>
+<td>One entry; <code>singleton</code> is the same</td>
+</tr>
+<tr>
+<td><code>pairToDict</code></td>
+<td><code>pair</code>: PAIR OF k, v</td>
+<td>Dictionary k v</td>
+<td>One entry from a pair</td>
+</tr>
+<tr>
+<td><code>listToDict</code></td>
+<td><code>pairs</code>: LIST OF PAIR OF k, v</td>
+<td>Dictionary k v</td>
+<td>One entry per pair, as given; <code>fromList</code> is the same</td>
+</tr>
+<tr>
+<td><code>fromListGrouped</code></td>
+<td><code>pairs</code>: LIST OF PAIR OF k, v</td>
+<td>Dictionary k (LIST OF v)</td>
+<td>The values of each key collected into a list</td>
+</tr>
+</tbody>
+</table>
+<h3 id="reading-a-dictionary">Reading a dictionary</h3>
+<table>
+<thead>
+<tr>
+<th>Function</th>
+<th>Inputs</th>
+<th>Gives</th>
+<th>What it does</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>dictLookup</code></td>
+<td><code>key</code>: k, <code>dict</code>: Dictionary k v</td>
+<td>MAYBE v</td>
+<td>The value for <code>key</code>, or <code>NOTHING</code></td>
+</tr>
+<tr>
+<td><code>dictFindWithDefault</code></td>
+<td><code>default</code>: v, <code>key</code>: k, <code>dict</code>: Dictionary k v</td>
+<td>v</td>
+<td>The value for <code>key</code>, or <code>default</code></td>
+</tr>
+<tr>
+<td><code>dictMember</code></td>
+<td><code>key</code>: k, <code>dict</code>: Dictionary k v</td>
+<td>BOOLEAN</td>
+<td>TRUE if <code>key</code> has an entry</td>
+</tr>
+<tr>
+<td><code>dictNotMember</code></td>
+<td><code>key</code>: k, <code>dict</code>: Dictionary k v</td>
+<td>BOOLEAN</td>
+<td>TRUE if <code>key</code> has no entry</td>
+</tr>
+<tr>
+<td><code>dictKeys</code></td>
+<td><code>dict</code>: Dictionary k v</td>
+<td>LIST OF k</td>
+<td>All keys</td>
+</tr>
+<tr>
+<td><code>dictElems</code></td>
+<td><code>dict</code>: Dictionary k v</td>
+<td>LIST OF v</td>
+<td>All values</td>
+</tr>
+<tr>
+<td><code>dictToList</code></td>
+<td><code>dict</code>: Dictionary k v</td>
+<td>LIST OF PAIR OF k, v</td>
+<td>All entries as pairs</td>
+</tr>
+<tr>
+<td><code>dictSize</code></td>
+<td><code>dict</code>: Dictionary k v</td>
+<td>NUMBER</td>
+<td>The number of entries</td>
+</tr>
+<tr>
+<td><code>dictIsEmpty</code></td>
+<td><code>dict</code>: Dictionary k v</td>
+<td>BOOLEAN</td>
+<td>TRUE if there are no entries</td>
+</tr>
+</tbody>
+</table>
+<h3 id="changing-a-dictionary">Changing a dictionary</h3>
+<p>Each of these gives a new dictionary; the original is unchanged.</p>
+<table>
+<thead>
+<tr>
+<th>Function</th>
+<th>Inputs</th>
+<th>What it does</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>dictInsert</code></td>
+<td><code>key</code>: k, <code>value</code>: v, <code>dict</code>: Dictionary k v</td>
+<td>Adds the entry, replacing any value for <code>key</code></td>
+</tr>
+<tr>
+<td><code>dictInsertWith</code></td>
+<td><code>combiner</code>: FUNCTION FROM v AND v TO v, <code>key</code>: k, <code>value</code>: v, <code>dict</code>: Dictionary k v</td>
+<td>Adds the entry; if <code>key</code> has a value, stores <code>combiner value</code> (new, then old)</td>
+</tr>
+<tr>
+<td><code>dictDelete</code></td>
+<td><code>key</code>: k, <code>dict</code>: Dictionary k v</td>
+<td>Removes the entry for <code>key</code></td>
+</tr>
+<tr>
+<td><code>dictAdjust</code></td>
+<td><code>f</code>: FUNCTION FROM v TO v, <code>key</code>: k, <code>dict</code>: Dictionary k v</td>
+<td>Applies <code>f</code> to the value for <code>key</code>, if there is one</td>
+</tr>
+<tr>
+<td><code>dictUpdate</code></td>
+<td><code>f</code>: FUNCTION FROM v TO MAYBE v, <code>key</code>: k, <code>dict</code>: Dictionary k v</td>
+<td>Replaces the value for <code>key</code> with what <code>f</code> gives, or removes it when <code>f</code> gives <code>NOTHING</code></td>
+</tr>
+<tr>
+<td><code>dictUnion</code></td>
+<td><code>dict1</code>, <code>dict2</code>: Dictionary k v</td>
+<td>Both dictionaries' entries; for a key in both, <code>dict1</code>'s value wins</td>
+</tr>
+<tr>
+<td><code>dictUnionWith</code></td>
+<td><code>combiner</code>: FUNCTION FROM v AND v TO v, <code>dict1</code>, <code>dict2</code>: Dictionary k v</td>
+<td>Both dictionaries' entries; for a key in both, <code>combiner</code> joins the two values</td>
+</tr>
+</tbody>
+</table>
+<p>All of these give a <code>Dictionary k v</code>.</p>
+<h3 id="working-over-all-entries">Working over all entries</h3>
+<table>
+<thead>
+<tr>
+<th>Function</th>
+<th>Inputs</th>
+<th>Gives</th>
+<th>What it does</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>mapDict</code></td>
+<td><code>f</code>: FUNCTION FROM v TO w, <code>dict</code>: Dictionary k v</td>
+<td>Dictionary k w</td>
+<td><code>f</code> applied to every value</td>
+</tr>
+<tr>
+<td><code>dictMapWithKey</code></td>
+<td><code>f</code>: FUNCTION FROM k AND v TO w, <code>dict</code>: Dictionary k v</td>
+<td>Dictionary k w</td>
+<td><code>f</code> applied to every key and value</td>
+</tr>
+<tr>
+<td><code>filterDict</code></td>
+<td><code>pred</code>: FUNCTION FROM v TO BOOLEAN, <code>dict</code>: Dictionary k v</td>
+<td>Dictionary k v</td>
+<td>The entries whose value satisfies <code>pred</code></td>
+</tr>
+<tr>
+<td><code>dictFilterWithKey</code></td>
+<td><code>pred</code>: FUNCTION FROM k AND v TO BOOLEAN, <code>dict</code>: Dictionary k v</td>
+<td>Dictionary k v</td>
+<td>The entries whose key and value satisfy <code>pred</code></td>
+</tr>
+<tr>
+<td><code>foldrDict</code></td>
+<td><code>f</code>: FUNCTION FROM v AND r TO r, <code>z</code>: r, <code>dict</code>: Dictionary k v</td>
+<td>r</td>
+<td>Combines the values from the right</td>
+</tr>
+<tr>
+<td><code>foldlDict</code></td>
+<td><code>f</code>: FUNCTION FROM r AND v TO r, <code>z</code>: r, <code>dict</code>: Dictionary k v</td>
+<td>r</td>
+<td>Combines the values from the left</td>
+</tr>
+<tr>
+<td><code>dictFoldrWithKey</code></td>
+<td><code>f</code>: FUNCTION FROM k AND v AND r TO r, <code>z</code>: r, <code>dict</code>: Dictionary k v</td>
+<td>r</td>
+<td>Combines keys and values from the right</td>
+</tr>
+<tr>
+<td><code>dictFoldlWithKey</code></td>
+<td><code>f</code>: FUNCTION FROM r AND k AND v TO r, <code>z</code>: r, <code>dict</code>: Dictionary k v</td>
+<td>r</td>
+<td>Combines keys and values from the left</td>
+</tr>
+</tbody>
+</table>
+<h3 id="grouped-pairs">Grouped pairs</h3>
+<table>
+<thead>
+<tr>
+<th>Function</th>
+<th>Inputs</th>
+<th>Gives</th>
+<th>What it does</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>groupPairs</code></td>
+<td><code>pairs</code>: LIST OF PAIR OF k, v</td>
+<td>LIST OF PAIR OF k, LIST OF v</td>
+<td>Collects the values of each key into a list</td>
+</tr>
+<tr>
+<td><code>insertValue</code></td>
+<td><code>key</code>: k, <code>value</code>: v, <code>dictPairs</code>: LIST OF PAIR OF k, LIST OF v</td>
+<td>LIST OF PAIR OF k, LIST OF v</td>
+<td>Adds <code>value</code> to the list for <code>key</code>, creating it if needed</td>
+</tr>
+</tbody>
+</table>
+<h2 id="other-functions">Other functions</h2>
+<table>
+<thead>
+<tr>
+<th>Function</th>
+<th>Inputs</th>
+<th>Gives</th>
+<th>What it does</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>id</code></td>
+<td><code>x</code>: a</td>
+<td>a</td>
+<td><code>x</code> itself</td>
+</tr>
+<tr>
+<td><code>const</code></td>
+<td><code>x</code>: a, <code>y</code>: b</td>
+<td>a</td>
+<td><code>x</code>, ignoring <code>y</code></td>
+</tr>
+<tr>
+<td><code>APPEND</code></td>
+<td><code>x</code>, <code>y</code>: STRING</td>
+<td>STRING</td>
+<td>Written between its inputs, <code>x APPEND y</code>: the two strings joined, like <code>CONCAT x, y</code></td>
+</tr>
+<tr>
+<td><code>TBD</code></td>
+<td>none</td>
+<td>a</td>
+<td>A placeholder of any type for a value not yet decided; evaluating it is an error</td>
+</tr>
+</tbody>
+</table>
+0:{"rsc":["$","$1","c",{"children":[["$","$L2",null,{"navSections":[{"title":"","items":[{"title":"Language Reference","href":"reference"},{"title":"Glossary","href":"reference/GLOSSARY"},{"title":"Cheat sheet","href":"reference/cheat-sheet"},{"title":"Types","href":"reference/types","children":[{"title":"DECLARE","href":"reference/types/DECLARE"},{"title":"ASSUME","href":"reference/types/ASSUME"},{"title":"FOR ALL","href":"reference/types/for-all"},{"title":"Coercions","href":"reference/types/coercions"}]},{"title":"Functions","href":"reference/functions","children":[{"title":"DECIDE","href":"reference/functions/DECIDE"},{"title":"GIVEN and GIVETH","href":"reference/functions/GIVEN"},{"title":"MEANS","href":"reference/functions/MEANS"},{"title":"LET and WHERE","href":"reference/functions/LET"},{"title":"YIELD","href":"reference/functions/YIELD"},{"title":"AKA","href":"reference/functions/AKA"}]},{"title":"Control flow","href":"reference/control-flow","children":[{"title":"IF","href":"reference/control-flow/IF"},{"title":"BRANCH","href":"reference/control-flow/BRANCH"},{"title":"CONSIDER","href":"reference/control-flow/CONSIDER"}]},{"title":"Operators","href":"reference/operators","children":[{"title":"AND, OR, NOT, IMPLIES","href":"reference/operators/logical"},{"title":"UNLESS","href":"reference/operators/UNLESS"},{"title":"Arithmetic","href":"reference/operators/arithmetic"},{"title":"Comparisons","href":"reference/operators/comparisons"}]},{"title":"Regulative rules","href":"reference/regulative","children":[{"title":"PARTY, MUST, MAY, SHANT","href":"reference/regulative/PARTY"},{"title":"Deadlines and consequences","href":"reference/regulative/consequences"},{"title":"BECAUSE","href":"reference/regulative/BECAUSE"},{"title":"DEONTIC","href":"reference/regulative/DEONTIC"},{"title":"EVENT","href":"reference/regulative/EVENT"}]},{"title":"Syntax and directives","href":"reference/syntax"},{"title":"Built-in functions","href":"reference/builtins","children":[{"title":"HTTP and JSON","href":"reference/builtins/http-json"}]},{"title":"Standard libraries","href":"reference/libraries","children":[{"title":"prelude","href":"reference/libraries/prelude"},{"title":"math","href":"reference/libraries/math"},{"title":"daydate","href":"reference/libraries/daydate"},{"title":"time","href":"reference/libraries/time"},{"title":"datetime","href":"reference/libraries/datetime"},{"title":"timezone","href":"reference/libraries/timezone"},{"title":"excel-date","href":"reference/libraries/excel-date"},{"title":"currency","href":"reference/libraries/currency"},{"title":"holdings","href":"reference/libraries/holdings"},{"title":"actus","href":"reference/libraries/actus"},{"title":"legal-persons","href":"reference/libraries/legal-persons"},{"title":"jurisdiction","href":"reference/libraries/jurisdiction"},{"title":"llm","href":"reference/libraries/llm"}]},{"title":"Error messages","href":"reference/errors"}]}],"toc":[],"htmlContent":"$3","pager":{"prev":"$0:rsc:props:children:0:props:navSections:0:items:10","next":"$0:rsc:props:children:0:props:navSections:0:items:10:children:1"}}],["$L4"],"$L5"]}],"isPartial":false,"staleTime":300,"varyParams":null,"buildId":"iJUXAyHcmcW99cMci3ei9"}
+4:["$","script","script-0",{"src":"/_next/static/chunks/0fl~me.qwn48c.js","async":true}]
+5:["$","$L6",null,{"children":["$","$7",null,{"name":"Next.MetadataOutlet","children":"$@8"}]}]
+8:null

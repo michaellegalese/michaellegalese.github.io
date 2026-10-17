@@ -1,0 +1,137 @@
+1:"$Sreact.fragment"
+2:I[90160,["/_next/static/chunks/0ypf.t599.7y6.js","/_next/static/chunks/0t2xr05rlu96l.js","/_next/static/chunks/0uxaa7wo_wmcw.js","/_next/static/chunks/0fl~me.qwn48c.js"],"default"]
+6:I[97367,["/_next/static/chunks/0ypf.t599.7y6.js","/_next/static/chunks/0t2xr05rlu96l.js"],"OutletBoundary"]
+7:"$Sreact.suspense"
+3:T1880,<h1>Chat with your rules through the OpenAI or Anthropic API</h1>
+<p>Ask a deployment questions in plain language from any OpenAI or Anthropic client. Legalese Cloud serves each deployment in both formats, backed by the same <code>legalese-comply-4</code> model pipeline: the model decides which exported rules to run, gathers their inputs and explains the result. It is the same service the <strong>Use in chat</strong> button in the VS Code Deployments tab connects to.</p>
+<p><strong>Before you start:</strong> a deployment on Legalese Cloud (<a href="/l4/tutorials/deploying-rules/exporting-rules-for-deployment">Deploy your rules</a>). To compare this with the other integrations, see <a href="/l4/tutorials/legalese-cloud">Choose an integration</a>.</p>
+<hr>
+<h2 id="endpoint">Endpoint</h2>
+<pre><code>https://ai.legalese.cloud/{orgSlug}/{deploymentId}/v1
+</code></pre>
+<p><code>{orgSlug}</code> is your Legalese Cloud organization; <code>{deploymentId}</code> is the deployment's name. The VS Code <strong>Integrate</strong> dialog pre-fills both for you. Append the path that matches your client's wire format:</p>
+<table>
+<thead>
+<tr>
+<th>Client wire format</th>
+<th>Append</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>OpenAI</td>
+<td><code>/chat/completions</code></td>
+</tr>
+<tr>
+<td>Anthropic Messages</td>
+<td><code>/messages</code></td>
+</tr>
+</tbody>
+</table>
+<p>Both paths lead to the same pipeline, with the same authentication and daily token quota; only the shape of requests and responses differs. Use whichever SDK your stack already has.</p>
+<h2 id="authentication">Authentication</h2>
+<p>Send your credential, a Legalese Cloud session or an <code>sk_...</code> API key, in either header:</p>
+<ul>
+<li><code>Authorization: Bearer {token}</code>: the OpenAI SDK's default, and what the VS Code extension sends with your session;</li>
+<li><code>x-api-key: {token}</code>: the Anthropic SDK's default.</li>
+</ul>
+<p>An API key needs the <code>ai:chat</code>, <code>l4:rules</code> and <code>l4:evaluate</code> permissions. With <code>ai:chat</code> but not <code>l4:evaluate</code>, the model can hold a conversation but cannot run any rule, and says it cannot compute the answer. See <a href="/l4/tutorials/legalese-cloud#api-keys-and-permissions">API keys and permissions</a>.</p>
+<h2 id="use-it">Use it</h2>
+<h3 id="openai-clients">OpenAI clients</h3>
+<h4 id="curl">curl</h4>
+<pre><code class="language-bash">curl https://ai.legalese.cloud/{orgSlug}/{deploymentId}/v1/chat/completions \
+  -H "Authorization: Bearer sk_..." \
+  -H "Content-Type: application/json" \
+  -d '{
+    "model": "legalese-comply-4",
+    "messages": [
+      { "role": "user", "content": "Is a tenant who is 40 days late on rent in breach?" }
+    ]
+  }'
+</code></pre>
+<h4 id="openai-sdk-python">OpenAI SDK (Python)</h4>
+<pre><code class="language-python">from openai import OpenAI
+
+client = OpenAI(
+    base_url="https://ai.legalese.cloud/{orgSlug}/{deploymentId}/v1",
+    api_key="sk_...",
+)
+
+resp = client.chat.completions.create(
+    model="legalese-comply-4",
+    messages=[{"role": "user", "content": "Is a tenant 40 days late in breach?"}],
+)
+print(resp.choices[0].message.content)
+</code></pre>
+<h4 id="openai-sdk-typescript">OpenAI SDK (TypeScript)</h4>
+<pre><code class="language-ts">import OpenAI from "openai";
+
+const client = new OpenAI({
+  baseURL: "https://ai.legalese.cloud/{orgSlug}/{deploymentId}/v1",
+  apiKey: "sk_...",
+});
+
+const resp = await client.chat.completions.create({
+  model: "legalese-comply-4",
+  messages: [{ role: "user", content: "Is a tenant 40 days late in breach?" }],
+});
+console.log(resp.choices[0].message.content);
+</code></pre>
+<p>Streaming (<code>stream: true</code>) and multi-turn conversations work exactly as they do against <code>api.openai.com</code>.</p>
+<h3 id="anthropic-clients">Anthropic clients</h3>
+<h4 id="curl-1">curl</h4>
+<pre><code class="language-bash">curl https://ai.legalese.cloud/{orgSlug}/{deploymentId}/v1/messages \
+  -H "x-api-key: sk_..." \
+  -H "anthropic-version: 2023-06-01" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "model": "legalese-comply-4",
+    "max_tokens": 1024,
+    "messages": [
+      { "role": "user", "content": "Is a tenant who is 40 days late on rent in breach?" }
+    ]
+  }'
+</code></pre>
+<h4 id="anthropic-sdk-python">Anthropic SDK (Python)</h4>
+<pre><code class="language-python">import anthropic
+
+# Anthropic's SDK appends "/v1/messages" itself, so base_url stops at the deployment root.
+client = anthropic.Anthropic(
+    base_url="https://ai.legalese.cloud/{orgSlug}/{deploymentId}",
+    api_key="sk_...",
+)
+
+resp = client.messages.create(
+    model="legalese-comply-4",
+    max_tokens=1024,
+    messages=[{"role": "user", "content": "Is a tenant 40 days late in breach?"}],
+)
+print(resp.content[0].text)
+</code></pre>
+<h4 id="anthropic-sdk-typescript">Anthropic SDK (TypeScript)</h4>
+<pre><code class="language-ts">import Anthropic from "@anthropic-ai/sdk";
+
+// baseURL stops at the deployment root; the SDK appends "/v1/messages".
+const client = new Anthropic({
+  baseURL: "https://ai.legalese.cloud/{orgSlug}/{deploymentId}",
+  apiKey: "sk_...",
+});
+
+const resp = await client.messages.create({
+  model: "legalese-comply-4",
+  max_tokens: 1024,
+  messages: [{ role: "user", content: "Is a tenant 40 days late in breach?" }],
+});
+console.log(resp.content[0].type === "text" ? resp.content[0].text : "");
+</code></pre>
+<p>Streaming (<code>stream: true</code>), extended thinking, and multi-turn conversations work exactly as they do against <code>api.anthropic.com</code>. The model's reasoning arrives as ordinary <code>thinking</code> content blocks.</p>
+<h2 id="notes">Notes</h2>
+<ul>
+<li>The endpoint knows only the rules exported in that deployment. It has no access to your editor, your workspace or your other deployments.</li>
+<li>The model name is always <code>legalese-comply-4</code>. Both formats reject other model names, such as <code>claude-opus-4-7</code>, with <code>400 model_not_found</code>.</li>
+<li>A self-hosted jl4-service does not offer this API; use <a href="/l4/tutorials/legalese-cloud/ai-agents">MCP</a> or <a href="/l4/tutorials/legalese-cloud/openapi-spec">REST</a> there.</li>
+</ul>
+0:{"rsc":["$","$1","c",{"children":[["$","$L2",null,{"navSections":[{"title":"","items":[{"title":"Overview","href":"tutorials"},{"title":"Install L4 and write your first rule","href":"tutorials/getting-started/first-l4-file"},{"title":"Draft rules with Legalese AI","href":"tutorials/llm-integration/composing-l4-with-ai"},{"title":"Test your rules","href":"tutorials/getting-started/testing-your-rules"},{"title":"Fix errors","href":"tutorials/getting-started/debugging-type-errors"},{"title":"Encode legislation","href":"tutorials/getting-started/encoding-legislation"},{"title":"Make rules read like law","href":"tutorials/natural-language-functions/optimising-natural-language-generation"},{"title":"Common patterns","href":"tutorials/getting-started/common-patterns"},{"title":"Deploy your rules","href":"tutorials/deploying-rules/exporting-rules-for-deployment"},{"title":"Choose an integration","href":"tutorials/legalese-cloud"},{"title":"Connect an AI agent","href":"tutorials/legalese-cloud/ai-agents"},{"title":"Chat with your rules","href":"tutorials/legalese-cloud/openai-compatible-api"},{"title":"Call rules over REST","href":"tutorials/legalese-cloud/openapi-spec"},{"title":"Embed rules in a website","href":"tutorials/legalese-cloud/webmcp-embed"},{"title":"Using the l4 CLI","href":"tutorials/getting-started/l4-cli"},{"title":"Manage rules in git and CI","href":"tutorials/getting-started/version-control-for-rules"}]}],"toc":[],"htmlContent":"$3","pager":{"prev":"$0:rsc:props:children:0:props:navSections:0:items:10","next":"$0:rsc:props:children:0:props:navSections:0:items:12"}}],["$L4"],"$L5"]}],"isPartial":false,"staleTime":300,"varyParams":null,"buildId":"iJUXAyHcmcW99cMci3ei9"}
+4:["$","script","script-0",{"src":"/_next/static/chunks/0fl~me.qwn48c.js","async":true}]
+5:["$","$L6",null,{"children":["$","$7",null,{"name":"Next.MetadataOutlet","children":"$@8"}]}]
+8:null

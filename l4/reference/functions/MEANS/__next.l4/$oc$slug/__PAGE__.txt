@@ -1,0 +1,121 @@
+1:"$Sreact.fragment"
+2:I[90160,["/_next/static/chunks/0ypf.t599.7y6.js","/_next/static/chunks/0t2xr05rlu96l.js","/_next/static/chunks/0uxaa7wo_wmcw.js","/_next/static/chunks/0fl~me.qwn48c.js"],"default"]
+6:I[97367,["/_next/static/chunks/0ypf.t599.7y6.js","/_next/static/chunks/0t2xr05rlu96l.js"],"OutletBoundary"]
+7:"$Sreact.suspense"
+3:Td7d,<h1>MEANS</h1>
+<p><code>MEANS</code> gives the body of a function or a value, written without <code>DECIDE</code>.</p>
+<h2 id="syntax">Syntax</h2>
+<pre><code class="language-text">name MEANS expression
+name input1 input2 ... MEANS expression
+</code></pre>
+<p><code>name MEANS expression</code> defines the same thing as <code>DECIDE name IS expression</code>.
+The two keywords do not mix: <code>DECIDE name MEANS ...</code> and a top-level <code>name IS ...</code> are syntax errors.</p>
+<p><strong>Example file:</strong></p>
+<pre><code class="language-l4-file">-- MEANS keyword examples
+
+-- Basic MEANS Usage
+
+-- Simple value definition
+greeting MEANS "Hello, World!"
+answer MEANS 42
+
+#EVAL greeting
+#EVAL answer
+
+-- Functions with MEANS
+
+GIVEN x IS A NUMBER
+double x MEANS x TIMES 2
+
+GIVEN a IS A NUMBER, b IS A NUMBER
+add a b MEANS a PLUS b
+
+#EVAL double 21
+#EVAL add 10 32
+
+-- Multi-line Function Bodies
+
+GIVEN n IS A NUMBER
+GIVETH A NUMBER
+factorial n MEANS
+  IF n EQUALS 0
+  THEN 1
+  ELSE n TIMES factorial (n MINUS 1)
+
+#EVAL factorial 6
+
+-- MEANS with WHERE Clauses
+
+GIVEN radius IS A NUMBER
+circumference radius MEANS
+  2 TIMES pi TIMES radius
+  WHERE
+    pi MEANS 3.14159
+
+#EVAL circumference 10
+
+-- Nested WHERE
+outerFunction MEANS
+  innerResult TIMES 2
+  WHERE
+    innerResult MEANS
+      baseValue PLUS 10
+      WHERE
+        baseValue MEANS 5
+
+#EVAL outerFunction
+
+-- MEANS vs IS Comparison
+
+-- Using MEANS for definitions
+valueWithMeans MEANS 100
+valueWithMeans2 MEANS 200
+
+#EVAL valueWithMeans
+#EVAL valueWithMeans2
+
+-- MEANS in Complex Expressions
+
+GIVEN items IS A LIST OF NUMBER
+sumItems items MEANS
+  CONSIDER items
+  WHEN EMPTY THEN 0
+  WHEN head FOLLOWED BY tail THEN head PLUS sumItems tail
+
+#EVAL sumItems (LIST 1, 2, 3, 4, 5)
+</code></pre>
+<h2 id="examples">Examples</h2>
+<pre><code class="language-l4">`the greeting` MEANS "Hello, World!"
+
+GIVEN n IS A NUMBER
+GIVETH A NUMBER
+`factorial of` n MEANS
+  IF n EQUALS 0
+  THEN 1
+  ELSE n TIMES `factorial of` (n MINUS 1)
+</code></pre>
+<p>The inputs can sit before, between or after the words of the name, so a call reads like a sentence:</p>
+<pre><code class="language-l4">GIVEN buyer IS A STRING
+      seller IS A STRING
+GIVETH A STRING
+buyer `buys from` seller MEANS CONCAT buyer, " buys from ", seller
+
+#EVAL "Alice" `buys from` "Bob"
+</code></pre>
+<p>See <a href="/l4/reference/functions#mixfix-functions">Mixfix functions</a>.</p>
+<h2 id="other-places-means-appears">Other places MEANS appears</h2>
+<ul>
+<li>Under <code>WHERE</code>, each local definition uses <code>MEANS</code>; see <a href="/l4/reference/functions/LET#where">LET and WHERE</a>.</li>
+<li>After <code>LET</code>, <code>MEANS</code> is one of the keywords that can introduce a definition, with <code>IS</code>, <code>BE</code>, <code>MEAN</code> and <code>=</code>.</li>
+<li>Inside a <code>DECLARE … HAS</code>, a field with <code>MEANS</code> is a computed field; see <a href="/l4/reference/types/DECLARE#computed-fields">DECLARE: Computed fields</a>.</li>
+<li>A function can be written as several <code>MEANS</code> lines, one per case; see <a href="/l4/reference/functions/DECIDE#several-clauses">DECIDE: Several clauses</a>.</li>
+</ul>
+<h2 id="related-pages">Related pages</h2>
+<ul>
+<li><a href="/l4/reference/functions/DECIDE">DECIDE</a></li>
+<li><a href="/l4/reference/functions/GIVEN">GIVEN and GIVETH</a></li>
+</ul>
+0:{"rsc":["$","$1","c",{"children":[["$","$L2",null,{"navSections":[{"title":"","items":[{"title":"Language Reference","href":"reference"},{"title":"Glossary","href":"reference/GLOSSARY"},{"title":"Cheat sheet","href":"reference/cheat-sheet"},{"title":"Types","href":"reference/types","children":[{"title":"DECLARE","href":"reference/types/DECLARE"},{"title":"ASSUME","href":"reference/types/ASSUME"},{"title":"FOR ALL","href":"reference/types/for-all"},{"title":"Coercions","href":"reference/types/coercions"}]},{"title":"Functions","href":"reference/functions","children":[{"title":"DECIDE","href":"reference/functions/DECIDE"},{"title":"GIVEN and GIVETH","href":"reference/functions/GIVEN"},{"title":"MEANS","href":"reference/functions/MEANS"},{"title":"LET and WHERE","href":"reference/functions/LET"},{"title":"YIELD","href":"reference/functions/YIELD"},{"title":"AKA","href":"reference/functions/AKA"}]},{"title":"Control flow","href":"reference/control-flow","children":[{"title":"IF","href":"reference/control-flow/IF"},{"title":"BRANCH","href":"reference/control-flow/BRANCH"},{"title":"CONSIDER","href":"reference/control-flow/CONSIDER"}]},{"title":"Operators","href":"reference/operators","children":[{"title":"AND, OR, NOT, IMPLIES","href":"reference/operators/logical"},{"title":"UNLESS","href":"reference/operators/UNLESS"},{"title":"Arithmetic","href":"reference/operators/arithmetic"},{"title":"Comparisons","href":"reference/operators/comparisons"}]},{"title":"Regulative rules","href":"reference/regulative","children":[{"title":"PARTY, MUST, MAY, SHANT","href":"reference/regulative/PARTY"},{"title":"Deadlines and consequences","href":"reference/regulative/consequences"},{"title":"BECAUSE","href":"reference/regulative/BECAUSE"},{"title":"DEONTIC","href":"reference/regulative/DEONTIC"},{"title":"EVENT","href":"reference/regulative/EVENT"}]},{"title":"Syntax and directives","href":"reference/syntax"},{"title":"Built-in functions","href":"reference/builtins","children":[{"title":"HTTP and JSON","href":"reference/builtins/http-json"}]},{"title":"Standard libraries","href":"reference/libraries","children":[{"title":"prelude","href":"reference/libraries/prelude"},{"title":"math","href":"reference/libraries/math"},{"title":"daydate","href":"reference/libraries/daydate"},{"title":"time","href":"reference/libraries/time"},{"title":"datetime","href":"reference/libraries/datetime"},{"title":"timezone","href":"reference/libraries/timezone"},{"title":"excel-date","href":"reference/libraries/excel-date"},{"title":"currency","href":"reference/libraries/currency"},{"title":"holdings","href":"reference/libraries/holdings"},{"title":"actus","href":"reference/libraries/actus"},{"title":"legal-persons","href":"reference/libraries/legal-persons"},{"title":"jurisdiction","href":"reference/libraries/jurisdiction"},{"title":"llm","href":"reference/libraries/llm"}]},{"title":"Error messages","href":"reference/errors"}]}],"toc":[],"htmlContent":"$3","pager":{"prev":"$0:rsc:props:children:0:props:navSections:0:items:4:children:1","next":"$0:rsc:props:children:0:props:navSections:0:items:4:children:3"}}],["$L4"],"$L5"]}],"isPartial":false,"staleTime":300,"varyParams":null,"buildId":"iJUXAyHcmcW99cMci3ei9"}
+4:["$","script","script-0",{"src":"/_next/static/chunks/0fl~me.qwn48c.js","async":true}]
+5:["$","$L6",null,{"children":["$","$7",null,{"name":"Next.MetadataOutlet","children":"$@8"}]}]
+8:null

@@ -1,0 +1,24 @@
+1:"$Sreact.fragment"
+2:I[90160,["/_next/static/chunks/0ypf.t599.7y6.js","/_next/static/chunks/0t2xr05rlu96l.js","/_next/static/chunks/0uxaa7wo_wmcw.js","/_next/static/chunks/0fl~me.qwn48c.js"],"default"]
+6:I[97367,["/_next/static/chunks/0ypf.t599.7y6.js","/_next/static/chunks/0t2xr05rlu96l.js"],"OutletBoundary"]
+7:"$Sreact.suspense"
+3:T974,<h1>Foundation course</h1>
+<p>A complete introduction to L4. It assumes basic familiarity with legal concepts and no programming experience.</p>
+<p>The course takes you from zero to modelling a small legal scheme. You will learn to write legal rules that a computer can check and run, model legal entities and their relationships, express multi-step legal processes, and test them against scenarios. Take the modules in order; each builds on the ones before.</p>
+<h2 id="modules">Modules</h2>
+<ul>
+<li><a href="/l4/courses/foundation/module-0-introduction">Module 0: Introduction to L4</a>: what L4 is for, the parts of an L4 file, and setting up.</li>
+<li><a href="/l4/courses/foundation/module-1-first-rule">Module 1: Your first legal rule</a>: an obligation with <code>PARTY</code> and <code>MUST</code>, a condition, a deadline and consequences.</li>
+<li><a href="/l4/courses/foundation/module-2-entities">Module 2: Legal entities and relationships</a>: records and enumerations with <code>DECLARE</code>, and field access.</li>
+<li><a href="/l4/courses/foundation/module-3-control-flow">Module 3: Control flow</a>: <code>IF</code>, <code>BRANCH</code>, <code>CONSIDER</code>, boolean logic and lists.</li>
+<li><a href="/l4/courses/foundation/module-4-decision-logic">Module 4: Decision logic</a>: constitutive rules with <code>DECIDE</code> and <code>MEANS</code>, signatures, <code>WHERE</code>, <code>MAYBE</code> and dates.</li>
+<li><a href="/l4/courses/foundation/module-5-functions">Module 5: Functions</a>: calling functions, recursion, and higher-order functions such as <code>map</code> and <code>filter</code>.</li>
+<li><a href="/l4/courses/foundation/module-6-regulative">Module 6: Regulative rules</a>: obligations, permissions and prohibitions, chained with <code>HENCE</code> and <code>LEST</code> and tested with <code>#TRACE</code>.</li>
+<li><a href="/l4/courses/foundation/module-7-capstone">Module 7: Putting it together</a>: a complete model of a charity registration scheme.</li>
+</ul>
+<h2 id="after-this-course">After this course</h2>
+<p>Continue with the <a href="/l4/courses/advanced">Advanced course</a>. For a specific task, see the <a href="/l4/tutorials">Tutorials</a>; to look up a keyword, the <a href="/l4/reference">Reference</a>; for why L4 works as it does, <a href="/l4/concepts">Concepts</a>. Report a problem on <a href="https://github.com/legalese/l4-ide/issues">GitHub</a>.</p>
+0:{"rsc":["$","$1","c",{"children":[["$","$L2",null,{"navSections":[{"title":"","items":[{"title":"Overview","href":"courses"},{"title":"Overview","href":"courses/foundation"},{"title":"0. Introduction to L4","href":"courses/foundation/module-0-introduction"},{"title":"1. Your first legal rule","href":"courses/foundation/module-1-first-rule"},{"title":"2. Legal entities and relationships","href":"courses/foundation/module-2-entities"},{"title":"3. Control flow","href":"courses/foundation/module-3-control-flow"},{"title":"4. Decision logic","href":"courses/foundation/module-4-decision-logic"},{"title":"5. Functions","href":"courses/foundation/module-5-functions"},{"title":"6. Regulative rules","href":"courses/foundation/module-6-regulative"},{"title":"7. Putting it together","href":"courses/foundation/module-7-capstone"},{"title":"Overview","href":"courses/advanced"},{"title":"A1. Real regulatory schemes","href":"courses/advanced/module-a1-regulatory"},{"title":"A2. Cross-cutting concerns","href":"courses/advanced/module-a2-cross-cutting"},{"title":"A3. Contracts in depth","href":"courses/advanced/module-a3-contracts"},{"title":"A4. Production patterns","href":"courses/advanced/module-a4-production"}]}],"toc":[],"htmlContent":"$3","pager":{"prev":"$0:rsc:props:children:0:props:navSections:0:items:0","next":"$0:rsc:props:children:0:props:navSections:0:items:2"}}],["$L4"],"$L5"]}],"isPartial":false,"staleTime":300,"varyParams":null,"buildId":"iJUXAyHcmcW99cMci3ei9"}
+4:["$","script","script-0",{"src":"/_next/static/chunks/0fl~me.qwn48c.js","async":true}]
+5:["$","$L6",null,{"children":["$","$7",null,{"name":"Next.MetadataOutlet","children":"$@8"}]}]
+8:null

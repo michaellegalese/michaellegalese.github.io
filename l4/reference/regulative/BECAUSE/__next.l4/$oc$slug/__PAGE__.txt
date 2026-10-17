@@ -1,0 +1,193 @@
+1:"$Sreact.fragment"
+2:I[90160,["/_next/static/chunks/0ypf.t599.7y6.js","/_next/static/chunks/0t2xr05rlu96l.js","/_next/static/chunks/0uxaa7wo_wmcw.js","/_next/static/chunks/0fl~me.qwn48c.js"],"default"]
+6:I[97367,["/_next/static/chunks/0ypf.t599.7y6.js","/_next/static/chunks/0t2xr05rlu96l.js"],"OutletBoundary"]
+7:"$Sreact.suspense"
+3:T184d,<h1>BECAUSE</h1>
+<p><code>BECAUSE</code> gives the reason for a breach. It comes after <code>BREACH</code>, optionally with <code>BY</code> and the party in breach.</p>
+<h2 id="syntax">Syntax</h2>
+<pre><code class="language-text">BREACH BECAUSE reason
+BREACH BY party BECAUSE reason
+</code></pre>
+<table>
+<thead>
+<tr>
+<th>Form</th>
+<th>Records</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>BREACH</code></td>
+<td>that a breach happened</td>
+</tr>
+<tr>
+<td><code>BREACH BY Seller</code></td>
+<td>who is in breach</td>
+</tr>
+<tr>
+<td><code>BREACH BECAUSE "reason"</code></td>
+<td>why</td>
+</tr>
+<tr>
+<td><code>BREACH BY Seller BECAUSE "reason"</code></td>
+<td>who and why</td>
+</tr>
+</tbody>
+</table>
+<p>The reason is a STRING, either text in quotes or an expression that gives text.</p>
+<p><strong>Example file:</strong></p>
+<pre><code class="language-l4-file">-- BECAUSE Keyword Examples
+-- Demonstrates breach reasons in regulative rules
+
+--------------------------------------------------------------------------------
+-- Type Declarations
+--------------------------------------------------------------------------------
+
+DECLARE Person IS ONE OF Seller, Buyer, Employee, Employer, Tenant, Landlord
+
+DECLARE Action IS ONE OF
+  `deliver goods`
+  `pay amount` HAS amount IS A NUMBER
+  `pass inspection`
+  `disclose information`
+  `pay rent` HAS amount IS A NUMBER
+  `maintain property`
+  smoke
+
+--------------------------------------------------------------------------------
+-- Basic BECAUSE Usage
+--------------------------------------------------------------------------------
+
+-- Simple breach with reason only
+`delivery with reason` MEANS
+  PARTY Seller
+  MUST `deliver goods`
+  WITHIN 14
+  HENCE FULFILLED
+  LEST BREACH BECAUSE "delivery deadline exceeded"
+
+-- Full form: BY party BECAUSE reason
+`delivery full form` MEANS
+  PARTY Seller
+  MUST `deliver goods`
+  WITHIN 14
+  HENCE FULFILLED
+  LEST BREACH BY Seller BECAUSE "failed to deliver within contractual period"
+
+--------------------------------------------------------------------------------
+-- Distinguishing Different Breach Types
+--------------------------------------------------------------------------------
+
+-- Payment deadline breach
+`payment deadline` MEANS
+  PARTY Buyer
+  MUST `pay amount` 1000
+  WITHIN 30
+  HENCE FULFILLED
+  LEST BREACH BY Buyer BECAUSE "payment received after deadline"
+
+-- Quality inspection failure
+`quality check` MEANS
+  PARTY Seller
+  MUST `pass inspection`
+  WITHIN 7
+  HENCE FULFILLED
+  LEST BREACH BY Seller BECAUSE "goods failed quality inspection per spec A.3"
+
+--------------------------------------------------------------------------------
+-- Referencing Legal Text in Reasons
+--------------------------------------------------------------------------------
+
+-- Reference to contract section
+`nda obligation` MEANS
+  PARTY Employee
+  SHANT `disclose information`
+  HENCE FULFILLED
+  LEST BREACH BY Employee BECAUSE "violated NDA section 3.2"
+
+-- Reference to lease agreement
+`subletting prohibition` MEANS
+  PARTY Tenant
+  SHANT `disclose information`
+  HENCE FULFILLED
+  LEST BREACH BY Tenant BECAUSE "violated lease agreement section 8"
+
+--------------------------------------------------------------------------------
+-- Chained Obligations with Different Reasons
+--------------------------------------------------------------------------------
+
+`rental agreement` MEANS
+  PARTY Tenant
+  MUST `pay rent` 2000
+  WITHIN 5
+  HENCE (
+    PARTY Landlord
+    MUST `maintain property`
+    WITHIN 30
+    HENCE FULFILLED
+    LEST BREACH BY Landlord BECAUSE "failed to perform maintenance duties"
+  )
+  LEST BREACH BY Tenant BECAUSE "rent payment overdue"
+
+--------------------------------------------------------------------------------
+-- BECAUSE in Prohibition (SHANT)
+--------------------------------------------------------------------------------
+
+`no smoking policy` MEANS
+  PARTY Employee
+  SHANT smoke
+  HENCE FULFILLED
+  LEST BREACH BY Employee BECAUSE "violated workplace no-smoking policy"
+
+--------------------------------------------------------------------------------
+-- Testing with #TRACE
+--------------------------------------------------------------------------------
+
+-- Test 1: Obligation fulfilled (no breach)
+#TRACE `delivery with reason` AT 0 WITH
+  PARTY Seller DOES `deliver goods` AT 10
+
+-- Test 2: Obligation breached (deadline passes without action)
+-- This will show the BECAUSE reason in the breach output
+#TRACE `delivery full form` AT 0 WITH
+  (`WAIT UNTIL` 15)
+
+-- Test 3: Prohibition violated
+#TRACE `no smoking policy` AT 0 WITH
+  PARTY Employee DOES smoke AT 5
+
+-- Test 4: Chained obligation - first party fulfills, second breaches
+#TRACE `rental agreement` AT 0 WITH
+  PARTY Tenant DOES `pay rent` 2000 AT 3
+  (`WAIT UNTIL` 40)
+</code></pre>
+<h2 id="example">Example</h2>
+<pre><code class="language-l4">DECLARE Party IS ONE OF Buyer, Seller
+DECLARE Action IS ONE OF `pay invoice` HAS amount IS A NUMBER
+
+`the amount due` MEANS 1000
+
+GIVETH A DEONTIC Party Action
+`payment` MEANS
+  PARTY Buyer
+  MUST `pay invoice` (EXACTLY `the amount due`)
+  WITHIN 30
+  HENCE FULFILLED
+  LEST BREACH BY Buyer BECAUSE (CONCAT "failed to pay ", TOSTRING `the amount due`)
+
+#TRACE `payment` AT 0 WITH
+  (`WAIT UNTIL` 31)
+</code></pre>
+<p>The <code>#TRACE</code> result shows the breach with its party and reason: <code>BREACH BY Buyer BECAUSE "failed to pay 1000"</code>.</p>
+<p><code>BREACH … BECAUSE</code> usually follows <code>LEST</code>, but it can stand wherever a rule can, for example after <code>HENCE</code> or in a branch of an <code>IF</code>.
+When a contract has several ways to fail, give each its own reason, and cite the clause or section it comes from, so a reader of the result knows which duty failed and why.</p>
+<h2 id="related-pages">Related pages</h2>
+<ul>
+<li><a href="/l4/reference/regulative/consequences#fulfilled-and-breach">Deadlines and consequences: FULFILLED and BREACH</a></li>
+<li><a href="/l4/reference/regulative/PARTY">PARTY, MUST, MAY, SHANT</a></li>
+<li><a href="/l4/reference/regulative/DEONTIC">DEONTIC</a></li>
+</ul>
+0:{"rsc":["$","$1","c",{"children":[["$","$L2",null,{"navSections":[{"title":"","items":[{"title":"Language Reference","href":"reference"},{"title":"Glossary","href":"reference/GLOSSARY"},{"title":"Cheat sheet","href":"reference/cheat-sheet"},{"title":"Types","href":"reference/types","children":[{"title":"DECLARE","href":"reference/types/DECLARE"},{"title":"ASSUME","href":"reference/types/ASSUME"},{"title":"FOR ALL","href":"reference/types/for-all"},{"title":"Coercions","href":"reference/types/coercions"}]},{"title":"Functions","href":"reference/functions","children":[{"title":"DECIDE","href":"reference/functions/DECIDE"},{"title":"GIVEN and GIVETH","href":"reference/functions/GIVEN"},{"title":"MEANS","href":"reference/functions/MEANS"},{"title":"LET and WHERE","href":"reference/functions/LET"},{"title":"YIELD","href":"reference/functions/YIELD"},{"title":"AKA","href":"reference/functions/AKA"}]},{"title":"Control flow","href":"reference/control-flow","children":[{"title":"IF","href":"reference/control-flow/IF"},{"title":"BRANCH","href":"reference/control-flow/BRANCH"},{"title":"CONSIDER","href":"reference/control-flow/CONSIDER"}]},{"title":"Operators","href":"reference/operators","children":[{"title":"AND, OR, NOT, IMPLIES","href":"reference/operators/logical"},{"title":"UNLESS","href":"reference/operators/UNLESS"},{"title":"Arithmetic","href":"reference/operators/arithmetic"},{"title":"Comparisons","href":"reference/operators/comparisons"}]},{"title":"Regulative rules","href":"reference/regulative","children":[{"title":"PARTY, MUST, MAY, SHANT","href":"reference/regulative/PARTY"},{"title":"Deadlines and consequences","href":"reference/regulative/consequences"},{"title":"BECAUSE","href":"reference/regulative/BECAUSE"},{"title":"DEONTIC","href":"reference/regulative/DEONTIC"},{"title":"EVENT","href":"reference/regulative/EVENT"}]},{"title":"Syntax and directives","href":"reference/syntax"},{"title":"Built-in functions","href":"reference/builtins","children":[{"title":"HTTP and JSON","href":"reference/builtins/http-json"}]},{"title":"Standard libraries","href":"reference/libraries","children":[{"title":"prelude","href":"reference/libraries/prelude"},{"title":"math","href":"reference/libraries/math"},{"title":"daydate","href":"reference/libraries/daydate"},{"title":"time","href":"reference/libraries/time"},{"title":"datetime","href":"reference/libraries/datetime"},{"title":"timezone","href":"reference/libraries/timezone"},{"title":"excel-date","href":"reference/libraries/excel-date"},{"title":"currency","href":"reference/libraries/currency"},{"title":"holdings","href":"reference/libraries/holdings"},{"title":"actus","href":"reference/libraries/actus"},{"title":"legal-persons","href":"reference/libraries/legal-persons"},{"title":"jurisdiction","href":"reference/libraries/jurisdiction"},{"title":"llm","href":"reference/libraries/llm"}]},{"title":"Error messages","href":"reference/errors"}]}],"toc":[],"htmlContent":"$3","pager":{"prev":"$0:rsc:props:children:0:props:navSections:0:items:7:children:1","next":"$0:rsc:props:children:0:props:navSections:0:items:7:children:3"}}],["$L4"],"$L5"]}],"isPartial":false,"staleTime":300,"varyParams":null,"buildId":"iJUXAyHcmcW99cMci3ei9"}
+4:["$","script","script-0",{"src":"/_next/static/chunks/0fl~me.qwn48c.js","async":true}]
+5:["$","$L6",null,{"children":["$","$7",null,{"name":"Next.MetadataOutlet","children":"$@8"}]}]
+8:null

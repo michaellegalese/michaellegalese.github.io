@@ -1,0 +1,171 @@
+1:"$Sreact.fragment"
+2:I[90160,["/_next/static/chunks/0ypf.t599.7y6.js","/_next/static/chunks/0t2xr05rlu96l.js","/_next/static/chunks/0uxaa7wo_wmcw.js","/_next/static/chunks/0fl~me.qwn48c.js"],"default"]
+6:I[97367,["/_next/static/chunks/0ypf.t599.7y6.js","/_next/static/chunks/0t2xr05rlu96l.js"],"OutletBoundary"]
+7:"$Sreact.suspense"
+3:T193b,<h1>Install L4 and write your first rule</h1>
+<p>Set up L4, write a short eligibility rule, and run it.</p>
+<hr>
+<h2 id="install-l4">Install L4</h2>
+<h3 id="vs-code-extension">VS Code extension</h3>
+<p>This is the main way to work with L4.</p>
+<ol>
+<li>Install <a href="https://code.visualstudio.com/">VS Code</a>.</li>
+<li>Install the <a href="https://marketplace.visualstudio.com/items?itemName=Legalese.l4-vscode">L4 extension</a> from the Marketplace.</li>
+<li>Open or create a file ending in <code>.l4</code>. The extension checks it as you type, shows errors and results, draws decision diagrams, and adds the L4 sidebar (Legalese AI, Render, Deploy).</li>
+</ol>
+<p>The extension also ships the <code>l4</code> command-line tool. The first time it starts, it asks "Install the L4 CLI?". Accept, or run <strong>L4: Install L4 CLI</strong> from the Command Palette later. On macOS and Linux it links <code>l4</code> into <code>~/.local/bin</code>; on Windows it copies <code>l4.exe</code> to <code>%LOCALAPPDATA%\Programs\l4</code>. Both are added to your PATH. Open a new terminal and check:</p>
+<pre><code class="language-bash">l4 --help
+</code></pre>
+<h3 id="web-editor">Web editor</h3>
+<p>To try L4 without installing anything, open the web editor at <a href="https://jl4.legalese.com/">jl4.legalese.com</a>.</p>
+<p>Developers can also build <code>l4</code> from source; see <a href="/l4/tutorials/getting-started/l4-cli">Using the l4 CLI</a>.</p>
+<hr>
+<h2 id="write-the-rule">Write the rule</h2>
+<p>The rule: <em>a person is eligible if they are at least 18 years old and have valid ID.</em></p>
+<p>Create a file called <code>eligibility.l4</code> with this content:</p>
+<pre><code class="language-l4-file">-- eligibility-example.l4
+-- A person is eligible if they are at least 18 years old and have valid ID.
+
+§ `Eligibility`
+
+DECLARE Person
+    HAS `name`         IS A STRING
+        `age`          IS A NUMBER
+        `has valid ID` IS A BOOLEAN
+
+GIVEN `the applicant` IS A Person
+GIVETH A BOOLEAN
+DECIDE `is eligible` IF
+        `the applicant`'s `age` AT LEAST 18
+    AND `the applicant`'s `has valid ID`
+
+§§ `Examples`
+
+`Alice` MEANS Person WITH
+    `name`         IS "Alice"
+    `age`          IS 25
+    `has valid ID` IS TRUE
+
+`Bob` MEANS Person WITH
+    `name`         IS "Bob"
+    `age`          IS 16
+    `has valid ID` IS TRUE
+
+`Charlie` MEANS Person WITH
+    `name`         IS "Charlie"
+    `age`          IS 30
+    `has valid ID` IS FALSE
+
+#EVAL `is eligible` `Alice`
+#EVAL `is eligible` `Bob`
+#EVAL `is eligible` `Charlie`
+</code></pre>
+<p>What each part does:</p>
+<table>
+<thead>
+<tr>
+<th>Part</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>-- ...</code></td>
+<td>A comment. L4 ignores it.</td>
+</tr>
+<tr>
+<td><code>§ `Eligibility`</code></td>
+<td>A section heading. <code>§§</code> starts a subsection.</td>
+</tr>
+<tr>
+<td><code>DECLARE Person HAS ...</code></td>
+<td>A record type with three fields: a name (text), an age (number) and whether the person has valid ID (<code>TRUE</code> or <code>FALSE</code>).</td>
+</tr>
+<tr>
+<td><code>GIVEN `the applicant` IS A Person</code></td>
+<td>The rule's input.</td>
+</tr>
+<tr>
+<td><code>GIVETH A BOOLEAN</code></td>
+<td>The rule's answer is <code>TRUE</code> or <code>FALSE</code>.</td>
+</tr>
+<tr>
+<td><code>DECIDE `is eligible` IF ...</code></td>
+<td>The rule itself: the answer is <code>TRUE</code> when the conditions hold. <code>`the applicant`'s `age`</code> reads a field of the input.</td>
+</tr>
+<tr>
+<td><code>`Alice` MEANS Person WITH ...</code></td>
+<td>Example data: a person to test the rule on.</td>
+</tr>
+<tr>
+<td><code>#EVAL `is eligible` `Alice`</code></td>
+<td>Evaluate the rule for Alice and show the result.</td>
+</tr>
+</tbody>
+</table>
+<p>Names in backticks, such as <code>`is eligible`</code>, can contain spaces, so rules read like the text they encode. Indentation matters: the lines under <code>HAS</code> and <code>IF</code> are indented to show they belong there.</p>
+<hr>
+<h2 id="run-it">Run it</h2>
+<p><strong>In VS Code or the web editor</strong>, results appear as you type. Hover over an <code>#EVAL</code> line to see its result; errors are underlined in red with an explanation.</p>
+<p><strong>On the command line:</strong></p>
+<pre><code class="language-bash">l4 run eligibility.l4
+</code></pre>
+<pre><code>Evaluation[1] @ eligibility.l4:34:1-28
+
+Result:
+  TRUE
+...
+</code></pre>
+<p>There is one <code>Evaluation</code> block per <code>#EVAL</code>, in file order:</p>
+<table>
+<thead>
+<tr>
+<th>Expression</th>
+<th>Result</th>
+<th>Why</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>`is eligible` `Alice`</code></td>
+<td><code>TRUE</code></td>
+<td>25 is at least 18; has ID</td>
+</tr>
+<tr>
+<td><code>`is eligible` `Bob`</code></td>
+<td><code>FALSE</code></td>
+<td>16 is under 18</td>
+</tr>
+<tr>
+<td><code>`is eligible` `Charlie`</code></td>
+<td><code>FALSE</code></td>
+<td>No valid ID</td>
+</tr>
+</tbody>
+</table>
+<p><code>l4 check eligibility.l4</code> only type-checks the file, without evaluating anything. It prints <code>Check succeeded.</code> when the file is valid.</p>
+<p>Try a change: add a field <code>`is banned` IS A BOOLEAN</code> to <code>Person</code>, add <code>AND NOT `the applicant`'s `is banned`</code> to the rule, and give each example person a value for it.</p>
+<hr>
+<h2 id="common-mistakes">Common mistakes</h2>
+<p><strong>Missing indentation.</strong> Fields and conditions must be indented under the line that introduces them.</p>
+<pre><code class="language-l4">-- Wrong: the fields start in column 1
+-- DECLARE Person
+-- HAS `name` IS A STRING
+
+-- Right
+DECLARE Person
+    HAS `name` IS A STRING
+</code></pre>
+<p><strong>Missing <code>'s</code> in field access.</strong> Write <code>`the applicant`'s `age`</code>, not <code>`the applicant` `age`</code>.</p>
+<p><strong>Missing backticks around a name with spaces.</strong> Write <code>DECIDE `is eligible` IF</code>. Without backticks, <code>is eligible</code> is two separate words.</p>
+<hr>
+<h2 id="next-steps">Next steps</h2>
+<ul>
+<li><a href="/l4/courses/foundation">Foundation course</a>: learn the language step by step.</li>
+<li><a href="/l4/tutorials/getting-started/testing-your-rules">Test your rules</a>: check that rules give the answers you expect.</li>
+<li><a href="/l4/tutorials/getting-started/l4-cli">Using the l4 CLI</a>: check, run, batch-evaluate and deploy rules from the command line.</li>
+</ul>
+0:{"rsc":["$","$1","c",{"children":[["$","$L2",null,{"navSections":[{"title":"","items":[{"title":"Overview","href":"tutorials"},{"title":"Install L4 and write your first rule","href":"tutorials/getting-started/first-l4-file"},{"title":"Draft rules with Legalese AI","href":"tutorials/llm-integration/composing-l4-with-ai"},{"title":"Test your rules","href":"tutorials/getting-started/testing-your-rules"},{"title":"Fix errors","href":"tutorials/getting-started/debugging-type-errors"},{"title":"Encode legislation","href":"tutorials/getting-started/encoding-legislation"},{"title":"Make rules read like law","href":"tutorials/natural-language-functions/optimising-natural-language-generation"},{"title":"Common patterns","href":"tutorials/getting-started/common-patterns"},{"title":"Deploy your rules","href":"tutorials/deploying-rules/exporting-rules-for-deployment"},{"title":"Choose an integration","href":"tutorials/legalese-cloud"},{"title":"Connect an AI agent","href":"tutorials/legalese-cloud/ai-agents"},{"title":"Chat with your rules","href":"tutorials/legalese-cloud/openai-compatible-api"},{"title":"Call rules over REST","href":"tutorials/legalese-cloud/openapi-spec"},{"title":"Embed rules in a website","href":"tutorials/legalese-cloud/webmcp-embed"},{"title":"Using the l4 CLI","href":"tutorials/getting-started/l4-cli"},{"title":"Manage rules in git and CI","href":"tutorials/getting-started/version-control-for-rules"}]}],"toc":[],"htmlContent":"$3","pager":{"prev":"$0:rsc:props:children:0:props:navSections:0:items:0","next":"$0:rsc:props:children:0:props:navSections:0:items:2"}}],["$L4"],"$L5"]}],"isPartial":false,"staleTime":300,"varyParams":null,"buildId":"iJUXAyHcmcW99cMci3ei9"}
+4:["$","script","script-0",{"src":"/_next/static/chunks/0fl~me.qwn48c.js","async":true}]
+5:["$","$L6",null,{"children":["$","$7",null,{"name":"Next.MetadataOutlet","children":"$@8"}]}]
+8:null

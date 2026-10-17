@@ -1,0 +1,308 @@
+1:"$Sreact.fragment"
+2:I[90160,["/_next/static/chunks/0ypf.t599.7y6.js","/_next/static/chunks/0t2xr05rlu96l.js","/_next/static/chunks/0uxaa7wo_wmcw.js","/_next/static/chunks/0fl~me.qwn48c.js"],"default"]
+6:I[97367,["/_next/static/chunks/0ypf.t599.7y6.js","/_next/static/chunks/0t2xr05rlu96l.js"],"OutletBoundary"]
+7:"$Sreact.suspense"
+3:T3ee1,<h1>DECIDE</h1>
+<p><code>DECIDE</code> defines a named value or a function: a rule with a name, its inputs, and the expression that gives its result.</p>
+<h2 id="syntax">Syntax</h2>
+<pre><code class="language-text">DECIDE name IS expression
+DECIDE name IF condition
+DECIDE name input1 input2 ... IS expression
+name input1 input2 ... MEANS expression
+</code></pre>
+<ul>
+<li>After <code>DECIDE</code>, <code>IS</code> and <code>IF</code> mean the same. <code>IF</code> reads better for a rule that gives a BOOLEAN.</li>
+<li>Without <code>DECIDE</code>, the body is introduced by <code>MEANS</code> (see <a href="/l4/reference/functions/MEANS">MEANS</a>). <code>DECIDE name MEANS ...</code> is a syntax error.</li>
+<li>A function's inputs are declared with <a href="/l4/reference/functions/GIVEN">GIVEN</a> on the lines above it, and its result type with <a href="/l4/reference/functions/GIVEN#giveth">GIVETH</a>.</li>
+</ul>
+<p><strong>Example file:</strong></p>
+<pre><code class="language-l4-file">-- DECIDE keyword examples
+
+-- Simple Named Values
+
+DECIDE `the answer` IS 42
+DECIDE `approximate pi` IS 3.14159
+DECIDE `welcome greeting` IS "Hello, World!"
+DECIDE `is enabled` IS TRUE
+
+#EVAL `the answer`
+#EVAL `welcome greeting`
+
+-- Functions with DECIDE and MEANS
+
+-- Simple function using MEANS
+GIVEN x IS A NUMBER
+`double a number` x MEANS x TIMES 2
+
+#EVAL `double a number` 21
+
+-- Function with DECIDE ... IS
+GIVEN n IS A NUMBER
+DECIDE `square of` n IS n TIMES n
+
+#EVAL `square of` 7
+
+-- Conditional Decisions
+
+GIVEN age IS A NUMBER
+`age category for` age MEANS
+  IF age &#x3C; 13 THEN "child"
+  ELSE IF age &#x3C; 20 THEN "teenager"
+       ELSE IF age &#x3C; 65 THEN "adult"
+            ELSE "senior"
+
+#EVAL `age category for` 25
+#EVAL `age category for` 10
+
+-- Boolean Decisions with IF
+
+ASSUME `person age` IS A NUMBER
+ASSUME `has valid ID` IS A BOOLEAN
+DECIDE `can enter venue` IF
+  `person age` >= 21 AND `has valid ID`
+
+#CHECK `can enter venue`
+
+-- Decisions with WHERE Clauses
+
+GIVEN radius IS A NUMBER
+DECIDE `area of circle with radius` radius IS
+  `local pi` TIMES radius TIMES radius
+  WHERE
+    `local pi` MEANS 3.14159
+
+#EVAL `area of circle with radius` 10
+
+-- Recursive Decisions
+
+GIVEN num IS A NUMBER
+GIVETH A NUMBER
+`factorial of` num MEANS
+  IF num EQUALS 0
+  THEN 1
+  ELSE num TIMES `factorial of` (num MINUS 1)
+
+#EVAL `factorial of` 5
+
+-- Multi-parameter Functions
+
+GIVEN a IS A NUMBER
+      b IS A NUMBER
+`maximum of two numbers` a b MEANS IF a > b THEN a ELSE b
+
+#EVAL `maximum of two numbers` 10 25
+</code></pre>
+<h2 id="values">Values</h2>
+<pre><code class="language-l4">DECIDE `the standard rate` IS 0.2
+DECIDE `the welcome message` IS "Welcome"
+</code></pre>
+<h2 id="functions">Functions</h2>
+<pre><code class="language-l4">GIVEN amount IS A NUMBER
+GIVETH A NUMBER
+DECIDE `the tax on` amount IS amount TIMES 0.2
+</code></pre>
+<p>The names after the function name are its <code>GIVEN</code> inputs, in order.
+They can be left out: under the same <code>GIVEN</code>, <code>DECIDE `the tax` IS amount TIMES 0.2</code> also takes one input.
+When they are written, they must match the <code>GIVEN</code> names.</p>
+<p>A body can end with <code>WHERE</code> and use the names defined there; see <a href="/l4/reference/functions/LET">LET and WHERE</a>.</p>
+<h2 id="decide-if">DECIDE IF</h2>
+<p><code>DECIDE name IF condition</code> means the same as <code>DECIDE name IS condition</code>: the rule is TRUE exactly when the condition is.
+It is the usual way to write a legal test ("a person is eligible if ...").</p>
+<pre><code class="language-l4">GIVEN age IS A NUMBER
+      income IS A NUMBER
+GIVETH A BOOLEAN
+DECIDE `is eligible` age income IF
+  age >= 18 AND income > 30000
+</code></pre>
+<p>For <code>IF … THEN … ELSE</code> inside a body, see <a href="/l4/reference/control-flow/IF">IF and BRANCH</a>.</p>
+<h2 id="several-clauses">Several clauses</h2>
+<p>A function can be written as several <code>DECIDE</code> lines, one per case.
+Each line is a <strong>clause</strong>. Where an input goes, a clause can put a value to match, such as <code>0</code>, <code>TRUE</code> or <code>Water</code>.
+L4 tries the clauses from top to bottom and uses the first one that matches, the way a table of cases in a statute is read.</p>
+<pre><code class="language-l4">DECLARE Peril IS ONE OF Water, Fire, Cosmetic
+
+GIVEN peril IS A Peril
+GIVETH A BOOLEAN
+DECIDE covered Water    IS TRUE
+DECIDE covered Fire     IS TRUE
+DECIDE covered Cosmetic IS FALSE
+</code></pre>
+<p>The clauses of one function must:</p>
+<ul>
+<li>follow one another under a single <code>GIVEN</code>/<code>GIVETH</code>, each starting in the same column;</li>
+<li>use the same function name and the same number of inputs.</li>
+</ul>
+<p><code>name pattern MEANS result</code> works as well as <code>DECIDE name pattern IS result</code>.
+A function published with <code>@export</code> needs the <code>GIVEN</code>, naming and typing each input, even when it has a single clause: see <a href="/l4/reference/errors#an-export-of-clauses-with-no-given">An @export of clauses with no GIVEN</a>.</p>
+<p><strong>Example file:</strong></p>
+<pre><code class="language-l4-file">-- DECIDE written as several clauses, one per case
+
+-- Numbers: the first clause matches only 0, the second any number
+
+GIVEN n IS A NUMBER
+GIVETH A NUMBER
+DECIDE factorial 0 IS 1
+DECIDE factorial n IS n TIMES factorial (n MINUS 1)
+
+#EVAL factorial 5
+
+-- The same function written with CONSIDER
+
+GIVEN n IS A NUMBER
+GIVETH A NUMBER
+DECIDE `factorial with CONSIDER` n IS
+  CONSIDER n
+  WHEN 0 THEN 1
+  OTHERWISE n TIMES `factorial with CONSIDER` (n MINUS 1)
+
+#EVAL `factorial with CONSIDER` 5
+
+-- Enumerations: one clause per value
+
+DECLARE Peril IS ONE OF Water, Fire, Cosmetic
+
+GIVEN peril IS A Peril
+GIVETH A BOOLEAN
+DECIDE covered Water    IS TRUE
+DECIDE covered Fire     IS TRUE
+DECIDE covered Cosmetic IS FALSE
+
+#EVAL covered Fire
+#EVAL covered Cosmetic
+
+-- A decision table over two inputs; the last clause catches the rest
+
+GIVEN weekend IS A BOOLEAN
+      day IS A STRING
+GIVETH A NUMBER
+DECIDE `parking fee` TRUE  day        IS 0
+DECIDE `parking fee` FALSE "Saturday" IS 5
+DECIDE `parking fee` FALSE day        IS 10
+
+#EVAL `parking fee` TRUE "Sunday"
+#EVAL `parking fee` FALSE "Saturday"
+#EVAL `parking fee` FALSE "Monday"
+
+-- Lists and MAYBE values: a pattern with an argument goes in parentheses
+
+GIVEN xs IS A LIST OF NUMBER
+GIVETH A NUMBER
+DECIDE total EMPTY IS 0
+DECIDE total (x FOLLOWED BY rest) IS x PLUS total rest
+
+#EVAL total (LIST 1, 2, 3)
+
+GIVEN amount IS A MAYBE NUMBER
+GIVETH A NUMBER
+DECIDE `amount or zero` NOTHING IS 0
+DECIDE `amount or zero` (JUST a) IS a
+
+#EVAL `amount or zero` (JUST 4)
+#EVAL `amount or zero` NOTHING
+</code></pre>
+<h3 id="what-a-clause-can-match">What a clause can match</h3>
+<p>In each input position:</p>
+<ul>
+<li>a value (<code>0</code>, <code>"Saturday"</code>, <code>TRUE</code>, <code>Water</code>, <code>EMPTY</code>) matches only that value;</li>
+<li>the <code>GIVEN</code> name for that position matches anything;</li>
+<li>any other name also matches anything, and stands for that input inside its own clause;</li>
+<li>a constructor with an argument goes in parentheses: <code>(JUST a)</code>, <code>(x FOLLOWED BY rest)</code>.</li>
+</ul>
+<pre><code class="language-l4">GIVEN weekend IS A BOOLEAN
+      day IS A STRING
+GIVETH A NUMBER
+DECIDE `parking fee` TRUE  day        IS 0
+DECIDE `parking fee` FALSE "Saturday" IS 5
+DECIDE `parking fee` FALSE day        IS 10
+</code></pre>
+<p><code>`parking fee` FALSE "Monday"</code> gives <code>10</code>: the second clause does not match <code>"Monday"</code>, so the third is used.</p>
+<p>The clauses mean the same as one <code>DECIDE</code> whose body is a <a href="/l4/reference/control-flow/CONSIDER">CONSIDER</a> with one <code>WHEN</code> per clause; a clause that matches anything acts like <code>OTHERWISE</code>.</p>
+<h3 id="restrictions">Restrictions</h3>
+<ul>
+<li>Clauses make one function only at the top level of a file or of a section, not inside <code>WHERE</code> or <code>LET</code>.</li>
+<li>A function whose name sits between or after its inputs, such as <code>c `costs` n</code>, cannot be written as clauses. Use <code>CONSIDER</code> instead; see <a href="/l4/reference/errors#a-clause-written-like-a-rule-with-a-word-between-its-inputs">A clause written like a rule with a word between its inputs</a>.</li>
+<li>A bare <code>_</code> is a syntax error. To match anything, use the <code>GIVEN</code> name, or write <code>`_`</code> in backquotes.</li>
+<li>A single <code>DECIDE</code> line whose inputs are all plain names is an ordinary definition, so its names must match the <code>GIVEN</code>.</li>
+</ul>
+<h3 id="warnings-and-errors">Warnings and errors</h3>
+<ul>
+<li>When the clauses leave a case out, <code>l4 check</code> warns and lists the clauses still needed: <a href="/l4/reference/errors#multi-clause-decide-does-not-cover-all-cases">Multi-clause DECIDE does not cover all cases</a>.</li>
+<li>A clause below one that matches every input is never reached, and <code>l4 check</code> warns: <a href="/l4/reference/errors#clause-that-is-never-used">Clause that is never used</a>.</li>
+<li>When no clause matches at run time, evaluation stops with "No clause of <code>name</code> matches these inputs": <a href="/l4/reference/errors#non-exhaustive-patterns-at-runtime">Non-exhaustive patterns at runtime</a>.</li>
+</ul>
+<p>What the missing-case check can and cannot see is explained in <a href="/l4/concepts/type-system/exhaustiveness">Exhaustiveness</a>.</p>
+<h3 id="the-decision-graph-and-the-query-plan">The decision graph and the query plan</h3>
+<p>A rule written as clauses that answers yes or no has a decision graph in the editor, as the <code>CONSIDER</code> it stands for has.
+It also has a query plan from the service that publishes rules: the <code>/query-plan</code> route of <code>jl4-service</code>, which a wizard asks for the next question to put.
+L4 reads the clauses as that <code>CONSIDER</code>.
+These two rules are the same rule, and are drawn and planned alike:</p>
+<pre><code class="language-l4">DECLARE Colour IS ONE OF Red, Green, Blue
+
+GIVEN c IS A Colour
+GIVETH A BOOLEAN
+DECIDE warm Red   IS TRUE
+DECIDE warm Green IS FALSE
+DECIDE warm Blue  IS FALSE
+
+GIVEN c IS A Colour
+GIVETH A BOOLEAN
+DECIDE `warm, by hand` c IS
+  CONSIDER c
+    WHEN Red   THEN TRUE
+    WHEN Green THEN FALSE
+    WHEN Blue  THEN FALSE
+</code></pre>
+<p>Clauses may share an earlier input and differ in a later one, as the rows of a decision table do:</p>
+<pre><code class="language-l4">DECLARE Colour IS ONE OF Red, Green, Blue
+
+GIVEN c IS A Colour
+      b IS A BOOLEAN
+GIVETH A BOOLEAN
+DECIDE `colour rule` Red   TRUE  IS TRUE
+DECIDE `colour rule` Red   FALSE IS FALSE
+DECIDE `colour rule` Green b     IS b
+DECIDE `colour rule` Blue  b     IS NOT b
+</code></pre>
+<p>L4 reads each clause knowing what the clauses above it have already settled, so this is read as the nested <code>CONSIDER</code> a drafter would write: one question about the colour, and for <code>Red</code> one question about <code>b</code>.
+A clause whose pattern is a new name, such as <code>DECIDE warm other IS FALSE</code>, matches anything that reaches it, and is read as <code>OTHERWISE</code>.</p>
+<p>The decision graph draws a <code>CONSIDER</code> as one box, labelled with the <code>CONSIDER</code>, and a rule written as clauses is that same box, with the same label.
+A <code>CONSIDER</code> that means the same but is written another way, such as <code>WHEN Red THEN b</code> in place of the nested <code>CONSIDER</code> on <code>b</code>, is a box with another label.</p>
+<p><strong>Clauses too long to read.</strong>
+Clauses that come to more than 20,000 parts when written out as their CONSIDER are not drawn or planned.
+This is reached most easily by a table over optional inputs whose clauses take values apart with JUST: each such clause is written out again under every answer to the inputs after it.
+A table of eleven clauses over five MAYBE BOOLEAN inputs can reach it.
+The decision graph and the query plan refuse them with this message (the service answers with a 400 error):</p>
+<pre><code>These clauses are too long to draw: written out as the CONSIDER they stand for, they come to more than 20000 parts. Split the rule into smaller groups of clauses, or into named sub-rules.
+</code></pre>
+<p><strong>At most 300 boxes.</strong>
+A rule written as clauses is also refused when its picture would come to more than 300 boxes.
+Clauses that read as one <code>CONSIDER</code> are one box, however many rows they have, so this is reached by clauses that read as something else.
+One way is a first clause that gives an input a new name, such as <code>DECIDE rule m a b IS …</code> for a rule whose <code>GIVEN</code> calls its first input <code>n</code>: L4 reads that as a test of the input, with the clauses after it as the other answer, and draws its result, which can be long.
+The query plan reaches the limit sooner than the picture does, because the service simplifies the picture first, and an <code>OR</code> of <code>AND</code>s, rewritten as an <code>AND</code> of <code>OR</code>s, can grow far past its own size.
+An <code>OR</code> of six <code>AND</code>s of two inputs each, as the result of such a first clause, is drawn in VS Code, and its query plan is refused with this message:</p>
+<pre><code>These clauses would draw a ladder of more than 300 boxes, too many to show. Split the rule into smaller groups of clauses, or into named sub-rules.
+</code></pre>
+<p>In VS Code, a rule that is refused keeps the lens above it, which then reads <code>No decision graph: these clauses are too long to draw</code>, or <code>No decision graph: these clauses would draw more than 300 boxes</code> when the picture as drawn comes to that many.
+Clicking it shows the whole message.
+Only the picture and the plan are refused: <code>#EVAL</code>, <code>l4 run</code> and the service's evaluation answer the rule as usual.</p>
+<p>To bring such a rule back into the picture, give part of it a name of its own: move a group of clauses into a separate rule, named for what it decides, and use that rule in the clauses that remain.
+A rule that uses another shows the use as one box, not the clauses behind it.
+Or split one long list into smaller lists, each deciding one part of the question, and combine their answers with <code>AND</code> or <code>OR</code>.</p>
+<p>The limits apply only to a rule written as clauses that L4 reads through.
+A rule whose first clause names each input as its <code>GIVEN</code> does, or is <code>`_`</code>, is not read through, because the clauses after that one are never reached, so it is drawn and planned as a rule written without clauses is, however long it is.
+A first clause that gives an input a new name is read through, and both limits apply to it.
+<code>EXACTLY</code> of the input's own name, as in <code>DECIDE f (EXACTLY n) IS 1</code>, is not the bare name: drawn or planned, such a clause is read as a test, so the 20,000-part limit applies to it.
+A <code>CONSIDER</code> you write yourself is drawn as you wrote it.
+A rule that answers something other than yes or no, such as a number, is not drawn at all, however it is written, and L4 says that first.</p>
+<h2 id="related-pages">Related pages</h2>
+<ul>
+<li><a href="/l4/reference/functions/GIVEN">GIVEN and GIVETH</a>: inputs and result type</li>
+<li><a href="/l4/reference/functions/MEANS">MEANS</a>: definitions without <code>DECIDE</code></li>
+<li><a href="/l4/reference/functions/LET">LET and WHERE</a>: local definitions</li>
+<li><a href="/l4/reference/control-flow/CONSIDER">CONSIDER</a>: pattern matching inside an expression</li>
+<li><a href="/l4/tutorials/natural-language-functions/optimising-natural-language-generation">Make rules read like law</a>: functions whose names read like natural language</li>
+</ul>
+0:{"rsc":["$","$1","c",{"children":[["$","$L2",null,{"navSections":[{"title":"","items":[{"title":"Language Reference","href":"reference"},{"title":"Glossary","href":"reference/GLOSSARY"},{"title":"Cheat sheet","href":"reference/cheat-sheet"},{"title":"Types","href":"reference/types","children":[{"title":"DECLARE","href":"reference/types/DECLARE"},{"title":"ASSUME","href":"reference/types/ASSUME"},{"title":"FOR ALL","href":"reference/types/for-all"},{"title":"Coercions","href":"reference/types/coercions"}]},{"title":"Functions","href":"reference/functions","children":[{"title":"DECIDE","href":"reference/functions/DECIDE"},{"title":"GIVEN and GIVETH","href":"reference/functions/GIVEN"},{"title":"MEANS","href":"reference/functions/MEANS"},{"title":"LET and WHERE","href":"reference/functions/LET"},{"title":"YIELD","href":"reference/functions/YIELD"},{"title":"AKA","href":"reference/functions/AKA"}]},{"title":"Control flow","href":"reference/control-flow","children":[{"title":"IF","href":"reference/control-flow/IF"},{"title":"BRANCH","href":"reference/control-flow/BRANCH"},{"title":"CONSIDER","href":"reference/control-flow/CONSIDER"}]},{"title":"Operators","href":"reference/operators","children":[{"title":"AND, OR, NOT, IMPLIES","href":"reference/operators/logical"},{"title":"UNLESS","href":"reference/operators/UNLESS"},{"title":"Arithmetic","href":"reference/operators/arithmetic"},{"title":"Comparisons","href":"reference/operators/comparisons"}]},{"title":"Regulative rules","href":"reference/regulative","children":[{"title":"PARTY, MUST, MAY, SHANT","href":"reference/regulative/PARTY"},{"title":"Deadlines and consequences","href":"reference/regulative/consequences"},{"title":"BECAUSE","href":"reference/regulative/BECAUSE"},{"title":"DEONTIC","href":"reference/regulative/DEONTIC"},{"title":"EVENT","href":"reference/regulative/EVENT"}]},{"title":"Syntax and directives","href":"reference/syntax"},{"title":"Built-in functions","href":"reference/builtins","children":[{"title":"HTTP and JSON","href":"reference/builtins/http-json"}]},{"title":"Standard libraries","href":"reference/libraries","children":[{"title":"prelude","href":"reference/libraries/prelude"},{"title":"math","href":"reference/libraries/math"},{"title":"daydate","href":"reference/libraries/daydate"},{"title":"time","href":"reference/libraries/time"},{"title":"datetime","href":"reference/libraries/datetime"},{"title":"timezone","href":"reference/libraries/timezone"},{"title":"excel-date","href":"reference/libraries/excel-date"},{"title":"currency","href":"reference/libraries/currency"},{"title":"holdings","href":"reference/libraries/holdings"},{"title":"actus","href":"reference/libraries/actus"},{"title":"legal-persons","href":"reference/libraries/legal-persons"},{"title":"jurisdiction","href":"reference/libraries/jurisdiction"},{"title":"llm","href":"reference/libraries/llm"}]},{"title":"Error messages","href":"reference/errors"}]}],"toc":[],"htmlContent":"$3","pager":{"prev":"$0:rsc:props:children:0:props:navSections:0:items:4","next":"$0:rsc:props:children:0:props:navSections:0:items:4:children:1"}}],["$L4"],"$L5"]}],"isPartial":false,"staleTime":300,"varyParams":null,"buildId":"iJUXAyHcmcW99cMci3ei9"}
+4:["$","script","script-0",{"src":"/_next/static/chunks/0fl~me.qwn48c.js","async":true}]
+5:["$","$L6",null,{"children":["$","$7",null,{"name":"Next.MetadataOutlet","children":"$@8"}]}]
+8:null

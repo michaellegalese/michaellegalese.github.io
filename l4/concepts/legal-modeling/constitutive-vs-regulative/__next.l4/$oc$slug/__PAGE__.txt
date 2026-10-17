@@ -1,0 +1,129 @@
+1:"$Sreact.fragment"
+2:I[90160,["/_next/static/chunks/0ypf.t599.7y6.js","/_next/static/chunks/0t2xr05rlu96l.js","/_next/static/chunks/0uxaa7wo_wmcw.js","/_next/static/chunks/0fl~me.qwn48c.js"],"default"]
+6:I[97367,["/_next/static/chunks/0ypf.t599.7y6.js","/_next/static/chunks/0t2xr05rlu96l.js"],"OutletBoundary"]
+7:"$Sreact.suspense"
+3:T2262,<h1>Definitions and duties</h1>
+<p>The most important structural distinction in legal drafting — and how L4 makes it a distinction in the type system.</p>
+<hr>
+<h2 id="the-distinction">The Distinction</h2>
+<p>Legal theory divides rules into two kinds:</p>
+<ul>
+<li><strong>Constitutive rules</strong> define and classify. They say what things <em>are</em>: what counts as a "small business", when a payment is "overdue", who qualifies as a "dependant". They create the legal vocabulary that the rest of the law is written in.</li>
+<li><strong>Regulative rules</strong> oblige, permit, and prohibit. They say what parties <em>must, may, or must not do</em>: deliver the goods, file the return, refrain from disclosure.</li>
+</ul>
+<p>Statutes are organised around this split. A typical act opens with an interpretation section ("In this Act, 'worker' means…") — constitutive — and then states operative provisions ("An employer must not deduct…") — regulative. Contracts do the same: a definitions clause, followed by the parties' obligations.</p>
+<p>The two kinds of rule behave differently:</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Constitutive</th>
+<th>Regulative</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Answers</td>
+<td>"Is X a Y?" / "What is the value of Z?"</td>
+<td>"What must/may/mustn't a party do now?"</td>
+</tr>
+<tr>
+<td>Involves a party?</td>
+<td>No — it classifies facts</td>
+<td>Yes — a <code>PARTY</code> bears the duty</td>
+</tr>
+<tr>
+<td>Involves time?</td>
+<td>No — it is evaluated against a snapshot of facts</td>
+<td>Yes — deadlines, event order, elapsed time</td>
+</tr>
+<tr>
+<td>Can be breached?</td>
+<td>No — a definition is just true or false of the facts</td>
+<td>Yes — <code>BREACH</code> is a possible outcome</td>
+</tr>
+<tr>
+<td>Result</td>
+<td>A value (<code>BOOLEAN</code>, <code>NUMBER</code>, …)</td>
+<td>A verdict: <code>FULFILLED</code>, <code>BREACH</code>, or a residual obligation</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h2 id="constitutive-rules-in-l4-declare-decide-means">Constitutive Rules in L4: DECLARE, DECIDE, MEANS</h2>
+<p>Constitutive rules are L4's declarations and functions. <code>DECLARE</code> creates the categories; <code>DECIDE</code> and <code>MEANS</code> define terms over them:</p>
+<pre><code class="language-l4">DECLARE Business
+    HAS `annual turnover` IS A NUMBER
+        `employee count` IS A NUMBER
+
+GIVEN business IS A Business
+GIVETH A BOOLEAN
+DECIDE `is a small business` IF
+        business's `annual turnover` LESS THAN 10000000
+    AND business's `employee count` AT MOST 200
+</code></pre>
+<p>This is the L4 form of an interpretation clause. It names no party, sets no deadline, and cannot be breached — it simply classifies. Constitutive rules can also compute values rather than booleans:</p>
+<pre><code class="language-l4">GIVEN business IS A Business
+GIVETH A NUMBER
+`applicable fee` MEANS
+    IF `is a small business` business
+    THEN 100
+    ELSE 500
+</code></pre>
+<p><code>DECIDE … IF …</code> and <code>… MEANS …</code> are two spellings of the same thing: a definition. Evaluating a constitutive rule against the same facts always yields the same answer — there is no timeline, no event stream, no state.</p>
+<hr>
+<h2 id="regulative-rules-in-l4-party-must-may-shant">Regulative Rules in L4: PARTY, MUST, MAY, SHANT</h2>
+<p>Regulative rules are built from a different vocabulary — <code>PARTY</code>, a deontic modal (<code>MUST</code>, <code>MAY</code>, <code>SHANT</code>, or <code>MUST NOT</code> as a synonym of <code>SHANT</code>), a deadline (<code>WITHIN</code>), and consequence branches (<code>HENCE</code>, <code>LEST</code>) — and they have a different type: <code>DEONTIC</code>.</p>
+<pre><code class="language-l4">DECLARE Actor IS ONE OF `The Company`, `The Regulator`
+DECLARE Act IS ONE OF
+    `file annual return`
+    `pay filing fee` HAS amount IS A NUMBER
+
+GIVEN business IS A Business
+GIVETH A DEONTIC Actor Act
+`filing obligation` MEANS
+    PARTY `The Company`
+    MUST  `pay filing fee` amount PROVIDED amount AT LEAST `applicable fee` business
+    WITHIN 30
+    HENCE FULFILLED
+    LEST  BREACH BY `The Company`
+</code></pre>
+<p>A <code>DEONTIC</code> value does not evaluate to true or false. It lies dormant until fed a start time and a stream of events, and then advances to one of three outcomes: <code>FULFILLED</code>, <code>BREACH</code>, or a residual obligation still awaiting events. That machinery — timelines, event matching, reparation chains — is the subject of <a href="/l4/concepts/legal-modeling/regulative-rules">How obligations unfold</a>.</p>
+<hr>
+<h2 id="the-separation-is-type-level">The Separation Is Type-Level</h2>
+<p>L4 does not merely <em>recommend</em> keeping definitions and obligations apart; the type system enforces it. A constitutive rule has an ordinary type like <code>BOOLEAN</code> or <code>NUMBER</code>. A regulative rule has type <code>DEONTIC actor action</code>. You cannot accidentally use an obligation where a definition is expected, or vice versa — the type checker rejects it.</p>
+<p>The two layers connect in exactly one direction: <strong>constitutive rules feed regulative rules</strong>. Definitions appear inside obligations as conditions (<code>IF</code>, <code>PROVIDED</code>) and computed values (deadlines, amounts):</p>
+<ul>
+<li><code>`is a small business` business</code> decides <em>whether</em> a duty applies</li>
+<li><code>`applicable fee` business</code> decides <em>how much</em> the duty demands</li>
+<li>the <code>PARTY … MUST …</code> particle decides <em>what happens over time</em></li>
+</ul>
+<p>In the example above, the constitutive layer answers "what fee does this business owe?" and the regulative layer answers "who must pay it, by when, and what if they don't?".</p>
+<hr>
+<h2 id="why-the-distinction-matters-for-encoding-statutes">Why the Distinction Matters for Encoding Statutes</h2>
+<h3 id="it-mirrors-the-source-text">It mirrors the source text</h3>
+<p>Statutes and contracts are already factored this way. If the interpretation section becomes <code>DECLARE</code>/<code>DECIDE</code> and the operative provisions become <code>PARTY</code>/<code>MUST</code>, the encoding is <em>isomorphic</em> to the text: each provision has one home in the code, and a reviewer can check them clause by clause. (This is L4's <a href="/l4/concepts/language-design/principles">legal isomorphism principle</a>.)</p>
+<h3 id="it-prevents-two-common-encoding-mistakes">It prevents two common encoding mistakes</h3>
+<p><strong>Flattening an obligation into a boolean.</strong> Encoding "the seller must deliver within 14 days" as a predicate <code>`seller is compliant`</code> loses the party, the deadline, the ability to say <em>who</em> breached and <em>why</em>, and the possibility of a partially-performed contract. A boolean can only say yes or no about a snapshot; an obligation unfolds over time.</p>
+<p><strong>Inflating a definition into an obligation.</strong> Encoding "'small business' means a business with turnover under $10m" as some kind of duty ("the business must have turnover under $10m") invents a deontic force the text does not have. Nobody breaches by being a large business — they simply fall outside a category.</p>
+<h3 id="it-keeps-the-reusable-part-reusable">It keeps the reusable part reusable</h3>
+<p>Constitutive definitions are pure functions: they can be tested with <code>#EVAL</code>, reused across many obligations, and exposed as decision services on their own. Regulative rules are tested differently — with <code>#TRACE</code> against event sequences. Keeping the layers separate means each can be validated with the right tool.</p>
+<hr>
+<h2 id="rule-of-thumb">Rule of Thumb</h2>
+<p>When encoding a provision, ask: <strong>can this be breached, by someone, over time?</strong></p>
+<ul>
+<li>If no — it classifies or computes — write it as <code>DECIDE</code>/<code>MEANS</code> returning an ordinary value.</li>
+<li>If yes — someone must, may, or must not act — write it as a <code>PARTY</code> particle returning a <code>DEONTIC</code>.</li>
+</ul>
+<hr>
+<h2 id="further-reading">Further Reading</h2>
+<ul>
+<li><a href="/l4/concepts/legal-modeling/regulative-rules">How obligations unfold</a> — Events, timelines and verdicts</li>
+<li><a href="/l4/concepts/legal-modeling/default-reasoning">Exceptions and defaults</a> — Structuring the constitutive layer's general rules and exceptions</li>
+<li><a href="/l4/reference/regulative">Regulative Keywords Reference</a> — <code>PARTY</code>, <code>MUST</code>, <code>MAY</code>, <code>SHANT</code> and friends</li>
+<li><a href="/l4/reference/functions">Functions Reference</a> — <code>DECIDE</code>, <code>MEANS</code>, <code>GIVEN</code>, <code>GIVETH</code></li>
+</ul>
+0:{"rsc":["$","$1","c",{"children":[["$","$L2",null,{"navSections":[{"title":"","items":[{"title":"Concepts home","href":"concepts"},{"title":"Design principles","href":"concepts/language-design/principles"},{"title":"Reading like the law","href":"concepts/language-design/linguistic-syntax"},{"title":"Definitions and duties","href":"concepts/legal-modeling/constitutive-vs-regulative"},{"title":"Exceptions and defaults","href":"concepts/legal-modeling/default-reasoning"},{"title":"How obligations unfold","href":"concepts/legal-modeling/regulative-rules"},{"title":"Types as legal categories","href":"concepts/type-system/algebraic-types"},{"title":"Exhaustiveness","href":"concepts/type-system/exhaustiveness"},{"title":"Type theory","href":"concepts/type-system/type-theory"}]}],"toc":[],"htmlContent":"$3","pager":{"prev":"$0:rsc:props:children:0:props:navSections:0:items:2","next":"$0:rsc:props:children:0:props:navSections:0:items:4"}}],["$L4"],"$L5"]}],"isPartial":false,"staleTime":300,"varyParams":null,"buildId":"iJUXAyHcmcW99cMci3ei9"}
+4:["$","script","script-0",{"src":"/_next/static/chunks/0fl~me.qwn48c.js","async":true}]
+5:["$","$L6",null,{"children":["$","$7",null,{"name":"Next.MetadataOutlet","children":"$@8"}]}]
+8:null

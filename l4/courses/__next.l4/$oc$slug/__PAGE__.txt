@@ -1,0 +1,33 @@
+1:"$Sreact.fragment"
+2:I[90160,["/_next/static/chunks/0ypf.t599.7y6.js","/_next/static/chunks/0t2xr05rlu96l.js","/_next/static/chunks/0uxaa7wo_wmcw.js","/_next/static/chunks/0fl~me.qwn48c.js"],"default"]
+5:I[97367,["/_next/static/chunks/0ypf.t599.7y6.js","/_next/static/chunks/0t2xr05rlu96l.js"],"OutletBoundary"]
+6:"$Sreact.suspense"
+3:T86c,<h1>Choose a course</h1>
+<p>The courses are learning paths through L4, each a sequence of modules with examples and exercises. Take them in order; each module builds on the one before.</p>
+<h2 id="foundation-course">Foundation course</h2>
+<p><a href="/l4/courses/foundation">The Foundation course</a> is for anyone new to L4, with or without programming experience. In eight modules it goes from a first legal rule to a complete model of a charity registration scheme: types for legal entities, decision logic, functions, and obligations with deadlines and consequences.</p>
+<h2 id="advanced-course">Advanced course</h2>
+<p><a href="/l4/courses/advanced">The Advanced course</a> is for those who have finished the Foundation course or already write L4. In four modules it covers encoding real regulatory schemes, patterns that recur across rules (deadlines, notices, appeals), contracts in depth, and structuring a real rulebase.</p>
+<h2 id="learning-paths">Learning paths</h2>
+<h3 id="for-legal-professionals">For legal professionals</h3>
+<ol>
+<li>The Foundation course, all modules (0 to 7)</li>
+<li><a href="/l4/courses/advanced/module-a1-regulatory">Module A1: Real regulatory schemes</a>: encoding real legislation</li>
+<li><a href="/l4/courses/advanced/module-a2-cross-cutting">Module A2: Cross-cutting concerns</a>: timing, notices and appeals</li>
+</ol>
+<h3 id="for-developers">For developers</h3>
+<ol>
+<li>Foundation modules 0 to 5 (skim Module 0; focus on types, control flow and functions)</li>
+<li><a href="/l4/courses/foundation/module-6-regulative">Module 6: Regulative rules</a>: the part with no equivalent in other programming languages</li>
+<li><a href="/l4/courses/advanced/module-a3-contracts">Module A3: Contracts in depth</a>: recursive obligations and multi-party agreements</li>
+<li><a href="/l4/courses/advanced/module-a4-production">Module A4: Production patterns</a>: structuring, testing and deploying a rulebase</li>
+</ol>
+<h3 id="for-legal-engineers">For legal engineers</h3>
+<ol>
+<li>The Foundation course</li>
+<li>The Advanced course</li>
+<li><a href="/l4/concepts">Concepts</a>, for why L4 works the way it does</li>
+</ol>
+0:{"rsc":["$","$1","c",{"children":[["$","$L2",null,{"navSections":[{"title":"","items":[{"title":"Overview","href":"courses"},{"title":"Overview","href":"courses/foundation"},{"title":"0. Introduction to L4","href":"courses/foundation/module-0-introduction"},{"title":"1. Your first legal rule","href":"courses/foundation/module-1-first-rule"},{"title":"2. Legal entities and relationships","href":"courses/foundation/module-2-entities"},{"title":"3. Control flow","href":"courses/foundation/module-3-control-flow"},{"title":"4. Decision logic","href":"courses/foundation/module-4-decision-logic"},{"title":"5. Functions","href":"courses/foundation/module-5-functions"},{"title":"6. Regulative rules","href":"courses/foundation/module-6-regulative"},{"title":"7. Putting it together","href":"courses/foundation/module-7-capstone"},{"title":"Overview","href":"courses/advanced"},{"title":"A1. Real regulatory schemes","href":"courses/advanced/module-a1-regulatory"},{"title":"A2. Cross-cutting concerns","href":"courses/advanced/module-a2-cross-cutting"},{"title":"A3. Contracts in depth","href":"courses/advanced/module-a3-contracts"},{"title":"A4. Production patterns","href":"courses/advanced/module-a4-production"}]}],"toc":[],"htmlContent":"$3","pager":{"next":"$0:rsc:props:children:0:props:navSections:0:items:1"}}],[["$","script","script-0",{"src":"/_next/static/chunks/0fl~me.qwn48c.js","async":true}]],"$L4"]}],"isPartial":false,"staleTime":300,"varyParams":null,"buildId":"iJUXAyHcmcW99cMci3ei9"}
+4:["$","$L5",null,{"children":["$","$6",null,{"name":"Next.MetadataOutlet","children":"$@7"}]}]
+7:null

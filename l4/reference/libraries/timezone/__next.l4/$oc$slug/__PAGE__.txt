@@ -1,0 +1,116 @@
+1:"$Sreact.fragment"
+2:I[90160,["/_next/static/chunks/0ypf.t599.7y6.js","/_next/static/chunks/0t2xr05rlu96l.js","/_next/static/chunks/0uxaa7wo_wmcw.js","/_next/static/chunks/0fl~me.qwn48c.js"],"default"]
+6:I[97367,["/_next/static/chunks/0ypf.t599.7y6.js","/_next/static/chunks/0t2xr05rlu96l.js"],"OutletBoundary"]
+7:"$Sreact.suspense"
+3:T9ea,<h1>timezone</h1>
+<p>Constants that give the IANA name of common time zones, for <code>TIMEZONE IS</code> lines and the <a href="/l4/reference/libraries/datetime">datetime</a> constructors. Import it with <code>IMPORT timezone</code>.</p>
+<p><strong>Example:</strong></p>
+<pre><code class="language-l4-file">-- Timezone Example: IANA timezone constants
+IMPORT timezone
+
+-- Set document timezone using a constant
+TIMEZONE IS EST
+
+-- Verify the resolved IANA name
+DECIDE `document timezone` IS TIMEZONE
+#EVAL `document timezone`  -- "America/New_York"
+
+-- Timezone constants resolve to IANA strings
+#EVAL EST  -- "America/New_York"
+#EVAL PST  -- "America/Los_Angeles"
+#EVAL SGT  -- "Asia/Singapore"
+#EVAL UTC  -- "Etc/UTC"
+
+-- EST and EDT map to the same zone (DST handled automatically)
+#ASSERT EST EQUALS EDT
+</code></pre>
+<h2 id="setting-the-document-time-zone">Setting the document time zone</h2>
+<pre><code class="language-l4">IMPORT timezone
+
+TIMEZONE IS SGT
+</code></pre>
+<p>sets the document's time zone to <code>"Asia/Singapore"</code>. Without the library, write the IANA name itself:</p>
+<pre><code class="language-l4">TIMEZONE IS "Asia/Singapore"
+</code></pre>
+<h2 id="constants">Constants</h2>
+<p>Each constant is a STRING.</p>
+<table>
+<thead>
+<tr>
+<th>Constant</th>
+<th>IANA name</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>EST, EDT</td>
+<td>America/New_York</td>
+</tr>
+<tr>
+<td>CST, CDT</td>
+<td>America/Chicago</td>
+</tr>
+<tr>
+<td>MST, MDT</td>
+<td>America/Denver</td>
+</tr>
+<tr>
+<td>PST, PDT</td>
+<td>America/Los_Angeles</td>
+</tr>
+<tr>
+<td>GMT, BST</td>
+<td>Europe/London</td>
+</tr>
+<tr>
+<td>CET, CEST</td>
+<td>Europe/Berlin</td>
+</tr>
+<tr>
+<td>EET, EEST</td>
+<td>Europe/Helsinki</td>
+</tr>
+<tr>
+<td>IST</td>
+<td>Asia/Kolkata</td>
+</tr>
+<tr>
+<td>SGT</td>
+<td>Asia/Singapore</td>
+</tr>
+<tr>
+<td>HKT</td>
+<td>Asia/Hong_Kong</td>
+</tr>
+<tr>
+<td>JST</td>
+<td>Asia/Tokyo</td>
+</tr>
+<tr>
+<td>KST</td>
+<td>Asia/Seoul</td>
+</tr>
+<tr>
+<td>AEST, AEDT</td>
+<td>Australia/Sydney</td>
+</tr>
+<tr>
+<td>NZST, NZDT</td>
+<td>Pacific/Auckland</td>
+</tr>
+<tr>
+<td>UTC</td>
+<td>Etc/UTC</td>
+</tr>
+</tbody>
+</table>
+<h2 id="daylight-saving-time">Daylight saving time</h2>
+<p>The standard and the daylight-saving abbreviation of a zone give the same IANA name, so <code>EST</code> and <code>EDT</code> are both <code>"America/New_York"</code>. Whether daylight saving applies is worked out from the date, not from the abbreviation you chose.</p>
+<pre><code class="language-l4">IMPORT timezone
+
+#ASSERT EST EQUALS EDT
+</code></pre>
+0:{"rsc":["$","$1","c",{"children":[["$","$L2",null,{"navSections":[{"title":"","items":[{"title":"Language Reference","href":"reference"},{"title":"Glossary","href":"reference/GLOSSARY"},{"title":"Cheat sheet","href":"reference/cheat-sheet"},{"title":"Types","href":"reference/types","children":[{"title":"DECLARE","href":"reference/types/DECLARE"},{"title":"ASSUME","href":"reference/types/ASSUME"},{"title":"FOR ALL","href":"reference/types/for-all"},{"title":"Coercions","href":"reference/types/coercions"}]},{"title":"Functions","href":"reference/functions","children":[{"title":"DECIDE","href":"reference/functions/DECIDE"},{"title":"GIVEN and GIVETH","href":"reference/functions/GIVEN"},{"title":"MEANS","href":"reference/functions/MEANS"},{"title":"LET and WHERE","href":"reference/functions/LET"},{"title":"YIELD","href":"reference/functions/YIELD"},{"title":"AKA","href":"reference/functions/AKA"}]},{"title":"Control flow","href":"reference/control-flow","children":[{"title":"IF","href":"reference/control-flow/IF"},{"title":"BRANCH","href":"reference/control-flow/BRANCH"},{"title":"CONSIDER","href":"reference/control-flow/CONSIDER"}]},{"title":"Operators","href":"reference/operators","children":[{"title":"AND, OR, NOT, IMPLIES","href":"reference/operators/logical"},{"title":"UNLESS","href":"reference/operators/UNLESS"},{"title":"Arithmetic","href":"reference/operators/arithmetic"},{"title":"Comparisons","href":"reference/operators/comparisons"}]},{"title":"Regulative rules","href":"reference/regulative","children":[{"title":"PARTY, MUST, MAY, SHANT","href":"reference/regulative/PARTY"},{"title":"Deadlines and consequences","href":"reference/regulative/consequences"},{"title":"BECAUSE","href":"reference/regulative/BECAUSE"},{"title":"DEONTIC","href":"reference/regulative/DEONTIC"},{"title":"EVENT","href":"reference/regulative/EVENT"}]},{"title":"Syntax and directives","href":"reference/syntax"},{"title":"Built-in functions","href":"reference/builtins","children":[{"title":"HTTP and JSON","href":"reference/builtins/http-json"}]},{"title":"Standard libraries","href":"reference/libraries","children":[{"title":"prelude","href":"reference/libraries/prelude"},{"title":"math","href":"reference/libraries/math"},{"title":"daydate","href":"reference/libraries/daydate"},{"title":"time","href":"reference/libraries/time"},{"title":"datetime","href":"reference/libraries/datetime"},{"title":"timezone","href":"reference/libraries/timezone"},{"title":"excel-date","href":"reference/libraries/excel-date"},{"title":"currency","href":"reference/libraries/currency"},{"title":"holdings","href":"reference/libraries/holdings"},{"title":"actus","href":"reference/libraries/actus"},{"title":"legal-persons","href":"reference/libraries/legal-persons"},{"title":"jurisdiction","href":"reference/libraries/jurisdiction"},{"title":"llm","href":"reference/libraries/llm"}]},{"title":"Error messages","href":"reference/errors"}]}],"toc":[],"htmlContent":"$3","pager":{"prev":"$0:rsc:props:children:0:props:navSections:0:items:10:children:4","next":"$0:rsc:props:children:0:props:navSections:0:items:10:children:6"}}],["$L4"],"$L5"]}],"isPartial":false,"staleTime":300,"varyParams":null,"buildId":"iJUXAyHcmcW99cMci3ei9"}
+4:["$","script","script-0",{"src":"/_next/static/chunks/0fl~me.qwn48c.js","async":true}]
+5:["$","$L6",null,{"children":["$","$7",null,{"name":"Next.MetadataOutlet","children":"$@8"}]}]
+8:null

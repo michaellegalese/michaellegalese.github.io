@@ -1,0 +1,155 @@
+1:"$Sreact.fragment"
+2:I[90160,["/_next/static/chunks/0ypf.t599.7y6.js","/_next/static/chunks/0t2xr05rlu96l.js","/_next/static/chunks/0uxaa7wo_wmcw.js","/_next/static/chunks/0fl~me.qwn48c.js"],"default"]
+6:I[97367,["/_next/static/chunks/0ypf.t599.7y6.js","/_next/static/chunks/0t2xr05rlu96l.js"],"OutletBoundary"]
+7:"$Sreact.suspense"
+3:T1301,<h1>IF</h1>
+<p><code>IF … THEN … ELSE</code> chooses between two values by a BOOLEAN condition.
+It is an expression: it always gives a value, so the <code>ELSE</code> is required.</p>
+<h2 id="syntax">Syntax</h2>
+<pre><code class="language-text">IF condition THEN value-if-true ELSE value-if-false
+
+IF condition
+THEN value-if-true
+ELSE value-if-false
+</code></pre>
+<p>Both branches must have the same type (<a href="/l4/reference/errors#branch-type-mismatch">Branch type mismatch</a>). An <code>IF</code> without <code>ELSE</code> is a syntax error (<a href="/l4/reference/errors#if-without-else">IF without ELSE</a>).</p>
+<p><strong>Example file:</strong></p>
+<pre><code class="language-l4-file">-- IF keyword examples
+
+-- Basic If-Then-Else
+
+-- Simple conditional
+DECIDE `basic if example` IS IF TRUE THEN "yes" ELSE "no"
+
+-- With variable
+GIVEN x IS A NUMBER
+`check if positive` x MEANS IF x > 0 THEN "positive" ELSE "not positive"
+
+#EVAL `basic if example`
+#EVAL `check if positive` 5
+#EVAL `check if positive` -3
+
+-- Multi-line Format
+
+GIVEN n IS A NUMBER
+`absolute value of` n MEANS
+  IF n >= 0
+  THEN n
+  ELSE 0 MINUS n
+
+#EVAL `absolute value of` 5
+#EVAL `absolute value of` -5
+
+-- Nested If-Else (Chained Conditions)
+
+GIVEN score IS A NUMBER
+`letter grade for` score MEANS
+  IF score >= 90 THEN "A"
+  ELSE IF score >= 80 THEN "B"
+       ELSE IF score >= 70 THEN "C"
+            ELSE IF score >= 60 THEN "D"
+                 ELSE "F"
+
+#EVAL `letter grade for` 95
+#EVAL `letter grade for` 75
+#EVAL `letter grade for` 50
+
+-- Complex Conditions
+
+GIVEN age IS A NUMBER
+      `has valid ID` IS A BOOLEAN
+      `is member` IS A BOOLEAN
+`can enter venue` age `has valid ID` `is member` MEANS
+  IF (age >= 21 AND `has valid ID`) OR `is member`
+  THEN "Welcome"
+  ELSE "Access denied"
+
+#EVAL `can enter venue` 25 TRUE FALSE
+#EVAL `can enter venue` 18 TRUE FALSE
+#EVAL `can enter venue` 18 FALSE TRUE
+
+-- DECIDE ... IF Form (Boolean Functions)
+
+-- Shorthand for boolean-returning functions
+GIVEN `person age` IS A NUMBER
+DECIDE `is adult` IF `person age` >= 18
+
+-- Equivalent long form:
+GIVEN `person age 2` IS A NUMBER
+DECIDE `is adult 2` IS IF `person age 2` >= 18 THEN TRUE ELSE FALSE
+
+-- Both work the same way; an input can also be given by name with WITH
+#EVAL `is adult` 21
+#EVAL `is adult 2` WITH `person age 2` IS 15
+
+-- Returning Different Types
+
+-- Returning numbers
+GIVEN a IS A NUMBER, b IS A NUMBER
+`maximum number` a b MEANS IF a > b THEN a ELSE b
+
+-- Returning lists
+GIVEN condition IS A BOOLEAN
+`list if true otherwise empty` condition MEANS
+  IF condition
+  THEN LIST 1, 2, 3
+  ELSE EMPTY
+
+#EVAL `maximum number` 10 25
+#EVAL `list if true otherwise empty` TRUE
+#EVAL `list if true otherwise empty` FALSE
+
+-- If in Complex Expressions
+
+GIVEN n IS A NUMBER
+GIVETH A NUMBER
+`fibonacci number` n MEANS
+  IF n &#x3C;= 1
+  THEN n
+  ELSE `fibonacci number` (n MINUS 1) PLUS `fibonacci number` (n MINUS 2)
+
+#EVAL `fibonacci number` 10
+</code></pre>
+<h2 id="examples">Examples</h2>
+<pre><code class="language-l4">GIVEN age IS A NUMBER
+GIVETH A STRING
+`age group of` age MEANS IF age >= 18 THEN "adult" ELSE "minor"
+
+GIVEN x IS A NUMBER
+GIVETH A NUMBER
+`absolute value of` x MEANS
+  IF x >= 0
+  THEN x
+  ELSE 0 MINUS x
+</code></pre>
+<p>The condition can be any BOOLEAN expression, built with <a href="/l4/reference/operators/logical">AND, OR, NOT</a>:</p>
+<pre><code class="language-l4">GIVEN age IS A NUMBER
+      `has a licence` IS A BOOLEAN
+GIVETH A STRING
+`driving status` age `has a licence` MEANS
+  IF age >= 16 AND `has a licence`
+  THEN "may drive"
+  ELSE "may not drive"
+</code></pre>
+<h2 id="several-conditions">Several conditions</h2>
+<p>An <code>IF</code> can go inside the <code>ELSE</code> of another. Each inner <code>IF</code> must be indented further than the one it belongs to:</p>
+<pre><code class="language-l4">GIVEN score IS A NUMBER
+GIVETH A STRING
+`grade for` score MEANS
+  IF score >= 90 THEN "A"
+  ELSE IF score >= 80 THEN "B"
+       ELSE IF score >= 70 THEN "C"
+            ELSE "F"
+</code></pre>
+<p>Lining up every <code>ELSE IF</code> in one column is an indentation error from the second one on. For more than two conditions, <a href="/l4/reference/control-flow/BRANCH">BRANCH</a> is flatter.</p>
+<p>A rule that is only a condition, such as "a person is eligible if …", is better written <code>DECIDE … IF</code>; see <a href="/l4/reference/functions/DECIDE#decide-if">DECIDE IF</a>.</p>
+<h2 id="related-pages">Related pages</h2>
+<ul>
+<li><a href="/l4/reference/control-flow/BRANCH">BRANCH</a>: several conditions, tried in order</li>
+<li><a href="/l4/reference/control-flow/CONSIDER">CONSIDER</a>: choose by the shape of a value</li>
+<li><a href="/l4/reference/control-flow">Control flow</a></li>
+</ul>
+0:{"rsc":["$","$1","c",{"children":[["$","$L2",null,{"navSections":[{"title":"","items":[{"title":"Language Reference","href":"reference"},{"title":"Glossary","href":"reference/GLOSSARY"},{"title":"Cheat sheet","href":"reference/cheat-sheet"},{"title":"Types","href":"reference/types","children":[{"title":"DECLARE","href":"reference/types/DECLARE"},{"title":"ASSUME","href":"reference/types/ASSUME"},{"title":"FOR ALL","href":"reference/types/for-all"},{"title":"Coercions","href":"reference/types/coercions"}]},{"title":"Functions","href":"reference/functions","children":[{"title":"DECIDE","href":"reference/functions/DECIDE"},{"title":"GIVEN and GIVETH","href":"reference/functions/GIVEN"},{"title":"MEANS","href":"reference/functions/MEANS"},{"title":"LET and WHERE","href":"reference/functions/LET"},{"title":"YIELD","href":"reference/functions/YIELD"},{"title":"AKA","href":"reference/functions/AKA"}]},{"title":"Control flow","href":"reference/control-flow","children":[{"title":"IF","href":"reference/control-flow/IF"},{"title":"BRANCH","href":"reference/control-flow/BRANCH"},{"title":"CONSIDER","href":"reference/control-flow/CONSIDER"}]},{"title":"Operators","href":"reference/operators","children":[{"title":"AND, OR, NOT, IMPLIES","href":"reference/operators/logical"},{"title":"UNLESS","href":"reference/operators/UNLESS"},{"title":"Arithmetic","href":"reference/operators/arithmetic"},{"title":"Comparisons","href":"reference/operators/comparisons"}]},{"title":"Regulative rules","href":"reference/regulative","children":[{"title":"PARTY, MUST, MAY, SHANT","href":"reference/regulative/PARTY"},{"title":"Deadlines and consequences","href":"reference/regulative/consequences"},{"title":"BECAUSE","href":"reference/regulative/BECAUSE"},{"title":"DEONTIC","href":"reference/regulative/DEONTIC"},{"title":"EVENT","href":"reference/regulative/EVENT"}]},{"title":"Syntax and directives","href":"reference/syntax"},{"title":"Built-in functions","href":"reference/builtins","children":[{"title":"HTTP and JSON","href":"reference/builtins/http-json"}]},{"title":"Standard libraries","href":"reference/libraries","children":[{"title":"prelude","href":"reference/libraries/prelude"},{"title":"math","href":"reference/libraries/math"},{"title":"daydate","href":"reference/libraries/daydate"},{"title":"time","href":"reference/libraries/time"},{"title":"datetime","href":"reference/libraries/datetime"},{"title":"timezone","href":"reference/libraries/timezone"},{"title":"excel-date","href":"reference/libraries/excel-date"},{"title":"currency","href":"reference/libraries/currency"},{"title":"holdings","href":"reference/libraries/holdings"},{"title":"actus","href":"reference/libraries/actus"},{"title":"legal-persons","href":"reference/libraries/legal-persons"},{"title":"jurisdiction","href":"reference/libraries/jurisdiction"},{"title":"llm","href":"reference/libraries/llm"}]},{"title":"Error messages","href":"reference/errors"}]}],"toc":[],"htmlContent":"$3","pager":{"prev":"$0:rsc:props:children:0:props:navSections:0:items:5","next":"$0:rsc:props:children:0:props:navSections:0:items:5:children:1"}}],["$L4"],"$L5"]}],"isPartial":false,"staleTime":300,"varyParams":null,"buildId":"iJUXAyHcmcW99cMci3ei9"}
+4:["$","script","script-0",{"src":"/_next/static/chunks/0fl~me.qwn48c.js","async":true}]
+5:["$","$L6",null,{"children":["$","$7",null,{"name":"Next.MetadataOutlet","children":"$@8"}]}]
+8:null

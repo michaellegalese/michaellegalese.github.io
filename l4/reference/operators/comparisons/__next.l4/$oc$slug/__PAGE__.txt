@@ -1,0 +1,167 @@
+1:"$Sreact.fragment"
+2:I[90160,["/_next/static/chunks/0ypf.t599.7y6.js","/_next/static/chunks/0t2xr05rlu96l.js","/_next/static/chunks/0uxaa7wo_wmcw.js","/_next/static/chunks/0fl~me.qwn48c.js"],"default"]
+6:I[97367,["/_next/static/chunks/0ypf.t599.7y6.js","/_next/static/chunks/0t2xr05rlu96l.js"],"OutletBoundary"]
+7:"$Sreact.suspense"
+3:Tf65,<h1>Comparisons</h1>
+<p>The comparison operators compare two values of the same type and give a BOOLEAN.</p>
+<table>
+<thead>
+<tr>
+<th>Word</th>
+<th>Symbol</th>
+<th>TRUE when</th>
+<th>Example</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>EQUALS</code></td>
+<td><code>=</code></td>
+<td>the values are equal</td>
+<td><code>5 EQUALS 5</code></td>
+</tr>
+<tr>
+<td><code>GREATER THAN</code>, <code>ABOVE</code></td>
+<td><code>></code></td>
+<td>the first is greater</td>
+<td><code>10 GREATER THAN 5</code></td>
+</tr>
+<tr>
+<td><code>LESS THAN</code>, <code>BELOW</code></td>
+<td><code>&#x3C;</code></td>
+<td>the first is smaller</td>
+<td><code>3 BELOW 7</code></td>
+</tr>
+<tr>
+<td><code>AT LEAST</code></td>
+<td><code>>=</code></td>
+<td>the first is greater or equal</td>
+<td><code>5 AT LEAST 5</code></td>
+</tr>
+<tr>
+<td><code>AT MOST</code></td>
+<td><code>&#x3C;=</code></td>
+<td>the first is smaller or equal</td>
+<td><code>4 AT MOST 10</code></td>
+</tr>
+</tbody>
+</table>
+<p>There is no "not equal" operator: write <code>NOT a EQUALS b</code>.</p>
+<p><strong>Example file:</strong></p>
+<pre><code class="language-l4-file">-- Comparison keyword examples
+
+-- EQUALS
+
+-- Numeric equality
+#EVAL 5 EQUALS 5
+#EVAL 5 = 5
+
+-- String equality
+#EVAL "hello" EQUALS "hello"
+#EVAL "hello" = "world"
+
+-- Boolean equality
+#EVAL TRUE EQUALS TRUE
+#EVAL FALSE = FALSE
+
+-- GREATER THAN / ABOVE
+
+-- Numeric greater than
+#EVAL 10 GREATER THAN 5
+#EVAL 10 > 5
+#EVAL 10 ABOVE 5
+
+-- String comparison (lexicographic)
+#EVAL "b" GREATER THAN "a"
+#EVAL "zebra" > "apple"
+
+-- LESS THAN / BELOW
+
+-- Numeric less than
+#EVAL 3 LESS THAN 7
+#EVAL 3 &#x3C; 7
+#EVAL 3 BELOW 7
+
+-- AT LEAST (>=)
+
+#EVAL 5 AT LEAST 5
+#EVAL 6 AT LEAST 5
+#EVAL 4 AT LEAST 5
+
+#EVAL 5 >= 5
+#EVAL 6 >= 5
+
+-- AT MOST (&#x3C;=)
+
+#EVAL 4 AT MOST 10
+#EVAL 10 AT MOST 10
+#EVAL 11 AT MOST 10
+
+#EVAL 4 &#x3C;= 10
+#EVAL 10 &#x3C;= 10
+
+-- Combined Comparisons
+
+ASSUME age IS A NUMBER
+
+DECIDE `is of working age` IS
+      age AT LEAST 18
+  AND age AT MOST 65
+
+#CHECK `is of working age`
+
+-- Comparison in Functions
+
+GIVEN n IS A NUMBER
+GIVETH A STRING
+`classification of` n MEANS
+  IF n LESS THAN 0
+    THEN "negative"
+    ELSE IF n EQUALS 0
+           THEN "zero"
+           ELSE "positive"
+
+#EVAL `classification of` (-5)
+#EVAL `classification of` 0
+#EVAL `classification of` 42
+
+-- Range Check Pattern
+
+GIVEN val IS A NUMBER
+      `minimum value` IS A NUMBER
+      `maximum value` IS A NUMBER
+GIVETH A BOOLEAN
+`is in range` val `minimum value` `maximum value` MEANS
+  val AT LEAST `minimum value` AND val AT MOST `maximum value`
+
+#EVAL `is in range` 5 1 10
+#EVAL `is in range` 15 1 10
+#EVAL `is in range` 1 1 10
+</code></pre>
+<h2 id="types">Types</h2>
+<ul>
+<li><code>EQUALS</code> works on numbers, text, booleans, values of enumerations, records and lists.</li>
+<li>The ordering operators work on <code>NUMBER</code>, <code>STRING</code> (in character-code order, so <code>"B" &#x3C; "a"</code>) and <code>BOOLEAN</code> (<code>FALSE</code> is less than <code>TRUE</code>).</li>
+<li>Dates can be compared once the <a href="/l4/reference/libraries/daydate">daydate</a> library is imported.</li>
+</ul>
+<h2 id="combining-comparisons">Combining comparisons</h2>
+<p>Comparisons bind more tightly than <code>AND</code> and <code>OR</code>, so no parentheses are needed:</p>
+<pre><code class="language-l4">GIVEN age IS A NUMBER
+      income IS A NUMBER
+GIVETH A BOOLEAN
+`is eligible` age income MEANS
+      age AT LEAST 18
+  AND age AT MOST 65
+  AND income GREATER THAN 30000
+</code></pre>
+<p>See <a href="/l4/reference/operators#precedence">Operators: Precedence</a>.</p>
+<h2 id="related-pages">Related pages</h2>
+<ul>
+<li><a href="/l4/reference/operators/logical">AND, OR, NOT, IMPLIES</a></li>
+<li><a href="/l4/reference/operators/arithmetic">Arithmetic</a></li>
+<li><a href="/l4/reference/control-flow/IF">IF</a></li>
+</ul>
+0:{"rsc":["$","$1","c",{"children":[["$","$L2",null,{"navSections":[{"title":"","items":[{"title":"Language Reference","href":"reference"},{"title":"Glossary","href":"reference/GLOSSARY"},{"title":"Cheat sheet","href":"reference/cheat-sheet"},{"title":"Types","href":"reference/types","children":[{"title":"DECLARE","href":"reference/types/DECLARE"},{"title":"ASSUME","href":"reference/types/ASSUME"},{"title":"FOR ALL","href":"reference/types/for-all"},{"title":"Coercions","href":"reference/types/coercions"}]},{"title":"Functions","href":"reference/functions","children":[{"title":"DECIDE","href":"reference/functions/DECIDE"},{"title":"GIVEN and GIVETH","href":"reference/functions/GIVEN"},{"title":"MEANS","href":"reference/functions/MEANS"},{"title":"LET and WHERE","href":"reference/functions/LET"},{"title":"YIELD","href":"reference/functions/YIELD"},{"title":"AKA","href":"reference/functions/AKA"}]},{"title":"Control flow","href":"reference/control-flow","children":[{"title":"IF","href":"reference/control-flow/IF"},{"title":"BRANCH","href":"reference/control-flow/BRANCH"},{"title":"CONSIDER","href":"reference/control-flow/CONSIDER"}]},{"title":"Operators","href":"reference/operators","children":[{"title":"AND, OR, NOT, IMPLIES","href":"reference/operators/logical"},{"title":"UNLESS","href":"reference/operators/UNLESS"},{"title":"Arithmetic","href":"reference/operators/arithmetic"},{"title":"Comparisons","href":"reference/operators/comparisons"}]},{"title":"Regulative rules","href":"reference/regulative","children":[{"title":"PARTY, MUST, MAY, SHANT","href":"reference/regulative/PARTY"},{"title":"Deadlines and consequences","href":"reference/regulative/consequences"},{"title":"BECAUSE","href":"reference/regulative/BECAUSE"},{"title":"DEONTIC","href":"reference/regulative/DEONTIC"},{"title":"EVENT","href":"reference/regulative/EVENT"}]},{"title":"Syntax and directives","href":"reference/syntax"},{"title":"Built-in functions","href":"reference/builtins","children":[{"title":"HTTP and JSON","href":"reference/builtins/http-json"}]},{"title":"Standard libraries","href":"reference/libraries","children":[{"title":"prelude","href":"reference/libraries/prelude"},{"title":"math","href":"reference/libraries/math"},{"title":"daydate","href":"reference/libraries/daydate"},{"title":"time","href":"reference/libraries/time"},{"title":"datetime","href":"reference/libraries/datetime"},{"title":"timezone","href":"reference/libraries/timezone"},{"title":"excel-date","href":"reference/libraries/excel-date"},{"title":"currency","href":"reference/libraries/currency"},{"title":"holdings","href":"reference/libraries/holdings"},{"title":"actus","href":"reference/libraries/actus"},{"title":"legal-persons","href":"reference/libraries/legal-persons"},{"title":"jurisdiction","href":"reference/libraries/jurisdiction"},{"title":"llm","href":"reference/libraries/llm"}]},{"title":"Error messages","href":"reference/errors"}]}],"toc":[],"htmlContent":"$3","pager":{"prev":"$0:rsc:props:children:0:props:navSections:0:items:6:children:2","next":"$0:rsc:props:children:0:props:navSections:0:items:7"}}],["$L4"],"$L5"]}],"isPartial":false,"staleTime":300,"varyParams":null,"buildId":"iJUXAyHcmcW99cMci3ei9"}
+4:["$","script","script-0",{"src":"/_next/static/chunks/0fl~me.qwn48c.js","async":true}]
+5:["$","$L6",null,{"children":["$","$7",null,{"name":"Next.MetadataOutlet","children":"$@8"}]}]
+8:null

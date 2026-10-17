@@ -1,0 +1,240 @@
+1:"$Sreact.fragment"
+2:I[90160,["/_next/static/chunks/0ypf.t599.7y6.js","/_next/static/chunks/0t2xr05rlu96l.js","/_next/static/chunks/0uxaa7wo_wmcw.js","/_next/static/chunks/0fl~me.qwn48c.js"],"default"]
+6:I[97367,["/_next/static/chunks/0ypf.t599.7y6.js","/_next/static/chunks/0t2xr05rlu96l.js"],"OutletBoundary"]
+7:"$Sreact.suspense"
+3:T255b,<h1>Language Reference</h1>
+<p>The reference describes exactly what each part of L4 is and does. To learn the language step by step, take a <a href="/l4/courses">course</a>; to get a particular job done, see the <a href="/l4/tutorials">tutorials</a>.</p>
+<table>
+<thead>
+<tr>
+<th>Go to</th>
+<th>If you want to…</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="/l4/reference/GLOSSARY">Glossary</a></td>
+<td>Look up a single keyword or symbol</td>
+</tr>
+<tr>
+<td><a href="/l4/reference/cheat-sheet">Cheat sheet</a></td>
+<td>Find the L4 version of code you know</td>
+</tr>
+<tr>
+<td><a href="/l4/reference/errors">Error messages</a></td>
+<td>Understand an error or warning</td>
+</tr>
+<tr>
+<td><a href="#library">Library</a></td>
+<td>Find a function for dates, money or lists (further down the page)</td>
+</tr>
+</tbody>
+</table>
+<h2 id="language">Language</h2>
+<h3 id="types"><a href="/l4/reference/types">Types</a></h3>
+<p>Describe the things your rules talk about: people, contracts, amounts, dates. The overview lists the built-in types (BOOLEAN, NUMBER, STRING, DATE) and the ready-made ones (LIST, MAYBE, EITHER).</p>
+<table>
+<thead>
+<tr>
+<th>Page</th>
+<th>What it covers</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="/l4/reference/types/DECLARE">DECLARE</a></td>
+<td>Records with HAS, enumerations with ONE OF, computed fields, type synonyms, parameterised types, A and AN</td>
+</tr>
+<tr>
+<td><a href="/l4/reference/types/ASSUME">ASSUME</a></td>
+<td>A name with a type but no value, for facts supplied from outside; how it works with <code>@export</code></td>
+</tr>
+<tr>
+<td><a href="/l4/reference/types/for-all">FOR ALL</a></td>
+<td>Functions that work for values of any type</td>
+</tr>
+<tr>
+<td><a href="/l4/reference/types/coercions">Coercions</a></td>
+<td>Converting between NUMBER, STRING, DATE and other types</td>
+</tr>
+</tbody>
+</table>
+<h3 id="functions"><a href="/l4/reference/functions">Functions</a></h3>
+<p>Rules in L4 are functions: they take inputs and compute a result.</p>
+<table>
+<thead>
+<tr>
+<th>Page</th>
+<th>What it covers</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="/l4/reference/functions/DECIDE">DECIDE</a></td>
+<td>Define a value, a function or a rule; DECIDE … IF; several clauses, one per case</td>
+</tr>
+<tr>
+<td><a href="/l4/reference/functions/GIVEN">GIVEN and GIVETH</a></td>
+<td>Name and type the inputs; state the type of the result</td>
+</tr>
+<tr>
+<td><a href="/l4/reference/functions/MEANS">MEANS</a></td>
+<td>The body of a definition, and computed fields in records</td>
+</tr>
+<tr>
+<td><a href="/l4/reference/functions/LET">LET and WHERE</a></td>
+<td>Local definitions, before or after an expression</td>
+</tr>
+<tr>
+<td><a href="/l4/reference/functions/YIELD">YIELD</a></td>
+<td>Functions without a name</td>
+</tr>
+<tr>
+<td><a href="/l4/reference/functions/AKA">AKA</a></td>
+<td>Other names for a definition, a type or a section</td>
+</tr>
+<tr>
+<td><a href="/l4/reference/functions#mixfix-functions">Mixfix functions</a></td>
+<td>Names with words between the inputs, so a call reads like a sentence</td>
+</tr>
+</tbody>
+</table>
+<h3 id="control-flow"><a href="/l4/reference/control-flow">Control flow</a></h3>
+<p>Choose between cases.</p>
+<table>
+<thead>
+<tr>
+<th>Page</th>
+<th>What it covers</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="/l4/reference/control-flow/IF">IF</a></td>
+<td>A choice between two values; several conditions</td>
+</tr>
+<tr>
+<td><a href="/l4/reference/control-flow/BRANCH">BRANCH</a></td>
+<td>Several conditions checked in order, with an OTHERWISE</td>
+</tr>
+<tr>
+<td><a href="/l4/reference/control-flow/CONSIDER">CONSIDER</a></td>
+<td>Choosing by the shape of a value; missing and redundant branches</td>
+</tr>
+</tbody>
+</table>
+<h3 id="operators"><a href="/l4/reference/operators">Operators</a></h3>
+<p>Combine and compare values. The overview covers word and symbol forms (<code>AND</code> or <code>&#x26;&#x26;</code>), precedence, and AND and OR across several lines (<code>...</code>, <code>..</code>).</p>
+<table>
+<thead>
+<tr>
+<th>Page</th>
+<th>What it covers</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="/l4/reference/operators/logical">AND, OR, NOT, IMPLIES</a></td>
+<td>Truth tables, conditions over several lines, order of evaluation</td>
+</tr>
+<tr>
+<td><a href="/l4/reference/operators/UNLESS">UNLESS</a></td>
+<td>Exceptions: "A, unless B"</td>
+</tr>
+<tr>
+<td><a href="/l4/reference/operators/arithmetic">Arithmetic</a></td>
+<td>PLUS, MINUS, TIMES, DIVIDED BY, MODULO; exact numbers</td>
+</tr>
+<tr>
+<td><a href="/l4/reference/operators/comparisons">Comparisons</a></td>
+<td>EQUALS, GREATER THAN, LESS THAN, AT LEAST, AT MOST</td>
+</tr>
+</tbody>
+</table>
+<h3 id="regulative-rules"><a href="/l4/reference/regulative">Regulative rules</a></h3>
+<p>Obligations, permissions and prohibitions: who must, may or must not do what, by when, and what follows. The overview shows the parts of a rule and how to test one with <code>#TRACE</code>.</p>
+<table>
+<thead>
+<tr>
+<th>Page</th>
+<th>What it covers</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="/l4/reference/regulative/PARTY">PARTY, MUST, MAY, SHANT</a></td>
+<td>Who acts, and whether they must, may or must not (MUST NOT); DO</td>
+</tr>
+<tr>
+<td><a href="/l4/reference/regulative/consequences">Deadlines and consequences</a></td>
+<td>WITHIN, HENCE and LEST, FULFILLED and BREACH, PROVIDED, EXACTLY, RAND and ROR</td>
+</tr>
+<tr>
+<td><a href="/l4/reference/regulative/BECAUSE">BECAUSE</a></td>
+<td>The reason given for a breach</td>
+</tr>
+<tr>
+<td><a href="/l4/reference/regulative/DEONTIC">DEONTIC</a></td>
+<td>The type of a regulative rule, and how a rule is evaluated</td>
+</tr>
+<tr>
+<td><a href="/l4/reference/regulative/EVENT">EVENT</a></td>
+<td>What a party did and when; WAIT UNTIL</td>
+</tr>
+</tbody>
+</table>
+<h3 id="syntax-and-directives"><a href="/l4/reference/syntax">Syntax and directives</a></h3>
+<p>How an L4 file is written, on one page:</p>
+<ul>
+<li><strong>Text and layout:</strong> <a href="/l4/reference/syntax#layout">layout</a>, <a href="/l4/reference/syntax#comments">comments</a>, <a href="/l4/reference/syntax#identifiers">identifiers</a>, <a href="/l4/reference/syntax#literals">literals</a></li>
+<li><strong>Files:</strong> <a href="/l4/reference/syntax#import">IMPORT</a>, <a href="/l4/reference/syntax#sections">§ sections</a></li>
+<li><strong>Annotations:</strong> <a href="/l4/reference/syntax#annotations"><code>@desc</code>, <code>@nlg</code>, <code>@ref</code>, <code>@export</code></a></li>
+<li><strong>Directives:</strong> <a href="/l4/reference/syntax#directives"><code>#EVAL</code>, <code>#CHECK</code>, <code>#ASSERT</code>, <code>#TRACE</code></a></li>
+<li><strong>Legal phrasing:</strong> <a href="/l4/reference/syntax#genitive">genitive 's</a>, <a href="/l4/reference/syntax#of">OF</a>, <a href="/l4/reference/syntax#ditto">ditto ^</a>, <a href="/l4/reference/syntax#asyndetic-and-and-or">AND and OR over several lines</a></li>
+</ul>
+<h2 id="library">Library</h2>
+<h3 id="built-in-functions"><a href="/l4/reference/builtins">Built-in functions</a></h3>
+<p>Functions every L4 file can use without <code>IMPORT</code>:</p>
+<ul>
+<li><a href="/l4/reference/builtins#numbers">Numbers</a>, <a href="/l4/reference/builtins#text">text</a>, <a href="/l4/reference/builtins#dates">dates</a>, <a href="/l4/reference/builtins#times-of-day">times of day</a>, <a href="/l4/reference/builtins#date-and-time-together">date and time together</a></li>
+<li><a href="/l4/reference/builtins#looking-across-days">Looking across days</a> and <a href="/l4/reference/builtins#regulative-traces">regulative traces</a></li>
+<li><a href="/l4/reference/builtins/http-json">HTTP and JSON</a>: FETCH, POST, ENV, JSONENCODE, JSONDECODE</li>
+</ul>
+<h3 id="standard-libraries"><a href="/l4/reference/libraries">Standard libraries</a></h3>
+<p>Libraries you load with <a href="/l4/reference/libraries#import"><code>IMPORT</code></a>:</p>
+<table>
+<thead>
+<tr>
+<th>Group</th>
+<th>Libraries</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Core</td>
+<td><a href="/l4/reference/libraries/prelude">prelude</a> (lists, MAYBE, EITHER, pairs), <a href="/l4/reference/libraries/math">math</a></td>
+</tr>
+<tr>
+<td>Dates and time</td>
+<td><a href="/l4/reference/libraries/daydate">daydate</a>, <a href="/l4/reference/libraries/time">time</a>, <a href="/l4/reference/libraries/datetime">datetime</a>, <a href="/l4/reference/libraries/timezone">timezone</a>, <a href="/l4/reference/libraries/excel-date">excel-date</a></td>
+</tr>
+<tr>
+<td>Money and finance</td>
+<td><a href="/l4/reference/libraries/currency">currency</a>, <a href="/l4/reference/libraries/holdings">holdings</a>, <a href="/l4/reference/libraries/actus">actus</a></td>
+</tr>
+<tr>
+<td>Legal entities and places</td>
+<td><a href="/l4/reference/libraries/legal-persons">legal-persons</a>, <a href="/l4/reference/libraries/jurisdiction">jurisdiction</a></td>
+</tr>
+<tr>
+<td>AI</td>
+<td><a href="/l4/reference/libraries/llm">llm</a></td>
+</tr>
+</tbody>
+</table>
+<h3 id="error-messages"><a href="/l4/reference/errors">Error messages</a></h3>
+<p>What the compiler's errors and warnings mean and how to fix them, grouped by kind: <a href="/l4/reference/errors#layout-and-syntax">layout and syntax</a>, <a href="/l4/reference/errors#types">types</a>, <a href="/l4/reference/errors#names-and-imports">names and imports</a>, <a href="/l4/reference/errors#definitions-and-clauses">definitions and clauses</a>, <a href="/l4/reference/errors#pattern-matching">pattern matching</a>, <a href="/l4/reference/errors#regulative-rules">regulative rules</a> and <a href="/l4/reference/errors#export">export</a>.</p>
+0:{"rsc":["$","$1","c",{"children":[["$","$L2",null,{"navSections":[{"title":"","items":[{"title":"Language Reference","href":"reference"},{"title":"Glossary","href":"reference/GLOSSARY"},{"title":"Cheat sheet","href":"reference/cheat-sheet"},{"title":"Types","href":"reference/types","children":[{"title":"DECLARE","href":"reference/types/DECLARE"},{"title":"ASSUME","href":"reference/types/ASSUME"},{"title":"FOR ALL","href":"reference/types/for-all"},{"title":"Coercions","href":"reference/types/coercions"}]},{"title":"Functions","href":"reference/functions","children":[{"title":"DECIDE","href":"reference/functions/DECIDE"},{"title":"GIVEN and GIVETH","href":"reference/functions/GIVEN"},{"title":"MEANS","href":"reference/functions/MEANS"},{"title":"LET and WHERE","href":"reference/functions/LET"},{"title":"YIELD","href":"reference/functions/YIELD"},{"title":"AKA","href":"reference/functions/AKA"}]},{"title":"Control flow","href":"reference/control-flow","children":[{"title":"IF","href":"reference/control-flow/IF"},{"title":"BRANCH","href":"reference/control-flow/BRANCH"},{"title":"CONSIDER","href":"reference/control-flow/CONSIDER"}]},{"title":"Operators","href":"reference/operators","children":[{"title":"AND, OR, NOT, IMPLIES","href":"reference/operators/logical"},{"title":"UNLESS","href":"reference/operators/UNLESS"},{"title":"Arithmetic","href":"reference/operators/arithmetic"},{"title":"Comparisons","href":"reference/operators/comparisons"}]},{"title":"Regulative rules","href":"reference/regulative","children":[{"title":"PARTY, MUST, MAY, SHANT","href":"reference/regulative/PARTY"},{"title":"Deadlines and consequences","href":"reference/regulative/consequences"},{"title":"BECAUSE","href":"reference/regulative/BECAUSE"},{"title":"DEONTIC","href":"reference/regulative/DEONTIC"},{"title":"EVENT","href":"reference/regulative/EVENT"}]},{"title":"Syntax and directives","href":"reference/syntax"},{"title":"Built-in functions","href":"reference/builtins","children":[{"title":"HTTP and JSON","href":"reference/builtins/http-json"}]},{"title":"Standard libraries","href":"reference/libraries","children":[{"title":"prelude","href":"reference/libraries/prelude"},{"title":"math","href":"reference/libraries/math"},{"title":"daydate","href":"reference/libraries/daydate"},{"title":"time","href":"reference/libraries/time"},{"title":"datetime","href":"reference/libraries/datetime"},{"title":"timezone","href":"reference/libraries/timezone"},{"title":"excel-date","href":"reference/libraries/excel-date"},{"title":"currency","href":"reference/libraries/currency"},{"title":"holdings","href":"reference/libraries/holdings"},{"title":"actus","href":"reference/libraries/actus"},{"title":"legal-persons","href":"reference/libraries/legal-persons"},{"title":"jurisdiction","href":"reference/libraries/jurisdiction"},{"title":"llm","href":"reference/libraries/llm"}]},{"title":"Error messages","href":"reference/errors"}]}],"toc":[],"htmlContent":"$3","pager":{"next":"$0:rsc:props:children:0:props:navSections:0:items:1"}}],["$L4"],"$L5"]}],"isPartial":false,"staleTime":300,"varyParams":null,"buildId":"iJUXAyHcmcW99cMci3ei9"}
+4:["$","script","script-0",{"src":"/_next/static/chunks/0fl~me.qwn48c.js","async":true}]
+5:["$","$L6",null,{"children":["$","$7",null,{"name":"Next.MetadataOutlet","children":"$@8"}]}]
+8:null

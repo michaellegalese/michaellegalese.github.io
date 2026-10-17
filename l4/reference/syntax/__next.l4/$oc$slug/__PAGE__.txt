@@ -1,0 +1,376 @@
+1:"$Sreact.fragment"
+2:I[90160,["/_next/static/chunks/0ypf.t599.7y6.js","/_next/static/chunks/0t2xr05rlu96l.js","/_next/static/chunks/0uxaa7wo_wmcw.js","/_next/static/chunks/0fl~me.qwn48c.js"],"default"]
+6:I[97367,["/_next/static/chunks/0ypf.t599.7y6.js","/_next/static/chunks/0t2xr05rlu96l.js"],"OutletBoundary"]
+7:"$Sreact.suspense"
+3:T424f,<h1>Syntax and directives</h1>
+<p>This page covers how an L4 file is written: layout, comments, names, literals, annotations, directives and the special forms that make rules read like legal text.
+For how to write rules that read well, see <a href="/l4/concepts/language-design/principles#writing-in-the-l4-style">Writing in the L4 style</a>.</p>
+<h2 id="layout">Layout</h2>
+<p>L4 is layout-sensitive: indentation, not braces or semicolons, shows what belongs to what.
+The lines of a block are indented further than the line that opens it, and the items of a block (fields, inputs, branches) start in the same column.
+Spaces only; a tab is not a substitute.</p>
+<p><strong>Example:</strong></p>
+<pre><code class="language-l4-file">-- Example: Layout rules (indentation-based grouping)
+-- Demonstrates how indentation defines code blocks
+
+DECLARE Person
+  HAS name IS A STRING    -- Indented: part of declaration
+      age IS A NUMBER     -- Same level: another field
+      
+john MEANS Person WITH
+  name IS "John Doe"
+  age  IS 30
+
+#EVAL john's name
+</code></pre>
+<p>In a long expression, indentation also groups the operators; see <a href="/l4/reference/operators/logical#several-lines">AND, OR, NOT, IMPLIES: Several lines</a>.</p>
+<h2 id="comments">Comments</h2>
+<ul>
+<li><code>--</code> or <code>//</code> starts a comment that runs to the end of the line.</li>
+<li><code>{- … -}</code> and <code>/* … */</code> enclose a comment that can span several lines.</li>
+</ul>
+<p><strong>Example:</strong></p>
+<pre><code class="language-l4-file">-- Comments
+
+-- A line comment starts with two dashes
+// or with two slashes
+`the age limit` MEANS 18  -- and can follow code on a line
+
+{- A block comment
+   can span several lines -}
+
+/* So can this
+   one */
+
+#EVAL `the age limit`
+</code></pre>
+<h2 id="identifiers">Identifiers</h2>
+<ul>
+<li>A plain identifier starts with a letter and continues with letters, digits and underscores: <code>age</code>, <code>income_band</code>.</li>
+<li>A quoted identifier is written in backquotes and can contain spaces and punctuation: <code>`the applicant`</code>, <code>`Section 2(a)`</code>. Prefer these: they let a rule read like the legal text.</li>
+<li>Keywords (<code>DECIDE</code>, <code>GIVEN</code>, <code>IF</code>, …) are written in capitals. Identifiers are case-sensitive: <code>`the rate`</code> and <code>`The rate`</code> are different names.</li>
+</ul>
+<p><strong>Example:</strong></p>
+<pre><code class="language-l4-file">-- Identifiers: plain and quoted
+
+-- A plain identifier: letters, digits and underscores, starting with a letter
+ASSUME age IS A NUMBER
+ASSUME income_band IS A STRING
+
+-- A quoted identifier, in backquotes, can contain spaces and punctuation
+ASSUME `total tax` IS A NUMBER
+ASSUME `Section 2(a)` IS A STRING
+
+-- Identifiers are case-sensitive: these are two different names
+`the rate` MEANS 1
+`The rate` MEANS 2
+
+#EVAL `the rate`
+#EVAL `The rate`
+</code></pre>
+<h2 id="literals">Literals</h2>
+<table>
+<thead>
+<tr>
+<th>Kind</th>
+<th>Examples</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Number</td>
+<td><code>42</code>, <code>-17</code>, <code>3.14</code>, <code>5%</code> (= <code>0.05</code>), <code>100_000</code></td>
+</tr>
+<tr>
+<td>Text</td>
+<td><code>"hello"</code>, with <code>\"</code>, <code>\\</code> and <code>\n</code> as escapes</td>
+</tr>
+<tr>
+<td>Boolean</td>
+<td><code>TRUE</code>, <code>FALSE</code></td>
+</tr>
+<tr>
+<td>List</td>
+<td><code>LIST 1, 2, 3</code>, <code>EMPTY</code>, <code>1 FOLLOWED BY 2 FOLLOWED BY EMPTY</code></td>
+</tr>
+</tbody>
+</table>
+<p>Underscores between the digits of a number are ignored. A number must start with a digit and must not end with an underscore.
+There is no date literal; see <a href="/l4/reference/types#built-in-types">Types</a>.</p>
+<h2 id="import">IMPORT</h2>
+<p><code>IMPORT name</code> at the top of a file, before the first <code>§</code> section, makes the definitions of a library or another L4 file available. An <code>IMPORT</code> below a section heading is ignored. See <a href="/l4/reference/libraries#import">Standard libraries: IMPORT</a>.</p>
+<h2 id="annotations">Annotations</h2>
+<p>Annotations attach information to the definition that follows them, or to the line they end.</p>
+<h3 id="desc">@desc</h3>
+<p><code>@desc text</code> describes a rule, a type or an input. It goes on the line above a definition, or at the end of an input's line. Deployed functions show it to their callers.</p>
+<pre><code class="language-l4">@desc The applicant's age in years
+ASSUME `the applicant's age` IS A NUMBER
+</code></pre>
+<h3 id="nlg">@nlg</h3>
+<p><code>@nlg</code> gives the natural-language wording of a definition, with <code>%name%</code> slots for its inputs. Write it at the end of the definition's line. <code>l4 render</code> and the editor use it when they put the rule into words.</p>
+<pre><code class="language-l4">GIVEN x IS A NUMBER, y IS A NUMBER
+GIVETH A NUMBER
+`the greater of` x y @nlg the greater of %x% and %y%
+  MEANS IF x >= y THEN x ELSE y
+</code></pre>
+<p>Text in square brackets after a name, as in <code>DECIDE `the limit` [the statutory limit] IS 5</code>, is a short inline wording for that name.
+How to use <code>@nlg</code> well: <a href="/l4/tutorials/natural-language-functions/optimising-natural-language-generation">Make rules read like law</a>.</p>
+<h3 id="ref">@ref</h3>
+<p><code>@ref</code> cites a legal source: the provision a rule, a type or an input comes from.</p>
+<ul>
+<li><strong>Line form:</strong> <code>@ref</code> and the citation, on a line of its own.</li>
+<li><strong>Inline form:</strong> the citation between <code>&#x3C;&#x3C;</code> and <code>>></code>, which can sit in the middle of a line.</li>
+</ul>
+<h4 id="what-a-ref-cites">What a <code>@ref</code> cites</h4>
+<p>A <code>@ref</code> cites what comes <strong>after</strong> it, so write it on the line above the thing it cites:</p>
+<pre><code class="language-l4">@ref Section 4(1)(a) of the Act
+GIVEN age IS A NUMBER
+      resident IS A BOOLEAN
+GIVETH A BOOLEAN
+`is eligible` MEANS
+  age >= 18
+  AND &#x3C;&#x3C;Section 4(1)(b)>> resident
+</code></pre>
+<p>The <code>@ref</code> cites the rule <code>is eligible</code>; the <code>&#x3C;&#x3C;…>></code> cites <code>resident</code>, the expression that follows it.
+A <code>@ref</code> is held by the first construct that starts after it: a rule, a type, a section heading, an input, or an expression inside a rule.
+Blank lines and comments between a <code>@ref</code> and that construct make no difference.
+A citation before the first operand of a chain of <code>AND</code>, <code>OR</code> or arithmetic is held by the whole chain, because the chain is the outermost expression that starts after it; to cite one operand, put the citation just before that operand inside the chain, as with <code>resident</code> above.</p>
+<p><strong>Several citations.</strong> Write them one above the other, each on a line of its own.
+The construct below keeps all of them, in the order written.</p>
+<pre><code class="language-l4">@ref Dog Act 058 of 1976 (WA)
+@ref url https://www.legislation.wa.gov.au/legislation/statutes.nsf/law_a230.html
+§ `Dogs Act - 33D.1`
+</code></pre>
+<p>Where only one citation per construct is wanted, the nearest is used: the one written last, just above the construct.
+In the editor, hovering over a citation shows it as a link.</p>
+<p><strong><code>@ref-map name url</code></strong> maps a citation to a link: a <code>@ref</code> whose text is <code>name</code> links to <code>url</code>.</p>
+<h4 id="two-warnings">Two warnings</h4>
+<p>Both are warnings, so <code>l4 check</code> still succeeds, and the VS Code extension marks the <code>@ref</code> itself.
+The browser-based editor does not show them.</p>
+<p><strong>A <code>@ref</code> that follows code on its line.</strong>
+A <code>@ref</code> written at the end of a line, after the code it means to cite, cannot cite that code, because it cites what comes after it.
+It does not cite the next construct either: it is attached to nothing, so the next construct's citation, in the IDE and in every export, is not this one.
+The warning names the code it trails:</p>
+<blockquote>
+<p>This @ref (<code>1981/61 sec. 2</code>) follows code on its line, but a @ref refers to what follows it, so this one is attached to nothing. Put it on the line above <code>GIVETH A BOOLEAN</code>.</p>
+</blockquote>
+<p>The fix is to move it to the line above that code.
+An inline <code>&#x3C;&#x3C;…>></code> is warned about only when it ends the line, because in the middle of a line it cites the word after it, which is what it is for.</p>
+<p><strong>A <code>@ref</code> with nothing after it.</strong>
+A <code>@ref</code> after the last construct of the file has nothing to attach to:</p>
+<blockquote>
+<p>This @ref (<code>Section 4(1)(a) of the Act</code>) is at the end of the file, so there is nothing after it to attach to.</p>
+</blockquote>
+<h3 id="export">@export</h3>
+<p><code>@export</code> marks a function to be published as an endpoint when the file is deployed. The rest of the line is the function's description. Functions without <code>@export</code> stay internal.</p>
+<pre><code class="language-l4">@export Check whether a person is old enough to apply
+GIVEN age IS A NUMBER @desc The person's age in years
+GIVETH A BOOLEAN
+DECIDE `is old enough` IF age >= 18
+</code></pre>
+<p><code>@export default</code> marks the file's main entry point among its exports.
+A function written as <a href="/l4/reference/functions/DECIDE#several-clauses">several clauses</a> needs a <code>GIVEN</code> to be exported, and a function-typed input cannot be exported (<a href="/l4/reference/types/ASSUME#function-typed-inputs-are-not-supported-for-export">ASSUME</a>).
+How to deploy: <a href="/l4/tutorials/deploying-rules/exporting-rules-for-deployment">Deploy your rules</a>.</p>
+<p><strong>Example:</strong></p>
+<pre><code class="language-l4-file">-- Annotations: @desc, @nlg, @ref, @export
+
+@desc The applicant's age in years
+ASSUME `the applicant's age` IS A NUMBER
+
+-- @nlg at the end of a definition's line gives its wording, with %name% slots
+GIVEN x IS A NUMBER, y IS A NUMBER
+GIVETH A NUMBER
+`the greater of` x y @nlg the greater of %x% and %y%
+  MEANS IF x >= y THEN x ELSE y
+
+-- A @ref cites what comes after it
+@ref Section 4(1)(a) of the Act
+@export Check whether a person is old enough to apply
+GIVEN age IS A NUMBER @desc The person's age in years
+GIVETH A BOOLEAN
+DECIDE `is old enough` IF age >= 18
+
+#EVAL `the greater of` 3 7
+#EVAL `is old enough` 20
+</code></pre>
+<h2 id="directives">Directives</h2>
+<p>Directives are instructions to the tools, written at the top level of a file. <code>l4 run</code> and the editor carry them out; <code>l4 check</code> only type-checks them.</p>
+<table>
+<thead>
+<tr>
+<th>Directive</th>
+<th>What it does</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>#EVAL</code></td>
+<td>evaluates an expression and shows the result</td>
+</tr>
+<tr>
+<td><code>#EVALTRACE</code></td>
+<td>evaluates an expression and also shows the steps that led to the result (<code>l4 trace</code> draws them)</td>
+</tr>
+<tr>
+<td><code>#CHECK</code></td>
+<td>type-checks an expression and shows its type, without evaluating it</td>
+</tr>
+<tr>
+<td><code>#ASSERT</code></td>
+<td>evaluates an expression and reports "assertion failed" when it is not TRUE</td>
+</tr>
+<tr>
+<td><code>#TRACE</code></td>
+<td>runs a regulative rule against a list of events (see <a href="/l4/reference/regulative">Regulative rules</a>)</td>
+</tr>
+</tbody>
+</table>
+<pre><code class="language-text">#EVAL expression
+#EVALTRACE expression
+#CHECK expression
+#ASSERT expression
+#TRACE rule AT start-time WITH
+  PARTY party DOES action AT time
+</code></pre>
+<p>A directive's expression ends with its line. To continue it, start the next line with <code>#</code> and a space, followed by an operator:</p>
+<pre><code class="language-l4">GIVEN age IS A NUMBER
+GIVETH A BOOLEAN
+DECIDE `is an adult` IF age >= 18
+
+#EVAL `is an adult` 21
+#   AND `is an adult` 30
+#CHECK `is an adult`
+#ASSERT NOT `is an adult` 12
+</code></pre>
+<p><strong>Example:</strong></p>
+<pre><code class="language-l4-file">-- Directives: #EVAL, #EVALTRACE, #CHECK, #ASSERT, #TRACE
+
+GIVEN age IS A NUMBER
+GIVETH A BOOLEAN
+DECIDE `is an adult` IF age >= 18
+
+-- #EVAL evaluates an expression and shows the result
+#EVAL `is an adult` 21
+
+-- A directive continues on the next line when that line starts with "# "
+-- and the expression goes on with an operator
+#EVAL `is an adult` 21
+#   AND `is an adult` 30
+
+-- #EVALTRACE also shows how the result was reached
+#EVALTRACE `is an adult` 15
+
+-- #CHECK type-checks an expression and shows its type, without evaluating it
+#CHECK `is an adult`
+
+-- #ASSERT checks that an expression is TRUE
+#ASSERT `is an adult` 40
+#ASSERT NOT `is an adult` 12
+
+-- #TRACE runs a regulative rule against events
+DECLARE Person IS ONE OF Seller
+DECLARE Action IS ONE OF delivery
+
+GIVETH A DEONTIC Person Action
+`delivery duty` MEANS
+  PARTY Seller
+  MUST delivery
+  WITHIN 3
+
+#TRACE `delivery duty` AT 0 WITH
+  PARTY Seller DOES delivery AT 2
+</code></pre>
+<h2 id="sections">Sections</h2>
+<p><code>§</code> starts a section, like a part or section of a statute; <code>§§</code> starts a subsection, <code>§§§</code> a sub-subsection, and so on. The heading is the name after the marks.</p>
+<pre><code class="language-l4">§ `Part VII`
+
+§§ `Subsection 2`
+`age of majority` MEANS 18
+
+§§ `Subsection 3`
+`age of majority` MEANS 21
+
+GIVEN age IS A NUMBER
+GIVETH A BOOLEAN
+DECIDE `is an adult under subsection 2` IF
+    age >= `Part VII`'s `Subsection 2`'s `age of majority`
+</code></pre>
+<p>Definitions in different sections can share a name. Where the name alone would be ambiguous, qualify it with the section's name and <code>'s</code>, as above.
+A section can have a shorter alias: <code>§ `Definitions for Part VII` AKA defs</code>, then <code>defs's `taxable income`</code> (or <code>defs.`taxable income`</code>).</p>
+<p><strong>Example:</strong></p>
+<pre><code class="language-l4-file">-- Sections (§) group definitions, like the parts of a statute
+
+§ `Eligibility Rules`
+
+`the minimum age` MEANS 18
+
+§§ `Age Requirements`
+
+GIVEN age IS A NUMBER
+GIVETH A BOOLEAN
+`is old enough` age MEANS age >= `the minimum age`
+
+§§ `Citizenship Requirements`
+
+GIVEN `is a citizen` IS A BOOLEAN
+GIVETH A BOOLEAN
+`meets citizenship requirement` `is a citizen` MEANS `is a citizen`
+
+#EVAL `is old enough` 21
+#EVAL `meets citizenship requirement` TRUE
+</code></pre>
+<h2 id="genitive">Genitive</h2>
+<p><code>'s</code> reads a field of a record, as in English: <code>`the applicant`'s age</code>. It can be chained: <code>`the applicant`'s address's city</code>.
+<code>age OF `the applicant` </code> means the same.</p>
+<p><strong>Example:</strong></p>
+<pre><code class="language-l4-file">-- Example: Genitive ('s) for field access
+-- Demonstrates possessive syntax for record fields
+
+DECLARE Person
+  HAS `full name` IS A STRING
+      age         IS A NUMBER
+
+DECIDE `the applicant` IS Person WITH
+  `full name` IS "John Doe"
+  age         IS 30
+
+-- Using genitive (reads like English)
+DECIDE `applicant age using genitive` IS `the applicant`'s age
+
+-- Equivalent to using THE ... OF
+DECIDE `applicant age using THE OF` IS age OF `the applicant`
+
+#EVAL `applicant age using genitive`
+#EVAL `applicant age using THE OF`
+</code></pre>
+<h2 id="of">OF</h2>
+<p><code>OF</code> introduces arguments separated by commas: <code>add OF 3, 4</code> means the same as <code>add 3 4</code>.
+It also appears in types (<code>LIST OF NUMBER</code>, <code>Box OF NUMBER</code>), in enumerations (<code>IS ONE OF</code>), when making a record (<code>Person OF "Kim", 30</code>) and in patterns (<code>WHEN JUST OF x</code>).</p>
+<h2 id="ditto">Ditto</h2>
+<p><code>^</code> repeats the word in the same position on the line above, one <code>^</code> per word. It keeps repetitive lines short.</p>
+<p><strong>Example:</strong></p>
+<pre><code class="language-l4-file">-- Example: Ditto (^) syntax
+-- Copy tokens from previous line (one ^ per token)
+
+eligible MEANS TRUE
+
+john  MEANS eligible
+mary  ^     ^        -- Copies "MEANS eligible"
+alice ^     ^        -- Also copies "MEANS eligible"
+
+#EVAL john
+#EVAL mary
+#EVAL alice
+</code></pre>
+<h2 id="asyndetic-and-and-or">Asyndetic AND and OR</h2>
+<p><code>...</code> means <code>AND</code> and <code>..</code> means <code>OR</code>, as in lists of conditions in legal text. See <a href="/l4/reference/operators#asyndetic-and-and-or">Operators: Asyndetic AND and OR</a>.</p>
+<h2 id="related-pages">Related pages</h2>
+<ul>
+<li><a href="/l4/reference/GLOSSARY">Glossary</a>: every keyword, with links</li>
+<li><a href="/l4/reference/functions">Functions</a></li>
+<li><a href="/l4/reference/operators">Operators</a></li>
+</ul>
+0:{"rsc":["$","$1","c",{"children":[["$","$L2",null,{"navSections":[{"title":"","items":[{"title":"Language Reference","href":"reference"},{"title":"Glossary","href":"reference/GLOSSARY"},{"title":"Cheat sheet","href":"reference/cheat-sheet"},{"title":"Types","href":"reference/types","children":[{"title":"DECLARE","href":"reference/types/DECLARE"},{"title":"ASSUME","href":"reference/types/ASSUME"},{"title":"FOR ALL","href":"reference/types/for-all"},{"title":"Coercions","href":"reference/types/coercions"}]},{"title":"Functions","href":"reference/functions","children":[{"title":"DECIDE","href":"reference/functions/DECIDE"},{"title":"GIVEN and GIVETH","href":"reference/functions/GIVEN"},{"title":"MEANS","href":"reference/functions/MEANS"},{"title":"LET and WHERE","href":"reference/functions/LET"},{"title":"YIELD","href":"reference/functions/YIELD"},{"title":"AKA","href":"reference/functions/AKA"}]},{"title":"Control flow","href":"reference/control-flow","children":[{"title":"IF","href":"reference/control-flow/IF"},{"title":"BRANCH","href":"reference/control-flow/BRANCH"},{"title":"CONSIDER","href":"reference/control-flow/CONSIDER"}]},{"title":"Operators","href":"reference/operators","children":[{"title":"AND, OR, NOT, IMPLIES","href":"reference/operators/logical"},{"title":"UNLESS","href":"reference/operators/UNLESS"},{"title":"Arithmetic","href":"reference/operators/arithmetic"},{"title":"Comparisons","href":"reference/operators/comparisons"}]},{"title":"Regulative rules","href":"reference/regulative","children":[{"title":"PARTY, MUST, MAY, SHANT","href":"reference/regulative/PARTY"},{"title":"Deadlines and consequences","href":"reference/regulative/consequences"},{"title":"BECAUSE","href":"reference/regulative/BECAUSE"},{"title":"DEONTIC","href":"reference/regulative/DEONTIC"},{"title":"EVENT","href":"reference/regulative/EVENT"}]},{"title":"Syntax and directives","href":"reference/syntax"},{"title":"Built-in functions","href":"reference/builtins","children":[{"title":"HTTP and JSON","href":"reference/builtins/http-json"}]},{"title":"Standard libraries","href":"reference/libraries","children":[{"title":"prelude","href":"reference/libraries/prelude"},{"title":"math","href":"reference/libraries/math"},{"title":"daydate","href":"reference/libraries/daydate"},{"title":"time","href":"reference/libraries/time"},{"title":"datetime","href":"reference/libraries/datetime"},{"title":"timezone","href":"reference/libraries/timezone"},{"title":"excel-date","href":"reference/libraries/excel-date"},{"title":"currency","href":"reference/libraries/currency"},{"title":"holdings","href":"reference/libraries/holdings"},{"title":"actus","href":"reference/libraries/actus"},{"title":"legal-persons","href":"reference/libraries/legal-persons"},{"title":"jurisdiction","href":"reference/libraries/jurisdiction"},{"title":"llm","href":"reference/libraries/llm"}]},{"title":"Error messages","href":"reference/errors"}]}],"toc":[],"htmlContent":"$3","pager":{"prev":"$0:rsc:props:children:0:props:navSections:0:items:7:children:4","next":"$0:rsc:props:children:0:props:navSections:0:items:9"}}],["$L4"],"$L5"]}],"isPartial":false,"staleTime":300,"varyParams":null,"buildId":"iJUXAyHcmcW99cMci3ei9"}
+4:["$","script","script-0",{"src":"/_next/static/chunks/0fl~me.qwn48c.js","async":true}]
+5:["$","$L6",null,{"children":["$","$7",null,{"name":"Next.MetadataOutlet","children":"$@8"}]}]
+8:null

@@ -1,0 +1,48 @@
+1:"$Sreact.fragment"
+2:I[90160,["/_next/static/chunks/0ypf.t599.7y6.js","/_next/static/chunks/0t2xr05rlu96l.js","/_next/static/chunks/0uxaa7wo_wmcw.js","/_next/static/chunks/0fl~me.qwn48c.js"],"default"]
+6:I[97367,["/_next/static/chunks/0ypf.t599.7y6.js","/_next/static/chunks/0t2xr05rlu96l.js"],"OutletBoundary"]
+7:"$Sreact.suspense"
+3:Tb84,<h1>Functions</h1>
+<p>A function takes inputs and computes a result from them. In L4 each rule is a function: <code>GIVEN</code> names and types its inputs, <code>GIVETH</code> states the type of its result, and <code>DECIDE</code> or <code>MEANS</code> gives the expression that computes it. A function without inputs is a named value.</p>
+<pre><code class="language-l4">GIVEN age IS A NUMBER
+GIVETH A BOOLEAN
+DECIDE `is an adult` age IF age >= 18
+</code></pre>
+<h2 id="pages">Pages</h2>
+<ul>
+<li><a href="/l4/reference/functions/DECIDE">DECIDE</a>: define a value or a function, including <code>DECIDE … IF</code> and functions written as several clauses</li>
+<li><a href="/l4/reference/functions/GIVEN">GIVEN and GIVETH</a>: declare the inputs and the result type</li>
+<li><a href="/l4/reference/functions/MEANS">MEANS</a>: define without <code>DECIDE</code></li>
+<li><a href="/l4/reference/functions/LET">LET and WHERE</a>: local definitions before or after an expression</li>
+<li><a href="/l4/reference/functions/YIELD">YIELD</a>: functions without a name</li>
+<li><a href="/l4/reference/functions/AKA">AKA</a>: more than one name for the same function, value, type or section</li>
+</ul>
+<h2 id="mixfix-functions">Mixfix functions</h2>
+<p>A function's name does not have to come first. In a <strong>mixfix</strong> function, the <code>GIVEN</code> inputs are placed between the words of the name, so a call reads like a sentence:</p>
+<pre><code class="language-l4">GIVEN mom IS A STRING
+      dad IS A STRING
+      kid IS A STRING
+GIVETH A STRING
+mom and dad `have a baby named` kid MEANS
+    CONCAT "mother: ", mom, ", father: ", dad, ", child: ", kid
+
+#EVAL "alice" and "bob" `have a baby named` "carol"
+</code></pre>
+<ul>
+<li>A call uses the same word order as the definition.</li>
+<li>Inputs can come before, between or after the words, so a function can be infix (<code>applicant `is entitled to` benefit</code>) or postfix (<code>n squared</code>).</li>
+<li>A word of the name can be a quoted identifier with spaces, such as <code>`is entitled to`</code>, so the words can be legal phrases.</li>
+<li>The words that are not inputs act as keywords of that function. When a call mixes inputs and words, L4 finds the function by those words.</li>
+</ul>
+<p>A mixfix function cannot be written as <a href="/l4/reference/functions/DECIDE#several-clauses">several clauses</a>; use <code>CONSIDER</code> in its body.</p>
+<p>When to use mixfix, with worked examples: <a href="/l4/tutorials/natural-language-functions/optimising-natural-language-generation">Make rules read like law</a>.</p>
+<h2 id="related-pages">Related pages</h2>
+<ul>
+<li><a href="/l4/reference/types">Types</a>: types of inputs and results</li>
+<li><a href="/l4/reference/operators">Operators</a>: operators inside expressions</li>
+<li><a href="/l4/reference/control-flow">Control flow</a>: <code>IF</code>, <code>BRANCH</code> and <code>CONSIDER</code></li>
+</ul>
+0:{"rsc":["$","$1","c",{"children":[["$","$L2",null,{"navSections":[{"title":"","items":[{"title":"Language Reference","href":"reference"},{"title":"Glossary","href":"reference/GLOSSARY"},{"title":"Cheat sheet","href":"reference/cheat-sheet"},{"title":"Types","href":"reference/types","children":[{"title":"DECLARE","href":"reference/types/DECLARE"},{"title":"ASSUME","href":"reference/types/ASSUME"},{"title":"FOR ALL","href":"reference/types/for-all"},{"title":"Coercions","href":"reference/types/coercions"}]},{"title":"Functions","href":"reference/functions","children":[{"title":"DECIDE","href":"reference/functions/DECIDE"},{"title":"GIVEN and GIVETH","href":"reference/functions/GIVEN"},{"title":"MEANS","href":"reference/functions/MEANS"},{"title":"LET and WHERE","href":"reference/functions/LET"},{"title":"YIELD","href":"reference/functions/YIELD"},{"title":"AKA","href":"reference/functions/AKA"}]},{"title":"Control flow","href":"reference/control-flow","children":[{"title":"IF","href":"reference/control-flow/IF"},{"title":"BRANCH","href":"reference/control-flow/BRANCH"},{"title":"CONSIDER","href":"reference/control-flow/CONSIDER"}]},{"title":"Operators","href":"reference/operators","children":[{"title":"AND, OR, NOT, IMPLIES","href":"reference/operators/logical"},{"title":"UNLESS","href":"reference/operators/UNLESS"},{"title":"Arithmetic","href":"reference/operators/arithmetic"},{"title":"Comparisons","href":"reference/operators/comparisons"}]},{"title":"Regulative rules","href":"reference/regulative","children":[{"title":"PARTY, MUST, MAY, SHANT","href":"reference/regulative/PARTY"},{"title":"Deadlines and consequences","href":"reference/regulative/consequences"},{"title":"BECAUSE","href":"reference/regulative/BECAUSE"},{"title":"DEONTIC","href":"reference/regulative/DEONTIC"},{"title":"EVENT","href":"reference/regulative/EVENT"}]},{"title":"Syntax and directives","href":"reference/syntax"},{"title":"Built-in functions","href":"reference/builtins","children":[{"title":"HTTP and JSON","href":"reference/builtins/http-json"}]},{"title":"Standard libraries","href":"reference/libraries","children":[{"title":"prelude","href":"reference/libraries/prelude"},{"title":"math","href":"reference/libraries/math"},{"title":"daydate","href":"reference/libraries/daydate"},{"title":"time","href":"reference/libraries/time"},{"title":"datetime","href":"reference/libraries/datetime"},{"title":"timezone","href":"reference/libraries/timezone"},{"title":"excel-date","href":"reference/libraries/excel-date"},{"title":"currency","href":"reference/libraries/currency"},{"title":"holdings","href":"reference/libraries/holdings"},{"title":"actus","href":"reference/libraries/actus"},{"title":"legal-persons","href":"reference/libraries/legal-persons"},{"title":"jurisdiction","href":"reference/libraries/jurisdiction"},{"title":"llm","href":"reference/libraries/llm"}]},{"title":"Error messages","href":"reference/errors"}]}],"toc":[],"htmlContent":"$3","pager":{"prev":"$0:rsc:props:children:0:props:navSections:0:items:3:children:3","next":"$0:rsc:props:children:0:props:navSections:0:items:4:children:0"}}],["$L4"],"$L5"]}],"isPartial":false,"staleTime":300,"varyParams":null,"buildId":"iJUXAyHcmcW99cMci3ei9"}
+4:["$","script","script-0",{"src":"/_next/static/chunks/0fl~me.qwn48c.js","async":true}]
+5:["$","$L6",null,{"children":["$","$7",null,{"name":"Next.MetadataOutlet","children":"$@8"}]}]
+8:null

@@ -1,0 +1,389 @@
+1:"$Sreact.fragment"
+2:I[39756,["/_next/static/chunks/0ypf.t599.7y6.js","/_next/static/chunks/0t2xr05rlu96l.js"],"default"]
+3:I[37457,["/_next/static/chunks/0ypf.t599.7y6.js","/_next/static/chunks/0t2xr05rlu96l.js"],"default"]
+4:I[22016,["/_next/static/chunks/0ypf.t599.7y6.js","/_next/static/chunks/0t2xr05rlu96l.js","/_next/static/chunks/11.9ba59t4-it.js"],""]
+5:I[5500,["/_next/static/chunks/0ypf.t599.7y6.js","/_next/static/chunks/0t2xr05rlu96l.js","/_next/static/chunks/11.9ba59t4-it.js"],"Image"]
+f:I[68027,["/_next/static/chunks/0ypf.t599.7y6.js","/_next/static/chunks/0t2xr05rlu96l.js"],"default",1]
+:HL["/_next/static/chunks/0xhryq7f66rdk.css","style"]
+:HL["/_next/static/chunks/0s9wju.j1~_xn.css","style"]
+:HL["/_next/static/media/248e1dc0efc99276-s.p.0ft7o6kv5bp14.woff2","font",{"crossOrigin":"","type":"font/woff2"}]
+:HL["/_next/static/media/83afe278b6a6bb3c-s.p.0q-301v4kxxnr.woff2","font",{"crossOrigin":"","type":"font/woff2"}]
+0:{"P":null,"c":["","l4","reference","types","DECLARE"],"q":"","i":false,"f":[[["",{"children":["l4",{"children":[["slug","reference/types/DECLARE","oc",null],{"children":["__PAGE__",{}]}]}]},"$undefined","$undefined",16],[["$","$1","c",{"children":[[["$","link","0",{"rel":"stylesheet","href":"/_next/static/chunks/0xhryq7f66rdk.css","precedence":"next","crossOrigin":"$undefined","nonce":"$undefined"}],["$","script","script-0",{"src":"/_next/static/chunks/0ypf.t599.7y6.js","async":true,"nonce":"$undefined"}],["$","script","script-1",{"src":"/_next/static/chunks/0t2xr05rlu96l.js","async":true,"nonce":"$undefined"}]],["$","html",null,{"lang":"en","children":[["$","head",null,{"children":[["$","meta",null,{"httpEquiv":"Content-Security-Policy","content":"default-src 'self' https://legalese.com; script-src 'self' https://legalese.com 'unsafe-inline' https://cdnjs.cloudflare.com; style-src 'self' https://legalese.com 'unsafe-inline'; font-src 'self' https://legalese.com; img-src 'self' https://legalese.com https://workoscdn.com https://*.googleusercontent.com; connect-src 'self' https://legalese.com https://legalese.cloud https://ai.legalese.cloud https://*.workos.com; frame-src 'self' https://legalese.com https://jl4.legalese.com https://*.workos.com; object-src 'none'; base-uri 'self' https://legalese.com"}],["$","link",null,{"rel":"apple-touch-icon","sizes":"180x180","href":"/favicon/apple-touch-icon.png"}],["$","link",null,{"rel":"icon","type":"image/png","sizes":"32x32","href":"/favicon/favicon-32x32.png"}],["$","link",null,{"rel":"icon","type":"image/png","sizes":"16x16","href":"/favicon/favicon-16x16.png"}],["$","link",null,{"rel":"manifest","href":"/favicon/site.webmanifest"}],["$","link",null,{"rel":"shortcut icon","href":"/favicon/favicon.ico"}],["$","meta",null,{"name":"msapplication-TileColor","content":"#000000"}],["$","meta",null,{"name":"msapplication-config","content":"/favicon/browserconfig.xml"}],["$","meta",null,{"name":"theme-color","content":"#000"}],["$","link",null,{"rel":"alternate","type":"application/rss+xml","href":"/feed.xml"}]]}],["$","body",null,{"className":"inter_5901b7c6-module__ec5Qua__variable merriweather_b1e99710-module__84TlHG__variable","children":[["$","div",null,{"className":"min-h-screen","children":["$","$L2",null,{"parallelRouterKey":"children","error":"$undefined","errorStyles":"$undefined","errorScripts":"$undefined","template":["$","$L3",null,{}],"templateStyles":"$undefined","templateScripts":"$undefined","notFound":[["$","div",null,{"className":"min-h-screen flex flex-col","children":["$","div",null,{"className":"container mx-auto px-5 flex-1 flex flex-col","children":[["$","header",null,{"className":"flex flex-col md:flex-row items-center justify-between py-8 mb-6","children":["$","$L4",null,{"href":"/","className":"flex items-center gap-1 hover:opacity-80 transition-opacity","children":[["$","$L5",null,{"src":"/assets/logos/legalese-logo.png","alt":"§","width":42,"height":42,"className":"rounded"}],["$","span",null,{"className":"text-2xl font-bold tracking-tight font-merriweather","children":"Legalese"}]]}]}],["$","div",null,{"className":"flex-1 flex items-center justify-center","children":["$","div",null,{"className":"text-center px-6 py-16","children":[["$","h1",null,{"className":"text-8xl font-bold text-gray-200 mb-4","children":404}],["$","h2",null,{"className":"text-2xl font-semibold text-gray-900 mb-4 font-merriweather","children":"Not Found"}],["$","p",null,{"className":"text-gray-600 mb-8 max-w-md","children":"The page you're looking for doesn't exist or may have been moved."}],["$","$L4",null,{"href":"/","className":"inline-block px-6 py-2 bg-accent text-white rounded-md hover:bg-accent-hover transition-colors","children":"Go to Homepage"}]]}]}]]}]}],[]],"forbidden":"$undefined","unauthorized":"$undefined"}]}],["$","footer",null,{"className":"bg-gray-900 text-white","children":["$","div",null,{"className":"container mx-auto px-5","children":["$","div",null,{"className":"py-16","children":[["$","div",null,{"className":"grid grid-cols-1 md:grid-cols-4 gap-12 mb-12","children":[["$","div",null,{"className":"md:col-span-1","children":[["$","div",null,{"className":"flex items-center","children":[["$","$L5",null,{"src":"/assets/logos/legalese-logo.png","alt":"§","width":36,"height":36,"className":"rounded invert"}],["$","h3",null,{"className":"text-2xl font-bold tracking-tight ml-1","children":"Legalese"}]]}],["$","p",null,{"className":"text-gray-400 text-sm mb-4","children":"AI is eating law"}]]}],"$L6","$L7","$L8"]}],"$L9"]}]}]}]]}]]}]]}],{"children":["$La",{"children":["$Lb",{"children":["$Lc",{},null,false,null]},null,false,"$@d"]},null,false,null]},null,false,null],"$Le",false]],"m":"$undefined","G":["$f",["$L10"]],"S":true,"h":null,"s":"$undefined","l":"$undefined","p":"$undefined","d":"$undefined","b":"iJUXAyHcmcW99cMci3ei9"}
+11:I[79520,["/_next/static/chunks/0ypf.t599.7y6.js","/_next/static/chunks/0t2xr05rlu96l.js","/_next/static/chunks/0uxaa7wo_wmcw.js"],""]
+12:I[85295,["/_next/static/chunks/0ypf.t599.7y6.js","/_next/static/chunks/0t2xr05rlu96l.js","/_next/static/chunks/0uxaa7wo_wmcw.js"],"default"]
+13:I[41529,["/_next/static/chunks/0ypf.t599.7y6.js","/_next/static/chunks/0t2xr05rlu96l.js","/_next/static/chunks/0uxaa7wo_wmcw.js"],"default"]
+15:I[97367,["/_next/static/chunks/0ypf.t599.7y6.js","/_next/static/chunks/0t2xr05rlu96l.js"],"OutletBoundary"]
+16:"$Sreact.suspense"
+19:I[97367,["/_next/static/chunks/0ypf.t599.7y6.js","/_next/static/chunks/0t2xr05rlu96l.js"],"ViewportBoundary"]
+1b:I[97367,["/_next/static/chunks/0ypf.t599.7y6.js","/_next/static/chunks/0t2xr05rlu96l.js"],"MetadataBoundary"]
+6:["$","div",null,{"children":[["$","h4",null,{"className":"font-bold mb-4 text-gray-300","children":"Company"}],["$","ul",null,{"className":"space-y-2","children":[[["$","li","about",{"children":["$","$L4",null,{"href":"/about","className":"text-gray-400 hover:text-white transition-colors text-sm","children":"About us"}]}],["$","li","team",{"children":["$","$L4",null,{"href":"/team","className":"text-gray-400 hover:text-white transition-colors text-sm","children":"Team"}]}],["$","li","media",{"children":["$","$L4",null,{"href":"/media","className":"text-gray-400 hover:text-white transition-colors text-sm","children":"Press & Media"}]}]],[],["$","li",null,{"children":["$","$L4",null,{"href":"/posts","className":"text-gray-400 hover:text-white transition-colors text-sm","children":"Blog"}]}]]}]]}]
+7:["$","div",null,{"children":[["$","h4",null,{"className":"font-bold mb-4 text-gray-300","children":"Resources"}],["$","ul",null,{"className":"space-y-2","children":[["$","li","l4-documentation",{"children":["$","a",null,{"href":"https://legalese.com/l4","target":"_blank","rel":"noopener noreferrer","className":"text-gray-400 hover:text-white transition-colors text-sm","children":"L4 Documentation"}]}],["$","li","vscode-extension",{"children":["$","a",null,{"href":"https://marketplace.visualstudio.com/items?itemName=Legalese.l4-vscode","target":"_blank","rel":"noopener noreferrer","className":"text-gray-400 hover:text-white transition-colors text-sm","children":"L4 VS Code Extension"}]}],["$","li","l4-web-ide",{"children":["$","a",null,{"href":"https://jl4.legalese.com","target":"_blank","rel":"noopener noreferrer","className":"text-gray-400 hover:text-white transition-colors text-sm","children":"L4 Web IDE"}]}],["$","li","l4-console",{"children":["$","a",null,{"href":"https://legalese.com/console","target":"_blank","rel":"noopener noreferrer","className":"text-gray-400 hover:text-white transition-colors text-sm","children":"Cloud Console"}]}],["$","li","l4-console copy",{"children":["$","a",null,{"href":"https://legalese.com/compare","target":"_blank","rel":"noopener noreferrer","className":"text-gray-400 hover:text-white transition-colors text-sm","children":"Compare AI Legal Interpretations"}]}],["$","li","provable",{"children":["$","a",null,{"href":"https://provable.legalese.com","target":"_blank","rel":"noopener noreferrer","className":"text-gray-400 hover:text-white transition-colors text-sm","children":"Provable Skill Marketplace"}]}],["$","li","github",{"children":["$","a",null,{"href":"https://github.com/legalese/l4-ide","target":"_blank","rel":"noopener noreferrer","className":"text-gray-400 hover:text-white transition-colors text-sm","children":"GitHub"}]}]]}]]}]
+8:["$","div",null,{"children":[["$","h4",null,{"className":"font-bold mb-4 text-gray-300","children":"Contact"}],["$","ul",null,{"className":"space-y-2","children":[[["$","li","community",{"children":["$","$L4",null,{"href":"/community","className":"text-gray-400 hover:text-white transition-colors text-sm","children":"Community"}]}],["$","li","code-of-conduct",{"children":["$","$L4",null,{"href":"/code-of-conduct","className":"text-gray-400 hover:text-white transition-colors text-sm","children":"Code of Conduct"}]}]],[["$","li","discord",{"children":["$","a",null,{"href":"https://discord.gg/Q7a7NSEdNy","target":"_blank","rel":"noopener noreferrer","className":"text-gray-400 hover:text-white transition-colors text-sm","children":"Discord"}]}],["$","li","x-twitter",{"children":["$","a",null,{"href":"https://x.com/legalese","target":"_blank","rel":"noopener noreferrer","className":"text-gray-400 hover:text-white transition-colors text-sm","children":"Legalese on X"}]}]]]}]]}]
+9:["$","div",null,{"className":"border-t border-gray-800 pt-8 flex flex-col md:flex-row justify-between items-center gap-4","children":[["$","p",null,{"className":"text-gray-500 text-sm","children":["© ",2026," Legalese Pte. Ltd., Singapore. All rights reserved."]}],["$","div",null,{"className":"flex gap-6","children":[["$","$L4","terms",{"href":"/terms","className":"text-gray-500 hover:text-white transition-colors text-sm","children":"Terms of Use"}],["$","$L4","privacy",{"href":"/privacy","className":"text-gray-500 hover:text-white transition-colors text-sm","children":"Privacy & Cookies"}]]}]]}]
+a:["$","$1","c",{"children":[[["$","link","0",{"rel":"stylesheet","href":"/_next/static/chunks/0s9wju.j1~_xn.css","precedence":"next","crossOrigin":"$undefined","nonce":"$undefined"}],["$","script","script-0",{"src":"/_next/static/chunks/0uxaa7wo_wmcw.js","async":true,"nonce":"$undefined"}]],[["$","$L2",null,{"parallelRouterKey":"children","error":"$undefined","errorStyles":"$undefined","errorScripts":"$undefined","template":["$","$L3",null,{}],"templateStyles":"$undefined","templateScripts":"$undefined","notFound":"$undefined","forbidden":"$undefined","unauthorized":"$undefined"}],["$","$L11",null,{"src":"https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"}],["$","$L11",null,{"src":"/hljs-l4/l4.min.js"}],["$","$L12",null,{}],["$","$L13",null,{}],["$","style",null,{"dangerouslySetInnerHTML":{"__html":"\npre code.hljs{display:block;overflow-x:auto;padding:0.2rem 0.4rem;font-size:13px;color:#104e64;background:#fdfdfd}\ncode.hljs .hljs-keyword{color:#0000ff;font-weight:500}\ncode.hljs .hljs-literal{color:#0000ff}\ncode.hljs .hljs-built_in{color:#267f99}\ncode.hljs .hljs-string{color:#a31515}\ncode.hljs .hljs-number{color:#098658}\ncode.hljs .hljs-comment{color:#008000;font-style:italic}\ncode.hljs .hljs-title{color:#795e26;font-weight:600}\ncode.hljs .hljs-variable{color:#001080}\ncode.hljs .hljs-doctag{color:#ffbd33}\ncode.hljs .hljs-formula{color:#af00db;font-weight:500}\n"}}]]]}]
+b:["$","$1","c",{"children":[null,["$","$L2",null,{"parallelRouterKey":"children","error":"$undefined","errorStyles":"$undefined","errorScripts":"$undefined","template":["$","$L3",null,{}],"templateStyles":"$undefined","templateScripts":"$undefined","notFound":"$undefined","forbidden":"$undefined","unauthorized":"$undefined"}]]}]
+c:["$","$1","c",{"children":["$L14",[["$","script","script-0",{"src":"/_next/static/chunks/0fl~me.qwn48c.js","async":true,"nonce":"$undefined"}]],["$","$L15",null,{"children":["$","$16",null,{"name":"Next.MetadataOutlet","children":"$@17"}]}]]}]
+18:[]
+d:"$W18"
+e:["$","$1","h",{"children":[null,["$","$L19",null,{"children":"$L1a"}],["$","div",null,{"hidden":true,"children":["$","$L1b",null,{"children":["$","$16",null,{"name":"Next.Metadata","children":"$L1c"}]}]}],["$","meta",null,{"name":"next-size-adjust","content":""}]]}]
+10:["$","link","0",{"rel":"stylesheet","href":"/_next/static/chunks/0xhryq7f66rdk.css","precedence":"next","crossOrigin":"$undefined","nonce":"$undefined"}]
+1d:I[90160,["/_next/static/chunks/0ypf.t599.7y6.js","/_next/static/chunks/0t2xr05rlu96l.js","/_next/static/chunks/0uxaa7wo_wmcw.js","/_next/static/chunks/0fl~me.qwn48c.js"],"default"]
+1e:T33cb,<h1>DECLARE</h1>
+<p><code>DECLARE</code> introduces a new type: a record, an enumeration, or a synonym for another type.</p>
+<h2 id="syntax">Syntax</h2>
+<pre><code class="language-text">DECLARE Name HAS field1 IS A Type1, field2 IS A Type2
+DECLARE Name IS ONE OF Value1, Value2, Value3
+DECLARE Name IS A Type
+DECLARE Name OF a, b HAS ...
+</code></pre>
+<p><strong>Example files:</strong></p>
+<pre><code class="language-l4-file">-- DECLARE keyword examples
+
+-- Record Types (Product Types)
+
+-- Basic record with multiple fields
+DECLARE Person
+  HAS
+    `full name` IS A STRING
+    age         IS A NUMBER
+
+-- Record with single line syntax
+DECLARE Point HAS x IS A NUMBER, y IS A NUMBER
+
+-- Enum Types (Sum Types)
+
+-- Simple enum with value constructors
+DECLARE Colour IS ONE OF `bright red`, `forest green`, `ocean blue`
+
+-- Enum with constructors that have fields
+DECLARE Shape IS ONE OF
+  Circle HAS radius IS A NUMBER
+  Rectangle HAS width IS A NUMBER, height IS A NUMBER
+  Point
+
+-- Type Synonyms
+
+DECLARE Age IS NUMBER
+DECLARE `Person name` IS STRING
+
+-- Parameterised Types
+
+-- The type parameter written after the name ...
+DECLARE Box OF a HAS contents IS AN a
+
+-- ... or declared with GIVEN above the DECLARE
+GIVEN a IS A TYPE, b IS A TYPE
+DECLARE `Pair of values` HAS first IS AN a, second IS A b
+
+-- Usage Examples
+
+-- Create record instances
+DECIDE `the applicant` IS Person WITH `full name` IS "John", age IS 30
+DECIDE `the origin` IS Point WITH x IS 0, y IS 0
+
+-- Use enum constructors
+DECIDE `my favourite colour` IS `bright red`
+DECIDE `my shape` IS Circle WITH radius IS 5
+
+-- Use parameterised types
+GIVETH A Box OF NUMBER
+DECIDE `box with number` IS Box WITH contents IS 42
+GIVETH A Box OF STRING
+DECIDE `box with text` IS Box WITH contents IS "hello"
+GIVETH A `Pair of values` OF NUMBER, STRING
+DECIDE `a pair` IS `Pair of values` WITH first IS 1, second IS "one"
+
+-- Evaluate examples
+#EVAL `the applicant`'s `full name`
+#EVAL `the applicant`'s age
+#EVAL `my favourite colour`
+#EVAL `box with text`'s contents
+#EVAL `a pair`'s second
+</code></pre>
+<p>,</p>
+<pre><code class="language-l4-file">-- Example: Record type declaration
+-- Demonstrates product types with named fields
+
+DECLARE Person
+  HAS `full name` IS A STRING
+      age         IS A NUMBER
+
+-- Example: Creating a person record
+`the applicant` MEANS Person WITH
+  `full name` IS "John Doe"
+  age         IS 30
+
+#EVAL `the applicant`'s `full name`
+#EVAL `the applicant`'s age
+</code></pre>
+<p>,</p>
+<pre><code class="language-l4-file">-- Example: Enum type declaration
+-- Demonstrates sum types with named constructors
+
+DECLARE Color IS ONE OF
+  Red
+  Green
+  Blue
+
+-- Example usage
+`my favorite color` MEANS Red
+
+`name of the color` MEANS
+  CONSIDER `my favorite color`
+  WHEN Red   THEN "red"
+  WHEN Green THEN "green"
+  WHEN Blue  THEN "blue"
+
+#EVAL `name of the color`
+</code></pre>
+<h2 id="records">Records</h2>
+<p>A record has named fields. Write them after <code>HAS</code>, one per line or separated by commas:</p>
+<pre><code class="language-l4">DECLARE Person
+  HAS
+    name IS A STRING
+    age IS A NUMBER
+
+DECLARE Point HAS x IS A NUMBER, y IS A NUMBER
+</code></pre>
+<p>A field can also be written <code>name: STRING</code> or <code>name: A STRING</code>.</p>
+<p><strong>Making a record.</strong> Give every field by name with <code>WITH</code>, or give the values in the order the fields are declared, with <code>OF</code> and commas or with spaces:</p>
+<pre><code class="language-l4">DECLARE Person HAS
+  name IS A STRING
+  age IS A NUMBER
+
+`the buyer` MEANS Person WITH name IS "Kim", age IS 30
+`the seller` MEANS Person OF "Lee", 45
+`the agent` MEANS Person "Jo" 28
+
+#EVAL `the buyer`'s age
+</code></pre>
+<p><strong>Reading a field.</strong> Use the genitive <code>'s</code>: <code>`the buyer`'s age</code>. See <a href="/l4/reference/syntax#genitive">Syntax and directives: Genitive</a>.</p>
+<h2 id="computed-fields">Computed fields</h2>
+<p>A field followed by <code>MEANS</code> is computed from the record's other fields. It is read with <code>'s</code> like any other field, and it is not given when the record is made.</p>
+<pre><code class="language-l4">DECLARE Employee HAS
+    `name`          IS A STRING
+    `year of birth` IS A NUMBER
+    `current year`  IS A NUMBER
+    `age`           IS A NUMBER
+        MEANS `current year` - `year of birth`
+    `adult`         IS A BOOLEAN
+        MEANS `age` >= 18
+
+`the employee` MEANS Employee WITH
+    `name`          IS "Lim"
+    `year of birth` IS 1990
+    `current year`  IS 2026
+
+#EVAL `the employee`'s `adult`
+</code></pre>
+<ul>
+<li>The body can use the record's other fields by name, including other computed fields, and call functions defined elsewhere.</li>
+<li>It can use <code>WHERE</code> and <code>LET … IN</code>.</li>
+<li>It takes no inputs of its own: there is no <code>GIVEN</code> for a computed field. Its only input is the record.</li>
+<li>Computed fields that depend on each other in a cycle are an error ("Circular dependency detected between computed fields").</li>
+</ul>
+<p>Putting the stored fields first and the computed fields after them makes a declaration easier to read.</p>
+<p><strong>Example file:</strong></p>
+<pre><code class="language-l4-file">-- Computed Fields Example
+-- Demonstrates "methods" on records: fields with MEANS clauses
+-- whose values are automatically derived from other fields.
+
+IMPORT prelude
+
+-- ─────────────────────────────────────────────────────────
+-- Basic computed fields (methods)
+-- ─────────────────────────────────────────────────────────
+-- Style: stored fields first, then computed/derived fields.
+
+DECLARE Employee HAS
+    -- stored fields (primary attributes)
+    `name`               IS A STRING
+    `date of birth`      IS A NUMBER
+    `date of employment` IS A NUMBER
+    `monthly salary`     IS A NUMBER
+    `current year`       IS A NUMBER
+    -- computed fields (derived attributes / methods)
+    `age`                IS A NUMBER
+        MEANS `current year` - `date of birth`
+    `years of service`   IS A NUMBER
+        MEANS `current year` - `date of employment`
+    `senior`             IS A BOOLEAN
+        MEANS `years of service` >= 10
+    `eligible`           IS A BOOLEAN
+        MEANS `senior`
+          AND `monthly salary` &#x3C;= 6000
+
+-- Construction: only stored fields are supplied.
+-- Computed fields are derived automatically.
+veteran MEANS Employee WITH
+    `name`               IS "Lim"
+    `date of birth`      IS 1960
+    `date of employment` IS 1990
+    `monthly salary`     IS 3000
+    `current year`       IS 2026
+
+-- Access computed fields with 's, just like stored fields.
+#EVAL veteran's `age`            -- 66
+#EVAL veteran's `years of service` -- 36
+#EVAL veteran's `senior`         -- TRUE
+#EVAL veteran's `eligible`       -- TRUE
+
+-- ─────────────────────────────────────────────────────────
+-- Calling external functions from computed fields
+-- ─────────────────────────────────────────────────────────
+-- Multi-argument calls can use juxtaposition, OF, or mixfix:
+--   `apply rate` `balance` `rate`         -- juxtaposition
+--   `apply rate` OF `balance`, `rate`     -- OF (comma-separated)
+--   `apply` `balance` `at rate` `rate`    -- mixfix (natural language)
+-- All are equivalent. Choose whichever reads best in context.
+
+GIVEN `base` IS A NUMBER
+      `rate` IS A NUMBER
+GIVETH A NUMBER
+`apply rate` MEANS `base` * `rate` / 100
+
+DECLARE Account HAS
+    `balance`   IS A NUMBER
+    `rate`      IS A NUMBER
+    `interest`  IS A NUMBER
+        MEANS `apply rate` `balance` `rate`
+    `projected` IS A NUMBER
+        MEANS `balance` + `interest`
+
+savings MEANS Account WITH
+    `balance` IS 10000
+    `rate`    IS 5
+
+#EVAL savings's `interest`   -- 500.0
+#EVAL savings's `projected`  -- 10500.0
+
+-- ─────────────────────────────────────────────────────────
+-- WHERE and LET/IN inside computed fields
+-- ─────────────────────────────────────────────────────────
+
+GIVEN `x` IS A NUMBER
+GIVETH A NUMBER
+`square` MEANS `x` * `x`
+
+DECLARE Shape HAS
+    `width`   IS A NUMBER
+    `height`  IS A NUMBER
+    `area`    IS A NUMBER
+        MEANS `width` * `height`
+    `diag sq` IS A NUMBER
+        MEANS `result`
+          WHERE
+            `w2` MEANS `square` `width`
+            `h2` MEANS `square` `height`
+            `result` MEANS `w2` + `h2`
+    `scaled`  IS A NUMBER
+        MEANS LET `factor` MEANS 2 IN `area` * `factor`
+
+rect MEANS Shape WITH
+    `width`  IS 3
+    `height` IS 4
+
+#EVAL rect's `area`     -- 12
+#EVAL rect's `diag sq`  -- 25
+#EVAL rect's `scaled`   -- 24
+</code></pre>
+<h2 id="enumerations">Enumerations</h2>
+<p><code>IS ONE OF</code> lists the values a type can have:</p>
+<pre><code class="language-l4">DECLARE Colour IS ONE OF Red, Green, Blue
+</code></pre>
+<p>A value can carry fields of its own:</p>
+<pre><code class="language-l4">DECLARE Shape IS ONE OF
+  Circle HAS radius IS A NUMBER
+  Rectangle HAS width IS A NUMBER, height IS A NUMBER
+  Point
+
+`the plot` MEANS Rectangle WITH width IS 20, height IS 30
+`the pond` MEANS Circle 4
+</code></pre>
+<p>Use <a href="/l4/reference/control-flow/CONSIDER">CONSIDER</a> to tell the values apart.</p>
+<h2 id="type-synonyms">Type synonyms</h2>
+<p><code>DECLARE Name IS Type</code> gives another name to an existing type. The two names are the same type.</p>
+<pre><code class="language-l4">DECLARE Age IS A NUMBER
+
+GIVEN age IS AN Age
+GIVETH A BOOLEAN
+`is an adult` age MEANS age >= 18
+</code></pre>
+<ul>
+<li>A synonym can take type parameters: <code>DECLARE Optional OF a IS A MAYBE a</code>.</li>
+<li>A synonym cannot refer to itself, directly or through other synonyms; L4 reports a circular dependency between them.</li>
+<li>L4 follows a chain of synonyms for at most 1000 steps. For a longer chain, declare the first synonym as the type the chain ends in.</li>
+</ul>
+<h2 id="parameterised-types">Parameterised types</h2>
+<p>A type can take type parameters, so that the same declaration works for numbers, text or any other type.
+Write the parameters after the name, with <code>OF</code> and commas, or declare them with <code>GIVEN … IS A TYPE</code> above the <code>DECLARE</code>:</p>
+<pre><code class="language-l4">DECLARE Box OF a HAS contents IS AN a
+
+GIVEN a IS A TYPE
+      b IS A TYPE
+DECLARE `Pair of values` HAS first IS AN a, second IS A b
+
+GIVETH A Box OF NUMBER
+`a box of 42` MEANS Box WITH contents IS 42
+</code></pre>
+<p>The parameter can also follow the name without <code>OF</code> (<code>DECLARE Box a HAS …</code>).
+A use of the type gives the parameters with <code>OF</code>: <code>Box OF NUMBER</code>, <code>`Pair of values` OF NUMBER, STRING</code>.</p>
+<h2 id="a-and-an">A and AN</h2>
+<p><code>A</code> and <code>AN</code> before a type are for readability only. They are interchangeable and can be left out: <code>IS A NUMBER</code>, <code>IS AN Account</code> and <code>IS NUMBER</code> mean the same.</p>
+<pre><code class="language-l4">DECLARE Account HAS balance IS A NUMBER
+
+GIVEN account IS AN Account
+GIVETH NUMBER
+`balance of` account MEANS account's balance
+</code></pre>
+<h2 id="type-expressions">Type expressions</h2>
+<p>Wherever a type is expected (after <code>IS A</code>, <code>GIVETH</code>, in a field):</p>
+<table>
+<thead>
+<tr>
+<th>Type expression</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>NUMBER</code>, <code>STRING</code>, <code>BOOLEAN</code>, <code>DATE</code></td>
+<td>a built-in type (<a href="/l4/reference/types">Types</a>)</td>
+</tr>
+<tr>
+<td><code>LIST OF Type</code></td>
+<td>a list</td>
+</tr>
+<tr>
+<td><code>MAYBE Type</code></td>
+<td>a value that may be missing</td>
+</tr>
+<tr>
+<td><code>EITHER Type1 Type2</code></td>
+<td>one of two types</td>
+</tr>
+<tr>
+<td><code>Name OF Type1, Type2</code></td>
+<td>a parameterised type, given its parameters</td>
+</tr>
+<tr>
+<td><code>FUNCTION FROM Type1 AND Type2 TO Type3</code></td>
+<td>a function</td>
+</tr>
+<tr>
+<td><code>TYPE</code></td>
+<td>a type parameter</td>
+</tr>
+</tbody>
+</table>
+<h2 id="related-pages">Related pages</h2>
+<ul>
+<li><a href="/l4/reference/types">Types</a>: built-in types</li>
+<li><a href="/l4/reference/types/ASSUME">ASSUME</a>: a name with a type and no definition</li>
+<li><a href="/l4/reference/types/for-all">FOR ALL</a>: polymorphic types for <code>ASSUME</code></li>
+<li><a href="/l4/reference/functions/AKA">AKA</a>: other names for a type</li>
+</ul>
+14:["$","$L1d",null,{"navSections":[{"title":"","items":[{"title":"Language Reference","href":"reference","children":"$undefined"},{"title":"Glossary","href":"reference/GLOSSARY","children":"$undefined"},{"title":"Cheat sheet","href":"reference/cheat-sheet","children":"$undefined"},{"title":"Types","href":"reference/types","children":[{"title":"DECLARE","href":"reference/types/DECLARE","children":"$undefined"},{"title":"ASSUME","href":"reference/types/ASSUME","children":"$undefined"},{"title":"FOR ALL","href":"reference/types/for-all","children":"$undefined"},{"title":"Coercions","href":"reference/types/coercions","children":"$undefined"}]},{"title":"Functions","href":"reference/functions","children":[{"title":"DECIDE","href":"reference/functions/DECIDE","children":"$undefined"},{"title":"GIVEN and GIVETH","href":"reference/functions/GIVEN","children":"$undefined"},{"title":"MEANS","href":"reference/functions/MEANS","children":"$undefined"},{"title":"LET and WHERE","href":"reference/functions/LET","children":"$undefined"},{"title":"YIELD","href":"reference/functions/YIELD","children":"$undefined"},{"title":"AKA","href":"reference/functions/AKA","children":"$undefined"}]},{"title":"Control flow","href":"reference/control-flow","children":[{"title":"IF","href":"reference/control-flow/IF","children":"$undefined"},{"title":"BRANCH","href":"reference/control-flow/BRANCH","children":"$undefined"},{"title":"CONSIDER","href":"reference/control-flow/CONSIDER","children":"$undefined"}]},{"title":"Operators","href":"reference/operators","children":[{"title":"AND, OR, NOT, IMPLIES","href":"reference/operators/logical","children":"$undefined"},{"title":"UNLESS","href":"reference/operators/UNLESS","children":"$undefined"},{"title":"Arithmetic","href":"reference/operators/arithmetic","children":"$undefined"},{"title":"Comparisons","href":"reference/operators/comparisons","children":"$undefined"}]},{"title":"Regulative rules","href":"reference/regulative","children":[{"title":"PARTY, MUST, MAY, SHANT","href":"reference/regulative/PARTY","children":"$undefined"},{"title":"Deadlines and consequences","href":"reference/regulative/consequences","children":"$undefined"},{"title":"BECAUSE","href":"reference/regulative/BECAUSE","children":"$undefined"},{"title":"DEONTIC","href":"reference/regulative/DEONTIC","children":"$undefined"},{"title":"EVENT","href":"reference/regulative/EVENT","children":"$undefined"}]},{"title":"Syntax and directives","href":"reference/syntax","children":"$undefined"},{"title":"Built-in functions","href":"reference/builtins","children":[{"title":"HTTP and JSON","href":"reference/builtins/http-json","children":"$undefined"}]},{"title":"Standard libraries","href":"reference/libraries","children":[{"title":"prelude","href":"reference/libraries/prelude","children":"$undefined"},{"title":"math","href":"reference/libraries/math","children":"$undefined"},{"title":"daydate","href":"reference/libraries/daydate","children":"$undefined"},{"title":"time","href":"reference/libraries/time","children":"$undefined"},{"title":"datetime","href":"reference/libraries/datetime","children":"$undefined"},{"title":"timezone","href":"reference/libraries/timezone","children":"$undefined"},{"title":"excel-date","href":"reference/libraries/excel-date","children":"$undefined"},{"title":"currency","href":"reference/libraries/currency","children":"$undefined"},{"title":"holdings","href":"reference/libraries/holdings","children":"$undefined"},{"title":"actus","href":"reference/libraries/actus","children":"$undefined"},{"title":"legal-persons","href":"reference/libraries/legal-persons","children":"$undefined"},{"title":"jurisdiction","href":"reference/libraries/jurisdiction","children":"$undefined"},{"title":"llm","href":"reference/libraries/llm","children":"$undefined"}]},{"title":"Error messages","href":"reference/errors","children":"$undefined"}]}],"toc":[],"htmlContent":"$1e","pager":{"prev":"$14:props:navSections:0:items:3","next":"$14:props:navSections:0:items:3:children:1"}}]
+1a:[["$","meta","0",{"charSet":"utf-8"}],["$","meta","1",{"name":"viewport","content":"width=device-width, initial-scale=1"}]]
+17:null
+1c:[["$","title","0",{"children":"DECLARE | L4 Documentation"}],["$","meta","1",{"name":"description","content":"DECLARE introduces a new type: a record, an enumeration, or a synonym for another type."}],["$","meta","2",{"name":"robots","content":"index, follow"}],["$","link","3",{"rel":"canonical","href":"https://legalese.com/l4/reference/types/DECLARE"}],["$","meta","4",{"property":"og:title","content":"DECLARE | L4 Documentation"}],["$","meta","5",{"property":"og:description","content":"DECLARE introduces a new type: a record, an enumeration, or a synonym for another type."}],["$","meta","6",{"property":"og:url","content":"https://legalese.com/l4/reference/types/DECLARE"}],["$","meta","7",{"property":"og:image","content":"https://legalese.com/opengraph/ai-is-eating-law-v2.jpg"}],["$","meta","8",{"name":"twitter:card","content":"summary_large_image"}],["$","meta","9",{"name":"twitter:title","content":"DECLARE | L4 Documentation"}],["$","meta","10",{"name":"twitter:description","content":"DECLARE introduces a new type: a record, an enumeration, or a synonym for another type."}],["$","meta","11",{"name":"twitter:image","content":"https://legalese.com/opengraph/ai-is-eating-law-v2.jpg"}]]

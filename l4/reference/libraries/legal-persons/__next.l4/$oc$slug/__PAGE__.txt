@@ -1,0 +1,381 @@
+1:"$Sreact.fragment"
+2:I[90160,["/_next/static/chunks/0ypf.t599.7y6.js","/_next/static/chunks/0t2xr05rlu96l.js","/_next/static/chunks/0uxaa7wo_wmcw.js","/_next/static/chunks/0fl~me.qwn48c.js"],"default"]
+6:I[97367,["/_next/static/chunks/0ypf.t599.7y6.js","/_next/static/chunks/0t2xr05rlu96l.js"],"OutletBoundary"]
+7:"$Sreact.suspense"
+3:T2b8a,<h1>legal-persons</h1>
+<p>Legal entity definitions for natural persons and corporate entities: name/address formatting, identity document validation, age and legal capacity checks, citizenship helpers, and beneficial ownership. Import with <code>IMPORT `legal-persons`</code> (backticks are required because of the hyphen in the name). Also imports prelude, daydate, and jurisdiction.</p>
+<p><strong>Example:</strong></p>
+<pre><code class="language-l4-file">-- Legal Persons Example: Natural and corporate entity modeling
+IMPORT daydate
+IMPORT timezone
+IMPORT `legal-persons`
+
+TIMEZONE IS "Etc/UTC"
+
+-- Name formatting
+DECIDE `john's full name` IS `full name` "John" "Doe"
+#EVAL `john's full name`  -- "John Doe"
+
+DECIDE `jane's formal name` IS `formal name` "Dr." "Jane" "Smith"
+#EVAL `jane's formal name`  -- "Dr. Jane Smith"
+
+-- Address formatting
+DECIDE `formatted address` IS `format address` "123 Main St" "New York" "NY" "10001" "US"
+#EVAL `formatted address`
+
+-- Age calculations
+DECIDE `birth date` IS Date 15 6 1990
+DECIDE `reference date` IS Date 1 1 2024
+
+DECIDE `age at reference` IS `age in years` `birth date` `reference date`
+#EVAL `age at reference`  -- 33
+
+-- Legal capacity checks (varies by jurisdiction)
+#EVAL `is adult` `birth date` "US"  -- TRUE (18+)
+#EVAL `is adult` `birth date` "JP"  -- TRUE (Japan uses 20)
+
+DECIDE `minor birth date` IS Date 1 1 2010
+#EVAL `is adult` `minor birth date` "US"  -- FALSE
+#EVAL `is minor` `minor birth date` "US"  -- TRUE
+
+-- Contract capacity
+#EVAL `can enter contract` `birth date` "US"  -- TRUE
+
+-- Voting age (varies by country)
+#EVAL `can vote` `birth date` "US"  -- TRUE
+#EVAL `can vote` `birth date` "BR"  -- TRUE (Brazil allows 16+)
+
+-- Citizenship functions
+DECIDE `citizenship list` IS LIST "US", "UK"
+#EVAL `has citizenship in` `citizenship list` "US"  -- TRUE
+#EVAL `has citizenship in` `citizenship list` "JP"  -- FALSE
+#EVAL `has multiple citizenships` `citizenship list`  -- TRUE
+#EVAL `citizenship count` `citizenship list`  -- 2
+
+-- Corporate entity types
+#EVAL `Corporation type`  -- "CORPORATION"
+#EVAL `LLC type`          -- "LLC"
+
+-- Beneficial ownership thresholds
+#EVAL `is beneficial owner` 25   -- TRUE (25%+ threshold)
+#EVAL `is beneficial owner` 24   -- FALSE
+#EVAL `is majority owner` 51     -- TRUE
+#EVAL `has significant control` 30  -- TRUE
+
+-- Corporate jurisdiction checks
+#EVAL `is US corporation` "US-DE"  -- TRUE (Delaware)
+#EVAL `is UK corporation` "GB"     -- TRUE
+</code></pre>
+<h2 id="name-formatting">Name formatting</h2>
+<table>
+<thead>
+<tr>
+<th>Function</th>
+<th>Signature</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>full name</code> firstName lastName</td>
+<td><code>STRING → STRING → STRING</code></td>
+<td>"First Last"</td>
+</tr>
+<tr>
+<td><code>full name with middle</code> firstName middleName lastName</td>
+<td><code>STRING → STRING → STRING → STRING</code></td>
+<td>"First Middle Last"</td>
+</tr>
+<tr>
+<td><code>formal name</code> prefix firstName lastName</td>
+<td><code>STRING → STRING → STRING → STRING</code></td>
+<td>"Prefix First Last"</td>
+</tr>
+</tbody>
+</table>
+<h2 id="address-components">Address components</h2>
+<table>
+<thead>
+<tr>
+<th>Function</th>
+<th>Signature</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>format address</code> street city state postalCode countryCode</td>
+<td><code>STRING → STRING → STRING → STRING → STRING → STRING</code></td>
+<td>Single-line address string</td>
+</tr>
+<tr>
+<td><code>is valid US zip code</code> postalCode</td>
+<td><code>STRING → BOOLEAN</code></td>
+<td>Format check</td>
+</tr>
+<tr>
+<td><code>is valid UK postcode</code> postalCode</td>
+<td><code>STRING → BOOLEAN</code></td>
+<td>Format check</td>
+</tr>
+<tr>
+<td><code>is valid Canadian postal code</code> postalCode</td>
+<td><code>STRING → BOOLEAN</code></td>
+<td>Format check</td>
+</tr>
+</tbody>
+</table>
+<h2 id="identity-document-validation">Identity document validation</h2>
+<p>Constants for document type codes (<code>Passport type</code>, <code>National ID type</code>, <code>Drivers License type</code>, <code>Social Security type</code>, <code>Tax ID type</code>, <code>Residence Permit type</code>), plus format validators (length/separator checks only):</p>
+<table>
+<thead>
+<tr>
+<th>Function</th>
+<th>Signature</th>
+<th>Expected format</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>is valid US SSN format</code> ssn</td>
+<td><code>STRING → BOOLEAN</code></td>
+<td><code>XXX-XX-XXXX</code></td>
+</tr>
+<tr>
+<td><code>is valid Canadian SIN format</code> sin</td>
+<td><code>STRING → BOOLEAN</code></td>
+<td><code>XXX-XXX-XXX</code></td>
+</tr>
+<tr>
+<td><code>is valid UK NINO format</code> nino</td>
+<td><code>STRING → BOOLEAN</code></td>
+<td><code>AB123456C</code> (9 chars)</td>
+</tr>
+</tbody>
+</table>
+<h2 id="age-calculations">Age calculations</h2>
+<table>
+<thead>
+<tr>
+<th>Function</th>
+<th>Signature</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>age in years</code> birthDate referenceDate</td>
+<td><code>DATE → DATE → NUMBER</code></td>
+<td>Completed years at the reference date</td>
+</tr>
+<tr>
+<td><code>current age</code> birthDate</td>
+<td><code>DATE → NUMBER</code></td>
+<td>Age as of TODAY (requires <code>TIMEZONE IS</code>)</td>
+</tr>
+<tr>
+<td><code>is at least age</code> birthDate minimumAge referenceDate</td>
+<td><code>DATE → NUMBER → DATE → BOOLEAN</code></td>
+<td>Age check at a reference date</td>
+</tr>
+<tr>
+<td><code>is currently at least age</code> birthDate minimumAge</td>
+<td><code>DATE → NUMBER → BOOLEAN</code></td>
+<td>Age check as of TODAY</td>
+</tr>
+</tbody>
+</table>
+<h2 id="legal-capacity-checks">Legal capacity checks</h2>
+<p>Jurisdiction-aware (ISO alpha-2 codes; majority age defaults to 18, with e.g. Japan 20 and South Korea 19):</p>
+<table>
+<thead>
+<tr>
+<th>Function</th>
+<th>Signature</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>is adult</code> birthDate jurisdictionCode</td>
+<td><code>DATE → STRING → BOOLEAN</code></td>
+<td>Has reached the age of majority</td>
+</tr>
+<tr>
+<td><code>is minor</code> birthDate jurisdictionCode</td>
+<td><code>DATE → STRING → BOOLEAN</code></td>
+<td>Negation of <code>is adult</code></td>
+</tr>
+<tr>
+<td><code>can enter contract</code> birthDate jurisdictionCode</td>
+<td><code>DATE → STRING → BOOLEAN</code></td>
+<td>Currently same as <code>is adult</code></td>
+</tr>
+<tr>
+<td><code>can vote</code> birthDate jurisdictionCode</td>
+<td><code>DATE → STRING → BOOLEAN</code></td>
+<td>Voting age check (e.g. Brazil 16)</td>
+</tr>
+</tbody>
+</table>
+<h2 id="citizenship-status">Citizenship status</h2>
+<table>
+<thead>
+<tr>
+<th>Function</th>
+<th>Signature</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>is citizen of</code> citizenshipCode countryCode</td>
+<td><code>STRING → STRING → BOOLEAN</code></td>
+<td>Code equality</td>
+</tr>
+<tr>
+<td><code>has citizenship in</code> citizenships countryCode</td>
+<td><code>LIST OF STRING → STRING → BOOLEAN</code></td>
+<td>Membership in a citizenship list</td>
+</tr>
+<tr>
+<td><code>has multiple citizenships</code> citizenships</td>
+<td><code>LIST OF STRING → BOOLEAN</code></td>
+<td>At least two citizenships</td>
+</tr>
+<tr>
+<td><code>citizenship count</code> citizenships</td>
+<td><code>LIST OF STRING → NUMBER</code></td>
+<td>Number of citizenships</td>
+</tr>
+</tbody>
+</table>
+<h2 id="corporate-entities">Corporate entities</h2>
+<p>Entity type constants: <code>Corporation type</code>, <code>LLC type</code>, <code>LLP type</code>, <code>Partnership type</code>, <code>Sole Proprietorship type</code>, <code>Non-Profit type</code>, <code>Cooperative type</code>, <code>Trust type</code>, <code>Foundation type</code>. Relationship constants: <code>Wholly-owned subsidiary relationship</code>, <code>Majority-owned subsidiary relationship</code>, <code>Minority stake relationship</code>, <code>Joint venture relationship</code>, <code>Parent company relationship</code>, <code>Sister company relationship</code>, <code>Affiliated entity relationship</code>.</p>
+<p><strong>Identifier validation (format checks):</strong></p>
+<table>
+<thead>
+<tr>
+<th>Function</th>
+<th>Signature</th>
+<th>Expected format</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>is valid US EIN format</code> ein</td>
+<td><code>STRING → BOOLEAN</code></td>
+<td><code>XX-XXXXXXX</code></td>
+</tr>
+<tr>
+<td><code>is valid UK CRN format</code> crn</td>
+<td><code>STRING → BOOLEAN</code></td>
+<td>8 characters</td>
+</tr>
+<tr>
+<td><code>is valid Canadian BN format</code> bn</td>
+<td><code>STRING → BOOLEAN</code></td>
+<td>9 characters</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Status checks (relative to TODAY):</strong></p>
+<table>
+<thead>
+<tr>
+<th>Function</th>
+<th>Signature</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>years since incorporation</code> incorporationDate</td>
+<td><code>DATE → NUMBER</code></td>
+<td>Calendar-year difference</td>
+</tr>
+<tr>
+<td><code>established for at least</code> incorporationDate minimumYears</td>
+<td><code>DATE → NUMBER → BOOLEAN</code></td>
+<td>Age-of-entity check</td>
+</tr>
+<tr>
+<td><code>is dissolved</code> incorporationDate dissolutionDate</td>
+<td><code>DATE → DATE → BOOLEAN</code></td>
+<td>Dissolution date is in the past</td>
+</tr>
+<tr>
+<td><code>is active corporation</code> incorporationDate</td>
+<td><code>DATE → BOOLEAN</code></td>
+<td>Incorporation date is in the past</td>
+</tr>
+</tbody>
+</table>
+<h2 id="beneficial-ownership">Beneficial ownership</h2>
+<table>
+<thead>
+<tr>
+<th>Function</th>
+<th>Signature</th>
+<th>Threshold</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>is beneficial owner</code> ownershipPercentage</td>
+<td><code>NUMBER → BOOLEAN</code></td>
+<td>>= 25%</td>
+</tr>
+<tr>
+<td><code>is majority owner</code> ownershipPercentage</td>
+<td><code>NUMBER → BOOLEAN</code></td>
+<td>> 50%</td>
+</tr>
+<tr>
+<td><code>is controlling owner</code> ownershipPercentage</td>
+<td><code>NUMBER → BOOLEAN</code></td>
+<td>> 50%</td>
+</tr>
+<tr>
+<td><code>has significant control</code> ownershipPercentage</td>
+<td><code>NUMBER → BOOLEAN</code></td>
+<td>>= 25%</td>
+</tr>
+</tbody>
+</table>
+<h2 id="corporate-jurisdiction">Corporate jurisdiction</h2>
+<table>
+<thead>
+<tr>
+<th>Function</th>
+<th>Signature</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>is Delaware corporation</code> jurisdictionCode</td>
+<td><code>STRING → BOOLEAN</code></td>
+<td>Code equals <code>"US-DE"</code></td>
+</tr>
+<tr>
+<td><code>is US corporation</code> / <code>is UK corporation</code> / <code>is Canadian corporation</code></td>
+<td><code>STRING → BOOLEAN</code></td>
+<td>Country prefix / constituent-country checks</td>
+</tr>
+<tr>
+<td><code>requires registered agent</code> jurisdictionCode</td>
+<td><code>STRING → BOOLEAN</code></td>
+<td>US, UK, or Canadian corporation</td>
+</tr>
+<tr>
+<td><code>is foreign qualification required</code> businessJurisdiction operatingJurisdiction</td>
+<td><code>STRING → STRING → BOOLEAN</code></td>
+<td>Different US jurisdictions for business vs operations</td>
+</tr>
+</tbody>
+</table>
+0:{"rsc":["$","$1","c",{"children":[["$","$L2",null,{"navSections":[{"title":"","items":[{"title":"Language Reference","href":"reference"},{"title":"Glossary","href":"reference/GLOSSARY"},{"title":"Cheat sheet","href":"reference/cheat-sheet"},{"title":"Types","href":"reference/types","children":[{"title":"DECLARE","href":"reference/types/DECLARE"},{"title":"ASSUME","href":"reference/types/ASSUME"},{"title":"FOR ALL","href":"reference/types/for-all"},{"title":"Coercions","href":"reference/types/coercions"}]},{"title":"Functions","href":"reference/functions","children":[{"title":"DECIDE","href":"reference/functions/DECIDE"},{"title":"GIVEN and GIVETH","href":"reference/functions/GIVEN"},{"title":"MEANS","href":"reference/functions/MEANS"},{"title":"LET and WHERE","href":"reference/functions/LET"},{"title":"YIELD","href":"reference/functions/YIELD"},{"title":"AKA","href":"reference/functions/AKA"}]},{"title":"Control flow","href":"reference/control-flow","children":[{"title":"IF","href":"reference/control-flow/IF"},{"title":"BRANCH","href":"reference/control-flow/BRANCH"},{"title":"CONSIDER","href":"reference/control-flow/CONSIDER"}]},{"title":"Operators","href":"reference/operators","children":[{"title":"AND, OR, NOT, IMPLIES","href":"reference/operators/logical"},{"title":"UNLESS","href":"reference/operators/UNLESS"},{"title":"Arithmetic","href":"reference/operators/arithmetic"},{"title":"Comparisons","href":"reference/operators/comparisons"}]},{"title":"Regulative rules","href":"reference/regulative","children":[{"title":"PARTY, MUST, MAY, SHANT","href":"reference/regulative/PARTY"},{"title":"Deadlines and consequences","href":"reference/regulative/consequences"},{"title":"BECAUSE","href":"reference/regulative/BECAUSE"},{"title":"DEONTIC","href":"reference/regulative/DEONTIC"},{"title":"EVENT","href":"reference/regulative/EVENT"}]},{"title":"Syntax and directives","href":"reference/syntax"},{"title":"Built-in functions","href":"reference/builtins","children":[{"title":"HTTP and JSON","href":"reference/builtins/http-json"}]},{"title":"Standard libraries","href":"reference/libraries","children":[{"title":"prelude","href":"reference/libraries/prelude"},{"title":"math","href":"reference/libraries/math"},{"title":"daydate","href":"reference/libraries/daydate"},{"title":"time","href":"reference/libraries/time"},{"title":"datetime","href":"reference/libraries/datetime"},{"title":"timezone","href":"reference/libraries/timezone"},{"title":"excel-date","href":"reference/libraries/excel-date"},{"title":"currency","href":"reference/libraries/currency"},{"title":"holdings","href":"reference/libraries/holdings"},{"title":"actus","href":"reference/libraries/actus"},{"title":"legal-persons","href":"reference/libraries/legal-persons"},{"title":"jurisdiction","href":"reference/libraries/jurisdiction"},{"title":"llm","href":"reference/libraries/llm"}]},{"title":"Error messages","href":"reference/errors"}]}],"toc":[],"htmlContent":"$3","pager":{"prev":"$0:rsc:props:children:0:props:navSections:0:items:10:children:9","next":"$0:rsc:props:children:0:props:navSections:0:items:10:children:11"}}],["$L4"],"$L5"]}],"isPartial":false,"staleTime":300,"varyParams":null,"buildId":"iJUXAyHcmcW99cMci3ei9"}
+4:["$","script","script-0",{"src":"/_next/static/chunks/0fl~me.qwn48c.js","async":true}]
+5:["$","$L6",null,{"children":["$","$7",null,{"name":"Next.MetadataOutlet","children":"$@8"}]}]
+8:null

@@ -1,0 +1,275 @@
+1:"$Sreact.fragment"
+2:I[90160,["/_next/static/chunks/0ypf.t599.7y6.js","/_next/static/chunks/0t2xr05rlu96l.js","/_next/static/chunks/0uxaa7wo_wmcw.js","/_next/static/chunks/0fl~me.qwn48c.js"],"default"]
+6:I[97367,["/_next/static/chunks/0ypf.t599.7y6.js","/_next/static/chunks/0t2xr05rlu96l.js"],"OutletBoundary"]
+7:"$Sreact.suspense"
+3:T311a,<h1>Types as legal categories</h1>
+<p>Why L4 builds its data model from algebraic data types — and why those types are a natural fit for legal structure.</p>
+<hr>
+<h2 id="what-are-algebraic-types">What Are Algebraic Types?</h2>
+<p><strong>Algebraic data types</strong> (ADTs) are types built from two fundamental operations:</p>
+<ol>
+<li><strong>Product types</strong>: Combine multiple values (AND)</li>
+<li><strong>Sum types</strong>: Choose between alternatives (OR)</li>
+</ol>
+<p>L4 uses ADTs extensively because they naturally map to legal structures. This article explains the mapping; for the full syntax of declaring and using types, see <a href="/l4/reference/types">Types</a> and <a href="/l4/reference/types/DECLARE">DECLARE</a>.</p>
+<hr>
+<h2 id="product-types-records">Product Types: Records</h2>
+<p>A <strong>product type</strong> combines multiple values together. In L4, these are <strong>records</strong>:</p>
+<pre><code class="language-l4">DECLARE Person
+    HAS `name` IS A STRING
+        `age` IS A NUMBER
+        `email` IS A STRING
+</code></pre>
+<p>The set of possible <code>Person</code> values is the <strong>product</strong> (cross-product) of all field types:</p>
+<pre><code>Person = STRING × NUMBER × STRING
+       = {all possible names} × {all possible ages} × {all possible emails}
+</code></pre>
+<p>Records model legal entities — the bundle of facts a legal instrument cares about:</p>
+<pre><code class="language-l4">DECLARE Contract
+    HAS parties IS A LIST OF Party
+        `effective date` IS A DATE
+        obligations IS A LIST OF Obligation
+</code></pre>
+<p>For record construction and field access syntax (<code>Person "Alice Smith" 30 "alice@example.com"</code>, <code>alice's name</code>), see <a href="/l4/reference/types">Types</a>.</p>
+<hr>
+<h2 id="sum-types-enumerations">Sum Types: Enumerations</h2>
+<p>A <strong>sum type</strong> represents a choice between alternatives. In L4, we use <code>IS ONE OF</code>:</p>
+<pre><code class="language-l4">DECLARE Status IS ONE OF
+    Active
+    Suspended
+    Terminated
+</code></pre>
+<p>The set of possible <code>Status</code> values is the <strong>sum</strong> (union) of the variants:</p>
+<pre><code>Status = Active ∪ Suspended ∪ Terminated
+       = 3 possible values
+</code></pre>
+<p>Variants can also carry data of their own:</p>
+<pre><code class="language-l4">DECLARE `payment status` IS ONE OF
+    Pending
+    Paid HAS `date paid` IS A DATE
+             amount IS A NUMBER
+    Rejected HAS reason IS A STRING
+</code></pre>
+<p>A <code>Paid</code> value always has a date and an amount; a <code>Rejected</code> value always has a reason; a <code>Pending</code> value carries nothing. Each alternative carries exactly the data that is relevant to it — there are no unused or "not applicable" fields.</p>
+<p>For the full enumeration syntax, see <a href="/l4/reference/types/DECLARE">DECLARE</a> and the</p>
+<pre><code class="language-l4-file">-- Example: Enum type declaration
+-- Demonstrates sum types with named constructors
+
+DECLARE Color IS ONE OF
+  Red
+  Green
+  Blue
+
+-- Example usage
+`my favorite color` MEANS Red
+
+`name of the color` MEANS
+  CONSIDER `my favorite color`
+  WHEN Red   THEN "red"
+  WHEN Green THEN "green"
+  WHEN Blue  THEN "blue"
+
+#EVAL `name of the color`
+</code></pre>
+<p>.</p>
+<hr>
+<h2 id="pattern-matching-and-exhaustiveness">Pattern Matching and Exhaustiveness</h2>
+<p>To work with sum types, use <code>CONSIDER</code>:</p>
+<pre><code class="language-l4">GIVEN status IS A `payment status`
+GIVETH A STRING
+`describe status` MEANS
+    CONSIDER status
+    WHEN Pending THEN "Payment pending"
+    WHEN Paid d a THEN "Paid"
+    WHEN Rejected r THEN r
+</code></pre>
+<p>Because a sum type lists all of its alternatives, L4 can check that a <code>CONSIDER</code> handles every one of them, and it warns when one is missing. That is the code form of a legal demand: a determination over a closed category must say what happens in every case. When an amendment adds a category and the new variant is added to the declaration, every determination that has not yet decided how to handle it is flagged. A catch-all <code>OTHERWISE</code> switches this check off, and would absorb the new variant without comment. <a href="/l4/concepts/type-system/exhaustiveness">Exhaustiveness</a> explains the check, its limits, and why it warns rather than fails.</p>
+<hr>
+<h2 id="why-algebraic-types-map-to-legal-structure">Why Algebraic Types Map to Legal Structure</h2>
+<p>This is the conceptual heart of the matter: legal drafting already uses the algebra, just informally.</p>
+<h3 id="closed-enumerations-are-statutory-categories">Closed enumerations are statutory categories</h3>
+<p>Legal definitions are typically <strong>closed lists</strong>:</p>
+<blockquote>
+<p>A "person" means—
+(a) a natural person; or
+(b) a body corporate; or
+(c) a partnership.</p>
+</blockquote>
+<p>This maps directly to a sum type:</p>
+<pre><code class="language-l4">DECLARE Person IS ONE OF
+    `natural person` HAS ...
+    `body corporate` HAS ...
+    partnership HAS ...
+</code></pre>
+<p>The closure is the point. Nothing is a <code>Person</code> unless it is one of the three listed alternatives — and nothing becomes one without amending the declaration, just as nothing enters the statutory definition without amending the statute. An open-ended encoding (say, a <code>STRING</code> holding "natural person") cannot express this: it admits values the law never defined, and the type checker has no way to notice.</p>
+<h3 id="sum-types-are-alternative-legal-statuses">Sum types are alternative legal statuses</h3>
+<p>A legal status is usually <strong>mutually exclusive</strong>: a contract is draft <em>or</em> executed <em>or</em> terminated; a payment is pending <em>or</em> paid <em>or</em> rejected — never two at once. A sum type builds that exclusivity into the data model.</p>
+<p>Compare the flattened alternative — a record of booleans:</p>
+<pre><code class="language-l4">-- Admits impossible states
+DECLARE `contract flags`
+    HAS `is draft` IS A BOOLEAN
+        `is executed` IS A BOOLEAN
+        `is terminated` IS A BOOLEAN
+</code></pre>
+<p>This type has 8 possible values, of which at most 3 describe a legally coherent contract. What does it mean for a contract to be simultaneously draft and terminated? The sum type version has exactly the 3 values the law contemplates. Illegal states are not merely avoided — they are <strong>unrepresentable</strong>.</p>
+<h3 id="products-are-required-particulars">Products are required particulars</h3>
+<p>Where legal text prescribes what an entity must comprise, that is a product type:</p>
+<blockquote>
+<p>A "registered charity" must have—</p>
+<ul>
+<li>a registered name</li>
+<li>a registration number</li>
+<li>at least one charitable purpose</li>
+</ul>
+</blockquote>
+<pre><code class="language-l4">DECLARE `registered charity`
+    HAS `name` IS A STRING
+        `registration number` IS A STRING
+        purposes IS A LIST OF Purpose
+</code></pre>
+<p>A value of this type cannot be constructed with a particular missing — the type checker enforces the completeness that the statute demands.</p>
+<h3 id="variants-with-data-mirror-case-specific-particulars">Variants with data mirror case-specific particulars</h3>
+<p>Legal consequences often depend on <em>which</em> alternative applies, and each alternative comes with its own relevant facts: a rejected application has grounds for rejection; a granted one has a grant date. Attaching data to variants keeps each case's facts with that case, instead of a wide record where most fields are meaningless most of the time.</p>
+<hr>
+<h2 id="combining-product-and-sum">Combining Product and Sum</h2>
+<p>Real models nest both freely:</p>
+<pre><code class="language-l4">-- Sum type whose variants are products
+DECLARE Employment IS ONE OF
+    Employed HAS employer IS A Company
+                 `start date` IS A DATE
+                 salary IS A NUMBER
+    `Self-employed` HAS `business name` IS A STRING
+    Unemployed HAS since IS A DATE
+
+-- Product type containing a sum type
+DECLARE Worker
+    HAS `name` IS A STRING
+        `employment status` IS AN Employment
+</code></pre>
+<p>And pattern matching reaches inside:</p>
+<pre><code class="language-l4">GIVEN worker IS A Worker
+GIVETH A BOOLEAN
+`is currently employed` MEANS
+    CONSIDER worker's `employment status`
+    WHEN Employed e s sal THEN TRUE
+    OTHERWISE FALSE
+</code></pre>
+<hr>
+<h2 id="recursive-types">Recursive Types</h2>
+<p>Types can reference themselves, which is how nested, tree-shaped legal structures are modeled — most obviously the structure of a legal document itself:</p>
+<pre><code class="language-l4">DECLARE `legal document` IS ONE OF
+    Section HAS number IS A STRING
+                title IS A STRING
+                content IS A LIST OF `legal document`
+    Paragraph HAS text IS A STRING
+    Definition HAS term IS A STRING
+                   meaning IS A STRING
+</code></pre>
+<p>A section contains subsections, which contain paragraphs and definitions — arbitrarily deep, out of one three-variant declaration. <a href="/l4/concepts/type-system/type-theory#fixed-points-and-recursion">Type theory</a> gives the formal reading of such a type as a fixed point.</p>
+<hr>
+<h2 id="common-patterns">Common Patterns</h2>
+<h3 id="optional-values-maybe">Optional Values: MAYBE</h3>
+<pre><code class="language-l4">DECLARE Person
+    HAS `name` IS A STRING
+        `middle name` IS A MAYBE STRING  -- Optional
+</code></pre>
+<p><code>MAYBE</code> is itself a sum type — conceptually:</p>
+<pre><code>MAYBE a  =  NOTHING  |  JUST a
+</code></pre>
+<p>Optionality is explicit in the type, so there is no null: to use the value, a <code>CONSIDER</code> takes it apart with <code>WHEN NOTHING</code> and <code>WHEN JUST x</code>. Write both branches; the <a href="/l4/concepts/type-system/exhaustiveness">exhaustiveness check</a> looks inside a <code>MAYBE</code> but does not report a missing <code>WHEN NOTHING</code>. See the</p>
+<pre><code class="language-l4-file">-- Example: Maybe type usage
+-- Demonstrates optional values with JUST and NOTHING
+
+`value is present` MEANS JUST OF 42
+`value is absent` MEANS NOTHING
+
+`get the value or default to zero` MEANS
+  CONSIDER `value is present`
+  WHEN JUST OF x THEN x
+  WHEN NOTHING THEN 0
+
+#EVAL `get the value or default to zero`
+</code></pre>
+<p>.</p>
+<h3 id="lists">Lists</h3>
+<p>Lists are also algebraic — conceptually a sum of "empty" and "an element followed by a rest", matched with:</p>
+<pre><code class="language-l4">CONSIDER items
+WHEN EMPTY THEN "no items"
+WHEN x FOLLOWED BY rest THEN "at least one item"
+</code></pre>
+<p>See the</p>
+<pre><code class="language-l4-file">-- Example: List type usage
+-- Demonstrates list literals and cons operator
+
+-- List literal syntax
+`first list` MEANS LIST 1, 2, 3
+
+-- Cons operator (FOLLOWED BY)
+`second list` MEANS 1 FOLLOWED BY 2 FOLLOWED BY 3 FOLLOWED BY EMPTY
+
+#EVAL `first list`
+#EVAL `second list`
+</code></pre>
+<p>.</p>
+<hr>
+<h2 id="summary">Summary</h2>
+<table>
+<thead>
+<tr>
+<th>Concept</th>
+<th>L4 Syntax</th>
+<th>Mathematical View</th>
+<th>Legal Reading</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Product type</td>
+<td><code>DECLARE X HAS field1, field2</code></td>
+<td>X = A × B</td>
+<td>Required particulars</td>
+</tr>
+<tr>
+<td>Sum type</td>
+<td><code>DECLARE X IS ONE OF A, B, C</code></td>
+<td>X = A + B + C</td>
+<td>Closed statutory category</td>
+</tr>
+<tr>
+<td>Sum with data</td>
+<td><code>A HAS field IS A Type</code></td>
+<td>Tagged union</td>
+<td>Case-specific particulars</td>
+</tr>
+<tr>
+<td>Pattern match</td>
+<td><code>CONSIDER x WHEN ...</code></td>
+<td>Case analysis</td>
+<td>Complete determination</td>
+</tr>
+<tr>
+<td>Optional</td>
+<td><code>MAYBE Type</code></td>
+<td>1 + Type</td>
+<td>Explicitly optional fact</td>
+</tr>
+<tr>
+<td>List</td>
+<td><code>LIST OF Type</code></td>
+<td>1 + (Type × List)</td>
+<td>Repeating particulars</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h2 id="further-reading">Further Reading</h2>
+<ul>
+<li><a href="/l4/concepts/type-system/exhaustiveness">Exhaustiveness</a> - Totality of determinations as a legal-safety property</li>
+<li><a href="/l4/reference/types">Types</a> - Detailed type reference</li>
+<li><a href="/l4/concepts/type-system/type-theory">Type theory</a> - Formal foundations of the type system</li>
+<li><a href="/l4/courses/foundation/module-2-entities">Module 2: Legal entities and relationships</a> - Hands-on with types</li>
+</ul>
+0:{"rsc":["$","$1","c",{"children":[["$","$L2",null,{"navSections":[{"title":"","items":[{"title":"Concepts home","href":"concepts"},{"title":"Design principles","href":"concepts/language-design/principles"},{"title":"Reading like the law","href":"concepts/language-design/linguistic-syntax"},{"title":"Definitions and duties","href":"concepts/legal-modeling/constitutive-vs-regulative"},{"title":"Exceptions and defaults","href":"concepts/legal-modeling/default-reasoning"},{"title":"How obligations unfold","href":"concepts/legal-modeling/regulative-rules"},{"title":"Types as legal categories","href":"concepts/type-system/algebraic-types"},{"title":"Exhaustiveness","href":"concepts/type-system/exhaustiveness"},{"title":"Type theory","href":"concepts/type-system/type-theory"}]}],"toc":[],"htmlContent":"$3","pager":{"prev":"$0:rsc:props:children:0:props:navSections:0:items:5","next":"$0:rsc:props:children:0:props:navSections:0:items:7"}}],["$L4"],"$L5"]}],"isPartial":false,"staleTime":300,"varyParams":null,"buildId":"iJUXAyHcmcW99cMci3ei9"}
+4:["$","script","script-0",{"src":"/_next/static/chunks/0fl~me.qwn48c.js","async":true}]
+5:["$","$L6",null,{"children":["$","$7",null,{"name":"Next.MetadataOutlet","children":"$@8"}]}]
+8:null

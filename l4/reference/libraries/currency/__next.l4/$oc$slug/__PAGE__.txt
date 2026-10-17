@@ -1,0 +1,217 @@
+1:"$Sreact.fragment"
+2:I[90160,["/_next/static/chunks/0ypf.t599.7y6.js","/_next/static/chunks/0t2xr05rlu96l.js","/_next/static/chunks/0uxaa7wo_wmcw.js","/_next/static/chunks/0fl~me.qwn48c.js"],"default"]
+6:I[97367,["/_next/static/chunks/0ypf.t599.7y6.js","/_next/static/chunks/0t2xr05rlu96l.js"],"OutletBoundary"]
+7:"$Sreact.suspense"
+3:T1a14,<h1>currency</h1>
+<p>Currency handling with ISO 4217 currency codes. Stores amounts as integer minor units (cents) to avoid floating-point errors. Import with <code>IMPORT currency</code> (also imports jurisdiction).</p>
+<p><strong>Example:</strong></p>
+<pre><code class="language-l4-file">-- Currency Example: ISO 4217 currency handling
+IMPORT currency
+
+-- Currency codes
+#EVAL `US Dollar code`  -- "USD"
+#EVAL `Euro code`       -- "EUR"
+
+-- Decimal places per currency
+#EVAL `decimal places for currency` "USD"  -- RIGHT 2
+#EVAL `decimal places for currency` "JPY"  -- RIGHT 0 (no decimals)
+#EVAL `decimal places for currency` "XXX"  -- LEFT "Unknown currency code: XXX"
+
+-- Create money from minor units (cents)
+-- 12345 cents = $123.45
+DECIDE priceInCents IS 12345
+DECIDE formattedPrice IS Money priceInCents "USD"
+#EVAL formattedPrice  -- RIGHT "123.45 USD"
+
+-- Japanese Yen has no decimals
+DECIDE yenAmount IS Money 1000 "JPY"
+#EVAL yenAmount  -- RIGHT "1000 JPY"
+
+-- Convert between major and minor units
+DECIDE dollars IS 99.99
+DECIDE cents IS `major to minor units` dollars "USD"
+#EVAL cents  -- RIGHT 9999
+
+DECIDE backToDollars IS `minor to major units` 9999 "USD"
+#EVAL backToDollars  -- RIGHT 99.99
+
+-- Arithmetic (all in minor units to avoid floating point errors)
+DECIDE amount1 IS 1000  -- $10.00
+DECIDE amount2 IS 500   -- $5.00
+
+DECIDE added IS `add money` amount1 amount2 "USD"
+#EVAL added  -- RIGHT 1500 ($15.00)
+
+DECIDE subtracted IS `subtract money` amount1 amount2 "USD"
+#EVAL subtracted  -- RIGHT 500 ($5.00)
+
+-- Multiply by factor (e.g., tax)
+DECIDE taxRate IS 1.08  -- 8% tax
+DECIDE withTax IS `multiply money` amount1 taxRate "USD"
+#EVAL withTax  -- RIGHT 1080 ($10.80)
+
+-- Comparisons
+#EVAL `money greater than` 1000 500  -- TRUE
+#EVAL `money at least` 1000 1000     -- TRUE
+
+-- Validation
+#EVAL `is valid currency code` "USD"  -- TRUE
+#EVAL `is valid currency code` "usd"  -- FALSE (must be uppercase)
+#EVAL `is non-negative` 100           -- TRUE
+#EVAL `is positive` 0                 -- FALSE
+</code></pre>
+<h2 id="supported-currencies">Supported currencies</h2>
+<p>USD, EUR, GBP, JPY, CHF, CAD, AUD, CNY, HKD, SGD, INR, BRL, MXN, SEK, NZD, KRW</p>
+<p>Each currency provides constants, e.g. <code>`US Dollar code`</code> (<code>"USD"</code>), <code>`US Dollar numeric`</code> (840), <code>`US Dollar decimals`</code> (2), and <code>`US Dollar country`</code> (the euro has <code>`Euro region`</code> instead of a country). JPY and KRW have 0 decimal places; all others 2.</p>
+<h2 id="construction-and-formatting">Construction and formatting</h2>
+<table>
+<thead>
+<tr>
+<th>Function</th>
+<th>Signature</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>Money</code> minorUnits currencyCode</td>
+<td><code>NUMBER → STRING → EITHER STRING STRING</code></td>
+<td>Format minor units as an amount string, e.g. <code>Money 12345 "USD"</code> → <code>RIGHT "123.45 USD"</code>. LEFT for unknown currencies or non-integer minor units.</td>
+</tr>
+<tr>
+<td><code>decimal places for currency</code> currencyCode</td>
+<td><code>STRING → EITHER STRING NUMBER</code></td>
+<td>Minor-unit decimal places for a currency code</td>
+</tr>
+<tr>
+<td><code>power of 10</code> exponent</td>
+<td><code>NUMBER → NUMBER</code></td>
+<td>10^n for n in 0-3 (defaults to 100 otherwise)</td>
+</tr>
+</tbody>
+</table>
+<p>The helpers that pad and format the amount are local to <code>Money</code> and cannot be called on their own.</p>
+<h2 id="amount-conversion">Amount conversion</h2>
+<table>
+<thead>
+<tr>
+<th>Function</th>
+<th>Signature</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>major to minor units</code> majorUnits currencyCode</td>
+<td><code>NUMBER → STRING → EITHER STRING NUMBER</code></td>
+<td>Dollars to cents (floors to an integer)</td>
+</tr>
+<tr>
+<td><code>minor to major units</code> minorUnits currencyCode</td>
+<td><code>NUMBER → STRING → EITHER STRING NUMBER</code></td>
+<td>Cents to dollars</td>
+</tr>
+</tbody>
+</table>
+<h2 id="arithmetic-operations">Arithmetic operations</h2>
+<p>All arithmetic works on minor-unit amounts and validates the currency code first (LEFT for unknown currencies).</p>
+<table>
+<thead>
+<tr>
+<th>Function</th>
+<th>Signature</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>add money</code> amount1 amount2 currencyCode</td>
+<td><code>NUMBER → NUMBER → STRING → EITHER STRING NUMBER</code></td>
+<td>Sum of two amounts</td>
+</tr>
+<tr>
+<td><code>subtract money</code> amount1 amount2 currencyCode</td>
+<td><code>NUMBER → NUMBER → STRING → EITHER STRING NUMBER</code></td>
+<td>Difference of two amounts</td>
+</tr>
+<tr>
+<td><code>multiply money</code> amount factor currencyCode</td>
+<td><code>NUMBER → NUMBER → STRING → EITHER STRING NUMBER</code></td>
+<td>Amount × factor, floored to whole minor units</td>
+</tr>
+<tr>
+<td><code>divide money</code> amount divisor currencyCode</td>
+<td><code>NUMBER → NUMBER → STRING → EITHER STRING NUMBER</code></td>
+<td>Amount ÷ divisor, floored; LEFT on division by zero</td>
+</tr>
+</tbody>
+</table>
+<h2 id="comparison-operations">Comparison operations</h2>
+<p>Plain minor-unit comparisons (both amounts assumed to be in the same currency):</p>
+<table>
+<thead>
+<tr>
+<th>Function</th>
+<th>Signature</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>money equal</code> amount1 amount2</td>
+<td><code>NUMBER → NUMBER → BOOLEAN</code></td>
+<td>amount1 = amount2</td>
+</tr>
+<tr>
+<td><code>money greater than</code> amount1 amount2</td>
+<td><code>NUMBER → NUMBER → BOOLEAN</code></td>
+<td>amount1 > amount2</td>
+</tr>
+<tr>
+<td><code>money less than</code> amount1 amount2</td>
+<td><code>NUMBER → NUMBER → BOOLEAN</code></td>
+<td>amount1 &#x3C; amount2</td>
+</tr>
+<tr>
+<td><code>money at least</code> amount1 amount2</td>
+<td><code>NUMBER → NUMBER → BOOLEAN</code></td>
+<td>amount1 >= amount2</td>
+</tr>
+<tr>
+<td><code>money at most</code> amount1 amount2</td>
+<td><code>NUMBER → NUMBER → BOOLEAN</code></td>
+<td>amount1 &#x3C;= amount2</td>
+</tr>
+</tbody>
+</table>
+<h2 id="validation-functions">Validation functions</h2>
+<table>
+<thead>
+<tr>
+<th>Function</th>
+<th>Signature</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>is valid currency code</code> code</td>
+<td><code>STRING → BOOLEAN</code></td>
+<td>Exactly 3 characters, all uppercase (format only)</td>
+</tr>
+<tr>
+<td><code>is non-negative</code> amount</td>
+<td><code>NUMBER → BOOLEAN</code></td>
+<td>amount >= 0</td>
+</tr>
+<tr>
+<td><code>is positive</code> amount</td>
+<td><code>NUMBER → BOOLEAN</code></td>
+<td>amount > 0</td>
+</tr>
+</tbody>
+</table>
+0:{"rsc":["$","$1","c",{"children":[["$","$L2",null,{"navSections":[{"title":"","items":[{"title":"Language Reference","href":"reference"},{"title":"Glossary","href":"reference/GLOSSARY"},{"title":"Cheat sheet","href":"reference/cheat-sheet"},{"title":"Types","href":"reference/types","children":[{"title":"DECLARE","href":"reference/types/DECLARE"},{"title":"ASSUME","href":"reference/types/ASSUME"},{"title":"FOR ALL","href":"reference/types/for-all"},{"title":"Coercions","href":"reference/types/coercions"}]},{"title":"Functions","href":"reference/functions","children":[{"title":"DECIDE","href":"reference/functions/DECIDE"},{"title":"GIVEN and GIVETH","href":"reference/functions/GIVEN"},{"title":"MEANS","href":"reference/functions/MEANS"},{"title":"LET and WHERE","href":"reference/functions/LET"},{"title":"YIELD","href":"reference/functions/YIELD"},{"title":"AKA","href":"reference/functions/AKA"}]},{"title":"Control flow","href":"reference/control-flow","children":[{"title":"IF","href":"reference/control-flow/IF"},{"title":"BRANCH","href":"reference/control-flow/BRANCH"},{"title":"CONSIDER","href":"reference/control-flow/CONSIDER"}]},{"title":"Operators","href":"reference/operators","children":[{"title":"AND, OR, NOT, IMPLIES","href":"reference/operators/logical"},{"title":"UNLESS","href":"reference/operators/UNLESS"},{"title":"Arithmetic","href":"reference/operators/arithmetic"},{"title":"Comparisons","href":"reference/operators/comparisons"}]},{"title":"Regulative rules","href":"reference/regulative","children":[{"title":"PARTY, MUST, MAY, SHANT","href":"reference/regulative/PARTY"},{"title":"Deadlines and consequences","href":"reference/regulative/consequences"},{"title":"BECAUSE","href":"reference/regulative/BECAUSE"},{"title":"DEONTIC","href":"reference/regulative/DEONTIC"},{"title":"EVENT","href":"reference/regulative/EVENT"}]},{"title":"Syntax and directives","href":"reference/syntax"},{"title":"Built-in functions","href":"reference/builtins","children":[{"title":"HTTP and JSON","href":"reference/builtins/http-json"}]},{"title":"Standard libraries","href":"reference/libraries","children":[{"title":"prelude","href":"reference/libraries/prelude"},{"title":"math","href":"reference/libraries/math"},{"title":"daydate","href":"reference/libraries/daydate"},{"title":"time","href":"reference/libraries/time"},{"title":"datetime","href":"reference/libraries/datetime"},{"title":"timezone","href":"reference/libraries/timezone"},{"title":"excel-date","href":"reference/libraries/excel-date"},{"title":"currency","href":"reference/libraries/currency"},{"title":"holdings","href":"reference/libraries/holdings"},{"title":"actus","href":"reference/libraries/actus"},{"title":"legal-persons","href":"reference/libraries/legal-persons"},{"title":"jurisdiction","href":"reference/libraries/jurisdiction"},{"title":"llm","href":"reference/libraries/llm"}]},{"title":"Error messages","href":"reference/errors"}]}],"toc":[],"htmlContent":"$3","pager":{"prev":"$0:rsc:props:children:0:props:navSections:0:items:10:children:6","next":"$0:rsc:props:children:0:props:navSections:0:items:10:children:8"}}],["$L4"],"$L5"]}],"isPartial":false,"staleTime":300,"varyParams":null,"buildId":"iJUXAyHcmcW99cMci3ei9"}
+4:["$","script","script-0",{"src":"/_next/static/chunks/0fl~me.qwn48c.js","async":true}]
+5:["$","$L6",null,{"children":["$","$7",null,{"name":"Next.MetadataOutlet","children":"$@8"}]}]
+8:null

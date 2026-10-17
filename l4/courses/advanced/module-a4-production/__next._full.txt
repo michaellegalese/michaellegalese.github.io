@@ -1,0 +1,255 @@
+1:"$Sreact.fragment"
+2:I[39756,["/_next/static/chunks/0ypf.t599.7y6.js","/_next/static/chunks/0t2xr05rlu96l.js"],"default"]
+3:I[37457,["/_next/static/chunks/0ypf.t599.7y6.js","/_next/static/chunks/0t2xr05rlu96l.js"],"default"]
+4:I[22016,["/_next/static/chunks/0ypf.t599.7y6.js","/_next/static/chunks/0t2xr05rlu96l.js","/_next/static/chunks/11.9ba59t4-it.js"],""]
+5:I[5500,["/_next/static/chunks/0ypf.t599.7y6.js","/_next/static/chunks/0t2xr05rlu96l.js","/_next/static/chunks/11.9ba59t4-it.js"],"Image"]
+10:I[68027,["/_next/static/chunks/0ypf.t599.7y6.js","/_next/static/chunks/0t2xr05rlu96l.js"],"default",1]
+:HL["/_next/static/chunks/0xhryq7f66rdk.css","style"]
+:HL["/_next/static/chunks/0s9wju.j1~_xn.css","style"]
+:HL["/_next/static/media/248e1dc0efc99276-s.p.0ft7o6kv5bp14.woff2","font",{"crossOrigin":"","type":"font/woff2"}]
+:HL["/_next/static/media/83afe278b6a6bb3c-s.p.0q-301v4kxxnr.woff2","font",{"crossOrigin":"","type":"font/woff2"}]
+0:{"P":null,"c":["","l4","courses","advanced","module-a4-production"],"q":"","i":false,"f":[[["",{"children":["l4",{"children":[["slug","courses/advanced/module-a4-production","oc",null],{"children":["__PAGE__",{}]}]}]},"$undefined","$undefined",16],[["$","$1","c",{"children":[[["$","link","0",{"rel":"stylesheet","href":"/_next/static/chunks/0xhryq7f66rdk.css","precedence":"next","crossOrigin":"$undefined","nonce":"$undefined"}],["$","script","script-0",{"src":"/_next/static/chunks/0ypf.t599.7y6.js","async":true,"nonce":"$undefined"}],["$","script","script-1",{"src":"/_next/static/chunks/0t2xr05rlu96l.js","async":true,"nonce":"$undefined"}]],["$","html",null,{"lang":"en","children":[["$","head",null,{"children":[["$","meta",null,{"httpEquiv":"Content-Security-Policy","content":"default-src 'self' https://legalese.com; script-src 'self' https://legalese.com 'unsafe-inline' https://cdnjs.cloudflare.com; style-src 'self' https://legalese.com 'unsafe-inline'; font-src 'self' https://legalese.com; img-src 'self' https://legalese.com https://workoscdn.com https://*.googleusercontent.com; connect-src 'self' https://legalese.com https://legalese.cloud https://ai.legalese.cloud https://*.workos.com; frame-src 'self' https://legalese.com https://jl4.legalese.com https://*.workos.com; object-src 'none'; base-uri 'self' https://legalese.com"}],["$","link",null,{"rel":"apple-touch-icon","sizes":"180x180","href":"/favicon/apple-touch-icon.png"}],["$","link",null,{"rel":"icon","type":"image/png","sizes":"32x32","href":"/favicon/favicon-32x32.png"}],["$","link",null,{"rel":"icon","type":"image/png","sizes":"16x16","href":"/favicon/favicon-16x16.png"}],["$","link",null,{"rel":"manifest","href":"/favicon/site.webmanifest"}],["$","link",null,{"rel":"shortcut icon","href":"/favicon/favicon.ico"}],["$","meta",null,{"name":"msapplication-TileColor","content":"#000000"}],["$","meta",null,{"name":"msapplication-config","content":"/favicon/browserconfig.xml"}],["$","meta",null,{"name":"theme-color","content":"#000"}],["$","link",null,{"rel":"alternate","type":"application/rss+xml","href":"/feed.xml"}]]}],["$","body",null,{"className":"inter_5901b7c6-module__ec5Qua__variable merriweather_b1e99710-module__84TlHG__variable","children":[["$","div",null,{"className":"min-h-screen","children":["$","$L2",null,{"parallelRouterKey":"children","error":"$undefined","errorStyles":"$undefined","errorScripts":"$undefined","template":["$","$L3",null,{}],"templateStyles":"$undefined","templateScripts":"$undefined","notFound":[["$","div",null,{"className":"min-h-screen flex flex-col","children":["$","div",null,{"className":"container mx-auto px-5 flex-1 flex flex-col","children":[["$","header",null,{"className":"flex flex-col md:flex-row items-center justify-between py-8 mb-6","children":["$","$L4",null,{"href":"/","className":"flex items-center gap-1 hover:opacity-80 transition-opacity","children":[["$","$L5",null,{"src":"/assets/logos/legalese-logo.png","alt":"§","width":42,"height":42,"className":"rounded"}],["$","span",null,{"className":"text-2xl font-bold tracking-tight font-merriweather","children":"Legalese"}]]}]}],["$","div",null,{"className":"flex-1 flex items-center justify-center","children":["$","div",null,{"className":"text-center px-6 py-16","children":[["$","h1",null,{"className":"text-8xl font-bold text-gray-200 mb-4","children":404}],["$","h2",null,{"className":"text-2xl font-semibold text-gray-900 mb-4 font-merriweather","children":"Not Found"}],["$","p",null,{"className":"text-gray-600 mb-8 max-w-md","children":"The page you're looking for doesn't exist or may have been moved."}],["$","$L4",null,{"href":"/","className":"inline-block px-6 py-2 bg-accent text-white rounded-md hover:bg-accent-hover transition-colors","children":"Go to Homepage"}]]}]}]]}]}],[]],"forbidden":"$undefined","unauthorized":"$undefined"}]}],["$","footer",null,{"className":"bg-gray-900 text-white","children":["$","div",null,{"className":"container mx-auto px-5","children":["$","div",null,{"className":"py-16","children":[["$","div",null,{"className":"grid grid-cols-1 md:grid-cols-4 gap-12 mb-12","children":[["$","div",null,{"className":"md:col-span-1","children":[["$","div",null,{"className":"flex items-center","children":[["$","$L5",null,{"src":"/assets/logos/legalese-logo.png","alt":"§","width":36,"height":36,"className":"rounded invert"}],["$","h3",null,{"className":"text-2xl font-bold tracking-tight ml-1","children":"Legalese"}]]}],"$L6"]}],"$L7","$L8","$L9"]}],"$La"]}]}]}]]}]]}]]}],{"children":["$Lb",{"children":["$Lc",{"children":["$Ld",{},null,false,null]},null,false,"$@e"]},null,false,null]},null,false,null],"$Lf",false]],"m":"$undefined","G":["$10",["$L11"]],"S":true,"h":null,"s":"$undefined","l":"$undefined","p":"$undefined","d":"$undefined","b":"iJUXAyHcmcW99cMci3ei9"}
+12:I[79520,["/_next/static/chunks/0ypf.t599.7y6.js","/_next/static/chunks/0t2xr05rlu96l.js","/_next/static/chunks/0uxaa7wo_wmcw.js"],""]
+13:I[85295,["/_next/static/chunks/0ypf.t599.7y6.js","/_next/static/chunks/0t2xr05rlu96l.js","/_next/static/chunks/0uxaa7wo_wmcw.js"],"default"]
+14:I[41529,["/_next/static/chunks/0ypf.t599.7y6.js","/_next/static/chunks/0t2xr05rlu96l.js","/_next/static/chunks/0uxaa7wo_wmcw.js"],"default"]
+16:I[97367,["/_next/static/chunks/0ypf.t599.7y6.js","/_next/static/chunks/0t2xr05rlu96l.js"],"OutletBoundary"]
+17:"$Sreact.suspense"
+1a:I[97367,["/_next/static/chunks/0ypf.t599.7y6.js","/_next/static/chunks/0t2xr05rlu96l.js"],"ViewportBoundary"]
+1c:I[97367,["/_next/static/chunks/0ypf.t599.7y6.js","/_next/static/chunks/0t2xr05rlu96l.js"],"MetadataBoundary"]
+6:["$","p",null,{"className":"text-gray-400 text-sm mb-4","children":"AI is eating law"}]
+7:["$","div",null,{"children":[["$","h4",null,{"className":"font-bold mb-4 text-gray-300","children":"Company"}],["$","ul",null,{"className":"space-y-2","children":[[["$","li","about",{"children":["$","$L4",null,{"href":"/about","className":"text-gray-400 hover:text-white transition-colors text-sm","children":"About us"}]}],["$","li","team",{"children":["$","$L4",null,{"href":"/team","className":"text-gray-400 hover:text-white transition-colors text-sm","children":"Team"}]}],["$","li","media",{"children":["$","$L4",null,{"href":"/media","className":"text-gray-400 hover:text-white transition-colors text-sm","children":"Press & Media"}]}]],[],["$","li",null,{"children":["$","$L4",null,{"href":"/posts","className":"text-gray-400 hover:text-white transition-colors text-sm","children":"Blog"}]}]]}]]}]
+8:["$","div",null,{"children":[["$","h4",null,{"className":"font-bold mb-4 text-gray-300","children":"Resources"}],["$","ul",null,{"className":"space-y-2","children":[["$","li","l4-documentation",{"children":["$","a",null,{"href":"https://legalese.com/l4","target":"_blank","rel":"noopener noreferrer","className":"text-gray-400 hover:text-white transition-colors text-sm","children":"L4 Documentation"}]}],["$","li","vscode-extension",{"children":["$","a",null,{"href":"https://marketplace.visualstudio.com/items?itemName=Legalese.l4-vscode","target":"_blank","rel":"noopener noreferrer","className":"text-gray-400 hover:text-white transition-colors text-sm","children":"L4 VS Code Extension"}]}],["$","li","l4-web-ide",{"children":["$","a",null,{"href":"https://jl4.legalese.com","target":"_blank","rel":"noopener noreferrer","className":"text-gray-400 hover:text-white transition-colors text-sm","children":"L4 Web IDE"}]}],["$","li","l4-console",{"children":["$","a",null,{"href":"https://legalese.com/console","target":"_blank","rel":"noopener noreferrer","className":"text-gray-400 hover:text-white transition-colors text-sm","children":"Cloud Console"}]}],["$","li","l4-console copy",{"children":["$","a",null,{"href":"https://legalese.com/compare","target":"_blank","rel":"noopener noreferrer","className":"text-gray-400 hover:text-white transition-colors text-sm","children":"Compare AI Legal Interpretations"}]}],["$","li","provable",{"children":["$","a",null,{"href":"https://provable.legalese.com","target":"_blank","rel":"noopener noreferrer","className":"text-gray-400 hover:text-white transition-colors text-sm","children":"Provable Skill Marketplace"}]}],["$","li","github",{"children":["$","a",null,{"href":"https://github.com/legalese/l4-ide","target":"_blank","rel":"noopener noreferrer","className":"text-gray-400 hover:text-white transition-colors text-sm","children":"GitHub"}]}]]}]]}]
+9:["$","div",null,{"children":[["$","h4",null,{"className":"font-bold mb-4 text-gray-300","children":"Contact"}],["$","ul",null,{"className":"space-y-2","children":[[["$","li","community",{"children":["$","$L4",null,{"href":"/community","className":"text-gray-400 hover:text-white transition-colors text-sm","children":"Community"}]}],["$","li","code-of-conduct",{"children":["$","$L4",null,{"href":"/code-of-conduct","className":"text-gray-400 hover:text-white transition-colors text-sm","children":"Code of Conduct"}]}]],[["$","li","discord",{"children":["$","a",null,{"href":"https://discord.gg/Q7a7NSEdNy","target":"_blank","rel":"noopener noreferrer","className":"text-gray-400 hover:text-white transition-colors text-sm","children":"Discord"}]}],["$","li","x-twitter",{"children":["$","a",null,{"href":"https://x.com/legalese","target":"_blank","rel":"noopener noreferrer","className":"text-gray-400 hover:text-white transition-colors text-sm","children":"Legalese on X"}]}]]]}]]}]
+a:["$","div",null,{"className":"border-t border-gray-800 pt-8 flex flex-col md:flex-row justify-between items-center gap-4","children":[["$","p",null,{"className":"text-gray-500 text-sm","children":["© ",2026," Legalese Pte. Ltd., Singapore. All rights reserved."]}],["$","div",null,{"className":"flex gap-6","children":[["$","$L4","terms",{"href":"/terms","className":"text-gray-500 hover:text-white transition-colors text-sm","children":"Terms of Use"}],["$","$L4","privacy",{"href":"/privacy","className":"text-gray-500 hover:text-white transition-colors text-sm","children":"Privacy & Cookies"}]]}]]}]
+b:["$","$1","c",{"children":[[["$","link","0",{"rel":"stylesheet","href":"/_next/static/chunks/0s9wju.j1~_xn.css","precedence":"next","crossOrigin":"$undefined","nonce":"$undefined"}],["$","script","script-0",{"src":"/_next/static/chunks/0uxaa7wo_wmcw.js","async":true,"nonce":"$undefined"}]],[["$","$L2",null,{"parallelRouterKey":"children","error":"$undefined","errorStyles":"$undefined","errorScripts":"$undefined","template":["$","$L3",null,{}],"templateStyles":"$undefined","templateScripts":"$undefined","notFound":"$undefined","forbidden":"$undefined","unauthorized":"$undefined"}],["$","$L12",null,{"src":"https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"}],["$","$L12",null,{"src":"/hljs-l4/l4.min.js"}],["$","$L13",null,{}],["$","$L14",null,{}],["$","style",null,{"dangerouslySetInnerHTML":{"__html":"\npre code.hljs{display:block;overflow-x:auto;padding:0.2rem 0.4rem;font-size:13px;color:#104e64;background:#fdfdfd}\ncode.hljs .hljs-keyword{color:#0000ff;font-weight:500}\ncode.hljs .hljs-literal{color:#0000ff}\ncode.hljs .hljs-built_in{color:#267f99}\ncode.hljs .hljs-string{color:#a31515}\ncode.hljs .hljs-number{color:#098658}\ncode.hljs .hljs-comment{color:#008000;font-style:italic}\ncode.hljs .hljs-title{color:#795e26;font-weight:600}\ncode.hljs .hljs-variable{color:#001080}\ncode.hljs .hljs-doctag{color:#ffbd33}\ncode.hljs .hljs-formula{color:#af00db;font-weight:500}\n"}}]]]}]
+c:["$","$1","c",{"children":[null,["$","$L2",null,{"parallelRouterKey":"children","error":"$undefined","errorStyles":"$undefined","errorScripts":"$undefined","template":["$","$L3",null,{}],"templateStyles":"$undefined","templateScripts":"$undefined","notFound":"$undefined","forbidden":"$undefined","unauthorized":"$undefined"}]]}]
+d:["$","$1","c",{"children":["$L15",[["$","script","script-0",{"src":"/_next/static/chunks/0fl~me.qwn48c.js","async":true,"nonce":"$undefined"}]],["$","$L16",null,{"children":["$","$17",null,{"name":"Next.MetadataOutlet","children":"$@18"}]}]]}]
+19:[]
+e:"$W19"
+f:["$","$1","h",{"children":[null,["$","$L1a",null,{"children":"$L1b"}],["$","div",null,{"hidden":true,"children":["$","$L1c",null,{"children":["$","$17",null,{"name":"Next.Metadata","children":"$L1d"}]}]}],["$","meta",null,{"name":"next-size-adjust","content":""}]]}]
+11:["$","link","0",{"rel":"stylesheet","href":"/_next/static/chunks/0xhryq7f66rdk.css","precedence":"next","crossOrigin":"$undefined","nonce":"$undefined"}]
+1e:I[90160,["/_next/static/chunks/0ypf.t599.7y6.js","/_next/static/chunks/0t2xr05rlu96l.js","/_next/static/chunks/0uxaa7wo_wmcw.js","/_next/static/chunks/0fl~me.qwn48c.js"],"default"]
+1f:T2c1c,<h1>Module A4: Production patterns</h1>
+<p>In this module, you'll learn how to structure a real rulebase so that it stays traceable to its source, easy to test, and ready to deploy.</p>
+<h2 id="learning-objectives">Learning Objectives</h2>
+<p>By the end of this module, you will be able to:</p>
+<ul>
+<li>Organise a rulebase into files and sections that mirror the source text</li>
+<li>Share types between files with <code>IMPORT</code></li>
+<li>Keep tests beside the rules they check, and build test data that is easy to vary</li>
+<li>Isolate a problem quickly</li>
+<li>Get a rulebase ready for deployment</li>
+</ul>
+<hr>
+<h2 id="organizing-a-rulebase">Organizing a Rulebase</h2>
+<h3 id="file-structure">File Structure</h3>
+<p>Keep the layout simple, and let it follow the instrument you are encoding:</p>
+<pre><code>charity-rules/
+├── README.md              # what these rules encode: which instrument, which version
+└── rules/
+    ├── shared-types.l4    # DECLAREs used by several files
+    ├── registration.l4    # Part 2 of the Law, with its §§ Tests section
+    ├── governors.l4       # Part 3, with its §§ Tests section
+    └── enforcement.l4     # Part 5: notices and appeals, with its §§ Tests section
+</code></pre>
+<p>Guidelines:</p>
+<ul>
+<li><strong>Mirror the source text.</strong> One file per part of the statute or per contract, named after it, with <code>§</code> sections that follow the source's numbering. Every change to the code can then be traced to a clause.</li>
+<li><strong>Shared vocabulary in one place.</strong> Put the <code>DECLARE</code>s that several files need in one file, and <code>IMPORT</code> it. A file in the same folder is imported by its name.</li>
+<li><strong>Tests live with the rules.</strong> Keep each rule's checks in a <code>§§ Tests</code> section of the same file, so that a change to a rule and the change to its tests travel together.</li>
+</ul>
+<p><a href="/l4/tutorials/getting-started/version-control-for-rules">Manage rules in git and CI</a> builds on this layout with commit discipline, review, and a CI check for every change.</p>
+<h3 id="sharing-types-with-import">Sharing Types with IMPORT</h3>
+<p>The shared file holds the vocabulary:</p>
+<pre><code class="language-l4">-- shared-types.l4
+§ `Shared types`
+
+DECLARE Person
+    HAS `the name` IS A STRING
+        `the age` IS A NUMBER
+        `is bankrupt` IS A BOOLEAN
+</code></pre>
+<p>Each rule file imports it by name; a name with a hyphen goes in backticks:</p>
+<pre><code class="language-l4">-- governors.l4
+IMPORT `shared-types`
+
+§ `Part 3: Governors`
+
+§§ `Article 19: Who may be a governor`
+
+-- A person may be a governor if they are an adult and not bankrupt.
+GIVEN person IS A Person
+GIVETH A BOOLEAN
+DECIDE `the person may be a governor` IF
+        person's `the age` AT LEAST 18
+    AND NOT person's `is bankrupt`
+
+§§ `Tests`
+
+`an adult` MEANS Person "Ann" 18 FALSE
+`a minor` MEANS Person "Ben" 17 FALSE
+`a bankrupt adult` MEANS Person "Cy" 40 TRUE
+
+#ASSERT `the person may be a governor` `an adult`
+#ASSERT NOT `the person may be a governor` `a minor`
+#ASSERT NOT `the person may be a governor` `a bankrupt adult`
+</code></pre>
+<p><code>l4 run governors.l4</code> reports each assertion as satisfied, or tells you which one failed.</p>
+<hr>
+<h2 id="testing-a-rulebase">Testing a Rulebase</h2>
+<p><a href="/l4/tutorials/getting-started/testing-your-rules">Test your rules</a> covers the testing directives step by step: <code>#EVAL</code> to look at a value, <code>#ASSERT</code> to state what a value must be, <code>#CHECK</code> to confirm a type, and <code>#TRACE</code> to run a regulative rule against a timeline. In a real rulebase, three habits matter most:</p>
+<ul>
+<li><strong>Assert, don't just evaluate.</strong> An <code>#EVAL</code> shows a result for you to read; an <code>#ASSERT</code> fails the run when the result is wrong, so CI can catch it.</li>
+<li><strong>Test both sides of every boundary.</strong> For "at least 18", test 17 and 18. For a deadline of 14 days, trace an event on day 14 and one after it.</li>
+<li><strong>Cover every path of a regulative rule</strong>: compliance, a missed deadline, and each <code>LEST</code> fallback.</li>
+</ul>
+<h3 id="test-data-factory">Test Data Factory</h3>
+<p>A function that builds test data from the one value you want to vary keeps boundary tests short:</p>
+<pre><code class="language-l4">DECLARE Person
+    HAS `the name` IS A STRING
+        `the age` IS A NUMBER
+        `is bankrupt` IS A BOOLEAN
+
+GIVEN person IS A Person
+GIVETH A BOOLEAN
+DECIDE `is adult` IF person's `the age` AT LEAST 18
+
+-- Test data factory
+GIVEN age IS A NUMBER
+GIVETH A Person
+`person with age` MEANS Person "Test" age FALSE
+
+-- Boundary tests
+#ASSERT NOT `is adult` (`person with age` 17)
+#ASSERT `is adult` (`person with age` 18)
+#ASSERT `is adult` (`person with age` 19)
+</code></pre>
+<hr>
+<h2 id="debugging-patterns">Debugging Patterns</h2>
+<p><a href="/l4/tutorials/getting-started/debugging-type-errors">Fix errors</a> explains the common error messages and how to fix each one. Two habits help in a large rulebase:</p>
+<p><strong>When in doubt, add parentheses.</strong> A field access passed to a function needs them:</p>
+<pre><code>length (charity's `the governors`) > 0
+all (GIVEN g YIELD g's `the age` >= 18) (charity's `the governors`)
+</code></pre>
+<p><strong>Isolate the failing part.</strong> When a rule gives a surprising answer, evaluate its parts one at a time, starting from the input:</p>
+<pre><code>#EVAL `the test charity`                                  -- is the input what you think?
+#EVAL `the test charity`'s `the governors`                -- is the field right?
+#EVAL `the person may be a governor` `the first governor` -- does the helper agree?
+</code></pre>
+<hr>
+<h2 id="getting-ready-to-deploy">Getting Ready to Deploy</h2>
+<p>Rules become API endpoints only when you mark them. Place <code>@export</code> directly above a rule to expose it, and add <code>@desc</code> to each input so that callers know what it means:</p>
+<pre><code class="language-l4">DECLARE Person
+    HAS `the age` IS A NUMBER
+        `is bankrupt` IS A BOOLEAN
+
+@export Check whether a person is eligible
+GIVEN person IS A Person @desc The person to check
+GIVETH A BOOLEAN
+DECIDE `is eligible` IF
+    person's `the age` >= 21
+    AND NOT person's `is bankrupt`
+</code></pre>
+<p><a href="/l4/tutorials/deploying-rules/exporting-rules-for-deployment">Deploy your rules</a> takes it from there: deploying from VS Code or the command line, calling the deployed rules over REST, reading the JSON answers, and exposing the rules to AI agents. Test directives such as <code>#ASSERT</code> and <code>#TRACE</code> stay in the file; deployment ignores them. For calling other services from L4, see <a href="/l4/reference/builtins/http-json">HTTP and JSON</a>.</p>
+<h3 id="keep-it-fast">Keep It Fast</h3>
+<ul>
+<li><strong>Prefer library functions to hand-written recursion.</strong> <code>foldl (GIVEN acc, x YIELD acc + x) 0 xs</code> from the prelude says what it does and needs no base case.</li>
+<li><strong>Prefer a formula to a loop</strong> where the law gives one: the sum of 1 to n is <code>n * (n + 1) / 2</code>.</li>
+<li><strong>Keep <code>#TRACE</code> scenarios short.</strong> Test a 30-year loan contract with a version of three instalments; the same rule on a short timeline exercises the same paths.</li>
+</ul>
+<h3 id="deployment-checklist">Deployment Checklist</h3>
+<p><strong>Code quality</strong></p>
+<ul class="contains-task-list">
+<li class="task-list-item"><input type="checkbox" disabled> <code>l4 check</code> passes with no errors</li>
+<li class="task-list-item"><input type="checkbox" disabled> Every <code>#ASSERT</code> is satisfied and every <code>#TRACE</code> gives the expected result</li>
+<li class="task-list-item"><input type="checkbox" disabled> No missing-case warnings left, or each one is deliberate</li>
+<li class="task-list-item"><input type="checkbox" disabled> Sections follow the source, and rules cite the provisions they encode</li>
+</ul>
+<p><strong>Test coverage</strong></p>
+<ul class="contains-task-list">
+<li class="task-list-item"><input type="checkbox" disabled> Happy path tested</li>
+<li class="task-list-item"><input type="checkbox" disabled> Both sides of every boundary tested</li>
+<li class="task-list-item"><input type="checkbox" disabled> Every <code>CONSIDER</code> branch and every <code>LEST</code> fallback reached by a test</li>
+</ul>
+<p><strong>Deployment</strong></p>
+<ul class="contains-task-list">
+<li class="task-list-item"><input type="checkbox" disabled> Rules marked with <code>@export</code>, and every input described with <code>@desc</code></li>
+<li class="task-list-item"><input type="checkbox" disabled> The Deploy tab preview shows the expected rules</li>
+<li class="task-list-item"><input type="checkbox" disabled> A few calls to the deployed API return the answers your tests expect</li>
+</ul>
+<hr>
+<h2 id="exercise-test-a-rule-thoroughly">Exercise: Test a Rule Thoroughly</h2>
+<p>Take this eligibility rule: a person qualifies if they are at least 21 years old and not bankrupt. Build a test data factory, assert the results on both sides of the age boundary and for a bankrupt person, and add the total of a list with a prelude fold instead of hand-written recursion.</p>
+<details>
+<summary>Solution</summary>
+<pre><code class="language-l4">IMPORT prelude
+
+DECLARE Person
+    HAS `the name` IS A STRING
+        `the age` IS A NUMBER
+        `is bankrupt` IS A BOOLEAN
+
+GIVEN person IS A Person
+GIVETH A BOOLEAN
+DECIDE `is eligible` IF
+    person's `the age` >= 21
+    AND NOT person's `is bankrupt`
+
+§§ `Tests`
+
+-- Test data factory
+GIVEN age IS A NUMBER
+GIVETH A Person
+`person with age` MEANS Person "Test" age FALSE
+
+-- Boundary tests
+#ASSERT NOT `is eligible` (`person with age` 20)
+#ASSERT `is eligible` (`person with age` 21)
+#ASSERT `is eligible` (`person with age` 22)
+#ASSERT NOT `is eligible` (Person "Bankrupt" 40 TRUE)
+
+-- Prelude fold instead of manual recursion
+GIVEN xs IS A LIST OF NUMBER
+GIVETH A NUMBER
+`total of` MEANS foldl (GIVEN acc, x YIELD acc + x) 0 xs
+
+#ASSERT `total of` (LIST 1, 2, 3) EQUALS 6
+</code></pre>
+</details>
+<hr>
+<h2 id="summary">Summary</h2>
+<table>
+<thead>
+<tr>
+<th>Area</th>
+<th>Best Practice</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Organization</strong></td>
+<td>One file per part of the source, <code>§</code> sections, shared types IMPORTed</td>
+</tr>
+<tr>
+<td><strong>Testing</strong></td>
+<td><code>#ASSERT</code> in a <code>§§ Tests</code> section of each file; test every boundary</td>
+</tr>
+<tr>
+<td><strong>Debugging</strong></td>
+<td>Isolate with <code>#EVAL</code>; add parentheses</td>
+</tr>
+<tr>
+<td><strong>Deployment</strong></td>
+<td><code>@export</code> and <code>@desc</code>, then deploy to Legalese Cloud</td>
+</tr>
+<tr>
+<td><strong>Performance</strong></td>
+<td>Prefer library functions and formulas; keep traces short</td>
+</tr>
+</tbody>
+</table>
+<p>You have completed the Advanced course. For a specific task, see the <a href="/l4/tutorials">Tutorials</a>; for the theory behind L4, <a href="/l4/concepts">Concepts</a>.</p>
+15:["$","$L1e",null,{"navSections":[{"title":"","items":[{"title":"Overview","href":"courses","children":"$undefined"},{"title":"Overview","href":"courses/foundation","children":"$undefined"},{"title":"0. Introduction to L4","href":"courses/foundation/module-0-introduction","children":"$undefined"},{"title":"1. Your first legal rule","href":"courses/foundation/module-1-first-rule","children":"$undefined"},{"title":"2. Legal entities and relationships","href":"courses/foundation/module-2-entities","children":"$undefined"},{"title":"3. Control flow","href":"courses/foundation/module-3-control-flow","children":"$undefined"},{"title":"4. Decision logic","href":"courses/foundation/module-4-decision-logic","children":"$undefined"},{"title":"5. Functions","href":"courses/foundation/module-5-functions","children":"$undefined"},{"title":"6. Regulative rules","href":"courses/foundation/module-6-regulative","children":"$undefined"},{"title":"7. Putting it together","href":"courses/foundation/module-7-capstone","children":"$undefined"},{"title":"Overview","href":"courses/advanced","children":"$undefined"},{"title":"A1. Real regulatory schemes","href":"courses/advanced/module-a1-regulatory","children":"$undefined"},{"title":"A2. Cross-cutting concerns","href":"courses/advanced/module-a2-cross-cutting","children":"$undefined"},{"title":"A3. Contracts in depth","href":"courses/advanced/module-a3-contracts","children":"$undefined"},{"title":"A4. Production patterns","href":"courses/advanced/module-a4-production","children":"$undefined"}]}],"toc":[],"htmlContent":"$1f","pager":{"prev":"$15:props:navSections:0:items:13","next":"$undefined"}}]
+1b:[["$","meta","0",{"charSet":"utf-8"}],["$","meta","1",{"name":"viewport","content":"width=device-width, initial-scale=1"}]]
+18:null
+1d:[["$","title","0",{"children":"Module A4: Production patterns | L4 Documentation"}],["$","meta","1",{"name":"description","content":"In this module, you'll learn how to structure a real rulebase so that it stays traceable to its source, easy to test, and ready to deploy."}],["$","meta","2",{"name":"robots","content":"index, follow"}],["$","link","3",{"rel":"canonical","href":"https://legalese.com/l4/courses/advanced/module-a4-production"}],["$","meta","4",{"property":"og:title","content":"Module A4: Production patterns | L4 Documentation"}],["$","meta","5",{"property":"og:description","content":"In this module, you'll learn how to structure a real rulebase so that it stays traceable to its source, easy to test, and ready to deploy."}],["$","meta","6",{"property":"og:url","content":"https://legalese.com/l4/courses/advanced/module-a4-production"}],["$","meta","7",{"property":"og:image","content":"https://legalese.com/opengraph/ai-is-eating-law-v2.jpg"}],["$","meta","8",{"name":"twitter:card","content":"summary_large_image"}],["$","meta","9",{"name":"twitter:title","content":"Module A4: Production patterns | L4 Documentation"}],["$","meta","10",{"name":"twitter:description","content":"In this module, you'll learn how to structure a real rulebase so that it stays traceable to its source, easy to test, and ready to deploy."}],["$","meta","11",{"name":"twitter:image","content":"https://legalese.com/opengraph/ai-is-eating-law-v2.jpg"}]]

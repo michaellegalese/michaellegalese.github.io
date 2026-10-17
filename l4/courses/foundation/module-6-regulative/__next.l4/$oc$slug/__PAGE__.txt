@@ -1,0 +1,676 @@
+1:"$Sreact.fragment"
+2:I[90160,["/_next/static/chunks/0ypf.t599.7y6.js","/_next/static/chunks/0t2xr05rlu96l.js","/_next/static/chunks/0uxaa7wo_wmcw.js","/_next/static/chunks/0fl~me.qwn48c.js"],"default"]
+6:I[97367,["/_next/static/chunks/0ypf.t599.7y6.js","/_next/static/chunks/0t2xr05rlu96l.js"],"OutletBoundary"]
+7:"$Sreact.suspense"
+3:T6385,<h1>Module 6: Regulative rules</h1>
+<p>In this module, you'll learn how to model legal obligations, permissions, and prohibitions—the core of contract and regulatory law.</p>
+<h2 id="learning-objectives">Learning Objectives</h2>
+<p>By the end of this module, you will be able to:</p>
+<ul>
+<li>Define Actor and Action types</li>
+<li>Create obligations with MUST</li>
+<li>Create permissions with MAY</li>
+<li>Create prohibitions with SHANT</li>
+<li>Chain obligations with HENCE and LEST</li>
+<li>Test regulative rules with #TRACE</li>
+</ul>
+<hr>
+<h2 id="what-are-regulative-rules">What Are Regulative Rules?</h2>
+<p><strong>Regulative rules</strong> define what parties must, may, or must not do. They're the building blocks of contracts and regulations:</p>
+<ul>
+<li><strong>Obligations</strong> (MUST): "The seller must deliver goods"</li>
+<li><strong>Permissions</strong> (MAY): "The buyer may inspect goods"</li>
+<li><strong>Prohibitions</strong> (SHANT): "The employee shall not disclose confidential information"</li>
+</ul>
+<p>L4 represents these using the <strong>DEONTIC</strong> type. <a href="/l4/concepts/legal-modeling/regulative-rules">How obligations unfold</a> explains how such a rule behaves over time.</p>
+<hr>
+<h2 id="the-deontic-type">The DEONTIC Type</h2>
+<p>A DEONTIC value represents an obligation, permission, or prohibition. It has:</p>
+<ul>
+<li><strong>Who</strong> (PARTY): The actor with the duty/permission</li>
+<li><strong>What</strong> (action): The action to be performed</li>
+<li><strong>When</strong> (WITHIN): The deadline</li>
+<li><strong>Consequences</strong> (HENCE/LEST): What happens next</li>
+</ul>
+<p>The complete working example:</p>
+<pre><code class="language-l4-file">-- Module 6: Regulative Rules - Complete Examples
+-- All examples are validated and use natural language identifiers
+
+-- =============================================================================
+-- SECTION 1: Actor and Action Types
+-- =============================================================================
+
+-- Parties to a contract
+DECLARE `Contract Party` IS ONE OF
+    `the buyer`
+    `the seller`
+
+-- Actions in a sale contract
+DECLARE `Sale Action` IS ONE OF
+    `deliver the goods`
+    `pay the invoice` HAS amount IS A NUMBER
+    `inspect the goods`
+    `resell the goods`
+    `arrange a pickup`
+
+-- =============================================================================
+-- SECTION 2: Basic Obligations with MUST
+-- =============================================================================
+
+-- Simple delivery obligation
+GIVETH A DEONTIC `Contract Party` `Sale Action`
+`the delivery obligation` MEANS
+    PARTY `the seller`
+    MUST `deliver the goods`
+    WITHIN 14
+    HENCE FULFILLED
+    LEST BREACH
+
+-- =============================================================================
+-- SECTION 3: Permissions with MAY
+-- =============================================================================
+
+-- The buyer may inspect goods
+GIVETH A DEONTIC `Contract Party` `Sale Action`
+`the inspection right` MEANS
+    PARTY `the buyer`
+    MAY `inspect the goods`
+    HENCE FULFILLED
+
+-- =============================================================================
+-- SECTION 4: Prohibitions with SHANT
+-- =============================================================================
+
+-- The buyer shall not resell the goods within 90 days
+GIVETH A DEONTIC `Contract Party` `Sale Action`
+`the resale prohibition` MEANS
+    PARTY `the buyer`
+    SHANT `resell the goods`
+    WITHIN 90
+    HENCE FULFILLED
+    LEST BREACH BY `the buyer` BECAUSE "resold the goods within 90 days"
+
+-- =============================================================================
+-- SECTION 5: Chained Obligations with HENCE
+-- =============================================================================
+
+-- Complete sale contract: deliver then pay
+GIVETH A DEONTIC `Contract Party` `Sale Action`
+`the complete sale contract` MEANS
+    PARTY `the seller`
+    MUST `deliver the goods`
+    WITHIN 14
+    HENCE
+        PARTY `the buyer`
+        MUST `pay the invoice` 1000
+        WITHIN 30
+        HENCE FULFILLED
+        LEST BREACH BY `the buyer`
+    LEST BREACH BY `the seller`
+
+-- =============================================================================
+-- SECTION 6: Alternative Consequences with LEST
+-- =============================================================================
+
+-- Late payment with penalty
+GIVETH A DEONTIC `Contract Party` `Sale Action`
+`the payment with late fee` MEANS
+    PARTY `the buyer`
+    MUST `pay the invoice` 1000
+    WITHIN 30
+    HENCE FULFILLED
+    LEST
+        PARTY `the buyer`
+        MUST `pay the invoice` 1100
+        WITHIN 14
+        HENCE FULFILLED
+        LEST BREACH
+
+-- =============================================================================
+-- SECTION 7: Parallel and Alternative Obligations with RAND and ROR
+-- =============================================================================
+
+-- Both must be fulfilled
+GIVETH A DEONTIC `Contract Party` `Sale Action`
+`delivery and payment` MEANS
+    (PARTY `the seller` MUST `deliver the goods` WITHIN 14 HENCE FULFILLED LEST BREACH)
+    RAND
+    (PARTY `the buyer` MUST `pay the invoice` 1000 WITHIN 30 HENCE FULFILLED LEST BREACH)
+
+-- Either one is enough
+GIVETH A DEONTIC `Contract Party` `Sale Action`
+`delivery or pickup` MEANS
+    (PARTY `the seller` MUST `deliver the goods` WITHIN 14 HENCE FULFILLED LEST BREACH)
+    ROR
+    (PARTY `the seller` MUST `arrange a pickup` WITHIN 7 HENCE FULFILLED LEST BREACH)
+
+-- =============================================================================
+-- SECTION 8: Tests
+-- =============================================================================
+
+-- The delivery obligation: fulfilled
+#TRACE `the delivery obligation` AT 0 WITH
+    PARTY `the seller` DOES `deliver the goods` AT 10
+
+-- The delivery obligation: breached (late delivery)
+#TRACE `the delivery obligation` AT 0 WITH
+    PARTY `the seller` DOES `deliver the goods` AT 20
+
+-- The resale prohibition: breached by reselling on day 40
+#TRACE `the resale prohibition` AT 0 WITH
+    PARTY `the buyer` DOES `resell the goods` AT 40
+
+-- The resale prohibition: respected, as the next event comes after day 90
+#TRACE `the resale prohibition` AT 0 WITH
+    PARTY `the buyer` DOES `resell the goods` AT 100
+
+-- The complete sale: happy path
+#TRACE `the complete sale contract` AT 0 WITH
+    PARTY `the seller` DOES `deliver the goods` AT 10
+    PARTY `the buyer` DOES `pay the invoice` 1000 AT 35
+
+-- Late payment with penalty: the day-35 payment misses the 30-day
+-- deadline, so the buyer must pay again with the 10% late fee
+#TRACE `the payment with late fee` AT 0 WITH
+    PARTY `the buyer` DOES `pay the invoice` 1000 AT 35
+    PARTY `the buyer` DOES `pay the invoice` 1100 AT 40
+
+-- Both duties performed
+#TRACE `delivery and payment` AT 0 WITH
+    PARTY `the seller` DOES `deliver the goods` AT 10
+    PARTY `the buyer` DOES `pay the invoice` 1000 AT 20
+
+-- A pickup instead of a delivery
+#TRACE `delivery or pickup` AT 0 WITH
+    PARTY `the seller` DOES `arrange a pickup` AT 5
+</code></pre>
+<h3 id="defining-actor-and-action-types">Defining Actor and Action Types</h3>
+<p>First, define who can act and what actions exist:</p>
+<pre><code class="language-l4">-- Who can act
+DECLARE `Contract Party` IS ONE OF
+    `the buyer`
+    `the seller`
+
+-- What actions exist
+DECLARE `Sale Action` IS ONE OF
+    `deliver the goods`
+    `pay the invoice` HAS amount IS A NUMBER
+    `inspect the goods`
+    `resell the goods`
+    `arrange a pickup`
+</code></pre>
+<hr>
+<h2 id="creating-obligations-with-must">Creating Obligations with MUST</h2>
+<pre><code class="language-l4">GIVETH A DEONTIC `Contract Party` `Sale Action`
+`the delivery obligation` MEANS
+    PARTY `the seller`
+    MUST `deliver the goods`
+    WITHIN 14
+    HENCE FULFILLED
+    LEST BREACH
+</code></pre>
+<table>
+<thead>
+<tr>
+<th>Part</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>GIVETH A DEONTIC `Contract Party` `Sale Action`</code></td>
+<td>Returns a deontic value with these actors and actions</td>
+</tr>
+<tr>
+<td><code>PARTY `the seller`</code></td>
+<td>The seller has this obligation</td>
+</tr>
+<tr>
+<td><code>MUST `deliver the goods`</code></td>
+<td>They must deliver goods</td>
+</tr>
+<tr>
+<td><code>WITHIN 14</code></td>
+<td>Within 14 days</td>
+</tr>
+<tr>
+<td><code>HENCE FULFILLED</code></td>
+<td>If they do, the obligation is fulfilled</td>
+</tr>
+<tr>
+<td><code>LEST BREACH</code></td>
+<td>If they don't, it's a breach</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h2 id="creating-permissions-with-may">Creating Permissions with MAY</h2>
+<p>Permissions don't create breaches if unused:</p>
+<pre><code class="language-l4">GIVETH A DEONTIC `Contract Party` `Sale Action`
+`the inspection right` MEANS
+    PARTY `the buyer`
+    MAY `inspect the goods`
+    HENCE FULFILLED
+</code></pre>
+<p>MAY doesn't need a LEST: whether the buyer inspects the goods or lets the time pass, the result is the HENCE branch, because not exercising a permission isn't a breach.</p>
+<hr>
+<h2 id="creating-prohibitions-with-shant">Creating Prohibitions with SHANT</h2>
+<p>Prohibitions say what must NOT happen:</p>
+<pre><code class="language-l4">GIVETH A DEONTIC `Contract Party` `Sale Action`
+`the resale prohibition` MEANS
+    PARTY `the buyer`
+    SHANT `resell the goods`
+    WITHIN 90
+    HENCE FULFILLED
+    LEST BREACH BY `the buyer` BECAUSE "resold the goods within 90 days"
+</code></pre>
+<p><code>SHANT</code> means "shall not"; <code>MUST NOT</code> is accepted as another spelling. For a prohibition, the branches turn around: doing the forbidden act leads to <code>LEST</code>, and reaching the end of the <code>WITHIN</code> window without it leads to <code>HENCE</code>. In every case, <code>HENCE</code> is the outcome the law wants.</p>
+<hr>
+<h2 id="chaining-obligations-with-hence">Chaining Obligations with HENCE</h2>
+<p>Real contracts have sequences of obligations. Use HENCE to chain them:</p>
+<pre><code class="language-l4">GIVETH A DEONTIC `Contract Party` `Sale Action`
+`the complete sale contract` MEANS
+    PARTY `the seller`
+    MUST `deliver the goods`
+    WITHIN 14
+    HENCE
+        PARTY `the buyer`
+        MUST `pay the invoice` 1000
+        WITHIN 30
+        HENCE FULFILLED
+        LEST BREACH BY `the buyer`
+    LEST BREACH BY `the seller`
+</code></pre>
+<p>This creates a chain:</p>
+<ol>
+<li>Seller must deliver within 14 days</li>
+<li><strong>If delivered</strong>: Buyer must pay within 30 days</li>
+<li><strong>If buyer pays</strong>: Contract fulfilled</li>
+<li><strong>If either fails</strong>: Breach, by whoever failed</li>
+</ol>
+<hr>
+<h2 id="alternative-consequences-with-lest">Alternative Consequences with LEST</h2>
+<p>LEST specifies what happens on non-compliance:</p>
+<pre><code class="language-l4">GIVETH A DEONTIC `Contract Party` `Sale Action`
+`the payment with late fee` MEANS
+    PARTY `the buyer`
+    MUST `pay the invoice` 1000
+    WITHIN 30
+    HENCE FULFILLED
+    LEST
+        PARTY `the buyer`
+        MUST `pay the invoice` 1100  -- 10% late fee
+        WITHIN 14
+        HENCE FULFILLED
+        LEST BREACH
+</code></pre>
+<p>This gives the buyer a second chance with a penalty before reaching breach.</p>
+<hr>
+<h2 id="conditional-obligations-with-provided">Conditional Obligations with PROVIDED</h2>
+<p><code>PROVIDED</code> adds a condition to the action:</p>
+<pre><code class="language-l4">PARTY `the buyer`
+MUST `pay the invoice` amount PROVIDED amount >= 100
+WITHIN 30
+HENCE FULFILLED
+LEST BREACH
+</code></pre>
+<p>Here <code>amount</code> stands for whatever amount the buyer actually pays. An event counts only if the condition holds: a payment of 50 does not fulfil the obligation, and the contract keeps waiting for a payment of at least 100.</p>
+<hr>
+<h2 id="parallel-obligations-with-rand">Parallel Obligations with RAND</h2>
+<p>Use <code>RAND</code> (regulative AND) for obligations that must all be fulfilled:</p>
+<pre><code class="language-l4">GIVETH A DEONTIC `Contract Party` `Sale Action`
+`delivery and payment` MEANS
+    (PARTY `the seller` MUST `deliver the goods` WITHIN 14 HENCE FULFILLED LEST BREACH)
+    RAND
+    (PARTY `the buyer` MUST `pay the invoice` 1000 WITHIN 30 HENCE FULFILLED LEST BREACH)
+</code></pre>
+<p>Both obligations must be fulfilled for the contract to be fulfilled.</p>
+<hr>
+<h2 id="alternative-paths-with-ror">Alternative Paths with ROR</h2>
+<p>Use <code>ROR</code> (regulative OR) when either path fulfills the contract:</p>
+<pre><code class="language-l4">GIVETH A DEONTIC `Contract Party` `Sale Action`
+`delivery or pickup` MEANS
+    (PARTY `the seller` MUST `deliver the goods` WITHIN 14 HENCE FULFILLED LEST BREACH)
+    ROR
+    (PARTY `the seller` MUST `arrange a pickup` WITHIN 7 HENCE FULFILLED LEST BREACH)
+</code></pre>
+<p>The seller can choose either option. Only if both fail is the contract breached.</p>
+<hr>
+<h2 id="testing-with-trace">Testing with #TRACE</h2>
+<p><code>#TRACE</code> simulates scenarios to see what happens:</p>
+<h3 id="basic-trace">Basic Trace</h3>
+<pre><code class="language-l4">#TRACE `the complete sale contract` AT 0 WITH
+    PARTY `the seller` DOES `deliver the goods` AT 10
+    PARTY `the buyer` DOES `pay the invoice` 1000 AT 35
+</code></pre>
+<p>This simulates:</p>
+<ul>
+<li>Start at day 0</li>
+<li>Seller delivers at day 10 (within the 14-day deadline)</li>
+<li>Buyer pays at day 35 (25 days after delivery, within the 30-day deadline)</li>
+</ul>
+<p>Note that a <code>WITHIN</code> deadline starts running when its obligation becomes active: the buyer's 30 days count from the delivery on day 10.</p>
+<p>Result: <code>FULFILLED</code></p>
+<h3 id="breach-scenario">Breach Scenario</h3>
+<pre><code class="language-l4">#TRACE `the delivery obligation` AT 0 WITH
+    PARTY `the seller` DOES `deliver the goods` AT 20  -- Late! Deadline was 14
+</code></pre>
+<p>Result: <code>BREACH</code> (seller delivered late)</p>
+<h3 id="no-events-yet">No events yet</h3>
+<p>With no events, or only events that don't match, the result is neither <code>FULFILLED</code> nor <code>BREACH</code>. It is the obligation itself, still waiting, with whatever time is left. A missing event is not a breach: the contract only learns that a deadline has passed when an event arrives after it.</p>
+<hr>
+<h2 id="worked-example-wedding-vows">Worked example: wedding vows</h2>
+<p>Traditional wedding vows make a small contract with all three kinds of rule:</p>
+<blockquote>
+<p>"I take you to be my wedded spouse, to have and to hold from this day forward, for better, for worse, for richer, for poorer, in sickness and in health, to love and to cherish, till death do us part."</p>
+</blockquote>
+<p><strong>Complete example:</strong></p>
+<pre><code class="language-l4-file">-- Wedding Vows as L4 Regulative Rules
+
+§ `Wedding Vows`
+
+-- The parties to the marriage
+DECLARE Person IS ONE OF Spouse1, Spouse2
+
+-- The actions the vows talk about
+DECLARE Action IS ONE OF
+    `exchange vows`
+    `love and cherish`
+    `be unfaithful`
+
+-- The ceremony: each spouse must exchange vows on the day
+GIVETH A DEONTIC Person Action
+`wedding ceremony` MEANS
+    PARTY Spouse1
+    MUST `exchange vows`
+    WITHIN 1
+    HENCE
+        PARTY Spouse2
+        MUST `exchange vows`
+        WITHIN 1
+        HENCE FULFILLED
+        LEST BREACH BY Spouse2 BECAUSE "failed to exchange vows"
+    LEST BREACH BY Spouse1 BECAUSE "failed to exchange vows"
+
+-- "To love and to cherish": two obligations that hold at the same time
+GIVETH A DEONTIC Person Action
+`love obligation` MEANS
+    (PARTY Spouse1 MUST `love and cherish` HENCE FULFILLED LEST BREACH BY Spouse1)
+    RAND
+    (PARTY Spouse2 MUST `love and cherish` HENCE FULFILLED LEST BREACH BY Spouse2)
+
+-- "Forsaking all others": two prohibitions
+GIVETH A DEONTIC Person Action
+`fidelity clause` MEANS
+    (PARTY Spouse1 SHANT `be unfaithful` HENCE FULFILLED LEST BREACH BY Spouse1 BECAUSE "was unfaithful")
+    RAND
+    (PARTY Spouse2 SHANT `be unfaithful` HENCE FULFILLED LEST BREACH BY Spouse2 BECAUSE "was unfaithful")
+
+§§ `Tests`
+
+-- Both spouses exchange vows on the day: FULFILLED
+#TRACE `wedding ceremony` AT 0 WITH
+    PARTY Spouse1 DOES `exchange vows` AT 0
+    PARTY Spouse2 DOES `exchange vows` AT 0
+
+-- Spouse1 does not show up; the next event comes on day 2: BREACH BY Spouse1
+#TRACE `wedding ceremony` AT 0 WITH
+    PARTY Spouse2 DOES `exchange vows` AT 2
+
+-- Spouse1 is unfaithful on day 100: BREACH BY Spouse1 BECAUSE "was unfaithful"
+#TRACE `fidelity clause` AT 0 WITH
+    PARTY Spouse1 DOES `be unfaithful` AT 100
+</code></pre>
+<p>The parties are two spouses, and the actions are the ones the vows talk about:</p>
+<pre><code>DECLARE Person IS ONE OF Spouse1, Spouse2
+
+DECLARE Action IS ONE OF
+    `exchange vows`
+    `love and cherish`
+    `be unfaithful`
+</code></pre>
+<p><strong>The ceremony</strong> is a chain. Spouse1 must exchange vows on the day; once they have, Spouse2 must too. Each <code>LEST</code> names who breached and why:</p>
+<pre><code>GIVETH A DEONTIC Person Action
+`wedding ceremony` MEANS
+    PARTY Spouse1
+    MUST `exchange vows`
+    WITHIN 1
+    HENCE
+        PARTY Spouse2
+        MUST `exchange vows`
+        WITHIN 1
+        HENCE FULFILLED
+        LEST BREACH BY Spouse2 BECAUSE "failed to exchange vows"
+    LEST BREACH BY Spouse1 BECAUSE "failed to exchange vows"
+</code></pre>
+<p><strong>"To love and to cherish"</strong> binds both spouses at once, so the two obligations are joined with <code>RAND</code>. <strong>"Forsaking all others"</strong> becomes two prohibitions, also joined with <code>RAND</code>:</p>
+<pre><code>GIVETH A DEONTIC Person Action
+`fidelity clause` MEANS
+    (PARTY Spouse1 SHANT `be unfaithful` HENCE FULFILLED LEST BREACH BY Spouse1 BECAUSE "was unfaithful")
+    RAND
+    (PARTY Spouse2 SHANT `be unfaithful` HENCE FULFILLED LEST BREACH BY Spouse2 BECAUSE "was unfaithful")
+</code></pre>
+<p>The tests at the end of the file give three results:</p>
+<table>
+<thead>
+<tr>
+<th>Scenario</th>
+<th>Result</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Both spouses exchange vows on day 0</td>
+<td><code>FULFILLED</code></td>
+</tr>
+<tr>
+<td>Spouse1 never does; the next event is on day 2</td>
+<td><code>BREACH BY Spouse1</code>, "failed to exchange vows"</td>
+</tr>
+<tr>
+<td>Spouse1 is unfaithful on day 100</td>
+<td><code>BREACH BY Spouse1</code>, "was unfaithful"</td>
+</tr>
+</tbody>
+</table>
+<p>The same patterns run through employment contracts (the employee must report for work), leases (the tenant shall not sublet without permission) and regulatory filings (the company must file a report within 60 days).</p>
+<hr>
+<h2 id="state-graphs">State Graphs</h2>
+<p>L4 can visualize regulative rules as state transition diagrams:</p>
+<pre><code class="language-bash">l4 state-graph mycontract.l4
+
+# Or from a Haskell checkout
+cabal run l4 -- state-graph mycontract.l4
+</code></pre>
+<p>This generates a graph showing:</p>
+<ul>
+<li><strong>States</strong>: Initial, intermediate, Fulfilled, Breach</li>
+<li><strong>Transitions</strong>: Actions that move between states</li>
+<li><strong>Deadlines</strong>: When actions must occur</li>
+</ul>
+<p>The graph makes complex contracts easier to understand.</p>
+<hr>
+<h2 id="best-practices">Best Practices</h2>
+<h3 id="1-define-clear-actors-and-actions">1. Define Clear Actors and Actions</h3>
+<pre><code class="language-l4">-- Good: Clear, descriptive types
+DECLARE `Lease Party` IS ONE OF
+    `the landlord`
+    `the tenant`
+
+DECLARE `Lease Action` IS ONE OF
+    `pay the rent` HAS amount IS A NUMBER
+    `maintain the property`
+    `provide access`
+    `terminate the lease`
+</code></pre>
+<h3 id="2-name-actions-like-the-legal-text">2. Name Actions Like the Legal Text</h3>
+<p><code>MUST `deliver goods in accordance with the specification`</code> keeps the legal nuance that <code>MUST deliver</code> loses.</p>
+<h3 id="3-use-breach-by-and-because-for-clear-blame">3. Use BREACH BY and BECAUSE for Clear Blame</h3>
+<pre><code class="language-l4">LEST BREACH BY `the seller` BECAUSE "failed to deliver on time"
+</code></pre>
+<p>The reason is what a reviewer or a downstream system reads.</p>
+<h3 id="4-write-both-paths">4. Write Both Paths</h3>
+<p><code>MUST</code> and <code>SHANT</code> have defaults (<code>HENCE FULFILLED</code>, <code>LEST BREACH</code>), but writing both <code>HENCE</code> and <code>LEST</code> makes the intent plain to a legal reviewer. Where the text gives a remedy ("pay within 30 days, or pay extra within 60"), write the remedy as an obligation in <code>LEST</code> rather than ending in a bare <code>BREACH</code>.</p>
+<h3 id="5-test-with-multiple-scenarios">5. Test with Multiple Scenarios</h3>
+<pre><code>-- Happy path
+#TRACE `the complete sale contract` AT 0 WITH
+    PARTY `the seller` DOES `deliver the goods` AT 5
+    PARTY `the buyer` DOES `pay the invoice` 1000 AT 20
+
+-- Late delivery
+#TRACE `the complete sale contract` AT 0 WITH
+    PARTY `the seller` DOES `deliver the goods` AT 20
+
+-- No action: the result is the contract, still waiting
+#TRACE `the complete sale contract` AT 0 WITH
+</code></pre>
+<hr>
+<h2 id="exercises">Exercises</h2>
+<h3 id="exercise-1-obligation-with-a-condition">Exercise 1: Obligation with a Condition</h3>
+<p>Write a regulative rule: "The buyer must pay at least 500 within 30 days." Test it with a payment of 200 on day 10 and a payment of 600 on day 20.</p>
+<details>
+<summary>Solution</summary>
+<pre><code class="language-l4">DECLARE `Sale Party` IS ONE OF
+    `the buyer`
+    `the seller`
+
+DECLARE `Sale Action` IS ONE OF
+    `pay` HAS amount IS A NUMBER
+
+GIVETH A DEONTIC `Sale Party` `Sale Action`
+`the minimum payment` MEANS
+    PARTY  `the buyer`
+    MUST   `pay` amount PROVIDED amount AT LEAST 500
+    WITHIN 30
+    HENCE  FULFILLED
+    LEST   BREACH BY `the buyer` BECAUSE "did not pay at least 500 within 30 days"
+
+#TRACE `the minimum payment` AT 0 WITH
+    PARTY `the buyer` DOES `pay` 200 AT 10
+    PARTY `the buyer` DOES `pay` 600 AT 20
+</code></pre>
+<p>The payment of 200 does not meet the condition, so it is skipped; the payment of 600 fulfils the obligation.</p>
+</details>
+<h3 id="exercise-2-chained-obligations">Exercise 2: Chained Obligations</h3>
+<p>Write a contract: "Buyer must pay deposit within 7 days. After deposit, seller must deliver within 14 days."</p>
+<details>
+<summary>Solution</summary>
+<pre><code class="language-l4">DECLARE `Sale Party` IS ONE OF
+    `the buyer`
+    `the seller`
+
+DECLARE `Deposit Action` IS ONE OF
+    `pay the deposit`
+    `deliver the goods`
+
+GIVETH A DEONTIC `Sale Party` `Deposit Action`
+`the deposit contract` MEANS
+    PARTY `the buyer`
+    MUST `pay the deposit`
+    WITHIN 7
+    HENCE
+        PARTY `the seller`
+        MUST `deliver the goods`
+        WITHIN 14
+        HENCE FULFILLED
+        LEST BREACH
+    LEST BREACH
+
+#TRACE `the deposit contract` AT 0 WITH
+    PARTY `the buyer` DOES `pay the deposit` AT 3
+    PARTY `the seller` DOES `deliver the goods` AT 12
+</code></pre>
+</details>
+<h3 id="exercise-3-permission-and-prohibition">Exercise 3: Permission and Prohibition</h3>
+<p>Write rules for: "Tenant may have pets. Tenant shall not smoke indoors."</p>
+<details>
+<summary>Solution</summary>
+<pre><code class="language-l4">DECLARE `Lease Party` IS ONE OF
+    `the tenant`
+    `the landlord`
+
+DECLARE `Lease Action` IS ONE OF
+    `keep a pet`
+    `smoke indoors`
+
+GIVETH A DEONTIC `Lease Party` `Lease Action`
+`the pet permission` MEANS
+    PARTY `the tenant`
+    MAY `keep a pet`
+    HENCE FULFILLED
+
+GIVETH A DEONTIC `Lease Party` `Lease Action`
+`the smoking prohibition` MEANS
+    PARTY `the tenant`
+    SHANT `smoke indoors`
+    HENCE FULFILLED
+    LEST BREACH BY `the tenant` BECAUSE "smoked indoors"
+
+#TRACE `the pet permission` AT 0 WITH
+    PARTY `the tenant` DOES `keep a pet` AT 1
+
+#TRACE `the smoking prohibition` AT 0 WITH
+    PARTY `the tenant` DOES `smoke indoors` AT 10
+</code></pre>
+</details>
+<hr>
+<h2 id="summary">Summary</h2>
+<table>
+<thead>
+<tr>
+<th>Concept</th>
+<th>Syntax</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Obligation</td>
+<td><code>PARTY actor MUST action</code></td>
+</tr>
+<tr>
+<td>Permission</td>
+<td><code>PARTY actor MAY action</code></td>
+</tr>
+<tr>
+<td>Prohibition</td>
+<td><code>PARTY actor SHANT action</code></td>
+</tr>
+<tr>
+<td>Deadline</td>
+<td><code>WITHIN days</code></td>
+</tr>
+<tr>
+<td>Compliance result</td>
+<td><code>HENCE next obligation</code> or <code>HENCE FULFILLED</code></td>
+</tr>
+<tr>
+<td>Non-compliance</td>
+<td><code>LEST consequence</code> or <code>LEST BREACH</code></td>
+</tr>
+<tr>
+<td>Condition</td>
+<td><code>PROVIDED condition</code></td>
+</tr>
+<tr>
+<td>Parallel obligations</td>
+<td><code>obligation1 RAND obligation2</code></td>
+</tr>
+<tr>
+<td>Alternative paths</td>
+<td><code>obligation1 ROR obligation2</code></td>
+</tr>
+<tr>
+<td>Simulate</td>
+<td><code>#TRACE rule AT start time WITH events</code></td>
+</tr>
+<tr>
+<td>Event</td>
+<td><code>PARTY actor DOES action AT time</code></td>
+</tr>
+</tbody>
+</table>
+<p>Next, <a href="/l4/courses/foundation/module-7-capstone">Module 7: Putting it together</a> builds a complete legal model that combines everything so far.</p>
+0:{"rsc":["$","$1","c",{"children":[["$","$L2",null,{"navSections":[{"title":"","items":[{"title":"Overview","href":"courses"},{"title":"Overview","href":"courses/foundation"},{"title":"0. Introduction to L4","href":"courses/foundation/module-0-introduction"},{"title":"1. Your first legal rule","href":"courses/foundation/module-1-first-rule"},{"title":"2. Legal entities and relationships","href":"courses/foundation/module-2-entities"},{"title":"3. Control flow","href":"courses/foundation/module-3-control-flow"},{"title":"4. Decision logic","href":"courses/foundation/module-4-decision-logic"},{"title":"5. Functions","href":"courses/foundation/module-5-functions"},{"title":"6. Regulative rules","href":"courses/foundation/module-6-regulative"},{"title":"7. Putting it together","href":"courses/foundation/module-7-capstone"},{"title":"Overview","href":"courses/advanced"},{"title":"A1. Real regulatory schemes","href":"courses/advanced/module-a1-regulatory"},{"title":"A2. Cross-cutting concerns","href":"courses/advanced/module-a2-cross-cutting"},{"title":"A3. Contracts in depth","href":"courses/advanced/module-a3-contracts"},{"title":"A4. Production patterns","href":"courses/advanced/module-a4-production"}]}],"toc":[],"htmlContent":"$3","pager":{"prev":"$0:rsc:props:children:0:props:navSections:0:items:7","next":"$0:rsc:props:children:0:props:navSections:0:items:9"}}],["$L4"],"$L5"]}],"isPartial":false,"staleTime":300,"varyParams":null,"buildId":"iJUXAyHcmcW99cMci3ei9"}
+4:["$","script","script-0",{"src":"/_next/static/chunks/0fl~me.qwn48c.js","async":true}]
+5:["$","$L6",null,{"children":["$","$7",null,{"name":"Next.MetadataOutlet","children":"$@8"}]}]
+8:null

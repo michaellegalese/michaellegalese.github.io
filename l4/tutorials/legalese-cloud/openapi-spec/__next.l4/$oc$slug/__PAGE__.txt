@@ -1,0 +1,110 @@
+1:"$Sreact.fragment"
+2:I[90160,["/_next/static/chunks/0ypf.t599.7y6.js","/_next/static/chunks/0t2xr05rlu96l.js","/_next/static/chunks/0uxaa7wo_wmcw.js","/_next/static/chunks/0fl~me.qwn48c.js"],"default"]
+6:I[97367,["/_next/static/chunks/0ypf.t599.7y6.js","/_next/static/chunks/0t2xr05rlu96l.js"],"OutletBoundary"]
+7:"$Sreact.suspense"
+3:T16be,<h1>Call rules over REST</h1>
+<p>Call a deployment's rules from your own application as a plain REST API, and generate a client from its OpenAPI document. No model is involved: the same inputs always give the same result, which is what back-end workflows, batch jobs and audited systems need.</p>
+<p><strong>Before you start:</strong> a deployment (<a href="/l4/tutorials/deploying-rules/exporting-rules-for-deployment">Deploy your rules</a>). For API keys, permissions and self-hosted addresses, see <a href="/l4/tutorials/legalese-cloud">Choose an integration</a>.</p>
+<p>The examples use the <code>insurance-premium</code> deployment from <a href="/l4/tutorials/deploying-rules/exporting-rules-for-deployment">Deploy your rules</a>. Replace <code>{orgSlug}</code> with your organization and <code>sk_...</code> with an API key.</p>
+<hr>
+<h2 id="names-in-the-api">Names in the API</h2>
+<p>In addresses and arguments, spaces in names become hyphens: the rule <code>`qualifies for discount`</code> is called as <code>qualifies-for-discount</code>, and the field <code>`risk score`</code> is passed as <code>"risk-score"</code>.</p>
+<h2 id="list-the-rules">List the rules</h2>
+<pre><code class="language-bash">curl https://api.legalese.cloud/{orgSlug}/insurance-premium/functions \
+  -H "Authorization: Bearer sk_..."
+</code></pre>
+<h2 id="run-a-rule">Run a rule</h2>
+<p>Send the rule's inputs under <code>arguments</code> to <code>/functions/{name}/evaluation</code>:</p>
+<pre><code class="language-bash">curl -X POST https://api.legalese.cloud/{orgSlug}/insurance-premium/functions/qualifies-for-discount/evaluation \
+  -H "Authorization: Bearer sk_..." \
+  -H "Content-Type: application/json" \
+  -d '{
+    "arguments": {
+      "applicant": {
+        "age": 35,
+        "risk-score": 0.4,
+        "is-existing-customer": true
+      }
+    }
+  }'
+</code></pre>
+<pre><code class="language-json">{ "contents": { "result": { "value": true } }, "tag": "SimpleResponse" }
+</code></pre>
+<p>The answer is in <code>value</code>, under <code>result</code>. With the same applicant, <code>calculate-premium</code> gives <code>{ "value": 1400 }</code>.</p>
+<h2 id="read-the-answer">Read the answer</h2>
+<p>What <code>value</code> holds depends on what the rule gives back:</p>
+<table>
+<thead>
+<tr>
+<th>The rule gives back</th>
+<th><code>value</code> is</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>TRUE</code> or <code>FALSE</code></td>
+<td><code>true</code> or <code>false</code></td>
+</tr>
+<tr>
+<td>a number</td>
+<td>that number; one that is not whole comes back as a decimal, to about 16 significant digits: a third is <code>0.3333333333333333</code></td>
+</tr>
+<tr>
+<td>a string</td>
+<td>that string</td>
+</tr>
+<tr>
+<td>a <code>DATE</code></td>
+<td>the date as text, year first: <code>"2026-01-31"</code></td>
+</tr>
+<tr>
+<td><code>NOTHING</code>, from a <code>MAYBE</code></td>
+<td><code>null</code></td>
+</tr>
+<tr>
+<td><code>JUST</code> a value, from a <code>MAYBE</code></td>
+<td>the value itself, with nothing around it</td>
+</tr>
+<tr>
+<td>a list</td>
+<td>a JSON array, even when the list has only one item</td>
+</tr>
+<tr>
+<td>one of a list of choices, such as <code>`under review`</code></td>
+<td>the name as a string, without backticks: <code>"under review"</code></td>
+</tr>
+<tr>
+<td>a record, such as a <code>Pair</code> of <code>left</code> and <code>right side</code></td>
+<td>an object with one key, the record's name, holding its fields: <code>{"Pair": {"left": 5, "right side": 6}}</code></td>
+</tr>
+</tbody>
+</table>
+<p>Four things to know:</p>
+<ul>
+<li>Field names inside an answer are spelled as the rule spells them, spaces included; they are not turned into hyphens.</li>
+<li>A rule that gives back a <code>MAYBE</code> of a <code>MAYBE</code> answers <code>null</code> both for <code>NOTHING</code> and for <code>JUST NOTHING</code>, so the two cannot be told apart.</li>
+<li>Each rule's description includes a <code>returnSchema</code> for its answer. It does not show the record's name around a record's fields, or that a <code>MAYBE</code> answer can be <code>null</code>; go by the table above for those two.</li>
+<li>A long list can come back cut short. A list answer of around 200 items or more may end with two <code>null</code>s in place of the rest, still with status 200, so two <code>null</code>s at the end of a long list mean it was cut, not that items were empty.</li>
+</ul>
+<h2 id="ask-only-the-questions-that-matter">Ask only the questions that matter</h2>
+<p>The query-plan endpoint takes the inputs you have so far and returns the inputs that are still needed, ranked by how much they can change the result:</p>
+<pre><code class="language-bash">curl -X POST https://api.legalese.cloud/{orgSlug}/insurance-premium/functions/calculate-premium/query-plan \
+  -H "Authorization: Bearer sk_..." \
+  -H "Content-Type: application/json" \
+  -d '{"arguments": {"applicant": {"is-existing-customer": true}}}'
+</code></pre>
+<h2 id="generate-a-client-from-the-openapi-document">Generate a client from the OpenAPI document</h2>
+<p>Every deployment publishes an OpenAPI document, with one operation per exported rule: the <code>GIVEN</code> inputs as the request body and the rule's result as the response.</p>
+<pre><code class="language-bash">curl https://api.legalese.cloud/{orgSlug}/insurance-premium/openapi.json \
+  -H "Authorization: Bearer sk_..."
+</code></pre>
+<p>Give the address to any OpenAPI tool, or import it into Postman, Insomnia or Swagger UI:</p>
+<pre><code class="language-bash">openapi-generator-cli generate \
+  -i https://api.legalese.cloud/{orgSlug}/insurance-premium/openapi.json \
+  -g typescript-fetch -o ./generated
+</code></pre>
+<p>The document is regenerated on every redeploy. Run the generator again after a deploy that changes a rule's inputs or result.</p>
+0:{"rsc":["$","$1","c",{"children":[["$","$L2",null,{"navSections":[{"title":"","items":[{"title":"Overview","href":"tutorials"},{"title":"Install L4 and write your first rule","href":"tutorials/getting-started/first-l4-file"},{"title":"Draft rules with Legalese AI","href":"tutorials/llm-integration/composing-l4-with-ai"},{"title":"Test your rules","href":"tutorials/getting-started/testing-your-rules"},{"title":"Fix errors","href":"tutorials/getting-started/debugging-type-errors"},{"title":"Encode legislation","href":"tutorials/getting-started/encoding-legislation"},{"title":"Make rules read like law","href":"tutorials/natural-language-functions/optimising-natural-language-generation"},{"title":"Common patterns","href":"tutorials/getting-started/common-patterns"},{"title":"Deploy your rules","href":"tutorials/deploying-rules/exporting-rules-for-deployment"},{"title":"Choose an integration","href":"tutorials/legalese-cloud"},{"title":"Connect an AI agent","href":"tutorials/legalese-cloud/ai-agents"},{"title":"Chat with your rules","href":"tutorials/legalese-cloud/openai-compatible-api"},{"title":"Call rules over REST","href":"tutorials/legalese-cloud/openapi-spec"},{"title":"Embed rules in a website","href":"tutorials/legalese-cloud/webmcp-embed"},{"title":"Using the l4 CLI","href":"tutorials/getting-started/l4-cli"},{"title":"Manage rules in git and CI","href":"tutorials/getting-started/version-control-for-rules"}]}],"toc":[],"htmlContent":"$3","pager":{"prev":"$0:rsc:props:children:0:props:navSections:0:items:11","next":"$0:rsc:props:children:0:props:navSections:0:items:13"}}],["$L4"],"$L5"]}],"isPartial":false,"staleTime":300,"varyParams":null,"buildId":"iJUXAyHcmcW99cMci3ei9"}
+4:["$","script","script-0",{"src":"/_next/static/chunks/0fl~me.qwn48c.js","async":true}]
+5:["$","$L6",null,{"children":["$","$7",null,{"name":"Next.MetadataOutlet","children":"$@8"}]}]
+8:null

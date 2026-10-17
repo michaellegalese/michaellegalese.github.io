@@ -1,0 +1,285 @@
+1:"$Sreact.fragment"
+2:I[90160,["/_next/static/chunks/0ypf.t599.7y6.js","/_next/static/chunks/0t2xr05rlu96l.js","/_next/static/chunks/0uxaa7wo_wmcw.js","/_next/static/chunks/0fl~me.qwn48c.js"],"default"]
+6:I[97367,["/_next/static/chunks/0ypf.t599.7y6.js","/_next/static/chunks/0t2xr05rlu96l.js"],"OutletBoundary"]
+7:"$Sreact.suspense"
+3:T1e76,<h1>excel-date</h1>
+<p>Excel-compatible date helpers: serial conversion (including Excel's 1900 leap-year bug), date differences (<code>DATEDIF</code>, <code>DAYS360</code>, <code>YEARFRAC</code>), month arithmetic (<code>EDATE</code>/<code>EOMONTH</code> equivalents), and workday calculations. Import it with <code>IMPORT `excel-date`</code> (the backticks are needed because of the hyphen). Import <code>daydate</code> too if you build dates with <code>Date</code>.</p>
+<h2 id="constants">Constants</h2>
+<table>
+<thead>
+<tr>
+<th>Constant</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>Excel 1900 epoch</code></td>
+<td>31 Dec 1899 (serial 0 in the 1900 system)</td>
+</tr>
+<tr>
+<td><code>Excel 1900 bug threshold</code></td>
+<td>1 Mar 1900</td>
+</tr>
+<tr>
+<td><code>Excel 1900 bug serial</code></td>
+<td>60 (the nonexistent 29 Feb 1900)</td>
+</tr>
+<tr>
+<td><code>Excel 1904 epoch</code></td>
+<td>1 Jan 1904</td>
+</tr>
+<tr>
+<td><code>Excel 1900 epoch days</code></td>
+<td>The day number of <code>Excel 1900 epoch</code></td>
+</tr>
+<tr>
+<td><code>Excel 1904 epoch days</code></td>
+<td>The day number of <code>Excel 1904 epoch</code></td>
+</tr>
+</tbody>
+</table>
+<h2 id="serial-numbers">Serial numbers</h2>
+<table>
+<thead>
+<tr>
+<th>Function</th>
+<th>Signature</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>day</code> date</td>
+<td><code>DATE → NUMBER</code></td>
+<td>Day of month</td>
+</tr>
+<tr>
+<td><code>month</code> date</td>
+<td><code>DATE → NUMBER</code></td>
+<td>Month number</td>
+</tr>
+<tr>
+<td><code>year</code> date</td>
+<td><code>DATE → NUMBER</code></td>
+<td>Year number</td>
+</tr>
+<tr>
+<td><code>excelSerial1900</code> date</td>
+<td><code>DATE → NUMBER</code></td>
+<td>Excel serial (1900 system), reproducing the +1 leap-bug offset from 1 Mar 1900</td>
+</tr>
+<tr>
+<td><code>excelSerial1904</code> date</td>
+<td><code>DATE → NUMBER</code></td>
+<td>Excel serial (1904 system)</td>
+</tr>
+<tr>
+<td><code>dateFromExcelSerial</code> serial</td>
+<td><code>NUMBER → EITHER STRING DATE</code></td>
+<td>DATE from a 1900-system serial; serial 60 (the phantom 29 Feb 1900) is a LEFT</td>
+</tr>
+<tr>
+<td><code>dateFromExcelSerial1904</code> serial</td>
+<td><code>NUMBER → EITHER STRING DATE</code></td>
+<td>DATE from a 1904-system serial</td>
+</tr>
+</tbody>
+</table>
+<h2 id="clock-and-parsing">Clock and parsing</h2>
+<table>
+<thead>
+<tr>
+<th>Function</th>
+<th>Signature</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>Today serial</code></td>
+<td><code>NUMBER</code></td>
+<td><code>DATE_SERIAL TODAY</code> (requires <code>TIMEZONE IS</code>)</td>
+</tr>
+<tr>
+<td><code>Now serial</code></td>
+<td><code>NUMBER</code></td>
+<td><code>DATETIME_SERIAL NOW</code></td>
+</tr>
+<tr>
+<td><code>excelToday</code></td>
+<td><code>DATE</code></td>
+<td>Alias for <code>TODAY</code></td>
+</tr>
+<tr>
+<td><code>excelNow</code></td>
+<td><code>NUMBER</code></td>
+<td>Excel-style now: 1900-system serial plus time-of-day fraction</td>
+</tr>
+<tr>
+<td><code>ExcelDateValue</code> text</td>
+<td><code>STRING → EITHER STRING DATE</code></td>
+<td>Parse date text to a DATE (like Excel <code>DATEVALUE</code>)</td>
+</tr>
+<tr>
+<td><code>ExcelTimeValue</code> text</td>
+<td><code>STRING → EITHER STRING NUMBER</code></td>
+<td>Parse time text to a day fraction (like Excel <code>TIMEVALUE</code>)</td>
+</tr>
+<tr>
+<td><code>DateValue serial</code> text</td>
+<td><code>STRING → EITHER STRING NUMBER</code></td>
+<td>Parse date text to a date serial</td>
+</tr>
+<tr>
+<td><code>TimeValue fraction</code> text</td>
+<td><code>STRING → EITHER STRING NUMBER</code></td>
+<td>Same as <code>ExcelTimeValue</code></td>
+</tr>
+</tbody>
+</table>
+<h2 id="days-and-datedif">DAYS and DATEDIF</h2>
+<table>
+<thead>
+<tr>
+<th>Function</th>
+<th>Signature</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>ExcelDays</code> endDate startDate</td>
+<td><code>DATE → DATE → NUMBER</code></td>
+<td>Days between (end − start); also has a <code>NUMBER → NUMBER → NUMBER</code> overload for serials</td>
+</tr>
+<tr>
+<td><code>DATEDIF</code> startDate endDate unit</td>
+<td><code>DATE → DATE → STRING → EITHER STRING NUMBER</code></td>
+<td>Excel <code>DATEDIF</code> with units <code>"Y"</code>, <code>"M"</code>, <code>"D"</code>, <code>"MD"</code>, <code>"YM"</code>, <code>"YD"</code>; LEFT if start > end or unit unknown</td>
+</tr>
+</tbody>
+</table>
+<p><code>DATEDIF</code> also accepts Excel serials in place of either or both DATE arguments (overloads for <code>NUMBER</code>/<code>DATE</code> combinations).</p>
+<h2 id="days360-and-yearfrac">DAYS360 and YEARFRAC</h2>
+<table>
+<thead>
+<tr>
+<th>Function</th>
+<th>Signature</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>ExcelDays360</code> startDate endDate</td>
+<td><code>DATE → DATE → EITHER STRING NUMBER</code></td>
+<td>30/360 day count, US (NASD) method</td>
+</tr>
+<tr>
+<td><code>ExcelDays360</code> startDate endDate european</td>
+<td><code>DATE → DATE → BOOLEAN → EITHER STRING NUMBER</code></td>
+<td>30/360 day count; TRUE selects the European method</td>
+</tr>
+<tr>
+<td><code>ExcelYearFrac</code> startDate endDate</td>
+<td><code>DATE → DATE → EITHER STRING NUMBER</code></td>
+<td>Year fraction with basis 0 (US 30/360)</td>
+</tr>
+<tr>
+<td><code>ExcelYearFrac</code> startDate endDate basis</td>
+<td><code>DATE → DATE → NUMBER → EITHER STRING NUMBER</code></td>
+<td>Basis 0-4: US 30/360, actual/actual, actual/360, actual/365, European 30/360</td>
+</tr>
+</tbody>
+</table>
+<h2 id="month-arithmetic">Month arithmetic</h2>
+<table>
+<thead>
+<tr>
+<th>Function</th>
+<th>Signature</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>ExcelEDate</code> startDate months</td>
+<td><code>DATE → NUMBER → EITHER STRING DATE</code></td>
+<td>Same day N months later/earlier, clamped to the target month's length (Excel <code>EDATE</code>)</td>
+</tr>
+<tr>
+<td><code>ExcelEOMonth</code> startDate months</td>
+<td><code>DATE → NUMBER → EITHER STRING DATE</code></td>
+<td>Last day of the month N months away (Excel <code>EOMONTH</code>)</td>
+</tr>
+</tbody>
+</table>
+<h2 id="working-days">Working days</h2>
+<table>
+<thead>
+<tr>
+<th>Function</th>
+<th>Signature</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>ExcelWorkday</code> startDate days</td>
+<td><code>DATE → NUMBER → EITHER STRING DATE</code></td>
+<td>Date N working days away, skipping weekends (Excel <code>WORKDAY</code>)</td>
+</tr>
+<tr>
+<td><code>ExcelWorkday</code> startDate days holidays</td>
+<td><code>DATE → NUMBER → LIST OF DATE → EITHER STRING DATE</code></td>
+<td>Same, also skipping the listed holidays</td>
+</tr>
+<tr>
+<td><code>ExcelNetworkDays</code> startDate endDate</td>
+<td><code>DATE → DATE → EITHER STRING NUMBER</code></td>
+<td>Working days between two dates, inclusive (Excel <code>NETWORKDAYS</code>)</td>
+</tr>
+<tr>
+<td><code>ExcelNetworkDays</code> startDate endDate holidays</td>
+<td><code>DATE → DATE → LIST OF DATE → EITHER STRING NUMBER</code></td>
+<td>Same, also excluding the listed holidays</td>
+</tr>
+</tbody>
+</table>
+<h2 id="utilities">Utilities</h2>
+<table>
+<thead>
+<tr>
+<th>Function</th>
+<th>Signature</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>ensureWhole</code> label value</td>
+<td><code>STRING → NUMBER → EITHER STRING NUMBER</code></td>
+<td>RIGHT if the value is an integer, LEFT otherwise</td>
+</tr>
+<tr>
+<td><code>absoluteValue</code> value</td>
+<td><code>NUMBER → NUMBER</code></td>
+<td>Absolute value</td>
+</tr>
+<tr>
+<td><code>containsDay</code> day days</td>
+<td><code>NUMBER → LIST OF NUMBER → BOOLEAN</code></td>
+<td>Membership test on day serials</td>
+</tr>
+<tr>
+<td><code>dayOfYear</code> date</td>
+<td><code>DATE → NUMBER</code></td>
+<td>1-based day of the year</td>
+</tr>
+</tbody>
+</table>
+0:{"rsc":["$","$1","c",{"children":[["$","$L2",null,{"navSections":[{"title":"","items":[{"title":"Language Reference","href":"reference"},{"title":"Glossary","href":"reference/GLOSSARY"},{"title":"Cheat sheet","href":"reference/cheat-sheet"},{"title":"Types","href":"reference/types","children":[{"title":"DECLARE","href":"reference/types/DECLARE"},{"title":"ASSUME","href":"reference/types/ASSUME"},{"title":"FOR ALL","href":"reference/types/for-all"},{"title":"Coercions","href":"reference/types/coercions"}]},{"title":"Functions","href":"reference/functions","children":[{"title":"DECIDE","href":"reference/functions/DECIDE"},{"title":"GIVEN and GIVETH","href":"reference/functions/GIVEN"},{"title":"MEANS","href":"reference/functions/MEANS"},{"title":"LET and WHERE","href":"reference/functions/LET"},{"title":"YIELD","href":"reference/functions/YIELD"},{"title":"AKA","href":"reference/functions/AKA"}]},{"title":"Control flow","href":"reference/control-flow","children":[{"title":"IF","href":"reference/control-flow/IF"},{"title":"BRANCH","href":"reference/control-flow/BRANCH"},{"title":"CONSIDER","href":"reference/control-flow/CONSIDER"}]},{"title":"Operators","href":"reference/operators","children":[{"title":"AND, OR, NOT, IMPLIES","href":"reference/operators/logical"},{"title":"UNLESS","href":"reference/operators/UNLESS"},{"title":"Arithmetic","href":"reference/operators/arithmetic"},{"title":"Comparisons","href":"reference/operators/comparisons"}]},{"title":"Regulative rules","href":"reference/regulative","children":[{"title":"PARTY, MUST, MAY, SHANT","href":"reference/regulative/PARTY"},{"title":"Deadlines and consequences","href":"reference/regulative/consequences"},{"title":"BECAUSE","href":"reference/regulative/BECAUSE"},{"title":"DEONTIC","href":"reference/regulative/DEONTIC"},{"title":"EVENT","href":"reference/regulative/EVENT"}]},{"title":"Syntax and directives","href":"reference/syntax"},{"title":"Built-in functions","href":"reference/builtins","children":[{"title":"HTTP and JSON","href":"reference/builtins/http-json"}]},{"title":"Standard libraries","href":"reference/libraries","children":[{"title":"prelude","href":"reference/libraries/prelude"},{"title":"math","href":"reference/libraries/math"},{"title":"daydate","href":"reference/libraries/daydate"},{"title":"time","href":"reference/libraries/time"},{"title":"datetime","href":"reference/libraries/datetime"},{"title":"timezone","href":"reference/libraries/timezone"},{"title":"excel-date","href":"reference/libraries/excel-date"},{"title":"currency","href":"reference/libraries/currency"},{"title":"holdings","href":"reference/libraries/holdings"},{"title":"actus","href":"reference/libraries/actus"},{"title":"legal-persons","href":"reference/libraries/legal-persons"},{"title":"jurisdiction","href":"reference/libraries/jurisdiction"},{"title":"llm","href":"reference/libraries/llm"}]},{"title":"Error messages","href":"reference/errors"}]}],"toc":[],"htmlContent":"$3","pager":{"prev":"$0:rsc:props:children:0:props:navSections:0:items:10:children:5","next":"$0:rsc:props:children:0:props:navSections:0:items:10:children:7"}}],["$L4"],"$L5"]}],"isPartial":false,"staleTime":300,"varyParams":null,"buildId":"iJUXAyHcmcW99cMci3ei9"}
+4:["$","script","script-0",{"src":"/_next/static/chunks/0fl~me.qwn48c.js","async":true}]
+5:["$","$L6",null,{"children":["$","$7",null,{"name":"Next.MetadataOutlet","children":"$@8"}]}]
+8:null

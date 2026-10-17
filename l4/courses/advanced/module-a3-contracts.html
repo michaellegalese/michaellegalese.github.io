@@ -1,0 +1,885 @@
+<!DOCTYPE html><html lang="en"><head><meta charSet="utf-8"/><meta name="viewport" content="width=device-width, initial-scale=1"/><link rel="preload" href="/_next/static/media/248e1dc0efc99276-s.p.0ft7o6kv5bp14.woff2" as="font" crossorigin="" type="font/woff2"/><link rel="preload" href="/_next/static/media/83afe278b6a6bb3c-s.p.0q-301v4kxxnr.woff2" as="font" crossorigin="" type="font/woff2"/><link rel="stylesheet" href="/_next/static/chunks/0xhryq7f66rdk.css" data-precedence="next"/><link rel="stylesheet" href="/_next/static/chunks/0s9wju.j1~_xn.css" data-precedence="next"/><link rel="preload" as="script" fetchPriority="low" href="/_next/static/chunks/0_ovy~dyroghb.js"/><script src="/_next/static/chunks/0~obkukllwtaq.js" async=""></script><script src="/_next/static/chunks/0shao_~29ipvc.js" async=""></script><script src="/_next/static/chunks/026trj-n~_p02.js" async=""></script><script src="/_next/static/chunks/0ph3xadm0-u_a.js" async=""></script><script src="/_next/static/chunks/turbopack-0fwd9fqlzc41g.js" async=""></script><script src="/_next/static/chunks/0ypf.t599.7y6.js" async=""></script><script src="/_next/static/chunks/0t2xr05rlu96l.js" async=""></script><script src="/_next/static/chunks/11.9ba59t4-it.js" async=""></script><script src="/_next/static/chunks/0uxaa7wo_wmcw.js" async=""></script><script src="/_next/static/chunks/0fl~me.qwn48c.js" async=""></script><link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js" as="script"/><link rel="preload" href="/hljs-l4/l4.min.js" as="script"/><meta http-equiv="Content-Security-Policy" content="default-src &#x27;self&#x27; https://legalese.com; script-src &#x27;self&#x27; https://legalese.com &#x27;unsafe-inline&#x27; https://cdnjs.cloudflare.com; style-src &#x27;self&#x27; https://legalese.com &#x27;unsafe-inline&#x27;; font-src &#x27;self&#x27; https://legalese.com; img-src &#x27;self&#x27; https://legalese.com https://workoscdn.com https://*.googleusercontent.com; connect-src &#x27;self&#x27; https://legalese.com https://legalese.cloud https://ai.legalese.cloud https://*.workos.com; frame-src &#x27;self&#x27; https://legalese.com https://jl4.legalese.com https://*.workos.com; object-src &#x27;none&#x27;; base-uri &#x27;self&#x27; https://legalese.com"/><link rel="apple-touch-icon" sizes="180x180" href="/favicon/apple-touch-icon.png"/><link rel="icon" type="image/png" sizes="32x32" href="/favicon/favicon-32x32.png"/><link rel="icon" type="image/png" sizes="16x16" href="/favicon/favicon-16x16.png"/><link rel="manifest" href="/favicon/site.webmanifest"/><link rel="shortcut icon" href="/favicon/favicon.ico"/><meta name="msapplication-TileColor" content="#000000"/><meta name="msapplication-config" content="/favicon/browserconfig.xml"/><meta name="theme-color" content="#000"/><link rel="alternate" type="application/rss+xml" href="/feed.xml"/><meta name="next-size-adjust" content=""/><title>Module A3: Contracts in depth | L4 Documentation</title><meta name="description" content="In this module, you&#x27;ll learn advanced contract modeling including complex payment terms, recursive obligations, and penalty structures. Find the full working…"/><meta name="robots" content="index, follow"/><link rel="canonical" href="https://legalese.com/l4/courses/advanced/module-a3-contracts"/><meta property="og:title" content="Module A3: Contracts in depth | L4 Documentation"/><meta property="og:description" content="In this module, you&#x27;ll learn advanced contract modeling including complex payment terms, recursive obligations, and penalty structures. Find the full working…"/><meta property="og:url" content="https://legalese.com/l4/courses/advanced/module-a3-contracts"/><meta property="og:image" content="https://legalese.com/opengraph/ai-is-eating-law-v2.jpg"/><meta name="twitter:card" content="summary_large_image"/><meta name="twitter:title" content="Module A3: Contracts in depth | L4 Documentation"/><meta name="twitter:description" content="In this module, you&#x27;ll learn advanced contract modeling including complex payment terms, recursive obligations, and penalty structures. Find the full working…"/><meta name="twitter:image" content="https://legalese.com/opengraph/ai-is-eating-law-v2.jpg"/><script src="/_next/static/chunks/03~yq9q893hmn.js" noModule=""></script></head><body class="inter_5901b7c6-module__ec5Qua__variable merriweather_b1e99710-module__84TlHG__variable"><div hidden=""><!--$--><!--/$--></div><div class="min-h-screen"><div class="min-h-screen flex flex-col"><header class="sticky top-0 z-50 bg-white border-b border-gray-200"><div class="flex items-center h-14 px-4 lg:px-6"><button class="lg:hidden p-2 -ml-2 mr-2 text-gray-500 hover:text-gray-700 rounded-md hover:bg-gray-100" aria-label="Open navigation menu"><svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path></svg></button><div class="lg:w-64 flex-shrink-0 pr-4"><a class="flex items-center gap-2 hover:opacity-80 transition-opacity" href="/"><img alt="§" loading="lazy" width="32" height="32" decoding="async" data-nimg="1" class="rounded" style="color:transparent" src="/assets/logos/legalese-logo.png"/><span class="hidden sm:inline text-xl font-bold tracking-tight font-merriweather">Legalese</span></a></div><div class="flex-1 flex justify-end md:justify-start mr-0 md:mr-4"><div class="relative w-full max-w-[400px]"><button class="flex items-center justify-between px-3 py-1.5 text-sm text-gray-500 bg-gray-100 hover:bg-gray-200 rounded-md transition-colors w-full"><span class="flex items-center gap-2"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>Search</span><kbd class="hidden sm:inline-flex items-center gap-0.5 px-1.5 py-0.5 text-xs font-mono bg-white rounded border border-gray-300"><span class="text-xs"><span class="os-mac:inline hidden">⌘</span><span class="os-other:inline hidden">Ctrl+</span></span>/</kbd></button></div></div><div class="flex items-center gap-4 flex-shrink-0"><nav class="hidden md:flex items-center gap-1"><a class="px-4 py-2 text-sm font-medium rounded-md transition-colors text-gray-600 hover:text-gray-900 hover:bg-gray-100" href="/l4">Home</a><a class="px-4 py-2 text-sm font-medium rounded-md transition-colors text-gray-600 hover:text-gray-900 hover:bg-gray-100" href="/l4/reference">Reference</a><a class="px-4 py-2 text-sm font-medium rounded-md transition-colors bg-accent/10 text-accent" href="/l4/courses">Courses</a><a class="px-4 py-2 text-sm font-medium rounded-md transition-colors text-gray-600 hover:text-gray-900 hover:bg-gray-100" href="/l4/tutorials">Tutorials</a><a class="px-4 py-2 text-sm font-medium rounded-md transition-colors text-gray-600 hover:text-gray-900 hover:bg-gray-100" href="/l4/concepts">Concepts</a></nav><a href="https://jl4.legalese.com" target="_blank" rel="noopener noreferrer" class="hidden lg:flex items-center gap-2 px-4 py-2 text-sm font-medium text-white bg-accent hover:bg-accent/90 rounded-md transition-colors"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"></path></svg>Web IDE</a></div></div><div class="md:hidden overflow-x-auto border-t border-gray-100"><nav class="flex px-4 py-2 gap-1"><a class="px-3 py-1.5 text-sm font-medium rounded-md whitespace-nowrap transition-colors text-gray-600 hover:text-gray-900 hover:bg-gray-100" href="/l4">Home</a><a class="px-3 py-1.5 text-sm font-medium rounded-md whitespace-nowrap transition-colors text-gray-600 hover:text-gray-900 hover:bg-gray-100" href="/l4/reference">Reference</a><a class="px-3 py-1.5 text-sm font-medium rounded-md whitespace-nowrap transition-colors bg-accent/10 text-accent" href="/l4/courses">Courses</a><a class="px-3 py-1.5 text-sm font-medium rounded-md whitespace-nowrap transition-colors text-gray-600 hover:text-gray-900 hover:bg-gray-100" href="/l4/tutorials">Tutorials</a><a class="px-3 py-1.5 text-sm font-medium rounded-md whitespace-nowrap transition-colors text-gray-600 hover:text-gray-900 hover:bg-gray-100" href="/l4/concepts">Concepts</a></nav></div></header><div class="flex-1 flex"><aside class="hidden lg:block w-64 flex-shrink-0"><nav class="sticky top-14 h-[calc(100vh-3.5rem)] border-r border-gray-200 bg-gray-50 flex flex-col overflow-y-auto"><div class="px-4 pb-4 pt-6 flex-1"><div class=""><ul class="space-y-0.5"><li class="my-0.5"><div class="flex items-center"><a class="flex-1 block py-1.5 px-3 text-sm rounded-md transition-colors text-gray-600 hover:text-gray-900 hover:bg-gray-100" style="padding-left:12px" href="/l4/courses">Overview</a></div></li><li class="my-0.5"><div class="flex items-center"><a class="flex-1 block py-1.5 px-3 text-sm rounded-md transition-colors text-gray-600 hover:text-gray-900 hover:bg-gray-100" style="padding-left:12px" href="/l4/courses/foundation">Overview</a></div></li><li class="my-0.5"><div class="flex items-center"><a class="flex-1 block py-1.5 px-3 text-sm rounded-md transition-colors text-gray-600 hover:text-gray-900 hover:bg-gray-100" style="padding-left:12px" href="/l4/courses/foundation/module-0-introduction">0. Introduction to L4</a></div></li><li class="my-0.5"><div class="flex items-center"><a class="flex-1 block py-1.5 px-3 text-sm rounded-md transition-colors text-gray-600 hover:text-gray-900 hover:bg-gray-100" style="padding-left:12px" href="/l4/courses/foundation/module-1-first-rule">1. Your first legal rule</a></div></li><li class="my-0.5"><div class="flex items-center"><a class="flex-1 block py-1.5 px-3 text-sm rounded-md transition-colors text-gray-600 hover:text-gray-900 hover:bg-gray-100" style="padding-left:12px" href="/l4/courses/foundation/module-2-entities">2. Legal entities and relationships</a></div></li><li class="my-0.5"><div class="flex items-center"><a class="flex-1 block py-1.5 px-3 text-sm rounded-md transition-colors text-gray-600 hover:text-gray-900 hover:bg-gray-100" style="padding-left:12px" href="/l4/courses/foundation/module-3-control-flow">3. Control flow</a></div></li><li class="my-0.5"><div class="flex items-center"><a class="flex-1 block py-1.5 px-3 text-sm rounded-md transition-colors text-gray-600 hover:text-gray-900 hover:bg-gray-100" style="padding-left:12px" href="/l4/courses/foundation/module-4-decision-logic">4. Decision logic</a></div></li><li class="my-0.5"><div class="flex items-center"><a class="flex-1 block py-1.5 px-3 text-sm rounded-md transition-colors text-gray-600 hover:text-gray-900 hover:bg-gray-100" style="padding-left:12px" href="/l4/courses/foundation/module-5-functions">5. Functions</a></div></li><li class="my-0.5"><div class="flex items-center"><a class="flex-1 block py-1.5 px-3 text-sm rounded-md transition-colors text-gray-600 hover:text-gray-900 hover:bg-gray-100" style="padding-left:12px" href="/l4/courses/foundation/module-6-regulative">6. Regulative rules</a></div></li><li class="my-0.5"><div class="flex items-center"><a class="flex-1 block py-1.5 px-3 text-sm rounded-md transition-colors text-gray-600 hover:text-gray-900 hover:bg-gray-100" style="padding-left:12px" href="/l4/courses/foundation/module-7-capstone">7. Putting it together</a></div></li><li class="my-0.5"><div class="flex items-center"><a class="flex-1 block py-1.5 px-3 text-sm rounded-md transition-colors text-gray-600 hover:text-gray-900 hover:bg-gray-100" style="padding-left:12px" href="/l4/courses/advanced">Overview</a></div></li><li class="my-0.5"><div class="flex items-center"><a class="flex-1 block py-1.5 px-3 text-sm rounded-md transition-colors text-gray-600 hover:text-gray-900 hover:bg-gray-100" style="padding-left:12px" href="/l4/courses/advanced/module-a1-regulatory">A1. Real regulatory schemes</a></div></li><li class="my-0.5"><div class="flex items-center"><a class="flex-1 block py-1.5 px-3 text-sm rounded-md transition-colors text-gray-600 hover:text-gray-900 hover:bg-gray-100" style="padding-left:12px" href="/l4/courses/advanced/module-a2-cross-cutting">A2. Cross-cutting concerns</a></div></li><li class="my-0.5"><div class="flex items-center"><a class="flex-1 block py-1.5 px-3 text-sm rounded-md transition-colors bg-accent/10 text-accent font-medium" style="padding-left:12px" aria-current="page" href="/l4/courses/advanced/module-a3-contracts">A3. Contracts in depth</a></div></li><li class="my-0.5"><div class="flex items-center"><a class="flex-1 block py-1.5 px-3 text-sm rounded-md transition-colors text-gray-600 hover:text-gray-900 hover:bg-gray-100" style="padding-left:12px" href="/l4/courses/advanced/module-a4-production">A4. Production patterns</a></div></li></ul></div></div></nav></aside><nav class="
+        lg:hidden fixed inset-y-0 left-0 z-50
+        w-64 flex-shrink-0 border-r border-gray-200 bg-gray-50
+        flex flex-col
+        transform transition-transform duration-200 ease-in-out
+        -translate-x-full
+      "><div class="px-4 pb-4 pt-6 flex-1 overflow-y-auto"><div class=""><ul class="space-y-0.5"><li class="my-0.5"><div class="flex items-center"><a class="flex-1 block py-1.5 px-3 text-sm rounded-md transition-colors text-gray-600 hover:text-gray-900 hover:bg-gray-100" style="padding-left:12px" href="/l4/courses">Overview</a></div></li><li class="my-0.5"><div class="flex items-center"><a class="flex-1 block py-1.5 px-3 text-sm rounded-md transition-colors text-gray-600 hover:text-gray-900 hover:bg-gray-100" style="padding-left:12px" href="/l4/courses/foundation">Overview</a></div></li><li class="my-0.5"><div class="flex items-center"><a class="flex-1 block py-1.5 px-3 text-sm rounded-md transition-colors text-gray-600 hover:text-gray-900 hover:bg-gray-100" style="padding-left:12px" href="/l4/courses/foundation/module-0-introduction">0. Introduction to L4</a></div></li><li class="my-0.5"><div class="flex items-center"><a class="flex-1 block py-1.5 px-3 text-sm rounded-md transition-colors text-gray-600 hover:text-gray-900 hover:bg-gray-100" style="padding-left:12px" href="/l4/courses/foundation/module-1-first-rule">1. Your first legal rule</a></div></li><li class="my-0.5"><div class="flex items-center"><a class="flex-1 block py-1.5 px-3 text-sm rounded-md transition-colors text-gray-600 hover:text-gray-900 hover:bg-gray-100" style="padding-left:12px" href="/l4/courses/foundation/module-2-entities">2. Legal entities and relationships</a></div></li><li class="my-0.5"><div class="flex items-center"><a class="flex-1 block py-1.5 px-3 text-sm rounded-md transition-colors text-gray-600 hover:text-gray-900 hover:bg-gray-100" style="padding-left:12px" href="/l4/courses/foundation/module-3-control-flow">3. Control flow</a></div></li><li class="my-0.5"><div class="flex items-center"><a class="flex-1 block py-1.5 px-3 text-sm rounded-md transition-colors text-gray-600 hover:text-gray-900 hover:bg-gray-100" style="padding-left:12px" href="/l4/courses/foundation/module-4-decision-logic">4. Decision logic</a></div></li><li class="my-0.5"><div class="flex items-center"><a class="flex-1 block py-1.5 px-3 text-sm rounded-md transition-colors text-gray-600 hover:text-gray-900 hover:bg-gray-100" style="padding-left:12px" href="/l4/courses/foundation/module-5-functions">5. Functions</a></div></li><li class="my-0.5"><div class="flex items-center"><a class="flex-1 block py-1.5 px-3 text-sm rounded-md transition-colors text-gray-600 hover:text-gray-900 hover:bg-gray-100" style="padding-left:12px" href="/l4/courses/foundation/module-6-regulative">6. Regulative rules</a></div></li><li class="my-0.5"><div class="flex items-center"><a class="flex-1 block py-1.5 px-3 text-sm rounded-md transition-colors text-gray-600 hover:text-gray-900 hover:bg-gray-100" style="padding-left:12px" href="/l4/courses/foundation/module-7-capstone">7. Putting it together</a></div></li><li class="my-0.5"><div class="flex items-center"><a class="flex-1 block py-1.5 px-3 text-sm rounded-md transition-colors text-gray-600 hover:text-gray-900 hover:bg-gray-100" style="padding-left:12px" href="/l4/courses/advanced">Overview</a></div></li><li class="my-0.5"><div class="flex items-center"><a class="flex-1 block py-1.5 px-3 text-sm rounded-md transition-colors text-gray-600 hover:text-gray-900 hover:bg-gray-100" style="padding-left:12px" href="/l4/courses/advanced/module-a1-regulatory">A1. Real regulatory schemes</a></div></li><li class="my-0.5"><div class="flex items-center"><a class="flex-1 block py-1.5 px-3 text-sm rounded-md transition-colors text-gray-600 hover:text-gray-900 hover:bg-gray-100" style="padding-left:12px" href="/l4/courses/advanced/module-a2-cross-cutting">A2. Cross-cutting concerns</a></div></li><li class="my-0.5"><div class="flex items-center"><a class="flex-1 block py-1.5 px-3 text-sm rounded-md transition-colors bg-accent/10 text-accent font-medium" style="padding-left:12px" aria-current="page" href="/l4/courses/advanced/module-a3-contracts">A3. Contracts in depth</a></div></li><li class="my-0.5"><div class="flex items-center"><a class="flex-1 block py-1.5 px-3 text-sm rounded-md transition-colors text-gray-600 hover:text-gray-900 hover:bg-gray-100" style="padding-left:12px" href="/l4/courses/advanced/module-a4-production">A4. Production patterns</a></div></li></ul></div></div><div class="p-4 border-t border-gray-200 mt-auto"><a href="https://jl4.legalese.com" target="_blank" rel="noopener noreferrer" class="flex items-center justify-center gap-2 w-full px-4 py-2.5 text-sm font-medium text-white bg-accent hover:bg-accent/90 rounded-md transition-colors"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"></path></svg>Web IDE</a></div></nav><main class="flex-1 min-w-0"><div class="max-w-4xl mx-auto px-4 sm:px-6 py-6 sm:py-8 lg:px-8"><div class="doc-content max-w-none"><h1>Module A3: Contracts in depth</h1>
+<p>In this module, you'll learn advanced contract modeling including complex payment terms, recursive obligations, and penalty structures. Find the full working example at the bottom.</p>
+<h2 id="learning-objectives">Learning Objectives</h2>
+<p>By the end of this module, you will be able to:</p>
+<ul>
+<li>Model complex payment schedules</li>
+<li>Implement recursive payment obligations</li>
+<li>Create penalty and interest calculations</li>
+<li>Handle multi-party contracts</li>
+</ul>
+<hr>
+<h2 id="contract-modeling-principles">Contract Modeling Principles</h2>
+<p>Well-modeled contracts in L4 follow these principles:</p>
+<ol>
+<li><strong>Clear parties</strong>: Who has obligations?</li>
+<li><strong>Precise actions</strong>: What must be done?</li>
+<li><strong>Explicit conditions</strong>: When do obligations apply?</li>
+<li><strong>Complete paths</strong>: Every scenario leads to FULFILLED or BREACH</li>
+<li><strong>Testable</strong>: Use #TRACE to verify behavior</li>
+</ol>
+<hr>
+<h2 id="case-study-promissory-note">Case Study: Promissory Note</h2>
+<p>We'll build a complete promissory note with:</p>
+<ul>
+<li>Principal and interest</li>
+<li>Monthly installments</li>
+<li>Late payment penalties</li>
+<li>Default provisions</li>
+</ul>
+<h3 id="step-1-define-types">Step 1: Define Types</h3>
+<pre><code class="language-l4">-- Money type with currency
+DECLARE Money
+    HAS `the amount` IS A NUMBER
+        `the currency` IS A STRING
+
+-- Currency constructors
+GIVEN n IS A NUMBER
+GIVETH A Money
+USD MEANS Money WITH `the amount` IS n, `the currency` IS "USD"
+
+GIVEN n IS A NUMBER
+GIVETH A Money
+SGD MEANS Money WITH `the amount` IS n, `the currency` IS "SGD"
+
+-- Party types
+DECLARE Party IS ONE OF
+    `the borrower party` HAS `the borrower` IS A Borrower
+    `the lender party` HAS `the lender` IS A Lender
+
+-- Borrower can be individual or company
+DECLARE Borrower IS ONE OF
+    `individual borrower` HAS `the person` IS A Person
+    `corporate borrower` HAS `the company` IS A Company
+
+DECLARE Lender IS ONE OF
+    `individual lender` HAS `the person` IS A Person
+    `institutional lender` HAS `the company` IS A Company
+
+-- Payment record
+DECLARE Payment
+    HAS `the amount` IS A Money
+        `the due date` IS A NUMBER  -- Days from commencement
+
+-- Penalty terms
+DECLARE `Penalty Terms`
+    HAS `the penalty rate` IS A NUMBER
+        `the grace period` IS A NUMBER  -- in days
+</code></pre>
+<h3 id="step-2-define-loan-terms">Step 2: Define Loan Terms</h3>
+<pre><code class="language-l4">DECLARE `Loan Terms`
+    HAS `the principal` IS A Money
+        `the annual interest rate` IS A NUMBER
+        `the number of installments` IS A NUMBER
+        `the days until default` IS A NUMBER
+        `the penalty terms` IS A `Penalty Terms`
+
+-- Example loan
+`the example loan` MEANS `Loan Terms` WITH
+    `the principal`              IS USD 25000
+    `the annual interest rate`   IS 0.15             -- 15% annual interest
+    `the number of installments` IS 12               -- 12 monthly installments
+    `the days until default`     IS 30               -- Default after 30 days late
+    `the penalty terms`          IS `Penalty Terms` WITH
+                                      `the penalty rate` IS 0.05   -- 5% penalty
+                                      `the grace period` IS 10
+</code></pre>
+<h3 id="step-3-calculate-payment-schedule">Step 3: Calculate Payment Schedule</h3>
+<pre><code class="language-l4">-- Monthly interest rate
+GIVEN terms IS A `Loan Terms`
+GIVETH A NUMBER
+`monthly rate` MEANS terms's `the annual interest rate` / 12
+
+-- Power function for calculations
+GIVEN base IS A NUMBER
+      exp IS A NUMBER
+GIVETH A NUMBER
+`power` MEANS
+    IF exp = 0
+    THEN 1
+    ELSE IF exp = 1
+         THEN base
+         ELSE base * `power` base (exp - 1)
+
+-- Monthly payment using amortization formula
+-- PMT = P × (r(1+r)^n) / ((1+r)^n - 1)
+GIVEN terms IS A `Loan Terms`
+GIVETH A Money
+`monthly payment amount` MEANS
+    Money WITH `the amount` IS payment, `the currency` IS terms's `the principal`'s `the currency`
+    WHERE
+        p MEANS terms's `the principal`'s `the amount`
+        r MEANS `monthly rate` terms
+        n MEANS terms's `the number of installments`
+        `the compound factor` MEANS `power` (1 + r) n
+        payment MEANS p * (r * `the compound factor`) / (`the compound factor` - 1)
+</code></pre>
+<hr>
+<h2 id="recursive-payment-obligations">Recursive Payment Obligations</h2>
+<p>The key insight: <strong>payment obligations are recursive</strong>. After each payment, there's another payment (until paid off).</p>
+<pre><code class="language-l4">-- Actions for the loan contract
+DECLARE `Loan Action` IS ONE OF
+    `pay installment` HAS `the recipient` IS A Lender
+                          `the amount` IS A Money
+
+-- Validate payment amount
+GIVEN paid IS A Money
+      expected IS A Money
+GIVETH A BOOLEAN
+`is valid payment` MEANS
+    paid's `the currency` EQUALS expected's `the currency`
+    AND paid's `the amount` >= (expected's `the amount` - 0.05)  -- Allow small rounding
+
+-- The recursive payment obligation
+GIVEN terms IS A `Loan Terms`
+      debtor IS A Borrower
+      creditor IS A Lender
+      outstanding IS A Money  -- Remaining balance
+GIVETH A DEONTIC Party `Loan Action`
+`payment obligation` MEANS
+    IF outstanding's `the amount` > 0
+    THEN
+        PARTY `the borrower party` debtor
+        MUST `pay installment` EXACTLY creditor
+                               `the amount paid` PROVIDED `the amount paid`'s `the amount` >= `the payment due`'s `the amount`
+        WITHIN `the next due date`
+        HENCE
+            -- Recursive call with reduced balance
+            `payment obligation` terms debtor creditor `the new outstanding balance`
+        LEST
+            -- Late: apply penalty
+            `late payment handling` terms debtor creditor outstanding
+    ELSE FULFILLED
+    WHERE
+        -- Calculate next payment
+        `the payment due` MEANS `calculate next payment` terms outstanding
+        `the next due date` MEANS `calculate due date` terms outstanding
+        -- After payment, reduce outstanding (simplified)
+        `the new outstanding balance` MEANS Money WITH
+            `the amount`   IS outstanding's `the amount` - `the payment due`'s `the amount`
+            `the currency` IS outstanding's `the currency`
+</code></pre>
+<h3 id="late-payment-with-penalty">Late Payment with Penalty</h3>
+<pre><code class="language-l4">GIVEN terms IS A `Loan Terms`
+      debtor IS A Borrower
+      creditor IS A Lender
+      outstanding IS A Money
+GIVETH A DEONTIC Party `Loan Action`
+`late payment handling` MEANS
+    -- Grace period with penalty interest
+    PARTY `the borrower party` debtor
+    MUST `pay installment` EXACTLY creditor
+                           `the amount paid` PROVIDED `the amount paid`'s `the amount` >= `the payment with penalty`'s `the amount`
+    WITHIN (`the next due date` + terms's `the penalty terms`'s `the grace period`)
+    HENCE
+        -- Continue with remaining payments
+        `payment obligation` terms debtor creditor `the new outstanding balance`
+    LEST
+        -- Default: full balance due
+        `default handling` terms debtor creditor outstanding
+    WHERE
+        `the base payment` MEANS `calculate next payment` terms outstanding
+        `the penalty amount` MEANS `the base payment`'s `the amount` * terms's `the penalty terms`'s `the penalty rate`
+        `the payment with penalty` MEANS Money WITH
+            `the amount`   IS `the base payment`'s `the amount` + `the penalty amount`
+            `the currency` IS `the base payment`'s `the currency`
+        `the next due date` MEANS `calculate due date` terms outstanding
+        `the new outstanding balance` MEANS Money WITH
+            `the amount`   IS outstanding's `the amount` - `the payment with penalty`'s `the amount`
+            `the currency` IS outstanding's `the currency`
+</code></pre>
+<h3 id="default-full-balance-due">Default: Full Balance Due</h3>
+<pre><code class="language-l4">GIVEN terms IS A `Loan Terms`
+      debtor IS A Borrower
+      creditor IS A Lender
+      outstanding IS A Money
+GIVETH A DEONTIC Party `Loan Action`
+`default handling` MEANS
+    PARTY `the borrower party` debtor
+    MUST `pay installment` EXACTLY creditor
+                           EXACTLY outstanding  -- Full balance required
+    WITHIN terms's `the days until default`
+    HENCE FULFILLED
+    LEST BREACH BY (`the borrower party` debtor) BECAUSE "loan default"
+</code></pre>
+<hr>
+<h2 id="testing-with-trace">Testing with #TRACE</h2>
+<h3 id="happy-path-all-payments-on-time">Happy Path: All Payments On Time</h3>
+<pre><code class="language-l4">-- Define test parties
+`Alice the borrower` MEANS `individual borrower` (Person WITH `the name` IS "Alice")
+`Bob the lender` MEANS `individual lender` (Person WITH `the name` IS "Bob")
+
+#TRACE `payment obligation` `the example loan` `Alice the borrower` `Bob the lender` (USD 25000) AT 0 WITH
+    PARTY (`the borrower party` `Alice the borrower`) DOES `pay installment` `Bob the lender` (USD 2256.46) AT 30
+    PARTY (`the borrower party` `Alice the borrower`) DOES `pay installment` `Bob the lender` (USD 2256.46) AT 60
+    PARTY (`the borrower party` `Alice the borrower`) DOES `pay installment` `Bob the lender` (USD 2256.46) AT 90
+    -- ... continue for all 12 payments
+</code></pre>
+<h3 id="late-payment-scenario">Late Payment Scenario</h3>
+<pre><code class="language-l4">-- First payment on time, second payment late (in grace period)
+#TRACE `payment obligation` `the example loan` `Alice the borrower` `Bob the lender` (USD 25000) AT 0 WITH
+    PARTY (`the borrower party` `Alice the borrower`) DOES `pay installment` `Bob the lender` (USD 2256.46) AT 30
+    -- Second payment late with penalty
+    PARTY (`the borrower party` `Alice the borrower`) DOES `pay installment` `Bob the lender` (USD 2369.28) AT 75
+</code></pre>
+<h3 id="default-scenario">Default Scenario</h3>
+<pre><code class="language-l4">-- Borrower stops paying
+#TRACE `payment obligation` `the example loan` `Alice the borrower` `Bob the lender` (USD 25000) AT 0 WITH
+    PARTY (`the borrower party` `Alice the borrower`) DOES `pay installment` `Bob the lender` (USD 2256.46) AT 30
+    -- No more payments... contract should reach BREACH
+</code></pre>
+<hr>
+<h2 id="multi-party-contracts">Multi-Party Contracts</h2>
+<p>Some contracts involve more than two parties:</p>
+<pre><code class="language-l4">-- Escrow arrangement: Buyer, Seller, Escrow Agent
+DECLARE `Escrow Party` IS ONE OF `the buyer`, `the seller`, `the escrow agent`
+
+DECLARE `Escrow Action` IS ONE OF
+    `deposit funds` HAS `the amount` IS A Money
+    `deliver goods`
+    `release funds to seller`
+    `return funds to buyer`
+
+GIVEN amount IS A Money
+GIVETH A DEONTIC `Escrow Party` `Escrow Action`
+`escrow arrangement` MEANS
+    -- Buyer deposits funds
+    PARTY `the buyer`
+    MUST `deposit funds` amount
+    WITHIN 7
+    HENCE
+        -- Seller delivers goods
+        PARTY `the seller`
+        MUST `deliver goods`
+        WITHIN 14
+        HENCE
+            -- Escrow releases to seller
+            PARTY `the escrow agent`
+            MUST `release funds to seller`
+            WITHIN 3
+            HENCE FULFILLED
+            LEST BREACH BY `the escrow agent` BECAUSE "escrow agent failed to release funds"
+        LEST
+            -- Seller didn't deliver, return funds
+            PARTY `the escrow agent`
+            MUST `return funds to buyer`
+            WITHIN 3
+            HENCE BREACH BY `the seller` BECAUSE "seller failed to deliver goods"
+            LEST BREACH BY `the escrow agent` BECAUSE "escrow agent failed to return funds"
+    LEST BREACH BY `the buyer` BECAUSE "buyer failed to deposit funds"
+</code></pre>
+<hr>
+<h2 id="parallel-obligations-with-rand">Parallel Obligations with RAND</h2>
+<p>When multiple obligations must all be fulfilled:</p>
+<pre><code class="language-l4">-- Types for service contract examples
+DECLARE `Service Party` IS ONE OF Provider, Client
+
+DECLARE `Contract Action` IS ONE OF
+    `deliver service`
+    `provide documentation`
+    `ship goods`
+    `arrange pickup`
+    `make payment`
+
+-- Service contract: Provider must deliver service AND provide documentation
+GIVETH A DEONTIC `Service Party` `Contract Action`
+`service delivery` MEANS
+    (PARTY Provider MUST `deliver service` WITHIN 30 HENCE FULFILLED LEST BREACH BY Provider BECAUSE "failed to deliver service")
+    RAND
+    (PARTY Provider MUST `provide documentation` WITHIN 30 HENCE FULFILLED LEST BREACH BY Provider BECAUSE "failed to provide documentation")
+</code></pre>
+<p>Both obligations must be fulfilled for the contract to be fulfilled.</p>
+<hr>
+<h2 id="alternative-obligations-with-ror">Alternative Obligations with ROR</h2>
+<p>When fulfilling any one obligation is sufficient:</p>
+<pre><code class="language-l4">-- Delivery options: Ship OR pickup
+GIVETH A DEONTIC `Service Party` `Contract Action`
+`delivery options` MEANS
+    (PARTY Provider MUST `ship goods` WITHIN 14 HENCE FULFILLED LEST BREACH BY Provider BECAUSE "failed to ship")
+    ROR
+    (PARTY Provider MUST `arrange pickup` WITHIN 7 HENCE FULFILLED LEST BREACH BY Provider BECAUSE "failed to arrange pickup")
+</code></pre>
+<p>Either shipping or arranging pickup fulfills the delivery obligation.</p>
+<hr>
+<h2 id="practical-patterns">Practical Patterns</h2>
+<h3 id="minimum-payment">Minimum Payment</h3>
+<pre><code class="language-l4">-- Credit card style: Pay minimum or full balance
+DECLARE `Card Party` IS ONE OF Cardholder, Bank
+
+DECLARE `Card Action` IS ONE OF
+    `pay` HAS `the payment amount` IS A NUMBER
+
+GIVEN balance IS A Money
+      `the minimum percentage` IS A NUMBER
+GIVETH A DEONTIC `Card Party` `Card Action`
+`credit payment` MEANS
+    PARTY Cardholder
+    MUST `pay` `the amount paid` PROVIDED `the amount paid` >= `the minimum payment`
+    WITHIN 30
+    HENCE
+        IF `the amount paid` >= balance's `the amount`
+        THEN FULFILLED  -- Paid in full
+        ELSE `credit payment` `the new balance` `the minimum percentage`  -- Recurse with new balance
+    LEST BREACH BY Cardholder BECAUSE "missed credit card payment"
+    WHERE
+        `the minimum payment` MEANS balance's `the amount` * `the minimum percentage`
+        `the new balance` MEANS Money WITH `the amount` IS balance's `the amount` - `the minimum payment`, `the currency` IS balance's `the currency`
+</code></pre>
+<h3 id="milestone-based-payment">Milestone-Based Payment</h3>
+<pre><code class="language-l4">DECLARE Milestone IS ONE OF
+    Design
+    Development
+    Testing
+    Delivery
+
+DECLARE `Milestone Action` IS ONE OF
+    `complete milestone` HAS `the completed milestone` IS A Milestone
+    `pay milestone` HAS `the paid milestone` IS A Milestone
+
+GIVEN milestones IS A LIST OF Milestone
+GIVETH A DEONTIC `Service Party` `Milestone Action`
+`milestone payments` MEANS
+    CONSIDER milestones
+    WHEN EMPTY THEN FULFILLED
+    WHEN m FOLLOWED BY rest THEN
+        PARTY Provider
+        MUST `complete milestone` m
+        WITHIN 30
+        HENCE
+            PARTY Client
+            MUST `pay milestone` m
+            WITHIN 14
+            HENCE `milestone payments` rest  -- Recurse
+            LEST BREACH BY Client BECAUSE "client failed to pay milestone"
+        LEST BREACH BY Provider BECAUSE "provider failed to complete milestone"
+</code></pre>
+<hr>
+<h2 id="exercise-model-a-security-deposit">Exercise: Model a Security Deposit</h2>
+<p>Encode this clause:</p>
+<blockquote>
+<p><strong>Security Deposit Return:</strong> At the end of the lease, the landlord must either
+(a) refund the deposit in full within 14 days, or
+(b) send an itemized list of deductions within 7 days and refund the balance within 21 days.
+Failing both, the landlord is in breach.</p>
+</blockquote>
+<p>Hint: two alternative obligation chains joined with ROR.</p>
+<details>
+<summary>Solution</summary>
+<pre><code class="language-l4">DECLARE `Tenancy Party` IS ONE OF
+    `the landlord`
+    `the tenant`
+
+DECLARE `Tenancy Action` IS ONE OF
+    `refund the deposit in full`
+    `send an itemized list of deductions`
+    `refund the balance`
+
+GIVETH A DEONTIC `Tenancy Party` `Tenancy Action`
+`deposit return obligation` MEANS
+    (PARTY `the landlord`
+     MUST `refund the deposit in full`
+     WITHIN 14
+     HENCE FULFILLED
+     LEST BREACH BY `the landlord` BECAUSE "failed to refund the deposit")
+    ROR
+    (PARTY `the landlord`
+     MUST `send an itemized list of deductions`
+     WITHIN 7
+     HENCE
+        PARTY `the landlord`
+        MUST `refund the balance`
+        WITHIN 21
+        HENCE FULFILLED
+        LEST BREACH BY `the landlord` BECAUSE "failed to refund the balance"
+     LEST BREACH BY `the landlord` BECAUSE "failed to account for deductions")
+
+-- Full refund on time
+#TRACE `deposit return obligation` AT 0 WITH
+    PARTY `the landlord` DOES `refund the deposit in full` AT 10
+
+-- Itemized deductions then balance refunded
+#TRACE `deposit return obligation` AT 0 WITH
+    PARTY `the landlord` DOES `send an itemized list of deductions` AT 5
+    PARTY `the landlord` DOES `refund the balance` AT 20
+</code></pre>
+</details>
+<hr>
+<h3 id="full-example">Full Example</h3>
+<pre><code class="language-l4-file">-- Module A3: Contracts in Depth - Examples
+-- This file demonstrates advanced contract modeling including complex payment terms,
+-- recursive obligations, and penalty structures.
+
+--------------------------------------------------------------------------------
+-- SECTION 1: Type Definitions
+--------------------------------------------------------------------------------
+
+-- Money type with currency
+DECLARE Money
+    HAS `the amount` IS A NUMBER
+        `the currency` IS A STRING
+
+-- Currency constructors
+GIVEN n IS A NUMBER
+GIVETH A Money
+USD MEANS Money WITH `the amount` IS n, `the currency` IS "USD"
+
+GIVEN n IS A NUMBER
+GIVETH A Money
+SGD MEANS Money WITH `the amount` IS n, `the currency` IS "SGD"
+
+-- Person and Company types (basic definitions)
+DECLARE Person
+    HAS `the name` IS A STRING
+
+DECLARE Company
+    HAS `the name` IS A STRING
+
+-- Party types
+DECLARE Party IS ONE OF
+    `the borrower party` HAS `the borrower` IS A Borrower
+    `the lender party` HAS `the lender` IS A Lender
+
+-- Borrower can be individual or company
+DECLARE Borrower IS ONE OF
+    `individual borrower` HAS `the person` IS A Person
+    `corporate borrower` HAS `the company` IS A Company
+
+DECLARE Lender IS ONE OF
+    `individual lender` HAS `the person` IS A Person
+    `institutional lender` HAS `the company` IS A Company
+
+-- Payment record
+DECLARE Payment
+    HAS `the amount` IS A Money
+        `the due date` IS A NUMBER  -- Days from commencement
+
+-- Penalty terms
+DECLARE `Penalty Terms`
+    HAS `the penalty rate` IS A NUMBER
+        `the grace period` IS A NUMBER  -- in days
+
+--------------------------------------------------------------------------------
+-- SECTION 2: Loan Terms
+--------------------------------------------------------------------------------
+
+DECLARE `Loan Terms`
+    HAS `the principal` IS A Money
+        `the annual interest rate` IS A NUMBER
+        `the number of installments` IS A NUMBER
+        `the days until default` IS A NUMBER
+        `the penalty terms` IS A `Penalty Terms`
+
+-- Example loan
+`the example loan` MEANS `Loan Terms` WITH
+    `the principal`              IS USD 25000
+    `the annual interest rate`   IS 0.15             -- 15% annual interest
+    `the number of installments` IS 12               -- 12 monthly installments
+    `the days until default`     IS 30               -- Default after 30 days late
+    `the penalty terms`          IS `Penalty Terms` WITH
+                                      `the penalty rate` IS 0.05   -- 5% penalty
+                                      `the grace period` IS 10
+
+--------------------------------------------------------------------------------
+-- SECTION 3: Payment Calculations
+--------------------------------------------------------------------------------
+
+-- Monthly interest rate
+GIVEN terms IS A `Loan Terms`
+GIVETH A NUMBER
+`monthly rate` MEANS terms's `the annual interest rate` / 12
+
+-- Power function for calculations
+GIVEN base IS A NUMBER
+      exp IS A NUMBER
+GIVETH A NUMBER
+`power` MEANS
+    IF exp = 0
+    THEN 1
+    ELSE IF exp = 1
+         THEN base
+         ELSE base * `power` base (exp - 1)
+
+-- Monthly payment using amortization formula
+-- PMT = P × (r(1+r)^n) / ((1+r)^n - 1)
+GIVEN terms IS A `Loan Terms`
+GIVETH A Money
+`monthly payment amount` MEANS
+    Money WITH `the amount` IS payment, `the currency` IS terms's `the principal`'s `the currency`
+    WHERE
+        p MEANS terms's `the principal`'s `the amount`
+        r MEANS `monthly rate` terms
+        n MEANS terms's `the number of installments`
+        `the compound factor` MEANS `power` (1 + r) n
+        payment MEANS p * (r * `the compound factor`) / (`the compound factor` - 1)
+
+-- Placeholder functions for payment scheduling
+GIVEN terms IS A `Loan Terms`
+      outstanding IS A Money
+GIVETH A Money
+`calculate next payment` MEANS `monthly payment amount` terms
+
+GIVEN terms IS A `Loan Terms`
+      outstanding IS A Money
+GIVETH A NUMBER
+`calculate due date` MEANS 30  -- Simplified: 30 days between payments
+
+--------------------------------------------------------------------------------
+-- SECTION 4: Loan Contract Actions
+--------------------------------------------------------------------------------
+
+-- Actions for the loan contract
+DECLARE `Loan Action` IS ONE OF
+    `pay installment` HAS `the recipient` IS A Lender
+                          `the amount` IS A Money
+
+-- Validate payment amount
+GIVEN paid IS A Money
+      expected IS A Money
+GIVETH A BOOLEAN
+`is valid payment` MEANS
+    paid's `the currency` EQUALS expected's `the currency`
+    AND paid's `the amount` >= (expected's `the amount` - 0.05)  -- Allow small rounding
+
+--------------------------------------------------------------------------------
+-- SECTION 5: Recursive Payment Obligations
+--------------------------------------------------------------------------------
+
+-- Test borrower and lender for examples
+`Alice the borrower` MEANS `individual borrower` (Person WITH `the name` IS "Alice")
+`Bob the lender` MEANS `individual lender` (Person WITH `the name` IS "Bob")
+
+-- The recursive payment obligation
+GIVEN terms IS A `Loan Terms`
+      debtor IS A Borrower
+      creditor IS A Lender
+      outstanding IS A Money  -- Remaining balance
+GIVETH A DEONTIC Party `Loan Action`
+`payment obligation` MEANS
+    IF outstanding's `the amount` > 0
+    THEN
+        PARTY `the borrower party` debtor
+        MUST `pay installment` EXACTLY creditor
+                               `the amount paid` PROVIDED `the amount paid`'s `the amount` >= `the payment due`'s `the amount`
+        WITHIN `the next due date`
+        HENCE
+            -- Recursive call with reduced balance
+            `payment obligation` terms debtor creditor `the new outstanding balance`
+        LEST
+            -- Late: apply penalty
+            `late payment handling` terms debtor creditor outstanding
+    ELSE FULFILLED
+    WHERE
+        -- Calculate next payment
+        `the payment due` MEANS `calculate next payment` terms outstanding
+        `the next due date` MEANS `calculate due date` terms outstanding
+        -- After payment, reduce outstanding (simplified)
+        `the new outstanding balance` MEANS Money WITH
+            `the amount`   IS outstanding's `the amount` - `the payment due`'s `the amount`
+            `the currency` IS outstanding's `the currency`
+
+-- Late payment with penalty
+GIVEN terms IS A `Loan Terms`
+      debtor IS A Borrower
+      creditor IS A Lender
+      outstanding IS A Money
+GIVETH A DEONTIC Party `Loan Action`
+`late payment handling` MEANS
+    -- Grace period with penalty interest
+    PARTY `the borrower party` debtor
+    MUST `pay installment` EXACTLY creditor
+                           `the amount paid` PROVIDED `the amount paid`'s `the amount` >= `the payment with penalty`'s `the amount`
+    WITHIN (`the next due date` + terms's `the penalty terms`'s `the grace period`)
+    HENCE
+        -- Continue with remaining payments
+        `payment obligation` terms debtor creditor `the new outstanding balance`
+    LEST
+        -- Default: full balance due
+        `default handling` terms debtor creditor outstanding
+    WHERE
+        `the base payment` MEANS `calculate next payment` terms outstanding
+        `the penalty amount` MEANS `the base payment`'s `the amount` * terms's `the penalty terms`'s `the penalty rate`
+        `the payment with penalty` MEANS Money WITH
+            `the amount`   IS `the base payment`'s `the amount` + `the penalty amount`
+            `the currency` IS `the base payment`'s `the currency`
+        `the next due date` MEANS `calculate due date` terms outstanding
+        `the new outstanding balance` MEANS Money WITH
+            `the amount`   IS outstanding's `the amount` - `the payment with penalty`'s `the amount`
+            `the currency` IS outstanding's `the currency`
+
+-- Default: Full balance due
+GIVEN terms IS A `Loan Terms`
+      debtor IS A Borrower
+      creditor IS A Lender
+      outstanding IS A Money
+GIVETH A DEONTIC Party `Loan Action`
+`default handling` MEANS
+    PARTY `the borrower party` debtor
+    MUST `pay installment` EXACTLY creditor
+                           EXACTLY outstanding  -- Full balance required
+    WITHIN terms's `the days until default`
+    HENCE FULFILLED
+    LEST BREACH BY (`the borrower party` debtor) BECAUSE "loan default"
+
+--------------------------------------------------------------------------------
+-- SECTION 6: Multi-Party Contracts (Escrow)
+--------------------------------------------------------------------------------
+
+-- Escrow arrangement: Buyer, Seller, Escrow Agent
+DECLARE `Escrow Party` IS ONE OF `the buyer`, `the seller`, `the escrow agent`
+
+DECLARE `Escrow Action` IS ONE OF
+    `deposit funds` HAS `the amount` IS A Money
+    `deliver goods`
+    `release funds to seller`
+    `return funds to buyer`
+
+GIVEN amount IS A Money
+GIVETH A DEONTIC `Escrow Party` `Escrow Action`
+`escrow arrangement` MEANS
+    -- Buyer deposits funds
+    PARTY `the buyer`
+    MUST `deposit funds` amount
+    WITHIN 7
+    HENCE
+        -- Seller delivers goods
+        PARTY `the seller`
+        MUST `deliver goods`
+        WITHIN 14
+        HENCE
+            -- Escrow releases to seller
+            PARTY `the escrow agent`
+            MUST `release funds to seller`
+            WITHIN 3
+            HENCE FULFILLED
+            LEST BREACH BY `the escrow agent` BECAUSE "escrow agent failed to release funds"
+        LEST
+            -- Seller didn't deliver, return funds
+            PARTY `the escrow agent`
+            MUST `return funds to buyer`
+            WITHIN 3
+            HENCE BREACH BY `the seller` BECAUSE "seller failed to deliver goods"
+            LEST BREACH BY `the escrow agent` BECAUSE "escrow agent failed to return funds"
+    LEST BREACH BY `the buyer` BECAUSE "buyer failed to deposit funds"
+
+--------------------------------------------------------------------------------
+-- SECTION 7: Parallel and Alternative Obligations
+--------------------------------------------------------------------------------
+
+-- Types for service contract examples
+DECLARE `Service Party` IS ONE OF Provider, Client
+
+DECLARE `Contract Action` IS ONE OF
+    `deliver service`
+    `provide documentation`
+    `ship goods`
+    `arrange pickup`
+    `make payment`
+
+-- Parallel obligations with RAND
+-- Service contract: Provider must deliver service AND provide documentation
+GIVETH A DEONTIC `Service Party` `Contract Action`
+`service delivery` MEANS
+    (PARTY Provider MUST `deliver service` WITHIN 30 HENCE FULFILLED LEST BREACH BY Provider BECAUSE "failed to deliver service")
+    RAND
+    (PARTY Provider MUST `provide documentation` WITHIN 30 HENCE FULFILLED LEST BREACH BY Provider BECAUSE "failed to provide documentation")
+
+-- Alternative obligations with ROR
+-- Delivery options: Ship OR pickup
+GIVETH A DEONTIC `Service Party` `Contract Action`
+`delivery options` MEANS
+    (PARTY Provider MUST `ship goods` WITHIN 14 HENCE FULFILLED LEST BREACH BY Provider BECAUSE "failed to ship")
+    ROR
+    (PARTY Provider MUST `arrange pickup` WITHIN 7 HENCE FULFILLED LEST BREACH BY Provider BECAUSE "failed to arrange pickup")
+
+--------------------------------------------------------------------------------
+-- SECTION 8: Practical Patterns
+--------------------------------------------------------------------------------
+
+-- Credit card style: Pay minimum or full balance
+DECLARE `Card Party` IS ONE OF Cardholder, Bank
+
+DECLARE `Card Action` IS ONE OF
+    `pay` HAS `the payment amount` IS A NUMBER
+
+GIVEN balance IS A Money
+      `the minimum percentage` IS A NUMBER
+GIVETH A DEONTIC `Card Party` `Card Action`
+`credit payment` MEANS
+    PARTY Cardholder
+    MUST `pay` `the amount paid` PROVIDED `the amount paid` >= `the minimum payment`
+    WITHIN 30
+    HENCE
+        IF `the amount paid` >= balance's `the amount`
+        THEN FULFILLED  -- Paid in full
+        ELSE `credit payment` `the new balance` `the minimum percentage`  -- Recurse with new balance
+    LEST BREACH BY Cardholder BECAUSE "missed credit card payment"
+    WHERE
+        `the minimum payment` MEANS balance's `the amount` * `the minimum percentage`
+        `the new balance` MEANS Money WITH `the amount` IS balance's `the amount` - `the minimum payment`, `the currency` IS balance's `the currency`
+
+-- Milestone-based payment pattern
+DECLARE Milestone IS ONE OF
+    Design
+    Development
+    Testing
+    Delivery
+
+DECLARE `Milestone Action` IS ONE OF
+    `complete milestone` HAS `the completed milestone` IS A Milestone
+    `pay milestone` HAS `the paid milestone` IS A Milestone
+
+GIVEN milestones IS A LIST OF Milestone
+GIVETH A DEONTIC `Service Party` `Milestone Action`
+`milestone payments` MEANS
+    CONSIDER milestones
+    WHEN EMPTY THEN FULFILLED
+    WHEN m FOLLOWED BY rest THEN
+        PARTY Provider
+        MUST `complete milestone` m
+        WITHIN 30
+        HENCE
+            PARTY Client
+            MUST `pay milestone` m
+            WITHIN 14
+            HENCE `milestone payments` rest  -- Recurse
+            LEST BREACH BY Client BECAUSE "client failed to pay milestone"
+        LEST BREACH BY Provider BECAUSE "provider failed to complete milestone"
+
+--------------------------------------------------------------------------------
+-- SECTION 9: Security Deposit (Exercise Solution)
+--------------------------------------------------------------------------------
+
+-- Exercise: at the end of the lease, the landlord must either refund the
+-- deposit in full within 14 days, or send an itemized list of deductions
+-- within 7 days and refund the balance within 21 days.
+
+DECLARE `Tenancy Party` IS ONE OF
+    `the landlord`
+    `the tenant`
+
+DECLARE `Tenancy Action` IS ONE OF
+    `refund the deposit in full`
+    `send an itemized list of deductions`
+    `refund the balance`
+
+GIVETH A DEONTIC `Tenancy Party` `Tenancy Action`
+`deposit return obligation` MEANS
+    (PARTY `the landlord`
+     MUST `refund the deposit in full`
+     WITHIN 14
+     HENCE FULFILLED
+     LEST BREACH BY `the landlord` BECAUSE "failed to refund the deposit")
+    ROR
+    (PARTY `the landlord`
+     MUST `send an itemized list of deductions`
+     WITHIN 7
+     HENCE
+        PARTY `the landlord`
+        MUST `refund the balance`
+        WITHIN 21
+        HENCE FULFILLED
+        LEST BREACH BY `the landlord` BECAUSE "failed to refund the balance"
+     LEST BREACH BY `the landlord` BECAUSE "failed to account for deductions")
+
+--------------------------------------------------------------------------------
+-- SECTION 10: Test Traces
+--------------------------------------------------------------------------------
+
+-- Escrow: happy path
+#TRACE `escrow arrangement` (USD 5000) AT 0 WITH
+    PARTY `the buyer` DOES `deposit funds` (USD 5000) AT 2
+    PARTY `the seller` DOES `deliver goods` AT 10
+    PARTY `the escrow agent` DOES `release funds to seller` AT 12
+
+-- Escrow: seller fails to deliver, funds returned
+#TRACE `escrow arrangement` (USD 5000) AT 0 WITH
+    PARTY `the buyer` DOES `deposit funds` (USD 5000) AT 2
+    (`WAIT UNTIL` 17)
+    PARTY `the escrow agent` DOES `return funds to buyer` AT 18
+
+-- Milestones: first milestone completed and paid
+#TRACE `milestone payments` (LIST Design, Development) AT 0 WITH
+    PARTY Provider DOES `complete milestone` Design AT 10
+    PARTY Client DOES `pay milestone` Design AT 20
+    PARTY Provider DOES `complete milestone` Development AT 45
+    PARTY Client DOES `pay milestone` Development AT 55
+
+-- Deposit return: full refund on time
+#TRACE `deposit return obligation` AT 0 WITH
+    PARTY `the landlord` DOES `refund the deposit in full` AT 10
+
+-- Deposit return: itemized deductions then balance refunded
+#TRACE `deposit return obligation` AT 0 WITH
+    PARTY `the landlord` DOES `send an itemized list of deductions` AT 5
+    PARTY `the landlord` DOES `refund the balance` AT 20
+
+--------------------------------------------------------------------------------
+-- SECTION 11: Evaluations
+--------------------------------------------------------------------------------
+
+-- Monthly payment for the example loan (expected: approximately 2256.45)
+#EVAL `monthly payment amount` `the example loan`
+
+-- Payment validation
+#EVAL `is valid payment` (USD 2256.44) (USD 2256.45)   -- TRUE (within rounding)
+#EVAL `is valid payment` (USD 2200) (USD 2256.45)      -- FALSE (short)
+#EVAL `is valid payment` (SGD 2256.45) (USD 2256.45)   -- FALSE (wrong currency)
+</code></pre>
+<hr>
+<h2 id="summary">Summary</h2>
+<table>
+<thead>
+<tr>
+<th>Pattern</th>
+<th>Use Case</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Recursive obligations</strong></td>
+<td>Installment payments, subscriptions</td>
+</tr>
+<tr>
+<td><strong>Penalty structures</strong></td>
+<td>Late fees, interest</td>
+</tr>
+<tr>
+<td><strong>Default acceleration</strong></td>
+<td>Full balance on default</td>
+</tr>
+<tr>
+<td><strong>Multi-party</strong></td>
+<td>Escrow, three-way agreements</td>
+</tr>
+<tr>
+<td><strong>RAND</strong></td>
+<td>Multiple parallel obligations</td>
+</tr>
+<tr>
+<td><strong>ROR</strong></td>
+<td>Alternative ways to fulfill</td>
+</tr>
+</tbody>
+</table>
+<p>Key insight: Complex contracts are <strong>compositions of simpler patterns</strong>, often with recursion for repeated obligations.</p>
+<hr>
+<p>Next, <a href="/l4/courses/advanced/module-a4-production">Module A4: Production patterns</a> shows how to structure, test and ship a real rulebase.</p>
+</div><nav aria-label="Previous and next page" class="mt-12 pt-6 border-t border-gray-200 grid grid-cols-1 sm:grid-cols-2 gap-4"><a class="group block rounded-md border border-gray-200 px-4 py-3 hover:border-accent/50 transition-colors" href="/l4/courses/advanced/module-a2-cross-cutting"><span class="block text-xs text-gray-500">Previous</span><span class="block text-sm font-medium text-gray-900 group-hover:text-accent">← <!-- -->A2. Cross-cutting concerns</span></a><a class="group block rounded-md border border-gray-200 px-4 py-3 text-right hover:border-accent/50 transition-colors" href="/l4/courses/advanced/module-a4-production"><span class="block text-xs text-gray-500">Next</span><span class="block text-sm font-medium text-gray-900 group-hover:text-accent">A4. Production patterns<!-- --> →</span></a></nav></div></main></div></div><!--$--><!--/$--><style>
+pre code.hljs{display:block;overflow-x:auto;padding:0.2rem 0.4rem;font-size:13px;color:#104e64;background:#fdfdfd}
+code.hljs .hljs-keyword{color:#0000ff;font-weight:500}
+code.hljs .hljs-literal{color:#0000ff}
+code.hljs .hljs-built_in{color:#267f99}
+code.hljs .hljs-string{color:#a31515}
+code.hljs .hljs-number{color:#098658}
+code.hljs .hljs-comment{color:#008000;font-style:italic}
+code.hljs .hljs-title{color:#795e26;font-weight:600}
+code.hljs .hljs-variable{color:#001080}
+code.hljs .hljs-doctag{color:#ffbd33}
+code.hljs .hljs-formula{color:#af00db;font-weight:500}
+</style></div><footer class="bg-gray-900 text-white"><div class="container mx-auto px-5"><div class="py-16"><div class="grid grid-cols-1 md:grid-cols-4 gap-12 mb-12"><div class="md:col-span-1"><div class="flex items-center"><img alt="§" loading="lazy" width="36" height="36" decoding="async" data-nimg="1" class="rounded invert" style="color:transparent" src="/assets/logos/legalese-logo.png"/><h3 class="text-2xl font-bold tracking-tight ml-1">Legalese</h3></div><p class="text-gray-400 text-sm mb-4">AI is eating law</p></div><div><h4 class="font-bold mb-4 text-gray-300">Company</h4><ul class="space-y-2"><li><a class="text-gray-400 hover:text-white transition-colors text-sm" href="/about">About us</a></li><li><a class="text-gray-400 hover:text-white transition-colors text-sm" href="/team">Team</a></li><li><a class="text-gray-400 hover:text-white transition-colors text-sm" href="/media">Press &amp; Media</a></li><li><a class="text-gray-400 hover:text-white transition-colors text-sm" href="/posts">Blog</a></li></ul></div><div><h4 class="font-bold mb-4 text-gray-300">Resources</h4><ul class="space-y-2"><li><a href="https://legalese.com/l4" target="_blank" rel="noopener noreferrer" class="text-gray-400 hover:text-white transition-colors text-sm">L4 Documentation</a></li><li><a href="https://marketplace.visualstudio.com/items?itemName=Legalese.l4-vscode" target="_blank" rel="noopener noreferrer" class="text-gray-400 hover:text-white transition-colors text-sm">L4 VS Code Extension</a></li><li><a href="https://jl4.legalese.com" target="_blank" rel="noopener noreferrer" class="text-gray-400 hover:text-white transition-colors text-sm">L4 Web IDE</a></li><li><a href="https://legalese.com/console" target="_blank" rel="noopener noreferrer" class="text-gray-400 hover:text-white transition-colors text-sm">Cloud Console</a></li><li><a href="https://legalese.com/compare" target="_blank" rel="noopener noreferrer" class="text-gray-400 hover:text-white transition-colors text-sm">Compare AI Legal Interpretations</a></li><li><a href="https://provable.legalese.com" target="_blank" rel="noopener noreferrer" class="text-gray-400 hover:text-white transition-colors text-sm">Provable Skill Marketplace</a></li><li><a href="https://github.com/legalese/l4-ide" target="_blank" rel="noopener noreferrer" class="text-gray-400 hover:text-white transition-colors text-sm">GitHub</a></li></ul></div><div><h4 class="font-bold mb-4 text-gray-300">Contact</h4><ul class="space-y-2"><li><a class="text-gray-400 hover:text-white transition-colors text-sm" href="/community">Community</a></li><li><a class="text-gray-400 hover:text-white transition-colors text-sm" href="/code-of-conduct">Code of Conduct</a></li><li><a href="https://discord.gg/Q7a7NSEdNy" target="_blank" rel="noopener noreferrer" class="text-gray-400 hover:text-white transition-colors text-sm">Discord</a></li><li><a href="https://x.com/legalese" target="_blank" rel="noopener noreferrer" class="text-gray-400 hover:text-white transition-colors text-sm">Legalese on X</a></li></ul></div></div><div class="border-t border-gray-800 pt-8 flex flex-col md:flex-row justify-between items-center gap-4"><p class="text-gray-500 text-sm">© <!-- -->2026<!-- --> Legalese Pte. Ltd., Singapore. All rights reserved.</p><div class="flex gap-6"><a class="text-gray-500 hover:text-white transition-colors text-sm" href="/terms">Terms of Use</a><a class="text-gray-500 hover:text-white transition-colors text-sm" href="/privacy">Privacy &amp; Cookies</a></div></div></div></div></footer><script src="/_next/static/chunks/0_ovy~dyroghb.js" id="_R_" async=""></script><script>(self.__next_f=self.__next_f||[]).push([0])</script><script>self.__next_f.push([1,"1:\"$Sreact.fragment\"\n2:I[39756,[\"/_next/static/chunks/0ypf.t599.7y6.js\",\"/_next/static/chunks/0t2xr05rlu96l.js\"],\"default\"]\n3:I[37457,[\"/_next/static/chunks/0ypf.t599.7y6.js\",\"/_next/static/chunks/0t2xr05rlu96l.js\"],\"default\"]\n4:I[22016,[\"/_next/static/chunks/0ypf.t599.7y6.js\",\"/_next/static/chunks/0t2xr05rlu96l.js\",\"/_next/static/chunks/11.9ba59t4-it.js\"],\"\"]\n5:I[5500,[\"/_next/static/chunks/0ypf.t599.7y6.js\",\"/_next/static/chunks/0t2xr05rlu96l.js\",\"/_next/static/chunks/11.9ba59t4-it.js\"],\"Image\"]\n10:I[68027,[\"/_next/static/chunks/0ypf.t599.7y6.js\",\"/_next/static/chunks/0t2xr05rlu96l.js\"],\"default\",1]\n:HL[\"/_next/static/chunks/0xhryq7f66rdk.css\",\"style\"]\n:HL[\"/_next/static/chunks/0s9wju.j1~_xn.css\",\"style\"]\n:HL[\"/_next/static/media/248e1dc0efc99276-s.p.0ft7o6kv5bp14.woff2\",\"font\",{\"crossOrigin\":\"\",\"type\":\"font/woff2\"}]\n:HL[\"/_next/static/media/83afe278b6a6bb3c-s.p.0q-301v4kxxnr.woff2\",\"font\",{\"crossOrigin\":\"\",\"type\":\"font/woff2\"}]\n"])</script><script>self.__next_f.push([1,"0:{\"P\":null,\"c\":[\"\",\"l4\",\"courses\",\"advanced\",\"module-a3-contracts\"],\"q\":\"\",\"i\":false,\"f\":[[[\"\",{\"children\":[\"l4\",{\"children\":[[\"slug\",\"courses/advanced/module-a3-contracts\",\"oc\",null],{\"children\":[\"__PAGE__\",{}]}]}]},\"$undefined\",\"$undefined\",16],[[\"$\",\"$1\",\"c\",{\"children\":[[[\"$\",\"link\",\"0\",{\"rel\":\"stylesheet\",\"href\":\"/_next/static/chunks/0xhryq7f66rdk.css\",\"precedence\":\"next\",\"crossOrigin\":\"$undefined\",\"nonce\":\"$undefined\"}],[\"$\",\"script\",\"script-0\",{\"src\":\"/_next/static/chunks/0ypf.t599.7y6.js\",\"async\":true,\"nonce\":\"$undefined\"}],[\"$\",\"script\",\"script-1\",{\"src\":\"/_next/static/chunks/0t2xr05rlu96l.js\",\"async\":true,\"nonce\":\"$undefined\"}]],[\"$\",\"html\",null,{\"lang\":\"en\",\"children\":[[\"$\",\"head\",null,{\"children\":[[\"$\",\"meta\",null,{\"httpEquiv\":\"Content-Security-Policy\",\"content\":\"default-src 'self' https://legalese.com; script-src 'self' https://legalese.com 'unsafe-inline' https://cdnjs.cloudflare.com; style-src 'self' https://legalese.com 'unsafe-inline'; font-src 'self' https://legalese.com; img-src 'self' https://legalese.com https://workoscdn.com https://*.googleusercontent.com; connect-src 'self' https://legalese.com https://legalese.cloud https://ai.legalese.cloud https://*.workos.com; frame-src 'self' https://legalese.com https://jl4.legalese.com https://*.workos.com; object-src 'none'; base-uri 'self' https://legalese.com\"}],[\"$\",\"link\",null,{\"rel\":\"apple-touch-icon\",\"sizes\":\"180x180\",\"href\":\"/favicon/apple-touch-icon.png\"}],[\"$\",\"link\",null,{\"rel\":\"icon\",\"type\":\"image/png\",\"sizes\":\"32x32\",\"href\":\"/favicon/favicon-32x32.png\"}],[\"$\",\"link\",null,{\"rel\":\"icon\",\"type\":\"image/png\",\"sizes\":\"16x16\",\"href\":\"/favicon/favicon-16x16.png\"}],[\"$\",\"link\",null,{\"rel\":\"manifest\",\"href\":\"/favicon/site.webmanifest\"}],[\"$\",\"link\",null,{\"rel\":\"shortcut icon\",\"href\":\"/favicon/favicon.ico\"}],[\"$\",\"meta\",null,{\"name\":\"msapplication-TileColor\",\"content\":\"#000000\"}],[\"$\",\"meta\",null,{\"name\":\"msapplication-config\",\"content\":\"/favicon/browserconfig.xml\"}],[\"$\",\"meta\",null,{\"name\":\"theme-color\",\"content\":\"#000\"}],[\"$\",\"link\",null,{\"rel\":\"alternate\",\"type\":\"application/rss+xml\",\"href\":\"/feed.xml\"}]]}],[\"$\",\"body\",null,{\"className\":\"inter_5901b7c6-module__ec5Qua__variable merriweather_b1e99710-module__84TlHG__variable\",\"children\":[[\"$\",\"div\",null,{\"className\":\"min-h-screen\",\"children\":[\"$\",\"$L2\",null,{\"parallelRouterKey\":\"children\",\"error\":\"$undefined\",\"errorStyles\":\"$undefined\",\"errorScripts\":\"$undefined\",\"template\":[\"$\",\"$L3\",null,{}],\"templateStyles\":\"$undefined\",\"templateScripts\":\"$undefined\",\"notFound\":[[\"$\",\"div\",null,{\"className\":\"min-h-screen flex flex-col\",\"children\":[\"$\",\"div\",null,{\"className\":\"container mx-auto px-5 flex-1 flex flex-col\",\"children\":[[\"$\",\"header\",null,{\"className\":\"flex flex-col md:flex-row items-center justify-between py-8 mb-6\",\"children\":[\"$\",\"$L4\",null,{\"href\":\"/\",\"className\":\"flex items-center gap-1 hover:opacity-80 transition-opacity\",\"children\":[[\"$\",\"$L5\",null,{\"src\":\"/assets/logos/legalese-logo.png\",\"alt\":\"§\",\"width\":42,\"height\":42,\"className\":\"rounded\"}],[\"$\",\"span\",null,{\"className\":\"text-2xl font-bold tracking-tight font-merriweather\",\"children\":\"Legalese\"}]]}]}],[\"$\",\"div\",null,{\"className\":\"flex-1 flex items-center justify-center\",\"children\":[\"$\",\"div\",null,{\"className\":\"text-center px-6 py-16\",\"children\":[[\"$\",\"h1\",null,{\"className\":\"text-8xl font-bold text-gray-200 mb-4\",\"children\":404}],[\"$\",\"h2\",null,{\"className\":\"text-2xl font-semibold text-gray-900 mb-4 font-merriweather\",\"children\":\"Not Found\"}],[\"$\",\"p\",null,{\"className\":\"text-gray-600 mb-8 max-w-md\",\"children\":\"The page you're looking for doesn't exist or may have been moved.\"}],[\"$\",\"$L4\",null,{\"href\":\"/\",\"className\":\"inline-block px-6 py-2 bg-accent text-white rounded-md hover:bg-accent-hover transition-colors\",\"children\":\"Go to Homepage\"}]]}]}]]}]}],[]],\"forbidden\":\"$undefined\",\"unauthorized\":\"$undefined\"}]}],[\"$\",\"footer\",null,{\"className\":\"bg-gray-900 text-white\",\"children\":[\"$\",\"div\",null,{\"className\":\"container mx-auto px-5\",\"children\":[\"$\",\"div\",null,{\"className\":\"py-16\",\"children\":[[\"$\",\"div\",null,{\"className\":\"grid grid-cols-1 md:grid-cols-4 gap-12 mb-12\",\"children\":[[\"$\",\"div\",null,{\"className\":\"md:col-span-1\",\"children\":[[\"$\",\"div\",null,{\"className\":\"flex items-center\",\"children\":[[\"$\",\"$L5\",null,{\"src\":\"/assets/logos/legalese-logo.png\",\"alt\":\"§\",\"width\":36,\"height\":36,\"className\":\"rounded invert\"}],[\"$\",\"h3\",null,{\"className\":\"text-2xl font-bold tracking-tight ml-1\",\"children\":\"Legalese\"}]]}],\"$L6\"]}],\"$L7\",\"$L8\",\"$L9\"]}],\"$La\"]}]}]}]]}]]}]]}],{\"children\":[\"$Lb\",{\"children\":[\"$Lc\",{\"children\":[\"$Ld\",{},null,false,null]},null,false,\"$@e\"]},null,false,null]},null,false,null],\"$Lf\",false]],\"m\":\"$undefined\",\"G\":[\"$10\",[\"$L11\"]],\"S\":true,\"h\":null,\"s\":\"$undefined\",\"l\":\"$undefined\",\"p\":\"$undefined\",\"d\":\"$undefined\",\"b\":\"iJUXAyHcmcW99cMci3ei9\"}\n"])</script><script>self.__next_f.push([1,"12:I[79520,[\"/_next/static/chunks/0ypf.t599.7y6.js\",\"/_next/static/chunks/0t2xr05rlu96l.js\",\"/_next/static/chunks/0uxaa7wo_wmcw.js\"],\"\"]\n13:I[85295,[\"/_next/static/chunks/0ypf.t599.7y6.js\",\"/_next/static/chunks/0t2xr05rlu96l.js\",\"/_next/static/chunks/0uxaa7wo_wmcw.js\"],\"default\"]\n14:I[41529,[\"/_next/static/chunks/0ypf.t599.7y6.js\",\"/_next/static/chunks/0t2xr05rlu96l.js\",\"/_next/static/chunks/0uxaa7wo_wmcw.js\"],\"default\"]\n16:I[97367,[\"/_next/static/chunks/0ypf.t599.7y6.js\",\"/_next/static/chunks/0t2xr05rlu96l.js\"],\"OutletBoundary\"]\n17:\"$Sreact.suspense\"\n1a:I[97367,[\"/_next/static/chunks/0ypf.t599.7y6.js\",\"/_next/static/chunks/0t2xr05rlu96l.js\"],\"ViewportBoundary\"]\n1c:I[97367,[\"/_next/static/chunks/0ypf.t599.7y6.js\",\"/_next/static/chunks/0t2xr05rlu96l.js\"],\"MetadataBoundary\"]\n6:[\"$\",\"p\",null,{\"className\":\"text-gray-400 text-sm mb-4\",\"children\":\"AI is eating law\"}]\n7:[\"$\",\"div\",null,{\"children\":[[\"$\",\"h4\",null,{\"className\":\"font-bold mb-4 text-gray-300\",\"children\":\"Company\"}],[\"$\",\"ul\",null,{\"className\":\"space-y-2\",\"children\":[[[\"$\",\"li\",\"about\",{\"children\":[\"$\",\"$L4\",null,{\"href\":\"/about\",\"className\":\"text-gray-400 hover:text-white transition-colors text-sm\",\"children\":\"About us\"}]}],[\"$\",\"li\",\"team\",{\"children\":[\"$\",\"$L4\",null,{\"href\":\"/team\",\"className\":\"text-gray-400 hover:text-white transition-colors text-sm\",\"children\":\"Team\"}]}],[\"$\",\"li\",\"media\",{\"children\":[\"$\",\"$L4\",null,{\"href\":\"/media\",\"className\":\"text-gray-400 hover:text-white transition-colors text-sm\",\"children\":\"Press \u0026 Media\"}]}]],[],[\"$\",\"li\",null,{\"children\":[\"$\",\"$L4\",null,{\"href\":\"/posts\",\"className\":\"text-gray-400 hover:text-white transition-colors text-sm\",\"children\":\"Blog\"}]}]]}]]}]\n"])</script><script>self.__next_f.push([1,"8:[\"$\",\"div\",null,{\"children\":[[\"$\",\"h4\",null,{\"className\":\"font-bold mb-4 text-gray-300\",\"children\":\"Resources\"}],[\"$\",\"ul\",null,{\"className\":\"space-y-2\",\"children\":[[\"$\",\"li\",\"l4-documentation\",{\"children\":[\"$\",\"a\",null,{\"href\":\"https://legalese.com/l4\",\"target\":\"_blank\",\"rel\":\"noopener noreferrer\",\"className\":\"text-gray-400 hover:text-white transition-colors text-sm\",\"children\":\"L4 Documentation\"}]}],[\"$\",\"li\",\"vscode-extension\",{\"children\":[\"$\",\"a\",null,{\"href\":\"https://marketplace.visualstudio.com/items?itemName=Legalese.l4-vscode\",\"target\":\"_blank\",\"rel\":\"noopener noreferrer\",\"className\":\"text-gray-400 hover:text-white transition-colors text-sm\",\"children\":\"L4 VS Code Extension\"}]}],[\"$\",\"li\",\"l4-web-ide\",{\"children\":[\"$\",\"a\",null,{\"href\":\"https://jl4.legalese.com\",\"target\":\"_blank\",\"rel\":\"noopener noreferrer\",\"className\":\"text-gray-400 hover:text-white transition-colors text-sm\",\"children\":\"L4 Web IDE\"}]}],[\"$\",\"li\",\"l4-console\",{\"children\":[\"$\",\"a\",null,{\"href\":\"https://legalese.com/console\",\"target\":\"_blank\",\"rel\":\"noopener noreferrer\",\"className\":\"text-gray-400 hover:text-white transition-colors text-sm\",\"children\":\"Cloud Console\"}]}],[\"$\",\"li\",\"l4-console copy\",{\"children\":[\"$\",\"a\",null,{\"href\":\"https://legalese.com/compare\",\"target\":\"_blank\",\"rel\":\"noopener noreferrer\",\"className\":\"text-gray-400 hover:text-white transition-colors text-sm\",\"children\":\"Compare AI Legal Interpretations\"}]}],[\"$\",\"li\",\"provable\",{\"children\":[\"$\",\"a\",null,{\"href\":\"https://provable.legalese.com\",\"target\":\"_blank\",\"rel\":\"noopener noreferrer\",\"className\":\"text-gray-400 hover:text-white transition-colors text-sm\",\"children\":\"Provable Skill Marketplace\"}]}],[\"$\",\"li\",\"github\",{\"children\":[\"$\",\"a\",null,{\"href\":\"https://github.com/legalese/l4-ide\",\"target\":\"_blank\",\"rel\":\"noopener noreferrer\",\"className\":\"text-gray-400 hover:text-white transition-colors text-sm\",\"children\":\"GitHub\"}]}]]}]]}]\n"])</script><script>self.__next_f.push([1,"9:[\"$\",\"div\",null,{\"children\":[[\"$\",\"h4\",null,{\"className\":\"font-bold mb-4 text-gray-300\",\"children\":\"Contact\"}],[\"$\",\"ul\",null,{\"className\":\"space-y-2\",\"children\":[[[\"$\",\"li\",\"community\",{\"children\":[\"$\",\"$L4\",null,{\"href\":\"/community\",\"className\":\"text-gray-400 hover:text-white transition-colors text-sm\",\"children\":\"Community\"}]}],[\"$\",\"li\",\"code-of-conduct\",{\"children\":[\"$\",\"$L4\",null,{\"href\":\"/code-of-conduct\",\"className\":\"text-gray-400 hover:text-white transition-colors text-sm\",\"children\":\"Code of Conduct\"}]}]],[[\"$\",\"li\",\"discord\",{\"children\":[\"$\",\"a\",null,{\"href\":\"https://discord.gg/Q7a7NSEdNy\",\"target\":\"_blank\",\"rel\":\"noopener noreferrer\",\"className\":\"text-gray-400 hover:text-white transition-colors text-sm\",\"children\":\"Discord\"}]}],[\"$\",\"li\",\"x-twitter\",{\"children\":[\"$\",\"a\",null,{\"href\":\"https://x.com/legalese\",\"target\":\"_blank\",\"rel\":\"noopener noreferrer\",\"className\":\"text-gray-400 hover:text-white transition-colors text-sm\",\"children\":\"Legalese on X\"}]}]]]}]]}]\na:[\"$\",\"div\",null,{\"className\":\"border-t border-gray-800 pt-8 flex flex-col md:flex-row justify-between items-center gap-4\",\"children\":[[\"$\",\"p\",null,{\"className\":\"text-gray-500 text-sm\",\"children\":[\"© \",2026,\" Legalese Pte. Ltd., Singapore. All rights reserved.\"]}],[\"$\",\"div\",null,{\"className\":\"flex gap-6\",\"children\":[[\"$\",\"$L4\",\"terms\",{\"href\":\"/terms\",\"className\":\"text-gray-500 hover:text-white transition-colors text-sm\",\"children\":\"Terms of Use\"}],[\"$\",\"$L4\",\"privacy\",{\"href\":\"/privacy\",\"className\":\"text-gray-500 hover:text-white transition-colors text-sm\",\"children\":\"Privacy \u0026 Cookies\"}]]}]]}]\n"])</script><script>self.__next_f.push([1,"b:[\"$\",\"$1\",\"c\",{\"children\":[[[\"$\",\"link\",\"0\",{\"rel\":\"stylesheet\",\"href\":\"/_next/static/chunks/0s9wju.j1~_xn.css\",\"precedence\":\"next\",\"crossOrigin\":\"$undefined\",\"nonce\":\"$undefined\"}],[\"$\",\"script\",\"script-0\",{\"src\":\"/_next/static/chunks/0uxaa7wo_wmcw.js\",\"async\":true,\"nonce\":\"$undefined\"}]],[[\"$\",\"$L2\",null,{\"parallelRouterKey\":\"children\",\"error\":\"$undefined\",\"errorStyles\":\"$undefined\",\"errorScripts\":\"$undefined\",\"template\":[\"$\",\"$L3\",null,{}],\"templateStyles\":\"$undefined\",\"templateScripts\":\"$undefined\",\"notFound\":\"$undefined\",\"forbidden\":\"$undefined\",\"unauthorized\":\"$undefined\"}],[\"$\",\"$L12\",null,{\"src\":\"https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js\"}],[\"$\",\"$L12\",null,{\"src\":\"/hljs-l4/l4.min.js\"}],[\"$\",\"$L13\",null,{}],[\"$\",\"$L14\",null,{}],[\"$\",\"style\",null,{\"dangerouslySetInnerHTML\":{\"__html\":\"\\npre code.hljs{display:block;overflow-x:auto;padding:0.2rem 0.4rem;font-size:13px;color:#104e64;background:#fdfdfd}\\ncode.hljs .hljs-keyword{color:#0000ff;font-weight:500}\\ncode.hljs .hljs-literal{color:#0000ff}\\ncode.hljs .hljs-built_in{color:#267f99}\\ncode.hljs .hljs-string{color:#a31515}\\ncode.hljs .hljs-number{color:#098658}\\ncode.hljs .hljs-comment{color:#008000;font-style:italic}\\ncode.hljs .hljs-title{color:#795e26;font-weight:600}\\ncode.hljs .hljs-variable{color:#001080}\\ncode.hljs .hljs-doctag{color:#ffbd33}\\ncode.hljs .hljs-formula{color:#af00db;font-weight:500}\\n\"}}]]]}]\n"])</script><script>self.__next_f.push([1,"c:[\"$\",\"$1\",\"c\",{\"children\":[null,[\"$\",\"$L2\",null,{\"parallelRouterKey\":\"children\",\"error\":\"$undefined\",\"errorStyles\":\"$undefined\",\"errorScripts\":\"$undefined\",\"template\":[\"$\",\"$L3\",null,{}],\"templateStyles\":\"$undefined\",\"templateScripts\":\"$undefined\",\"notFound\":\"$undefined\",\"forbidden\":\"$undefined\",\"unauthorized\":\"$undefined\"}]]}]\nd:[\"$\",\"$1\",\"c\",{\"children\":[\"$L15\",[[\"$\",\"script\",\"script-0\",{\"src\":\"/_next/static/chunks/0fl~me.qwn48c.js\",\"async\":true,\"nonce\":\"$undefined\"}]],[\"$\",\"$L16\",null,{\"children\":[\"$\",\"$17\",null,{\"name\":\"Next.MetadataOutlet\",\"children\":\"$@18\"}]}]]}]\n19:[]\ne:\"$W19\"\nf:[\"$\",\"$1\",\"h\",{\"children\":[null,[\"$\",\"$L1a\",null,{\"children\":\"$L1b\"}],[\"$\",\"div\",null,{\"hidden\":true,\"children\":[\"$\",\"$L1c\",null,{\"children\":[\"$\",\"$17\",null,{\"name\":\"Next.Metadata\",\"children\":\"$L1d\"}]}]}],[\"$\",\"meta\",null,{\"name\":\"next-size-adjust\",\"content\":\"\"}]]}]\n11:[\"$\",\"link\",\"0\",{\"rel\":\"stylesheet\",\"href\":\"/_next/static/chunks/0xhryq7f66rdk.css\",\"precedence\":\"next\",\"crossOrigin\":\"$undefined\",\"nonce\":\"$undefined\"}]\n"])</script><script>self.__next_f.push([1,"1e:I[90160,[\"/_next/static/chunks/0ypf.t599.7y6.js\",\"/_next/static/chunks/0t2xr05rlu96l.js\",\"/_next/static/chunks/0uxaa7wo_wmcw.js\",\"/_next/static/chunks/0fl~me.qwn48c.js\"],\"default\"]\n1f:T89df,"])</script><script>self.__next_f.push([1,"\u003ch1\u003eModule A3: Contracts in depth\u003c/h1\u003e\n\u003cp\u003eIn this module, you'll learn advanced contract modeling including complex payment terms, recursive obligations, and penalty structures. Find the full working example at the bottom.\u003c/p\u003e\n\u003ch2 id=\"learning-objectives\"\u003eLearning Objectives\u003c/h2\u003e\n\u003cp\u003eBy the end of this module, you will be able to:\u003c/p\u003e\n\u003cul\u003e\n\u003cli\u003eModel complex payment schedules\u003c/li\u003e\n\u003cli\u003eImplement recursive payment obligations\u003c/li\u003e\n\u003cli\u003eCreate penalty and interest calculations\u003c/li\u003e\n\u003cli\u003eHandle multi-party contracts\u003c/li\u003e\n\u003c/ul\u003e\n\u003chr\u003e\n\u003ch2 id=\"contract-modeling-principles\"\u003eContract Modeling Principles\u003c/h2\u003e\n\u003cp\u003eWell-modeled contracts in L4 follow these principles:\u003c/p\u003e\n\u003col\u003e\n\u003cli\u003e\u003cstrong\u003eClear parties\u003c/strong\u003e: Who has obligations?\u003c/li\u003e\n\u003cli\u003e\u003cstrong\u003ePrecise actions\u003c/strong\u003e: What must be done?\u003c/li\u003e\n\u003cli\u003e\u003cstrong\u003eExplicit conditions\u003c/strong\u003e: When do obligations apply?\u003c/li\u003e\n\u003cli\u003e\u003cstrong\u003eComplete paths\u003c/strong\u003e: Every scenario leads to FULFILLED or BREACH\u003c/li\u003e\n\u003cli\u003e\u003cstrong\u003eTestable\u003c/strong\u003e: Use #TRACE to verify behavior\u003c/li\u003e\n\u003c/ol\u003e\n\u003chr\u003e\n\u003ch2 id=\"case-study-promissory-note\"\u003eCase Study: Promissory Note\u003c/h2\u003e\n\u003cp\u003eWe'll build a complete promissory note with:\u003c/p\u003e\n\u003cul\u003e\n\u003cli\u003ePrincipal and interest\u003c/li\u003e\n\u003cli\u003eMonthly installments\u003c/li\u003e\n\u003cli\u003eLate payment penalties\u003c/li\u003e\n\u003cli\u003eDefault provisions\u003c/li\u003e\n\u003c/ul\u003e\n\u003ch3 id=\"step-1-define-types\"\u003eStep 1: Define Types\u003c/h3\u003e\n\u003cpre\u003e\u003ccode class=\"language-l4\"\u003e-- Money type with currency\r\nDECLARE Money\r\n    HAS `the amount` IS A NUMBER\r\n        `the currency` IS A STRING\r\n\r\n-- Currency constructors\r\nGIVEN n IS A NUMBER\r\nGIVETH A Money\r\nUSD MEANS Money WITH `the amount` IS n, `the currency` IS \"USD\"\r\n\r\nGIVEN n IS A NUMBER\r\nGIVETH A Money\r\nSGD MEANS Money WITH `the amount` IS n, `the currency` IS \"SGD\"\r\n\r\n-- Party types\r\nDECLARE Party IS ONE OF\r\n    `the borrower party` HAS `the borrower` IS A Borrower\r\n    `the lender party` HAS `the lender` IS A Lender\r\n\r\n-- Borrower can be individual or company\r\nDECLARE Borrower IS ONE OF\r\n    `individual borrower` HAS `the person` IS A Person\r\n    `corporate borrower` HAS `the company` IS A Company\r\n\r\nDECLARE Lender IS ONE OF\r\n    `individual lender` HAS `the person` IS A Person\r\n    `institutional lender` HAS `the company` IS A Company\r\n\r\n-- Payment record\r\nDECLARE Payment\r\n    HAS `the amount` IS A Money\r\n        `the due date` IS A NUMBER  -- Days from commencement\r\n\r\n-- Penalty terms\r\nDECLARE `Penalty Terms`\r\n    HAS `the penalty rate` IS A NUMBER\r\n        `the grace period` IS A NUMBER  -- in days\n\u003c/code\u003e\u003c/pre\u003e\n\u003ch3 id=\"step-2-define-loan-terms\"\u003eStep 2: Define Loan Terms\u003c/h3\u003e\n\u003cpre\u003e\u003ccode class=\"language-l4\"\u003eDECLARE `Loan Terms`\r\n    HAS `the principal` IS A Money\r\n        `the annual interest rate` IS A NUMBER\r\n        `the number of installments` IS A NUMBER\r\n        `the days until default` IS A NUMBER\r\n        `the penalty terms` IS A `Penalty Terms`\r\n\r\n-- Example loan\r\n`the example loan` MEANS `Loan Terms` WITH\r\n    `the principal`              IS USD 25000\r\n    `the annual interest rate`   IS 0.15             -- 15% annual interest\r\n    `the number of installments` IS 12               -- 12 monthly installments\r\n    `the days until default`     IS 30               -- Default after 30 days late\r\n    `the penalty terms`          IS `Penalty Terms` WITH\r\n                                      `the penalty rate` IS 0.05   -- 5% penalty\r\n                                      `the grace period` IS 10\n\u003c/code\u003e\u003c/pre\u003e\n\u003ch3 id=\"step-3-calculate-payment-schedule\"\u003eStep 3: Calculate Payment Schedule\u003c/h3\u003e\n\u003cpre\u003e\u003ccode class=\"language-l4\"\u003e-- Monthly interest rate\r\nGIVEN terms IS A `Loan Terms`\r\nGIVETH A NUMBER\r\n`monthly rate` MEANS terms's `the annual interest rate` / 12\r\n\r\n-- Power function for calculations\r\nGIVEN base IS A NUMBER\r\n      exp IS A NUMBER\r\nGIVETH A NUMBER\r\n`power` MEANS\r\n    IF exp = 0\r\n    THEN 1\r\n    ELSE IF exp = 1\r\n         THEN base\r\n         ELSE base * `power` base (exp - 1)\r\n\r\n-- Monthly payment using amortization formula\r\n-- PMT = P × (r(1+r)^n) / ((1+r)^n - 1)\r\nGIVEN terms IS A `Loan Terms`\r\nGIVETH A Money\r\n`monthly payment amount` MEANS\r\n    Money WITH `the amount` IS payment, `the currency` IS terms's `the principal`'s `the currency`\r\n    WHERE\r\n        p MEANS terms's `the principal`'s `the amount`\r\n        r MEANS `monthly rate` terms\r\n        n MEANS terms's `the number of installments`\r\n        `the compound factor` MEANS `power` (1 + r) n\r\n        payment MEANS p * (r * `the compound factor`) / (`the compound factor` - 1)\n\u003c/code\u003e\u003c/pre\u003e\n\u003chr\u003e\n\u003ch2 id=\"recursive-payment-obligations\"\u003eRecursive Payment Obligations\u003c/h2\u003e\n\u003cp\u003eThe key insight: \u003cstrong\u003epayment obligations are recursive\u003c/strong\u003e. After each payment, there's another payment (until paid off).\u003c/p\u003e\n\u003cpre\u003e\u003ccode class=\"language-l4\"\u003e-- Actions for the loan contract\r\nDECLARE `Loan Action` IS ONE OF\r\n    `pay installment` HAS `the recipient` IS A Lender\r\n                          `the amount` IS A Money\r\n\r\n-- Validate payment amount\r\nGIVEN paid IS A Money\r\n      expected IS A Money\r\nGIVETH A BOOLEAN\r\n`is valid payment` MEANS\r\n    paid's `the currency` EQUALS expected's `the currency`\r\n    AND paid's `the amount` \u003e= (expected's `the amount` - 0.05)  -- Allow small rounding\r\n\r\n-- The recursive payment obligation\r\nGIVEN terms IS A `Loan Terms`\r\n      debtor IS A Borrower\r\n      creditor IS A Lender\r\n      outstanding IS A Money  -- Remaining balance\r\nGIVETH A DEONTIC Party `Loan Action`\r\n`payment obligation` MEANS\r\n    IF outstanding's `the amount` \u003e 0\r\n    THEN\r\n        PARTY `the borrower party` debtor\r\n        MUST `pay installment` EXACTLY creditor\r\n                               `the amount paid` PROVIDED `the amount paid`'s `the amount` \u003e= `the payment due`'s `the amount`\r\n        WITHIN `the next due date`\r\n        HENCE\r\n            -- Recursive call with reduced balance\r\n            `payment obligation` terms debtor creditor `the new outstanding balance`\r\n        LEST\r\n            -- Late: apply penalty\r\n            `late payment handling` terms debtor creditor outstanding\r\n    ELSE FULFILLED\r\n    WHERE\r\n        -- Calculate next payment\r\n        `the payment due` MEANS `calculate next payment` terms outstanding\r\n        `the next due date` MEANS `calculate due date` terms outstanding\r\n        -- After payment, reduce outstanding (simplified)\r\n        `the new outstanding balance` MEANS Money WITH\r\n            `the amount`   IS outstanding's `the amount` - `the payment due`'s `the amount`\r\n            `the currency` IS outstanding's `the currency`\n\u003c/code\u003e\u003c/pre\u003e\n\u003ch3 id=\"late-payment-with-penalty\"\u003eLate Payment with Penalty\u003c/h3\u003e\n\u003cpre\u003e\u003ccode class=\"language-l4\"\u003eGIVEN terms IS A `Loan Terms`\r\n      debtor IS A Borrower\r\n      creditor IS A Lender\r\n      outstanding IS A Money\r\nGIVETH A DEONTIC Party `Loan Action`\r\n`late payment handling` MEANS\r\n    -- Grace period with penalty interest\r\n    PARTY `the borrower party` debtor\r\n    MUST `pay installment` EXACTLY creditor\r\n                           `the amount paid` PROVIDED `the amount paid`'s `the amount` \u003e= `the payment with penalty`'s `the amount`\r\n    WITHIN (`the next due date` + terms's `the penalty terms`'s `the grace period`)\r\n    HENCE\r\n        -- Continue with remaining payments\r\n        `payment obligation` terms debtor creditor `the new outstanding balance`\r\n    LEST\r\n        -- Default: full balance due\r\n        `default handling` terms debtor creditor outstanding\r\n    WHERE\r\n        `the base payment` MEANS `calculate next payment` terms outstanding\r\n        `the penalty amount` MEANS `the base payment`'s `the amount` * terms's `the penalty terms`'s `the penalty rate`\r\n        `the payment with penalty` MEANS Money WITH\r\n            `the amount`   IS `the base payment`'s `the amount` + `the penalty amount`\r\n            `the currency` IS `the base payment`'s `the currency`\r\n        `the next due date` MEANS `calculate due date` terms outstanding\r\n        `the new outstanding balance` MEANS Money WITH\r\n            `the amount`   IS outstanding's `the amount` - `the payment with penalty`'s `the amount`\r\n            `the currency` IS outstanding's `the currency`\n\u003c/code\u003e\u003c/pre\u003e\n\u003ch3 id=\"default-full-balance-due\"\u003eDefault: Full Balance Due\u003c/h3\u003e\n\u003cpre\u003e\u003ccode class=\"language-l4\"\u003eGIVEN terms IS A `Loan Terms`\r\n      debtor IS A Borrower\r\n      creditor IS A Lender\r\n      outstanding IS A Money\r\nGIVETH A DEONTIC Party `Loan Action`\r\n`default handling` MEANS\r\n    PARTY `the borrower party` debtor\r\n    MUST `pay installment` EXACTLY creditor\r\n                           EXACTLY outstanding  -- Full balance required\r\n    WITHIN terms's `the days until default`\r\n    HENCE FULFILLED\r\n    LEST BREACH BY (`the borrower party` debtor) BECAUSE \"loan default\"\n\u003c/code\u003e\u003c/pre\u003e\n\u003chr\u003e\n\u003ch2 id=\"testing-with-trace\"\u003eTesting with #TRACE\u003c/h2\u003e\n\u003ch3 id=\"happy-path-all-payments-on-time\"\u003eHappy Path: All Payments On Time\u003c/h3\u003e\n\u003cpre\u003e\u003ccode class=\"language-l4\"\u003e-- Define test parties\r\n`Alice the borrower` MEANS `individual borrower` (Person WITH `the name` IS \"Alice\")\r\n`Bob the lender` MEANS `individual lender` (Person WITH `the name` IS \"Bob\")\r\n\r\n#TRACE `payment obligation` `the example loan` `Alice the borrower` `Bob the lender` (USD 25000) AT 0 WITH\r\n    PARTY (`the borrower party` `Alice the borrower`) DOES `pay installment` `Bob the lender` (USD 2256.46) AT 30\r\n    PARTY (`the borrower party` `Alice the borrower`) DOES `pay installment` `Bob the lender` (USD 2256.46) AT 60\r\n    PARTY (`the borrower party` `Alice the borrower`) DOES `pay installment` `Bob the lender` (USD 2256.46) AT 90\r\n    -- ... continue for all 12 payments\n\u003c/code\u003e\u003c/pre\u003e\n\u003ch3 id=\"late-payment-scenario\"\u003eLate Payment Scenario\u003c/h3\u003e\n\u003cpre\u003e\u003ccode class=\"language-l4\"\u003e-- First payment on time, second payment late (in grace period)\r\n#TRACE `payment obligation` `the example loan` `Alice the borrower` `Bob the lender` (USD 25000) AT 0 WITH\r\n    PARTY (`the borrower party` `Alice the borrower`) DOES `pay installment` `Bob the lender` (USD 2256.46) AT 30\r\n    -- Second payment late with penalty\r\n    PARTY (`the borrower party` `Alice the borrower`) DOES `pay installment` `Bob the lender` (USD 2369.28) AT 75\n\u003c/code\u003e\u003c/pre\u003e\n\u003ch3 id=\"default-scenario\"\u003eDefault Scenario\u003c/h3\u003e\n\u003cpre\u003e\u003ccode class=\"language-l4\"\u003e-- Borrower stops paying\r\n#TRACE `payment obligation` `the example loan` `Alice the borrower` `Bob the lender` (USD 25000) AT 0 WITH\r\n    PARTY (`the borrower party` `Alice the borrower`) DOES `pay installment` `Bob the lender` (USD 2256.46) AT 30\r\n    -- No more payments... contract should reach BREACH\n\u003c/code\u003e\u003c/pre\u003e\n\u003chr\u003e\n\u003ch2 id=\"multi-party-contracts\"\u003eMulti-Party Contracts\u003c/h2\u003e\n\u003cp\u003eSome contracts involve more than two parties:\u003c/p\u003e\n\u003cpre\u003e\u003ccode class=\"language-l4\"\u003e-- Escrow arrangement: Buyer, Seller, Escrow Agent\r\nDECLARE `Escrow Party` IS ONE OF `the buyer`, `the seller`, `the escrow agent`\r\n\r\nDECLARE `Escrow Action` IS ONE OF\r\n    `deposit funds` HAS `the amount` IS A Money\r\n    `deliver goods`\r\n    `release funds to seller`\r\n    `return funds to buyer`\r\n\r\nGIVEN amount IS A Money\r\nGIVETH A DEONTIC `Escrow Party` `Escrow Action`\r\n`escrow arrangement` MEANS\r\n    -- Buyer deposits funds\r\n    PARTY `the buyer`\r\n    MUST `deposit funds` amount\r\n    WITHIN 7\r\n    HENCE\r\n        -- Seller delivers goods\r\n        PARTY `the seller`\r\n        MUST `deliver goods`\r\n        WITHIN 14\r\n        HENCE\r\n            -- Escrow releases to seller\r\n            PARTY `the escrow agent`\r\n            MUST `release funds to seller`\r\n            WITHIN 3\r\n            HENCE FULFILLED\r\n            LEST BREACH BY `the escrow agent` BECAUSE \"escrow agent failed to release funds\"\r\n        LEST\r\n            -- Seller didn't deliver, return funds\r\n            PARTY `the escrow agent`\r\n            MUST `return funds to buyer`\r\n            WITHIN 3\r\n            HENCE BREACH BY `the seller` BECAUSE \"seller failed to deliver goods\"\r\n            LEST BREACH BY `the escrow agent` BECAUSE \"escrow agent failed to return funds\"\r\n    LEST BREACH BY `the buyer` BECAUSE \"buyer failed to deposit funds\"\n\u003c/code\u003e\u003c/pre\u003e\n\u003chr\u003e\n\u003ch2 id=\"parallel-obligations-with-rand\"\u003eParallel Obligations with RAND\u003c/h2\u003e\n\u003cp\u003eWhen multiple obligations must all be fulfilled:\u003c/p\u003e\n\u003cpre\u003e\u003ccode class=\"language-l4\"\u003e-- Types for service contract examples\r\nDECLARE `Service Party` IS ONE OF Provider, Client\r\n\r\nDECLARE `Contract Action` IS ONE OF\r\n    `deliver service`\r\n    `provide documentation`\r\n    `ship goods`\r\n    `arrange pickup`\r\n    `make payment`\r\n\r\n-- Service contract: Provider must deliver service AND provide documentation\r\nGIVETH A DEONTIC `Service Party` `Contract Action`\r\n`service delivery` MEANS\r\n    (PARTY Provider MUST `deliver service` WITHIN 30 HENCE FULFILLED LEST BREACH BY Provider BECAUSE \"failed to deliver service\")\r\n    RAND\r\n    (PARTY Provider MUST `provide documentation` WITHIN 30 HENCE FULFILLED LEST BREACH BY Provider BECAUSE \"failed to provide documentation\")\n\u003c/code\u003e\u003c/pre\u003e\n\u003cp\u003eBoth obligations must be fulfilled for the contract to be fulfilled.\u003c/p\u003e\n\u003chr\u003e\n\u003ch2 id=\"alternative-obligations-with-ror\"\u003eAlternative Obligations with ROR\u003c/h2\u003e\n\u003cp\u003eWhen fulfilling any one obligation is sufficient:\u003c/p\u003e\n\u003cpre\u003e\u003ccode class=\"language-l4\"\u003e-- Delivery options: Ship OR pickup\r\nGIVETH A DEONTIC `Service Party` `Contract Action`\r\n`delivery options` MEANS\r\n    (PARTY Provider MUST `ship goods` WITHIN 14 HENCE FULFILLED LEST BREACH BY Provider BECAUSE \"failed to ship\")\r\n    ROR\r\n    (PARTY Provider MUST `arrange pickup` WITHIN 7 HENCE FULFILLED LEST BREACH BY Provider BECAUSE \"failed to arrange pickup\")\n\u003c/code\u003e\u003c/pre\u003e\n\u003cp\u003eEither shipping or arranging pickup fulfills the delivery obligation.\u003c/p\u003e\n\u003chr\u003e\n\u003ch2 id=\"practical-patterns\"\u003ePractical Patterns\u003c/h2\u003e\n\u003ch3 id=\"minimum-payment\"\u003eMinimum Payment\u003c/h3\u003e\n\u003cpre\u003e\u003ccode class=\"language-l4\"\u003e-- Credit card style: Pay minimum or full balance\r\nDECLARE `Card Party` IS ONE OF Cardholder, Bank\r\n\r\nDECLARE `Card Action` IS ONE OF\r\n    `pay` HAS `the payment amount` IS A NUMBER\r\n\r\nGIVEN balance IS A Money\r\n      `the minimum percentage` IS A NUMBER\r\nGIVETH A DEONTIC `Card Party` `Card Action`\r\n`credit payment` MEANS\r\n    PARTY Cardholder\r\n    MUST `pay` `the amount paid` PROVIDED `the amount paid` \u003e= `the minimum payment`\r\n    WITHIN 30\r\n    HENCE\r\n        IF `the amount paid` \u003e= balance's `the amount`\r\n        THEN FULFILLED  -- Paid in full\r\n        ELSE `credit payment` `the new balance` `the minimum percentage`  -- Recurse with new balance\r\n    LEST BREACH BY Cardholder BECAUSE \"missed credit card payment\"\r\n    WHERE\r\n        `the minimum payment` MEANS balance's `the amount` * `the minimum percentage`\r\n        `the new balance` MEANS Money WITH `the amount` IS balance's `the amount` - `the minimum payment`, `the currency` IS balance's `the currency`\n\u003c/code\u003e\u003c/pre\u003e\n\u003ch3 id=\"milestone-based-payment\"\u003eMilestone-Based Payment\u003c/h3\u003e\n\u003cpre\u003e\u003ccode class=\"language-l4\"\u003eDECLARE Milestone IS ONE OF\r\n    Design\r\n    Development\r\n    Testing\r\n    Delivery\r\n\r\nDECLARE `Milestone Action` IS ONE OF\r\n    `complete milestone` HAS `the completed milestone` IS A Milestone\r\n    `pay milestone` HAS `the paid milestone` IS A Milestone\r\n\r\nGIVEN milestones IS A LIST OF Milestone\r\nGIVETH A DEONTIC `Service Party` `Milestone Action`\r\n`milestone payments` MEANS\r\n    CONSIDER milestones\r\n    WHEN EMPTY THEN FULFILLED\r\n    WHEN m FOLLOWED BY rest THEN\r\n        PARTY Provider\r\n        MUST `complete milestone` m\r\n        WITHIN 30\r\n        HENCE\r\n            PARTY Client\r\n            MUST `pay milestone` m\r\n            WITHIN 14\r\n            HENCE `milestone payments` rest  -- Recurse\r\n            LEST BREACH BY Client BECAUSE \"client failed to pay milestone\"\r\n        LEST BREACH BY Provider BECAUSE \"provider failed to complete milestone\"\n\u003c/code\u003e\u003c/pre\u003e\n\u003chr\u003e\n\u003ch2 id=\"exercise-model-a-security-deposit\"\u003eExercise: Model a Security Deposit\u003c/h2\u003e\n\u003cp\u003eEncode this clause:\u003c/p\u003e\n\u003cblockquote\u003e\n\u003cp\u003e\u003cstrong\u003eSecurity Deposit Return:\u003c/strong\u003e At the end of the lease, the landlord must either\r\n(a) refund the deposit in full within 14 days, or\r\n(b) send an itemized list of deductions within 7 days and refund the balance within 21 days.\r\nFailing both, the landlord is in breach.\u003c/p\u003e\n\u003c/blockquote\u003e\n\u003cp\u003eHint: two alternative obligation chains joined with ROR.\u003c/p\u003e\n\u003cdetails\u003e\r\n\u003csummary\u003eSolution\u003c/summary\u003e\n\u003cpre\u003e\u003ccode class=\"language-l4\"\u003eDECLARE `Tenancy Party` IS ONE OF\r\n    `the landlord`\r\n    `the tenant`\r\n\r\nDECLARE `Tenancy Action` IS ONE OF\r\n    `refund the deposit in full`\r\n    `send an itemized list of deductions`\r\n    `refund the balance`\r\n\r\nGIVETH A DEONTIC `Tenancy Party` `Tenancy Action`\r\n`deposit return obligation` MEANS\r\n    (PARTY `the landlord`\r\n     MUST `refund the deposit in full`\r\n     WITHIN 14\r\n     HENCE FULFILLED\r\n     LEST BREACH BY `the landlord` BECAUSE \"failed to refund the deposit\")\r\n    ROR\r\n    (PARTY `the landlord`\r\n     MUST `send an itemized list of deductions`\r\n     WITHIN 7\r\n     HENCE\r\n        PARTY `the landlord`\r\n        MUST `refund the balance`\r\n        WITHIN 21\r\n        HENCE FULFILLED\r\n        LEST BREACH BY `the landlord` BECAUSE \"failed to refund the balance\"\r\n     LEST BREACH BY `the landlord` BECAUSE \"failed to account for deductions\")\r\n\r\n-- Full refund on time\r\n#TRACE `deposit return obligation` AT 0 WITH\r\n    PARTY `the landlord` DOES `refund the deposit in full` AT 10\r\n\r\n-- Itemized deductions then balance refunded\r\n#TRACE `deposit return obligation` AT 0 WITH\r\n    PARTY `the landlord` DOES `send an itemized list of deductions` AT 5\r\n    PARTY `the landlord` DOES `refund the balance` AT 20\n\u003c/code\u003e\u003c/pre\u003e\n\u003c/details\u003e\n\u003chr\u003e\n\u003ch3 id=\"full-example\"\u003eFull Example\u003c/h3\u003e\n\u003cpre\u003e\u003ccode class=\"language-l4-file\"\u003e-- Module A3: Contracts in Depth - Examples\r\n-- This file demonstrates advanced contract modeling including complex payment terms,\r\n-- recursive obligations, and penalty structures.\r\n\r\n--------------------------------------------------------------------------------\r\n-- SECTION 1: Type Definitions\r\n--------------------------------------------------------------------------------\r\n\r\n-- Money type with currency\r\nDECLARE Money\r\n    HAS `the amount` IS A NUMBER\r\n        `the currency` IS A STRING\r\n\r\n-- Currency constructors\r\nGIVEN n IS A NUMBER\r\nGIVETH A Money\r\nUSD MEANS Money WITH `the amount` IS n, `the currency` IS \"USD\"\r\n\r\nGIVEN n IS A NUMBER\r\nGIVETH A Money\r\nSGD MEANS Money WITH `the amount` IS n, `the currency` IS \"SGD\"\r\n\r\n-- Person and Company types (basic definitions)\r\nDECLARE Person\r\n    HAS `the name` IS A STRING\r\n\r\nDECLARE Company\r\n    HAS `the name` IS A STRING\r\n\r\n-- Party types\r\nDECLARE Party IS ONE OF\r\n    `the borrower party` HAS `the borrower` IS A Borrower\r\n    `the lender party` HAS `the lender` IS A Lender\r\n\r\n-- Borrower can be individual or company\r\nDECLARE Borrower IS ONE OF\r\n    `individual borrower` HAS `the person` IS A Person\r\n    `corporate borrower` HAS `the company` IS A Company\r\n\r\nDECLARE Lender IS ONE OF\r\n    `individual lender` HAS `the person` IS A Person\r\n    `institutional lender` HAS `the company` IS A Company\r\n\r\n-- Payment record\r\nDECLARE Payment\r\n    HAS `the amount` IS A Money\r\n        `the due date` IS A NUMBER  -- Days from commencement\r\n\r\n-- Penalty terms\r\nDECLARE `Penalty Terms`\r\n    HAS `the penalty rate` IS A NUMBER\r\n        `the grace period` IS A NUMBER  -- in days\r\n\r\n--------------------------------------------------------------------------------\r\n-- SECTION 2: Loan Terms\r\n--------------------------------------------------------------------------------\r\n\r\nDECLARE `Loan Terms`\r\n    HAS `the principal` IS A Money\r\n        `the annual interest rate` IS A NUMBER\r\n        `the number of installments` IS A NUMBER\r\n        `the days until default` IS A NUMBER\r\n        `the penalty terms` IS A `Penalty Terms`\r\n\r\n-- Example loan\r\n`the example loan` MEANS `Loan Terms` WITH\r\n    `the principal`              IS USD 25000\r\n    `the annual interest rate`   IS 0.15             -- 15% annual interest\r\n    `the number of installments` IS 12               -- 12 monthly installments\r\n    `the days until default`     IS 30               -- Default after 30 days late\r\n    `the penalty terms`          IS `Penalty Terms` WITH\r\n                                      `the penalty rate` IS 0.05   -- 5% penalty\r\n                                      `the grace period` IS 10\r\n\r\n--------------------------------------------------------------------------------\r\n-- SECTION 3: Payment Calculations\r\n--------------------------------------------------------------------------------\r\n\r\n-- Monthly interest rate\r\nGIVEN terms IS A `Loan Terms`\r\nGIVETH A NUMBER\r\n`monthly rate` MEANS terms's `the annual interest rate` / 12\r\n\r\n-- Power function for calculations\r\nGIVEN base IS A NUMBER\r\n      exp IS A NUMBER\r\nGIVETH A NUMBER\r\n`power` MEANS\r\n    IF exp = 0\r\n    THEN 1\r\n    ELSE IF exp = 1\r\n         THEN base\r\n         ELSE base * `power` base (exp - 1)\r\n\r\n-- Monthly payment using amortization formula\r\n-- PMT = P × (r(1+r)^n) / ((1+r)^n - 1)\r\nGIVEN terms IS A `Loan Terms`\r\nGIVETH A Money\r\n`monthly payment amount` MEANS\r\n    Money WITH `the amount` IS payment, `the currency` IS terms's `the principal`'s `the currency`\r\n    WHERE\r\n        p MEANS terms's `the principal`'s `the amount`\r\n        r MEANS `monthly rate` terms\r\n        n MEANS terms's `the number of installments`\r\n        `the compound factor` MEANS `power` (1 + r) n\r\n        payment MEANS p * (r * `the compound factor`) / (`the compound factor` - 1)\r\n\r\n-- Placeholder functions for payment scheduling\r\nGIVEN terms IS A `Loan Terms`\r\n      outstanding IS A Money\r\nGIVETH A Money\r\n`calculate next payment` MEANS `monthly payment amount` terms\r\n\r\nGIVEN terms IS A `Loan Terms`\r\n      outstanding IS A Money\r\nGIVETH A NUMBER\r\n`calculate due date` MEANS 30  -- Simplified: 30 days between payments\r\n\r\n--------------------------------------------------------------------------------\r\n-- SECTION 4: Loan Contract Actions\r\n--------------------------------------------------------------------------------\r\n\r\n-- Actions for the loan contract\r\nDECLARE `Loan Action` IS ONE OF\r\n    `pay installment` HAS `the recipient` IS A Lender\r\n                          `the amount` IS A Money\r\n\r\n-- Validate payment amount\r\nGIVEN paid IS A Money\r\n      expected IS A Money\r\nGIVETH A BOOLEAN\r\n`is valid payment` MEANS\r\n    paid's `the currency` EQUALS expected's `the currency`\r\n    AND paid's `the amount` \u003e= (expected's `the amount` - 0.05)  -- Allow small rounding\r\n\r\n--------------------------------------------------------------------------------\r\n-- SECTION 5: Recursive Payment Obligations\r\n--------------------------------------------------------------------------------\r\n\r\n-- Test borrower and lender for examples\r\n`Alice the borrower` MEANS `individual borrower` (Person WITH `the name` IS \"Alice\")\r\n`Bob the lender` MEANS `individual lender` (Person WITH `the name` IS \"Bob\")\r\n\r\n-- The recursive payment obligation\r\nGIVEN terms IS A `Loan Terms`\r\n      debtor IS A Borrower\r\n      creditor IS A Lender\r\n      outstanding IS A Money  -- Remaining balance\r\nGIVETH A DEONTIC Party `Loan Action`\r\n`payment obligation` MEANS\r\n    IF outstanding's `the amount` \u003e 0\r\n    THEN\r\n        PARTY `the borrower party` debtor\r\n        MUST `pay installment` EXACTLY creditor\r\n                               `the amount paid` PROVIDED `the amount paid`'s `the amount` \u003e= `the payment due`'s `the amount`\r\n        WITHIN `the next due date`\r\n        HENCE\r\n            -- Recursive call with reduced balance\r\n            `payment obligation` terms debtor creditor `the new outstanding balance`\r\n        LEST\r\n            -- Late: apply penalty\r\n            `late payment handling` terms debtor creditor outstanding\r\n    ELSE FULFILLED\r\n    WHERE\r\n        -- Calculate next payment\r\n        `the payment due` MEANS `calculate next payment` terms outstanding\r\n        `the next due date` MEANS `calculate due date` terms outstanding\r\n        -- After payment, reduce outstanding (simplified)\r\n        `the new outstanding balance` MEANS Money WITH\r\n            `the amount`   IS outstanding's `the amount` - `the payment due`'s `the amount`\r\n            `the currency` IS outstanding's `the currency`\r\n\r\n-- Late payment with penalty\r\nGIVEN terms IS A `Loan Terms`\r\n      debtor IS A Borrower\r\n      creditor IS A Lender\r\n      outstanding IS A Money\r\nGIVETH A DEONTIC Party `Loan Action`\r\n`late payment handling` MEANS\r\n    -- Grace period with penalty interest\r\n    PARTY `the borrower party` debtor\r\n    MUST `pay installment` EXACTLY creditor\r\n                           `the amount paid` PROVIDED `the amount paid`'s `the amount` \u003e= `the payment with penalty`'s `the amount`\r\n    WITHIN (`the next due date` + terms's `the penalty terms`'s `the grace period`)\r\n    HENCE\r\n        -- Continue with remaining payments\r\n        `payment obligation` terms debtor creditor `the new outstanding balance`\r\n    LEST\r\n        -- Default: full balance due\r\n        `default handling` terms debtor creditor outstanding\r\n    WHERE\r\n        `the base payment` MEANS `calculate next payment` terms outstanding\r\n        `the penalty amount` MEANS `the base payment`'s `the amount` * terms's `the penalty terms`'s `the penalty rate`\r\n        `the payment with penalty` MEANS Money WITH\r\n            `the amount`   IS `the base payment`'s `the amount` + `the penalty amount`\r\n            `the currency` IS `the base payment`'s `the currency`\r\n        `the next due date` MEANS `calculate due date` terms outstanding\r\n        `the new outstanding balance` MEANS Money WITH\r\n            `the amount`   IS outstanding's `the amount` - `the payment with penalty`'s `the amount`\r\n            `the currency` IS outstanding's `the currency`\r\n\r\n-- Default: Full balance due\r\nGIVEN terms IS A `Loan Terms`\r\n      debtor IS A Borrower\r\n      creditor IS A Lender\r\n      outstanding IS A Money\r\nGIVETH A DEONTIC Party `Loan Action`\r\n`default handling` MEANS\r\n    PARTY `the borrower party` debtor\r\n    MUST `pay installment` EXACTLY creditor\r\n                           EXACTLY outstanding  -- Full balance required\r\n    WITHIN terms's `the days until default`\r\n    HENCE FULFILLED\r\n    LEST BREACH BY (`the borrower party` debtor) BECAUSE \"loan default\"\r\n\r\n--------------------------------------------------------------------------------\r\n-- SECTION 6: Multi-Party Contracts (Escrow)\r\n--------------------------------------------------------------------------------\r\n\r\n-- Escrow arrangement: Buyer, Seller, Escrow Agent\r\nDECLARE `Escrow Party` IS ONE OF `the buyer`, `the seller`, `the escrow agent`\r\n\r\nDECLARE `Escrow Action` IS ONE OF\r\n    `deposit funds` HAS `the amount` IS A Money\r\n    `deliver goods`\r\n    `release funds to seller`\r\n    `return funds to buyer`\r\n\r\nGIVEN amount IS A Money\r\nGIVETH A DEONTIC `Escrow Party` `Escrow Action`\r\n`escrow arrangement` MEANS\r\n    -- Buyer deposits funds\r\n    PARTY `the buyer`\r\n    MUST `deposit funds` amount\r\n    WITHIN 7\r\n    HENCE\r\n        -- Seller delivers goods\r\n        PARTY `the seller`\r\n        MUST `deliver goods`\r\n        WITHIN 14\r\n        HENCE\r\n            -- Escrow releases to seller\r\n            PARTY `the escrow agent`\r\n            MUST `release funds to seller`\r\n            WITHIN 3\r\n            HENCE FULFILLED\r\n            LEST BREACH BY `the escrow agent` BECAUSE \"escrow agent failed to release funds\"\r\n        LEST\r\n            -- Seller didn't deliver, return funds\r\n            PARTY `the escrow agent`\r\n            MUST `return funds to buyer`\r\n            WITHIN 3\r\n            HENCE BREACH BY `the seller` BECAUSE \"seller failed to deliver goods\"\r\n            LEST BREACH BY `the escrow agent` BECAUSE \"escrow agent failed to return funds\"\r\n    LEST BREACH BY `the buyer` BECAUSE \"buyer failed to deposit funds\"\r\n\r\n--------------------------------------------------------------------------------\r\n-- SECTION 7: Parallel and Alternative Obligations\r\n--------------------------------------------------------------------------------\r\n\r\n-- Types for service contract examples\r\nDECLARE `Service Party` IS ONE OF Provider, Client\r\n\r\nDECLARE `Contract Action` IS ONE OF\r\n    `deliver service`\r\n    `provide documentation`\r\n    `ship goods`\r\n    `arrange pickup`\r\n    `make payment`\r\n\r\n-- Parallel obligations with RAND\r\n-- Service contract: Provider must deliver service AND provide documentation\r\nGIVETH A DEONTIC `Service Party` `Contract Action`\r\n`service delivery` MEANS\r\n    (PARTY Provider MUST `deliver service` WITHIN 30 HENCE FULFILLED LEST BREACH BY Provider BECAUSE \"failed to deliver service\")\r\n    RAND\r\n    (PARTY Provider MUST `provide documentation` WITHIN 30 HENCE FULFILLED LEST BREACH BY Provider BECAUSE \"failed to provide documentation\")\r\n\r\n-- Alternative obligations with ROR\r\n-- Delivery options: Ship OR pickup\r\nGIVETH A DEONTIC `Service Party` `Contract Action`\r\n`delivery options` MEANS\r\n    (PARTY Provider MUST `ship goods` WITHIN 14 HENCE FULFILLED LEST BREACH BY Provider BECAUSE \"failed to ship\")\r\n    ROR\r\n    (PARTY Provider MUST `arrange pickup` WITHIN 7 HENCE FULFILLED LEST BREACH BY Provider BECAUSE \"failed to arrange pickup\")\r\n\r\n--------------------------------------------------------------------------------\r\n-- SECTION 8: Practical Patterns\r\n--------------------------------------------------------------------------------\r\n\r\n-- Credit card style: Pay minimum or full balance\r\nDECLARE `Card Party` IS ONE OF Cardholder, Bank\r\n\r\nDECLARE `Card Action` IS ONE OF\r\n    `pay` HAS `the payment amount` IS A NUMBER\r\n\r\nGIVEN balance IS A Money\r\n      `the minimum percentage` IS A NUMBER\r\nGIVETH A DEONTIC `Card Party` `Card Action`\r\n`credit payment` MEANS\r\n    PARTY Cardholder\r\n    MUST `pay` `the amount paid` PROVIDED `the amount paid` \u003e= `the minimum payment`\r\n    WITHIN 30\r\n    HENCE\r\n        IF `the amount paid` \u003e= balance's `the amount`\r\n        THEN FULFILLED  -- Paid in full\r\n        ELSE `credit payment` `the new balance` `the minimum percentage`  -- Recurse with new balance\r\n    LEST BREACH BY Cardholder BECAUSE \"missed credit card payment\"\r\n    WHERE\r\n        `the minimum payment` MEANS balance's `the amount` * `the minimum percentage`\r\n        `the new balance` MEANS Money WITH `the amount` IS balance's `the amount` - `the minimum payment`, `the currency` IS balance's `the currency`\r\n\r\n-- Milestone-based payment pattern\r\nDECLARE Milestone IS ONE OF\r\n    Design\r\n    Development\r\n    Testing\r\n    Delivery\r\n\r\nDECLARE `Milestone Action` IS ONE OF\r\n    `complete milestone` HAS `the completed milestone` IS A Milestone\r\n    `pay milestone` HAS `the paid milestone` IS A Milestone\r\n\r\nGIVEN milestones IS A LIST OF Milestone\r\nGIVETH A DEONTIC `Service Party` `Milestone Action`\r\n`milestone payments` MEANS\r\n    CONSIDER milestones\r\n    WHEN EMPTY THEN FULFILLED\r\n    WHEN m FOLLOWED BY rest THEN\r\n        PARTY Provider\r\n        MUST `complete milestone` m\r\n        WITHIN 30\r\n        HENCE\r\n            PARTY Client\r\n            MUST `pay milestone` m\r\n            WITHIN 14\r\n            HENCE `milestone payments` rest  -- Recurse\r\n            LEST BREACH BY Client BECAUSE \"client failed to pay milestone\"\r\n        LEST BREACH BY Provider BECAUSE \"provider failed to complete milestone\"\r\n\r\n--------------------------------------------------------------------------------\r\n-- SECTION 9: Security Deposit (Exercise Solution)\r\n--------------------------------------------------------------------------------\r\n\r\n-- Exercise: at the end of the lease, the landlord must either refund the\r\n-- deposit in full within 14 days, or send an itemized list of deductions\r\n-- within 7 days and refund the balance within 21 days.\r\n\r\nDECLARE `Tenancy Party` IS ONE OF\r\n    `the landlord`\r\n    `the tenant`\r\n\r\nDECLARE `Tenancy Action` IS ONE OF\r\n    `refund the deposit in full`\r\n    `send an itemized list of deductions`\r\n    `refund the balance`\r\n\r\nGIVETH A DEONTIC `Tenancy Party` `Tenancy Action`\r\n`deposit return obligation` MEANS\r\n    (PARTY `the landlord`\r\n     MUST `refund the deposit in full`\r\n     WITHIN 14\r\n     HENCE FULFILLED\r\n     LEST BREACH BY `the landlord` BECAUSE \"failed to refund the deposit\")\r\n    ROR\r\n    (PARTY `the landlord`\r\n     MUST `send an itemized list of deductions`\r\n     WITHIN 7\r\n     HENCE\r\n        PARTY `the landlord`\r\n        MUST `refund the balance`\r\n        WITHIN 21\r\n        HENCE FULFILLED\r\n        LEST BREACH BY `the landlord` BECAUSE \"failed to refund the balance\"\r\n     LEST BREACH BY `the landlord` BECAUSE \"failed to account for deductions\")\r\n\r\n--------------------------------------------------------------------------------\r\n-- SECTION 10: Test Traces\r\n--------------------------------------------------------------------------------\r\n\r\n-- Escrow: happy path\r\n#TRACE `escrow arrangement` (USD 5000) AT 0 WITH\r\n    PARTY `the buyer` DOES `deposit funds` (USD 5000) AT 2\r\n    PARTY `the seller` DOES `deliver goods` AT 10\r\n    PARTY `the escrow agent` DOES `release funds to seller` AT 12\r\n\r\n-- Escrow: seller fails to deliver, funds returned\r\n#TRACE `escrow arrangement` (USD 5000) AT 0 WITH\r\n    PARTY `the buyer` DOES `deposit funds` (USD 5000) AT 2\r\n    (`WAIT UNTIL` 17)\r\n    PARTY `the escrow agent` DOES `return funds to buyer` AT 18\r\n\r\n-- Milestones: first milestone completed and paid\r\n#TRACE `milestone payments` (LIST Design, Development) AT 0 WITH\r\n    PARTY Provider DOES `complete milestone` Design AT 10\r\n    PARTY Client DOES `pay milestone` Design AT 20\r\n    PARTY Provider DOES `complete milestone` Development AT 45\r\n    PARTY Client DOES `pay milestone` Development AT 55\r\n\r\n-- Deposit return: full refund on time\r\n#TRACE `deposit return obligation` AT 0 WITH\r\n    PARTY `the landlord` DOES `refund the deposit in full` AT 10\r\n\r\n-- Deposit return: itemized deductions then balance refunded\r\n#TRACE `deposit return obligation` AT 0 WITH\r\n    PARTY `the landlord` DOES `send an itemized list of deductions` AT 5\r\n    PARTY `the landlord` DOES `refund the balance` AT 20\r\n\r\n--------------------------------------------------------------------------------\r\n-- SECTION 11: Evaluations\r\n--------------------------------------------------------------------------------\r\n\r\n-- Monthly payment for the example loan (expected: approximately 2256.45)\r\n#EVAL `monthly payment amount` `the example loan`\r\n\r\n-- Payment validation\r\n#EVAL `is valid payment` (USD 2256.44) (USD 2256.45)   -- TRUE (within rounding)\r\n#EVAL `is valid payment` (USD 2200) (USD 2256.45)      -- FALSE (short)\r\n#EVAL `is valid payment` (SGD 2256.45) (USD 2256.45)   -- FALSE (wrong currency)\n\u003c/code\u003e\u003c/pre\u003e\n\u003chr\u003e\n\u003ch2 id=\"summary\"\u003eSummary\u003c/h2\u003e\n\u003ctable\u003e\n\u003cthead\u003e\n\u003ctr\u003e\n\u003cth\u003ePattern\u003c/th\u003e\n\u003cth\u003eUse Case\u003c/th\u003e\n\u003c/tr\u003e\n\u003c/thead\u003e\n\u003ctbody\u003e\n\u003ctr\u003e\n\u003ctd\u003e\u003cstrong\u003eRecursive obligations\u003c/strong\u003e\u003c/td\u003e\n\u003ctd\u003eInstallment payments, subscriptions\u003c/td\u003e\n\u003c/tr\u003e\n\u003ctr\u003e\n\u003ctd\u003e\u003cstrong\u003ePenalty structures\u003c/strong\u003e\u003c/td\u003e\n\u003ctd\u003eLate fees, interest\u003c/td\u003e\n\u003c/tr\u003e\n\u003ctr\u003e\n\u003ctd\u003e\u003cstrong\u003eDefault acceleration\u003c/strong\u003e\u003c/td\u003e\n\u003ctd\u003eFull balance on default\u003c/td\u003e\n\u003c/tr\u003e\n\u003ctr\u003e\n\u003ctd\u003e\u003cstrong\u003eMulti-party\u003c/strong\u003e\u003c/td\u003e\n\u003ctd\u003eEscrow, three-way agreements\u003c/td\u003e\n\u003c/tr\u003e\n\u003ctr\u003e\n\u003ctd\u003e\u003cstrong\u003eRAND\u003c/strong\u003e\u003c/td\u003e\n\u003ctd\u003eMultiple parallel obligations\u003c/td\u003e\n\u003c/tr\u003e\n\u003ctr\u003e\n\u003ctd\u003e\u003cstrong\u003eROR\u003c/strong\u003e\u003c/td\u003e\n\u003ctd\u003eAlternative ways to fulfill\u003c/td\u003e\n\u003c/tr\u003e\n\u003c/tbody\u003e\n\u003c/table\u003e\n\u003cp\u003eKey insight: Complex contracts are \u003cstrong\u003ecompositions of simpler patterns\u003c/strong\u003e, often with recursion for repeated obligations.\u003c/p\u003e\n\u003chr\u003e\n\u003cp\u003eNext, \u003ca href=\"/l4/courses/advanced/module-a4-production\"\u003eModule A4: Production patterns\u003c/a\u003e shows how to structure, test and ship a real rulebase.\u003c/p\u003e\n"])</script><script>self.__next_f.push([1,"15:[\"$\",\"$L1e\",null,{\"navSections\":[{\"title\":\"\",\"items\":[{\"title\":\"Overview\",\"href\":\"courses\",\"children\":\"$undefined\"},{\"title\":\"Overview\",\"href\":\"courses/foundation\",\"children\":\"$undefined\"},{\"title\":\"0. Introduction to L4\",\"href\":\"courses/foundation/module-0-introduction\",\"children\":\"$undefined\"},{\"title\":\"1. Your first legal rule\",\"href\":\"courses/foundation/module-1-first-rule\",\"children\":\"$undefined\"},{\"title\":\"2. Legal entities and relationships\",\"href\":\"courses/foundation/module-2-entities\",\"children\":\"$undefined\"},{\"title\":\"3. Control flow\",\"href\":\"courses/foundation/module-3-control-flow\",\"children\":\"$undefined\"},{\"title\":\"4. Decision logic\",\"href\":\"courses/foundation/module-4-decision-logic\",\"children\":\"$undefined\"},{\"title\":\"5. Functions\",\"href\":\"courses/foundation/module-5-functions\",\"children\":\"$undefined\"},{\"title\":\"6. Regulative rules\",\"href\":\"courses/foundation/module-6-regulative\",\"children\":\"$undefined\"},{\"title\":\"7. Putting it together\",\"href\":\"courses/foundation/module-7-capstone\",\"children\":\"$undefined\"},{\"title\":\"Overview\",\"href\":\"courses/advanced\",\"children\":\"$undefined\"},{\"title\":\"A1. Real regulatory schemes\",\"href\":\"courses/advanced/module-a1-regulatory\",\"children\":\"$undefined\"},{\"title\":\"A2. Cross-cutting concerns\",\"href\":\"courses/advanced/module-a2-cross-cutting\",\"children\":\"$undefined\"},{\"title\":\"A3. Contracts in depth\",\"href\":\"courses/advanced/module-a3-contracts\",\"children\":\"$undefined\"},{\"title\":\"A4. Production patterns\",\"href\":\"courses/advanced/module-a4-production\",\"children\":\"$undefined\"}]}],\"toc\":[],\"htmlContent\":\"$1f\",\"pager\":{\"prev\":\"$15:props:navSections:0:items:12\",\"next\":\"$15:props:navSections:0:items:14\"}}]\n"])</script><script>self.__next_f.push([1,"1b:[[\"$\",\"meta\",\"0\",{\"charSet\":\"utf-8\"}],[\"$\",\"meta\",\"1\",{\"name\":\"viewport\",\"content\":\"width=device-width, initial-scale=1\"}]]\n"])</script><script>self.__next_f.push([1,"18:null\n"])</script><script>self.__next_f.push([1,"1d:[[\"$\",\"title\",\"0\",{\"children\":\"Module A3: Contracts in depth | L4 Documentation\"}],[\"$\",\"meta\",\"1\",{\"name\":\"description\",\"content\":\"In this module, you'll learn advanced contract modeling including complex payment terms, recursive obligations, and penalty structures. Find the full working…\"}],[\"$\",\"meta\",\"2\",{\"name\":\"robots\",\"content\":\"index, follow\"}],[\"$\",\"link\",\"3\",{\"rel\":\"canonical\",\"href\":\"https://legalese.com/l4/courses/advanced/module-a3-contracts\"}],[\"$\",\"meta\",\"4\",{\"property\":\"og:title\",\"content\":\"Module A3: Contracts in depth | L4 Documentation\"}],[\"$\",\"meta\",\"5\",{\"property\":\"og:description\",\"content\":\"In this module, you'll learn advanced contract modeling including complex payment terms, recursive obligations, and penalty structures. Find the full working…\"}],[\"$\",\"meta\",\"6\",{\"property\":\"og:url\",\"content\":\"https://legalese.com/l4/courses/advanced/module-a3-contracts\"}],[\"$\",\"meta\",\"7\",{\"property\":\"og:image\",\"content\":\"https://legalese.com/opengraph/ai-is-eating-law-v2.jpg\"}],[\"$\",\"meta\",\"8\",{\"name\":\"twitter:card\",\"content\":\"summary_large_image\"}],[\"$\",\"meta\",\"9\",{\"name\":\"twitter:title\",\"content\":\"Module A3: Contracts in depth | L4 Documentation\"}],[\"$\",\"meta\",\"10\",{\"name\":\"twitter:description\",\"content\":\"In this module, you'll learn advanced contract modeling including complex payment terms, recursive obligations, and penalty structures. Find the full working…\"}],[\"$\",\"meta\",\"11\",{\"name\":\"twitter:image\",\"content\":\"https://legalese.com/opengraph/ai-is-eating-law-v2.jpg\"}]]\n"])</script></body></html>

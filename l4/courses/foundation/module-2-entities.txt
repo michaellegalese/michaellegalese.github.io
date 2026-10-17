@@ -1,0 +1,773 @@
+1:"$Sreact.fragment"
+2:I[39756,["/_next/static/chunks/0ypf.t599.7y6.js","/_next/static/chunks/0t2xr05rlu96l.js"],"default"]
+3:I[37457,["/_next/static/chunks/0ypf.t599.7y6.js","/_next/static/chunks/0t2xr05rlu96l.js"],"default"]
+4:I[22016,["/_next/static/chunks/0ypf.t599.7y6.js","/_next/static/chunks/0t2xr05rlu96l.js","/_next/static/chunks/11.9ba59t4-it.js"],""]
+5:I[5500,["/_next/static/chunks/0ypf.t599.7y6.js","/_next/static/chunks/0t2xr05rlu96l.js","/_next/static/chunks/11.9ba59t4-it.js"],"Image"]
+10:I[68027,["/_next/static/chunks/0ypf.t599.7y6.js","/_next/static/chunks/0t2xr05rlu96l.js"],"default",1]
+:HL["/_next/static/chunks/0xhryq7f66rdk.css","style"]
+:HL["/_next/static/chunks/0s9wju.j1~_xn.css","style"]
+:HL["/_next/static/media/248e1dc0efc99276-s.p.0ft7o6kv5bp14.woff2","font",{"crossOrigin":"","type":"font/woff2"}]
+:HL["/_next/static/media/83afe278b6a6bb3c-s.p.0q-301v4kxxnr.woff2","font",{"crossOrigin":"","type":"font/woff2"}]
+0:{"P":null,"c":["","l4","courses","foundation","module-2-entities"],"q":"","i":false,"f":[[["",{"children":["l4",{"children":[["slug","courses/foundation/module-2-entities","oc",null],{"children":["__PAGE__",{}]}]}]},"$undefined","$undefined",16],[["$","$1","c",{"children":[[["$","link","0",{"rel":"stylesheet","href":"/_next/static/chunks/0xhryq7f66rdk.css","precedence":"next","crossOrigin":"$undefined","nonce":"$undefined"}],["$","script","script-0",{"src":"/_next/static/chunks/0ypf.t599.7y6.js","async":true,"nonce":"$undefined"}],["$","script","script-1",{"src":"/_next/static/chunks/0t2xr05rlu96l.js","async":true,"nonce":"$undefined"}]],["$","html",null,{"lang":"en","children":[["$","head",null,{"children":[["$","meta",null,{"httpEquiv":"Content-Security-Policy","content":"default-src 'self' https://legalese.com; script-src 'self' https://legalese.com 'unsafe-inline' https://cdnjs.cloudflare.com; style-src 'self' https://legalese.com 'unsafe-inline'; font-src 'self' https://legalese.com; img-src 'self' https://legalese.com https://workoscdn.com https://*.googleusercontent.com; connect-src 'self' https://legalese.com https://legalese.cloud https://ai.legalese.cloud https://*.workos.com; frame-src 'self' https://legalese.com https://jl4.legalese.com https://*.workos.com; object-src 'none'; base-uri 'self' https://legalese.com"}],["$","link",null,{"rel":"apple-touch-icon","sizes":"180x180","href":"/favicon/apple-touch-icon.png"}],["$","link",null,{"rel":"icon","type":"image/png","sizes":"32x32","href":"/favicon/favicon-32x32.png"}],["$","link",null,{"rel":"icon","type":"image/png","sizes":"16x16","href":"/favicon/favicon-16x16.png"}],["$","link",null,{"rel":"manifest","href":"/favicon/site.webmanifest"}],["$","link",null,{"rel":"shortcut icon","href":"/favicon/favicon.ico"}],["$","meta",null,{"name":"msapplication-TileColor","content":"#000000"}],["$","meta",null,{"name":"msapplication-config","content":"/favicon/browserconfig.xml"}],["$","meta",null,{"name":"theme-color","content":"#000"}],["$","link",null,{"rel":"alternate","type":"application/rss+xml","href":"/feed.xml"}]]}],["$","body",null,{"className":"inter_5901b7c6-module__ec5Qua__variable merriweather_b1e99710-module__84TlHG__variable","children":[["$","div",null,{"className":"min-h-screen","children":["$","$L2",null,{"parallelRouterKey":"children","error":"$undefined","errorStyles":"$undefined","errorScripts":"$undefined","template":["$","$L3",null,{}],"templateStyles":"$undefined","templateScripts":"$undefined","notFound":[["$","div",null,{"className":"min-h-screen flex flex-col","children":["$","div",null,{"className":"container mx-auto px-5 flex-1 flex flex-col","children":[["$","header",null,{"className":"flex flex-col md:flex-row items-center justify-between py-8 mb-6","children":["$","$L4",null,{"href":"/","className":"flex items-center gap-1 hover:opacity-80 transition-opacity","children":[["$","$L5",null,{"src":"/assets/logos/legalese-logo.png","alt":"§","width":42,"height":42,"className":"rounded"}],["$","span",null,{"className":"text-2xl font-bold tracking-tight font-merriweather","children":"Legalese"}]]}]}],["$","div",null,{"className":"flex-1 flex items-center justify-center","children":["$","div",null,{"className":"text-center px-6 py-16","children":[["$","h1",null,{"className":"text-8xl font-bold text-gray-200 mb-4","children":404}],["$","h2",null,{"className":"text-2xl font-semibold text-gray-900 mb-4 font-merriweather","children":"Not Found"}],["$","p",null,{"className":"text-gray-600 mb-8 max-w-md","children":"The page you're looking for doesn't exist or may have been moved."}],["$","$L4",null,{"href":"/","className":"inline-block px-6 py-2 bg-accent text-white rounded-md hover:bg-accent-hover transition-colors","children":"Go to Homepage"}]]}]}]]}]}],[]],"forbidden":"$undefined","unauthorized":"$undefined"}]}],["$","footer",null,{"className":"bg-gray-900 text-white","children":["$","div",null,{"className":"container mx-auto px-5","children":["$","div",null,{"className":"py-16","children":[["$","div",null,{"className":"grid grid-cols-1 md:grid-cols-4 gap-12 mb-12","children":[["$","div",null,{"className":"md:col-span-1","children":[["$","div",null,{"className":"flex items-center","children":[["$","$L5",null,{"src":"/assets/logos/legalese-logo.png","alt":"§","width":36,"height":36,"className":"rounded invert"}],["$","h3",null,{"className":"text-2xl font-bold tracking-tight ml-1","children":"Legalese"}]]}],"$L6"]}],"$L7","$L8","$L9"]}],"$La"]}]}]}]]}]]}]]}],{"children":["$Lb",{"children":["$Lc",{"children":["$Ld",{},null,false,null]},null,false,"$@e"]},null,false,null]},null,false,null],"$Lf",false]],"m":"$undefined","G":["$10",["$L11"]],"S":true,"h":null,"s":"$undefined","l":"$undefined","p":"$undefined","d":"$undefined","b":"iJUXAyHcmcW99cMci3ei9"}
+12:I[79520,["/_next/static/chunks/0ypf.t599.7y6.js","/_next/static/chunks/0t2xr05rlu96l.js","/_next/static/chunks/0uxaa7wo_wmcw.js"],""]
+13:I[85295,["/_next/static/chunks/0ypf.t599.7y6.js","/_next/static/chunks/0t2xr05rlu96l.js","/_next/static/chunks/0uxaa7wo_wmcw.js"],"default"]
+14:I[41529,["/_next/static/chunks/0ypf.t599.7y6.js","/_next/static/chunks/0t2xr05rlu96l.js","/_next/static/chunks/0uxaa7wo_wmcw.js"],"default"]
+16:I[97367,["/_next/static/chunks/0ypf.t599.7y6.js","/_next/static/chunks/0t2xr05rlu96l.js"],"OutletBoundary"]
+17:"$Sreact.suspense"
+1a:I[97367,["/_next/static/chunks/0ypf.t599.7y6.js","/_next/static/chunks/0t2xr05rlu96l.js"],"ViewportBoundary"]
+1c:I[97367,["/_next/static/chunks/0ypf.t599.7y6.js","/_next/static/chunks/0t2xr05rlu96l.js"],"MetadataBoundary"]
+6:["$","p",null,{"className":"text-gray-400 text-sm mb-4","children":"AI is eating law"}]
+7:["$","div",null,{"children":[["$","h4",null,{"className":"font-bold mb-4 text-gray-300","children":"Company"}],["$","ul",null,{"className":"space-y-2","children":[[["$","li","about",{"children":["$","$L4",null,{"href":"/about","className":"text-gray-400 hover:text-white transition-colors text-sm","children":"About us"}]}],["$","li","team",{"children":["$","$L4",null,{"href":"/team","className":"text-gray-400 hover:text-white transition-colors text-sm","children":"Team"}]}],["$","li","media",{"children":["$","$L4",null,{"href":"/media","className":"text-gray-400 hover:text-white transition-colors text-sm","children":"Press & Media"}]}]],[],["$","li",null,{"children":["$","$L4",null,{"href":"/posts","className":"text-gray-400 hover:text-white transition-colors text-sm","children":"Blog"}]}]]}]]}]
+8:["$","div",null,{"children":[["$","h4",null,{"className":"font-bold mb-4 text-gray-300","children":"Resources"}],["$","ul",null,{"className":"space-y-2","children":[["$","li","l4-documentation",{"children":["$","a",null,{"href":"https://legalese.com/l4","target":"_blank","rel":"noopener noreferrer","className":"text-gray-400 hover:text-white transition-colors text-sm","children":"L4 Documentation"}]}],["$","li","vscode-extension",{"children":["$","a",null,{"href":"https://marketplace.visualstudio.com/items?itemName=Legalese.l4-vscode","target":"_blank","rel":"noopener noreferrer","className":"text-gray-400 hover:text-white transition-colors text-sm","children":"L4 VS Code Extension"}]}],["$","li","l4-web-ide",{"children":["$","a",null,{"href":"https://jl4.legalese.com","target":"_blank","rel":"noopener noreferrer","className":"text-gray-400 hover:text-white transition-colors text-sm","children":"L4 Web IDE"}]}],["$","li","l4-console",{"children":["$","a",null,{"href":"https://legalese.com/console","target":"_blank","rel":"noopener noreferrer","className":"text-gray-400 hover:text-white transition-colors text-sm","children":"Cloud Console"}]}],["$","li","l4-console copy",{"children":["$","a",null,{"href":"https://legalese.com/compare","target":"_blank","rel":"noopener noreferrer","className":"text-gray-400 hover:text-white transition-colors text-sm","children":"Compare AI Legal Interpretations"}]}],["$","li","provable",{"children":["$","a",null,{"href":"https://provable.legalese.com","target":"_blank","rel":"noopener noreferrer","className":"text-gray-400 hover:text-white transition-colors text-sm","children":"Provable Skill Marketplace"}]}],["$","li","github",{"children":["$","a",null,{"href":"https://github.com/legalese/l4-ide","target":"_blank","rel":"noopener noreferrer","className":"text-gray-400 hover:text-white transition-colors text-sm","children":"GitHub"}]}]]}]]}]
+9:["$","div",null,{"children":[["$","h4",null,{"className":"font-bold mb-4 text-gray-300","children":"Contact"}],["$","ul",null,{"className":"space-y-2","children":[[["$","li","community",{"children":["$","$L4",null,{"href":"/community","className":"text-gray-400 hover:text-white transition-colors text-sm","children":"Community"}]}],["$","li","code-of-conduct",{"children":["$","$L4",null,{"href":"/code-of-conduct","className":"text-gray-400 hover:text-white transition-colors text-sm","children":"Code of Conduct"}]}]],[["$","li","discord",{"children":["$","a",null,{"href":"https://discord.gg/Q7a7NSEdNy","target":"_blank","rel":"noopener noreferrer","className":"text-gray-400 hover:text-white transition-colors text-sm","children":"Discord"}]}],["$","li","x-twitter",{"children":["$","a",null,{"href":"https://x.com/legalese","target":"_blank","rel":"noopener noreferrer","className":"text-gray-400 hover:text-white transition-colors text-sm","children":"Legalese on X"}]}]]]}]]}]
+a:["$","div",null,{"className":"border-t border-gray-800 pt-8 flex flex-col md:flex-row justify-between items-center gap-4","children":[["$","p",null,{"className":"text-gray-500 text-sm","children":["© ",2026," Legalese Pte. Ltd., Singapore. All rights reserved."]}],["$","div",null,{"className":"flex gap-6","children":[["$","$L4","terms",{"href":"/terms","className":"text-gray-500 hover:text-white transition-colors text-sm","children":"Terms of Use"}],["$","$L4","privacy",{"href":"/privacy","className":"text-gray-500 hover:text-white transition-colors text-sm","children":"Privacy & Cookies"}]]}]]}]
+b:["$","$1","c",{"children":[[["$","link","0",{"rel":"stylesheet","href":"/_next/static/chunks/0s9wju.j1~_xn.css","precedence":"next","crossOrigin":"$undefined","nonce":"$undefined"}],["$","script","script-0",{"src":"/_next/static/chunks/0uxaa7wo_wmcw.js","async":true,"nonce":"$undefined"}]],[["$","$L2",null,{"parallelRouterKey":"children","error":"$undefined","errorStyles":"$undefined","errorScripts":"$undefined","template":["$","$L3",null,{}],"templateStyles":"$undefined","templateScripts":"$undefined","notFound":"$undefined","forbidden":"$undefined","unauthorized":"$undefined"}],["$","$L12",null,{"src":"https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"}],["$","$L12",null,{"src":"/hljs-l4/l4.min.js"}],["$","$L13",null,{}],["$","$L14",null,{}],["$","style",null,{"dangerouslySetInnerHTML":{"__html":"\npre code.hljs{display:block;overflow-x:auto;padding:0.2rem 0.4rem;font-size:13px;color:#104e64;background:#fdfdfd}\ncode.hljs .hljs-keyword{color:#0000ff;font-weight:500}\ncode.hljs .hljs-literal{color:#0000ff}\ncode.hljs .hljs-built_in{color:#267f99}\ncode.hljs .hljs-string{color:#a31515}\ncode.hljs .hljs-number{color:#098658}\ncode.hljs .hljs-comment{color:#008000;font-style:italic}\ncode.hljs .hljs-title{color:#795e26;font-weight:600}\ncode.hljs .hljs-variable{color:#001080}\ncode.hljs .hljs-doctag{color:#ffbd33}\ncode.hljs .hljs-formula{color:#af00db;font-weight:500}\n"}}]]]}]
+c:["$","$1","c",{"children":[null,["$","$L2",null,{"parallelRouterKey":"children","error":"$undefined","errorStyles":"$undefined","errorScripts":"$undefined","template":["$","$L3",null,{}],"templateStyles":"$undefined","templateScripts":"$undefined","notFound":"$undefined","forbidden":"$undefined","unauthorized":"$undefined"}]]}]
+d:["$","$1","c",{"children":["$L15",[["$","script","script-0",{"src":"/_next/static/chunks/0fl~me.qwn48c.js","async":true,"nonce":"$undefined"}]],["$","$L16",null,{"children":["$","$17",null,{"name":"Next.MetadataOutlet","children":"$@18"}]}]]}]
+19:[]
+e:"$W19"
+f:["$","$1","h",{"children":[null,["$","$L1a",null,{"children":"$L1b"}],["$","div",null,{"hidden":true,"children":["$","$L1c",null,{"children":["$","$17",null,{"name":"Next.Metadata","children":"$L1d"}]}]}],["$","meta",null,{"name":"next-size-adjust","content":""}]]}]
+11:["$","link","0",{"rel":"stylesheet","href":"/_next/static/chunks/0xhryq7f66rdk.css","precedence":"next","crossOrigin":"$undefined","nonce":"$undefined"}]
+1e:I[90160,["/_next/static/chunks/0ypf.t599.7y6.js","/_next/static/chunks/0t2xr05rlu96l.js","/_next/static/chunks/0uxaa7wo_wmcw.js","/_next/static/chunks/0fl~me.qwn48c.js"],"default"]
+1f:T7050,<h1>Module 2: Legal entities and relationships</h1>
+<p>In this module, you'll learn how to model structured legal entities using L4's type system.</p>
+<h2 id="learning-objectives">Learning Objectives</h2>
+<p>By the end of this module, you will be able to:</p>
+<ul>
+<li>Define record types with DECLARE and HAS</li>
+<li>Create enumeration types with IS ONE OF</li>
+<li>Model relationships between entities</li>
+<li>Access fields using the possessive syntax</li>
+<li>Construct record values</li>
+</ul>
+<hr>
+<h2 id="from-strings-to-structured-types">From Strings to Structured Types</h2>
+<h3 id="the-problem-with-strings">The Problem with Strings</h3>
+<p>Using simple text leads to errors and ambiguity. You can't distinguish a charity from a person, access parts (name, address, etc.), or detect typos.</p>
+<h3 id="structured-types-the-solution">Structured Types: The Solution</h3>
+<p>The complete working example:</p>
+<pre><code class="language-l4-file">-- Module 2: Legal Entities and Relationships - Complete Examples
+-- All examples are validated and use natural language identifiers
+
+-- =============================================================================
+-- SECTION 1: Basic Record Types
+-- =============================================================================
+
+-- A person with natural language field names
+DECLARE Person
+    HAS `the person's name` IS A STRING
+        `the person's address` IS A STRING
+        `the person is a governor` IS A BOOLEAN
+
+-- A registered charity
+DECLARE `Registered Charity`
+    HAS `the charity's name` IS A STRING
+        `the registration number` IS A STRING
+        `the registration date` IS A NUMBER
+        `the address` IS A STRING
+
+-- =============================================================================
+-- SECTION 2: Enumeration Types
+-- =============================================================================
+
+-- Charitable purposes from legislation
+DECLARE Purpose IS ONE OF
+    `prevention or relief of poverty`
+    `advancement of education`
+    `advancement of religion`
+    `advancement of health`
+    `advancement of animal welfare`
+    `other purpose` HAS `the description` IS A STRING
+
+-- Status of a charity
+DECLARE Status IS ONE OF
+    Active
+    Suspended HAS `the reason` IS A STRING
+    Deregistered
+
+-- =============================================================================
+-- SECTION 3: Nested Types
+-- =============================================================================
+
+DECLARE `Bank Account`
+    HAS `the bank name` IS A STRING
+        `the account number` IS A STRING
+        `the SWIFT code` IS A STRING
+
+DECLARE Company
+    HAS `the company name` IS A STRING
+        `the jurisdiction` IS A STRING
+        `the bank account` IS A `Bank Account`
+
+-- =============================================================================
+-- SECTION 4: Union Types (Legal Entity)
+-- =============================================================================
+
+DECLARE `Legal Entity` IS ONE OF
+    Individual HAS `the person` IS A Person
+    Corporation HAS `the company` IS A Company
+
+-- =============================================================================
+-- SECTION 5: Pattern Matching
+-- =============================================================================
+
+-- Check if a purpose is charitable
+GIVEN purpose IS A Purpose
+GIVETH A BOOLEAN
+DECIDE `the purpose is charitable` IS
+    CONSIDER purpose
+    WHEN `advancement of education` THEN TRUE
+    WHEN `advancement of animal welfare` THEN TRUE
+    WHEN `prevention or relief of poverty` THEN TRUE
+    WHEN `advancement of health` THEN TRUE
+    WHEN `advancement of religion` THEN TRUE
+    WHEN `other purpose` description THEN FALSE
+    OTHERWISE FALSE
+
+-- Get the name of a legal entity
+GIVEN entity IS A `Legal Entity`
+GIVETH A STRING
+`the entity's name` MEANS
+    CONSIDER entity
+    WHEN Individual person THEN person's `the person's name`
+    WHEN Corporation company THEN company's `the company name`
+
+-- =============================================================================
+-- SECTION 6: Test Data
+-- =============================================================================
+
+-- Create test persons
+`Alice Smith` MEANS Person "Alice Smith" "123 Main Street, Jersey" TRUE
+`Bob Jones` MEANS Person "Bob Jones" "456 High Street, Jersey" FALSE
+
+-- Create test purposes
+`education purpose` MEANS `advancement of education`
+`custom purpose` MEANS `other purpose` "local community support"
+
+-- Create test company
+`Acme Bank Account` MEANS `Bank Account` "DBS Bank" "123-456789-0" "DBSSSGSG"
+`Acme Corporation` MEANS Company "Acme Corp" "Singapore" `Acme Bank Account`
+
+-- Create test legal entities
+`Alice as individual` MEANS Individual `Alice Smith`
+`Acme as corporation` MEANS Corporation `Acme Corporation`
+
+-- =============================================================================
+-- SECTION 7: Tests
+-- =============================================================================
+
+-- Field access tests
+#EVAL `Alice Smith`'s `the person's name`
+#EVAL `Alice Smith`'s `the person is a governor`
+
+-- Nested field access
+#EVAL `Acme Corporation`'s `the bank account`'s `the bank name`
+
+-- Pattern matching tests
+#EVAL `the purpose is charitable` `education purpose`
+#EVAL `the purpose is charitable` `custom purpose`
+
+-- Legal entity name extraction
+#EVAL `the entity's name` `Alice as individual`
+#EVAL `the entity's name` `Acme as corporation`
+</code></pre>
+<pre><code class="language-l4">DECLARE `Registered Charity`
+    HAS `the charity's name` IS A STRING
+        `the registration number` IS A STRING
+        `the registration date` IS A DATE
+        `the charity's address` IS A STRING
+        `the charity's purposes` IS A LIST OF Purpose
+</code></pre>
+<p>Benefits of structured types:</p>
+<ul>
+<li><strong>Prevents errors:</strong> Can't use a person where you need a charity</li>
+<li><strong>Captures relationships:</strong> Links charities to their purposes, addresses</li>
+<li><strong>Enables validation:</strong> L4 checks if all required information is present</li>
+</ul>
+<hr>
+<h2 id="declaring-record-types">Declaring Record Types</h2>
+<p>Use <code>DECLARE</code> with <code>HAS</code> to define record types:</p>
+<pre><code class="language-l4">DECLARE Person
+    HAS `the person's name` IS A STRING
+        `the person's age` IS A NUMBER
+        `the person is an adult` IS A BOOLEAN
+</code></pre>
+<h3 id="syntax-rules">Syntax Rules</h3>
+<ol>
+<li><strong>Indentation matters:</strong> All fields must be indented consistently under <code>HAS</code></li>
+<li><strong>Each field on its own line</strong> (or separated by commas)</li>
+<li><strong>Field names must be unique</strong> within the type</li>
+<li><strong>Use natural language field names</strong> with backticks: <code>`the person's name`</code></li>
+</ol>
+<h3 id="creating-record-values">Creating Record Values</h3>
+<p>Use the type name followed by values in field order:</p>
+<pre><code class="language-l4">alice MEANS Person "Alice" 30 TRUE
+</code></pre>
+<hr>
+<h2 id="enumeration-types">Enumeration Types</h2>
+<h3 id="the-problem-with-free-text">The Problem with Free Text</h3>
+<p>Using strings for categories allows mistakes—typos and inconsistencies go undetected.</p>
+<h3 id="enumerations-the-solution">Enumerations: The Solution</h3>
+<p>Use <code>IS ONE OF</code> to define exact legal categories:</p>
+<pre><code class="language-l4">DECLARE Purpose IS ONE OF
+    `prevention or relief of poverty`
+    `advancement of education`
+    `advancement of religion`
+    `advancement of health`
+    `advancement of animal welfare`
+</code></pre>
+<p>Now only these exact values are allowed—typos are compile-time errors!</p>
+<h3 id="enumerations-with-data">Enumerations with Data</h3>
+<p>Some enum variants can carry additional data:</p>
+<pre><code class="language-l4">DECLARE Purpose IS ONE OF
+    `advancement of education`
+    `advancement of health`
+    `other purpose` HAS `the description` IS A STRING
+</code></pre>
+<p>The <code>other purpose</code> variant includes a description for edge cases.</p>
+<hr>
+<h2 id="pattern-matching-on-enumerations">Pattern Matching on Enumerations</h2>
+<p>Use <code>CONSIDER</code> to handle different variants:</p>
+<pre><code class="language-l4">GIVEN purpose IS A Purpose
+GIVETH A BOOLEAN
+DECIDE `the purpose is charitable` IS
+    CONSIDER purpose
+    WHEN `advancement of education` THEN TRUE
+    WHEN `advancement of health` THEN TRUE
+    WHEN `other purpose` description THEN FALSE
+</code></pre>
+<h3 id="consider-syntax">CONSIDER Syntax</h3>
+<p>The general pattern is:</p>
+<ul>
+<li><code>CONSIDER expression</code></li>
+<li><code>WHEN pattern THEN result</code> (one for each variant)</li>
+<li><code>OTHERWISE default result</code> (optional catch-all)</li>
+</ul>
+<hr>
+<h2 id="connecting-multiple-entities">Connecting Multiple Entities</h2>
+<p>Legal systems involve relationships between entities. A field can reference another type, creating relationships.</p>
+<p>See the <code>Company</code> type in</p>
+<pre><code class="language-l4-file">-- Module 2: Legal Entities and Relationships - Complete Examples
+-- All examples are validated and use natural language identifiers
+
+-- =============================================================================
+-- SECTION 1: Basic Record Types
+-- =============================================================================
+
+-- A person with natural language field names
+DECLARE Person
+    HAS `the person's name` IS A STRING
+        `the person's address` IS A STRING
+        `the person is a governor` IS A BOOLEAN
+
+-- A registered charity
+DECLARE `Registered Charity`
+    HAS `the charity's name` IS A STRING
+        `the registration number` IS A STRING
+        `the registration date` IS A NUMBER
+        `the address` IS A STRING
+
+-- =============================================================================
+-- SECTION 2: Enumeration Types
+-- =============================================================================
+
+-- Charitable purposes from legislation
+DECLARE Purpose IS ONE OF
+    `prevention or relief of poverty`
+    `advancement of education`
+    `advancement of religion`
+    `advancement of health`
+    `advancement of animal welfare`
+    `other purpose` HAS `the description` IS A STRING
+
+-- Status of a charity
+DECLARE Status IS ONE OF
+    Active
+    Suspended HAS `the reason` IS A STRING
+    Deregistered
+
+-- =============================================================================
+-- SECTION 3: Nested Types
+-- =============================================================================
+
+DECLARE `Bank Account`
+    HAS `the bank name` IS A STRING
+        `the account number` IS A STRING
+        `the SWIFT code` IS A STRING
+
+DECLARE Company
+    HAS `the company name` IS A STRING
+        `the jurisdiction` IS A STRING
+        `the bank account` IS A `Bank Account`
+
+-- =============================================================================
+-- SECTION 4: Union Types (Legal Entity)
+-- =============================================================================
+
+DECLARE `Legal Entity` IS ONE OF
+    Individual HAS `the person` IS A Person
+    Corporation HAS `the company` IS A Company
+
+-- =============================================================================
+-- SECTION 5: Pattern Matching
+-- =============================================================================
+
+-- Check if a purpose is charitable
+GIVEN purpose IS A Purpose
+GIVETH A BOOLEAN
+DECIDE `the purpose is charitable` IS
+    CONSIDER purpose
+    WHEN `advancement of education` THEN TRUE
+    WHEN `advancement of animal welfare` THEN TRUE
+    WHEN `prevention or relief of poverty` THEN TRUE
+    WHEN `advancement of health` THEN TRUE
+    WHEN `advancement of religion` THEN TRUE
+    WHEN `other purpose` description THEN FALSE
+    OTHERWISE FALSE
+
+-- Get the name of a legal entity
+GIVEN entity IS A `Legal Entity`
+GIVETH A STRING
+`the entity's name` MEANS
+    CONSIDER entity
+    WHEN Individual person THEN person's `the person's name`
+    WHEN Corporation company THEN company's `the company name`
+
+-- =============================================================================
+-- SECTION 6: Test Data
+-- =============================================================================
+
+-- Create test persons
+`Alice Smith` MEANS Person "Alice Smith" "123 Main Street, Jersey" TRUE
+`Bob Jones` MEANS Person "Bob Jones" "456 High Street, Jersey" FALSE
+
+-- Create test purposes
+`education purpose` MEANS `advancement of education`
+`custom purpose` MEANS `other purpose` "local community support"
+
+-- Create test company
+`Acme Bank Account` MEANS `Bank Account` "DBS Bank" "123-456789-0" "DBSSSGSG"
+`Acme Corporation` MEANS Company "Acme Corp" "Singapore" `Acme Bank Account`
+
+-- Create test legal entities
+`Alice as individual` MEANS Individual `Alice Smith`
+`Acme as corporation` MEANS Corporation `Acme Corporation`
+
+-- =============================================================================
+-- SECTION 7: Tests
+-- =============================================================================
+
+-- Field access tests
+#EVAL `Alice Smith`'s `the person's name`
+#EVAL `Alice Smith`'s `the person is a governor`
+
+-- Nested field access
+#EVAL `Acme Corporation`'s `the bank account`'s `the bank name`
+
+-- Pattern matching tests
+#EVAL `the purpose is charitable` `education purpose`
+#EVAL `the purpose is charitable` `custom purpose`
+
+-- Legal entity name extraction
+#EVAL `the entity's name` `Alice as individual`
+#EVAL `the entity's name` `Acme as corporation`
+</code></pre>
+<p>which has a <code>Bank Account</code> field.</p>
+<p>The <code>elem</code> function (from prelude) checks if an item is in a list.</p>
+<hr>
+<h2 id="field-access">Field Access</h2>
+<h3 id="possessive-syntax">Possessive Syntax</h3>
+<p>Use <code>'s</code> to access record fields. Using the <code>Registered Charity</code> type declared above:</p>
+<pre><code class="language-l4">charity's `the charity's name`        -- the name field
+charity's `the registration number`   -- the registration number field
+charity's `the charity's purposes`    -- the list of purposes
+</code></pre>
+<h3 id="chained-access">Chained Access</h3>
+<p>Access nested fields by chaining:</p>
+<pre><code class="language-l4">company's `the bank account`'s `the bank name`
+-- Gets the bank name field of the bank account field of company
+</code></pre>
+<h3 id="function-application-alternative">Function Application Alternative</h3>
+<p>You can also write field access as function application:</p>
+<pre><code class="language-l4">`the charity's name` charity    -- same as: charity's `the charity's name`
+</code></pre>
+<p>This is useful in complex expressions.</p>
+<hr>
+<h2 id="nested-types">Nested Types</h2>
+<p>Types can contain other types:</p>
+<pre><code class="language-l4">DECLARE `Bank Account`
+    HAS `the bank name` IS A STRING
+        `the account number` IS A STRING
+
+DECLARE Company
+    HAS `the company name` IS A STRING
+        `the bank account` IS A `Bank Account`
+</code></pre>
+<hr>
+<h2 id="union-types-for-alternatives">Union Types for Alternatives</h2>
+<p>When something can be one of several different types:</p>
+<pre><code class="language-l4">DECLARE `Legal Entity` IS ONE OF
+    Individual HAS `the person` IS A Person
+    Corporation HAS `the company` IS A Company
+</code></pre>
+<p>A <code>Legal Entity</code> can be an individual or corporation—each with different data.</p>
+<h3 id="using-union-types">Using Union Types</h3>
+<pre><code class="language-l4">GIVEN entity IS A `Legal Entity`
+GIVETH A STRING
+`the entity's name` MEANS
+    CONSIDER entity
+    WHEN Individual person THEN person's `the person's name`
+    WHEN Corporation company THEN company's `the company name`
+</code></pre>
+<hr>
+<h2 id="real-world-example-charity-registration">Real-World Example: Charity Registration</h2>
+<p>For a complete charity registration system with types, see</p>
+<pre><code class="language-l4-file">-- Module 7: Putting It Together - Capstone Example
+-- A complete charity registration system
+-- All examples are validated and use natural language identifiers
+
+IMPORT prelude
+
+-- =============================================================================
+-- SECTION 1: Type Definitions
+-- =============================================================================
+
+-- Charitable purposes (from legislation)
+DECLARE Purpose IS ONE OF
+    `prevention or relief of poverty`
+    `advancement of education`
+    `advancement of religion`
+    `advancement of health`
+    `advancement of animal welfare`
+    `other purpose` HAS `the description` IS A STRING
+
+-- Legal status of a charity
+DECLARE Status IS ONE OF
+    Active
+    Suspended HAS `the reason` IS A STRING
+    Deregistered
+
+-- Criminal conviction record
+DECLARE Conviction
+    HAS `the description` IS A STRING
+        `the conviction is spent` IS A BOOLEAN
+
+-- Governor of a charity
+DECLARE Governor
+    HAS `the governor's name` IS A STRING
+        `the governor's age` IS A NUMBER
+        `the governor is bankrupt` IS A BOOLEAN
+        `the governor's convictions` IS A LIST OF Conviction
+
+-- The main charity record
+DECLARE `Registered Charity`
+    HAS `the charity's name` IS A STRING
+        `the registration number` IS A STRING
+        `the charity's status` IS A Status
+        `the charity's purposes` IS A LIST OF Purpose
+        `the charity's governors` IS A LIST OF Governor
+
+-- =============================================================================
+-- SECTION 2: Eligibility Rules
+-- =============================================================================
+
+-- A governor must be an adult (at least 18)
+GIVEN governor IS A Governor
+GIVETH A BOOLEAN
+DECIDE `the governor is an adult` IF
+    governor's `the governor's age` >= 18
+
+-- Check for disqualifying convictions (unspent convictions)
+GIVEN governor IS A Governor
+GIVETH A BOOLEAN
+DECIDE `the governor has a disqualifying conviction` IF
+    any (GIVEN c YIELD c's `the conviction is spent` EQUALS FALSE) (governor's `the governor's convictions`)
+
+-- A person can be a governor if they meet all criteria
+GIVEN governor IS A Governor
+GIVETH A BOOLEAN
+DECIDE `the person can be a governor` IF
+    `the governor is an adult` governor
+    AND NOT governor's `the governor is bankrupt`
+    AND NOT `the governor has a disqualifying conviction` governor
+
+-- A purpose is charitable if it's from the approved list
+GIVEN purpose IS A Purpose
+GIVETH A BOOLEAN
+DECIDE `the purpose is charitable` IS
+    CONSIDER purpose
+    WHEN `prevention or relief of poverty` THEN TRUE
+    WHEN `advancement of education` THEN TRUE
+    WHEN `advancement of religion` THEN TRUE
+    WHEN `advancement of health` THEN TRUE
+    WHEN `advancement of animal welfare` THEN TRUE
+    WHEN `other purpose` description THEN FALSE
+
+-- A charity is valid if it has valid purposes and valid governors
+GIVEN charity IS A `Registered Charity`
+GIVETH A BOOLEAN
+DECIDE `the charity is valid` IF
+    charity's `the charity's status` EQUALS Active
+    AND NOT null (charity's `the charity's purposes`)
+    AND all (GIVEN p YIELD `the purpose is charitable` p) (charity's `the charity's purposes`)
+    AND NOT null (charity's `the charity's governors`)
+    AND all (GIVEN g YIELD `the person can be a governor` g) (charity's `the charity's governors`)
+
+-- =============================================================================
+-- SECTION 3: Classification and Fees
+-- =============================================================================
+
+-- Classify a charity by its annual income (multi-way decision with BRANCH)
+GIVEN `the annual income` IS A NUMBER
+GIVETH A STRING
+DECIDE `the charity's size band` IS
+    BRANCH
+        IF `the annual income` &#x3C; 10000 THEN "small"
+        IF `the annual income` &#x3C; 500000 THEN "medium"
+        OTHERWISE "large"
+
+-- The annual filing fee, decomposed with WHERE
+GIVEN charity IS A `Registered Charity`
+      `the annual income` IS A NUMBER
+GIVETH A NUMBER
+`the annual filing fee` MEANS
+    `the base fee` + `the governor levy`
+    WHERE
+        `the base fee` MEANS
+            BRANCH
+                IF `the charity's size band` `the annual income` EQUALS "small" THEN 50
+                IF `the charity's size band` `the annual income` EQUALS "medium" THEN 200
+                OTHERWISE 500
+
+        `the governor levy` MEANS
+            10 * count (charity's `the charity's governors`)
+
+-- =============================================================================
+-- SECTION 4: Filing Obligations
+-- =============================================================================
+
+-- Actors and actions for the regulatory system
+DECLARE Actor IS ONE OF
+    `the Charity`
+    `the Commissioner`
+
+DECLARE Action IS ONE OF
+    `file the annual return`
+    `issue a Required Steps Notice`
+    `correct the deficiencies`
+    `distribute profits to the governors`
+
+-- Annual return filing obligation
+GIVEN charity IS A `Registered Charity`
+GIVETH A DEONTIC Actor Action
+`the annual return obligation` MEANS
+    IF charity's `the charity's status` EQUALS Active
+    THEN
+        PARTY `the Charity`
+        MUST `file the annual return`
+        WITHIN 60
+        HENCE FULFILLED
+        LEST
+            PARTY `the Commissioner`
+            MUST `issue a Required Steps Notice`
+            WITHIN 14
+            HENCE `the correction period`
+            LEST BREACH BY `the Commissioner` BECAUSE "failed to issue notice"
+    ELSE FULFILLED
+
+-- After notice is issued, charity has time to correct
+GIVETH A DEONTIC Actor Action
+`the correction period` MEANS
+    PARTY `the Charity`
+    MUST `correct the deficiencies`
+    WITHIN 30
+    HENCE FULFILLED
+    LEST BREACH BY `the Charity` BECAUSE "failed to correct after notice"
+
+-- A prohibition: charities must not distribute profits to their governors
+GIVETH A DEONTIC Actor Action
+`the profit distribution prohibition` MEANS
+    PARTY `the Charity`
+    SHANT `distribute profits to the governors`
+    HENCE FULFILLED
+    LEST BREACH BY `the Charity` BECAUSE "distributed profits to governors"
+
+-- =============================================================================
+-- SECTION 5: Test Data
+-- =============================================================================
+
+-- Valid governor
+`Jane Smith` MEANS Governor "Jane Smith" 45 FALSE (LIST)
+
+-- Governor with issues
+`John Doe (bankrupt)` MEANS Governor "John Doe" 50 TRUE (LIST)
+
+`unspent conviction` MEANS Conviction "Fraud conviction 2020" FALSE
+`Bob Jones (with conviction)` MEANS Governor "Bob Jones" 40 FALSE (LIST `unspent conviction`)
+
+`Young Person` MEANS Governor "Young Person" 16 FALSE (LIST)
+
+-- Valid charity
+`Jersey Animal Welfare` MEANS `Registered Charity` "Jersey Animal Welfare" "CH001" Active (LIST `advancement of animal welfare`, `advancement of education`) (LIST `Jane Smith`)
+
+-- Charity with invalid governor
+`Problem Charity` MEANS `Registered Charity` "Problem Charity" "CH002" Active (LIST `advancement of education`) (LIST `John Doe (bankrupt)`)
+
+-- Suspended charity
+`Suspended Charity` MEANS `Registered Charity` "Suspended Charity" "CH003" (Suspended "Financial irregularities") (LIST `advancement of health`) (LIST `Jane Smith`)
+
+-- =============================================================================
+-- SECTION 6: Tests
+-- =============================================================================
+
+-- Governor eligibility tests
+#EVAL `the governor is an adult` `Jane Smith`
+#EVAL `the governor is an adult` `Young Person`
+#EVAL `the person can be a governor` `Jane Smith`
+#EVAL `the person can be a governor` `John Doe (bankrupt)`
+#EVAL `the person can be a governor` `Bob Jones (with conviction)`
+#EVAL `the person can be a governor` `Young Person`
+
+-- Charity validity tests
+#EVAL `the charity is valid` `Jersey Animal Welfare`
+#EVAL `the charity is valid` `Problem Charity`
+#EVAL `the charity is valid` `Suspended Charity`
+
+-- Classification and fee tests
+#EVAL `the charity's size band` 5000
+#EVAL `the charity's size band` 60000
+#EVAL `the charity's size band` 750000
+#EVAL `the annual filing fee` `Jersey Animal Welfare` 60000
+
+-- Test filing obligation scenarios
+
+-- Happy path: charity files on time
+#TRACE `the annual return obligation` `Jersey Animal Welfare` AT 0 WITH
+    PARTY `the Charity` DOES `file the annual return` AT 30
+
+-- Suspended charity: no filing required
+#TRACE `the annual return obligation` `Suspended Charity` AT 0 WITH
+
+-- Late filing: the charity misses the 60-day deadline (its day-65 filing
+-- arrives too late), the Commissioner issues a notice, then the charity
+-- corrects within the correction period
+#TRACE `the annual return obligation` `Jersey Animal Welfare` AT 0 WITH
+    PARTY `the Charity` DOES `file the annual return` AT 65
+    PARTY `the Commissioner` DOES `issue a Required Steps Notice` AT 70
+    PARTY `the Charity` DOES `correct the deficiencies` AT 90
+
+-- Prohibition: distributing profits is a breach
+#TRACE `the profit distribution prohibition` AT 0 WITH
+    PARTY `the Charity` DOES `distribute profits to the governors` AT 10
+</code></pre>
+<p>in the capstone module.</p>
+<hr>
+<h2 id="common-mistakes">Common Mistakes</h2>
+<h3 id="1-inconsistent-indentation">1. Inconsistent Indentation</h3>
+<pre><code class="language-l4">-- Wrong: Fields not aligned
+DECLARE Person
+    HAS name IS A STRING
+      age IS A NUMBER
+
+-- Right: All fields aligned
+DECLARE Person
+    HAS name IS A STRING
+        age IS A NUMBER
+</code></pre>
+<h3 id="2-missing-field-values">2. Missing Field Values</h3>
+<pre><code class="language-l4">-- Wrong: Missing age field
+alice MEANS Person "Alice" TRUE
+
+-- Right: Provide all fields
+alice MEANS Person "Alice" 30 TRUE
+</code></pre>
+<hr>
+<h2 id="exercises">Exercises</h2>
+<h3 id="exercise-1-define-a-contract-type">Exercise 1: Define a Contract Type</h3>
+<p>Define types for a simple contract with parties and an amount.</p>
+<details>
+<summary>Solution</summary>
+<pre><code class="language-l4">DECLARE Contract
+    HAS `the first party` IS A STRING
+        `the second party` IS A STRING
+        `the contract amount` IS A NUMBER
+
+`the consulting contract` MEANS Contract "Acme Corp" "Jane Smith" 5000
+
+#EVAL `the consulting contract`'s `the contract amount`
+</code></pre>
+</details>
+<h3 id="exercise-2-employment-status-enumeration">Exercise 2: Employment Status Enumeration</h3>
+<p>Define an enumeration for employment status (full-time, part-time, contractor, terminated).</p>
+<details>
+<summary>Solution</summary>
+<pre><code class="language-l4">DECLARE `Employment Status` IS ONE OF
+    `full time`
+    `part time`
+    contractor
+    terminated
+</code></pre>
+</details>
+<h3 id="exercise-3-pattern-matching">Exercise 3: Pattern Matching</h3>
+<p>Write a function that returns a person's employment description based on their status.</p>
+<details>
+<summary>Solution</summary>
+<pre><code class="language-l4">GIVEN status IS A `Employment Status`
+GIVETH A STRING
+`the employment description` MEANS
+    CONSIDER status
+    WHEN `full time` THEN "employed full time"
+    WHEN `part time` THEN "employed part time"
+    WHEN contractor THEN "engaged as a contractor"
+    WHEN terminated THEN "no longer employed"
+
+#EVAL `the employment description` `full time`
+#EVAL `the employment description` contractor
+</code></pre>
+</details>
+<hr>
+<h2 id="summary">Summary</h2>
+<table>
+<thead>
+<tr>
+<th>Concept</th>
+<th>Syntax</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Record type</td>
+<td><code>DECLARE Type HAS field IS A FieldType</code></td>
+</tr>
+<tr>
+<td>Enumeration</td>
+<td><code>DECLARE Type IS ONE OF Variant1, Variant2</code></td>
+</tr>
+<tr>
+<td>Enum with data</td>
+<td><code>Variant HAS field IS A Type</code></td>
+</tr>
+<tr>
+<td>Create record</td>
+<td><code>Type value1 value2</code> or <code>Type WITH field IS value</code></td>
+</tr>
+<tr>
+<td>Field access</td>
+<td><code>record's field</code></td>
+</tr>
+<tr>
+<td>Pattern match</td>
+<td><code>CONSIDER expr WHEN pattern THEN result</code></td>
+</tr>
+<tr>
+<td>Check list membership</td>
+<td><code>elem item list</code></td>
+</tr>
+</tbody>
+</table>
+<hr>
+<p>Next, <a href="/l4/courses/foundation/module-3-control-flow">Module 3: Control flow</a> covers conditional logic, lists and boolean operators.</p>
+15:["$","$L1e",null,{"navSections":[{"title":"","items":[{"title":"Overview","href":"courses","children":"$undefined"},{"title":"Overview","href":"courses/foundation","children":"$undefined"},{"title":"0. Introduction to L4","href":"courses/foundation/module-0-introduction","children":"$undefined"},{"title":"1. Your first legal rule","href":"courses/foundation/module-1-first-rule","children":"$undefined"},{"title":"2. Legal entities and relationships","href":"courses/foundation/module-2-entities","children":"$undefined"},{"title":"3. Control flow","href":"courses/foundation/module-3-control-flow","children":"$undefined"},{"title":"4. Decision logic","href":"courses/foundation/module-4-decision-logic","children":"$undefined"},{"title":"5. Functions","href":"courses/foundation/module-5-functions","children":"$undefined"},{"title":"6. Regulative rules","href":"courses/foundation/module-6-regulative","children":"$undefined"},{"title":"7. Putting it together","href":"courses/foundation/module-7-capstone","children":"$undefined"},{"title":"Overview","href":"courses/advanced","children":"$undefined"},{"title":"A1. Real regulatory schemes","href":"courses/advanced/module-a1-regulatory","children":"$undefined"},{"title":"A2. Cross-cutting concerns","href":"courses/advanced/module-a2-cross-cutting","children":"$undefined"},{"title":"A3. Contracts in depth","href":"courses/advanced/module-a3-contracts","children":"$undefined"},{"title":"A4. Production patterns","href":"courses/advanced/module-a4-production","children":"$undefined"}]}],"toc":[],"htmlContent":"$1f","pager":{"prev":"$15:props:navSections:0:items:3","next":"$15:props:navSections:0:items:5"}}]
+1b:[["$","meta","0",{"charSet":"utf-8"}],["$","meta","1",{"name":"viewport","content":"width=device-width, initial-scale=1"}]]
+18:null
+1d:[["$","title","0",{"children":"Module 2: Legal entities and relationships | L4 Documentation"}],["$","meta","1",{"name":"description","content":"In this module, you'll learn how to model structured legal entities using L4's type system."}],["$","meta","2",{"name":"robots","content":"index, follow"}],["$","link","3",{"rel":"canonical","href":"https://legalese.com/l4/courses/foundation/module-2-entities"}],["$","meta","4",{"property":"og:title","content":"Module 2: Legal entities and relationships | L4 Documentation"}],["$","meta","5",{"property":"og:description","content":"In this module, you'll learn how to model structured legal entities using L4's type system."}],["$","meta","6",{"property":"og:url","content":"https://legalese.com/l4/courses/foundation/module-2-entities"}],["$","meta","7",{"property":"og:image","content":"https://legalese.com/opengraph/ai-is-eating-law-v2.jpg"}],["$","meta","8",{"name":"twitter:card","content":"summary_large_image"}],["$","meta","9",{"name":"twitter:title","content":"Module 2: Legal entities and relationships | L4 Documentation"}],["$","meta","10",{"name":"twitter:description","content":"In this module, you'll learn how to model structured legal entities using L4's type system."}],["$","meta","11",{"name":"twitter:image","content":"https://legalese.com/opengraph/ai-is-eating-law-v2.jpg"}]]

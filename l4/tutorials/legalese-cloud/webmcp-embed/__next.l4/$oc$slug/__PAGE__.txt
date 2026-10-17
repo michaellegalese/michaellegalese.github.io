@@ -1,0 +1,94 @@
+1:"$Sreact.fragment"
+2:I[90160,["/_next/static/chunks/0ypf.t599.7y6.js","/_next/static/chunks/0t2xr05rlu96l.js","/_next/static/chunks/0uxaa7wo_wmcw.js","/_next/static/chunks/0fl~me.qwn48c.js"],"default"]
+6:I[97367,["/_next/static/chunks/0ypf.t599.7y6.js","/_next/static/chunks/0t2xr05rlu96l.js"],"OutletBoundary"]
+7:"$Sreact.suspense"
+3:Tf9b,<h1>Embed rules in a website</h1>
+<p>Add one <code>&#x3C;script></code> tag to your website so that your visitors' browser AI assistants can run your deployed rules, through <a href="https://webmachinelearning.github.io/webmcp/">WebMCP</a>. An eligibility checker or a clause evaluator on your page becomes a set of tools the visitor's agent can call, with no back end of your own.</p>
+<p><strong>Before you start:</strong> a deployment (<a href="/l4/tutorials/deploying-rules/exporting-rules-for-deployment">Deploy your rules</a>), and access to your site's HTML. For permissions and self-hosted addresses, see <a href="/l4/tutorials/legalese-cloud">Choose an integration</a>.</p>
+<hr>
+<h2 id="the-script">The script</h2>
+<pre><code class="language-html">&#x3C;script
+  src="https://api.legalese.cloud/.webmcp/embed.js"
+  data-org="{orgSlug}"
+  data-scope="insurance-premium"
+  data-tools="auto"
+  data-api-key="sk_..."
+>&#x3C;/script>
+</code></pre>
+<p>The <strong>Integrate</strong> dialog of a deployment in VS Code shows this tag filled in for that deployment.</p>
+<table>
+<thead>
+<tr>
+<th>Attribute</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>src</code></td>
+<td>The script, served by Legalese Cloud or by your own jl4-service.</td>
+</tr>
+<tr>
+<td><code>data-org</code></td>
+<td>Your organization on Legalese Cloud.</td>
+</tr>
+<tr>
+<td><code>data-scope</code></td>
+<td>The deployments to offer: <code>*</code> for all, a deployment name, or several names separated by commas.</td>
+</tr>
+<tr>
+<td><code>data-tools</code></td>
+<td>Which kinds of tools to register (see below). Default: <code>auto</code>.</td>
+</tr>
+<tr>
+<td><code>data-api-key</code></td>
+<td>A Legalese Cloud API key that may run the rules.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="which-tools-are-registered">Which tools are registered</h2>
+<p><code>data-tools</code> chooses kinds of tools, not individual rules:</p>
+<table>
+<thead>
+<tr>
+<th>Value</th>
+<th>Registers</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>rules</code></td>
+<td>One tool per exported rule, which runs that rule directly.</td>
+</tr>
+<tr>
+<td><code>rule-tools</code></td>
+<td>Three search tools: <code>search_rules</code>, <code>get_rule_schema</code> and <code>evaluate_rule</code>.</td>
+</tr>
+<tr>
+<td><code>file-tools</code></td>
+<td><code>list_files</code>, <code>read_file</code>, <code>search_identifier</code> and <code>search_text</code>, to read the L4 source.</td>
+</tr>
+<tr>
+<td><code>auto</code></td>
+<td><code>rules</code> when the scope has at most 10 exported rules, otherwise <code>rule-tools</code>.</td>
+</tr>
+<tr>
+<td><code>all</code></td>
+<td>All of the above.</td>
+</tr>
+</tbody>
+</table>
+<p>Values can be combined: <code>data-tools="rules,file-tools"</code>. With <code>auto</code>, the tools follow your redeploys without any change to the page. The search tools do the same job as the all-deployments MCP server's <code>search_rules</code>, <code>get_schema</code> and <code>evaluate</code>, under different names; see <a href="/l4/tutorials/legalese-cloud/ai-agents#tool-names-in-webmcp">Connect an AI agent</a>.</p>
+<h2 id="the-api-key">The API key</h2>
+<ol>
+<li>Open the <a href="https://legalese.cloud">Legalese Cloud console</a>.</li>
+<li>Create an API key with only the <code>l4:rules</code> and <code>l4:evaluate</code> permissions, limited to the deployment you are embedding.</li>
+<li>Put your organization in <code>data-org</code> and the key in <code>data-api-key</code>.</li>
+</ol>
+<p>The key is part of your page's HTML, so anyone can read it. Treat it as a publishable key, not a secret: leave out <code>l4:read</code>, which the browser does not need, and replace the key if it is misused. See <a href="/l4/tutorials/legalese-cloud#api-keys-and-permissions">API keys and permissions</a>.</p>
+<h2 id="check-it">Check it</h2>
+<p>Open a page with the script in a browser with a WebMCP-aware assistant. Your rules appear among its tools; calling one runs the deployed rule and returns its result.</p>
+0:{"rsc":["$","$1","c",{"children":[["$","$L2",null,{"navSections":[{"title":"","items":[{"title":"Overview","href":"tutorials"},{"title":"Install L4 and write your first rule","href":"tutorials/getting-started/first-l4-file"},{"title":"Draft rules with Legalese AI","href":"tutorials/llm-integration/composing-l4-with-ai"},{"title":"Test your rules","href":"tutorials/getting-started/testing-your-rules"},{"title":"Fix errors","href":"tutorials/getting-started/debugging-type-errors"},{"title":"Encode legislation","href":"tutorials/getting-started/encoding-legislation"},{"title":"Make rules read like law","href":"tutorials/natural-language-functions/optimising-natural-language-generation"},{"title":"Common patterns","href":"tutorials/getting-started/common-patterns"},{"title":"Deploy your rules","href":"tutorials/deploying-rules/exporting-rules-for-deployment"},{"title":"Choose an integration","href":"tutorials/legalese-cloud"},{"title":"Connect an AI agent","href":"tutorials/legalese-cloud/ai-agents"},{"title":"Chat with your rules","href":"tutorials/legalese-cloud/openai-compatible-api"},{"title":"Call rules over REST","href":"tutorials/legalese-cloud/openapi-spec"},{"title":"Embed rules in a website","href":"tutorials/legalese-cloud/webmcp-embed"},{"title":"Using the l4 CLI","href":"tutorials/getting-started/l4-cli"},{"title":"Manage rules in git and CI","href":"tutorials/getting-started/version-control-for-rules"}]}],"toc":[],"htmlContent":"$3","pager":{"prev":"$0:rsc:props:children:0:props:navSections:0:items:12","next":"$0:rsc:props:children:0:props:navSections:0:items:14"}}],["$L4"],"$L5"]}],"isPartial":false,"staleTime":300,"varyParams":null,"buildId":"iJUXAyHcmcW99cMci3ei9"}
+4:["$","script","script-0",{"src":"/_next/static/chunks/0fl~me.qwn48c.js","async":true}]
+5:["$","$L6",null,{"children":["$","$7",null,{"name":"Next.MetadataOutlet","children":"$@8"}]}]
+8:null

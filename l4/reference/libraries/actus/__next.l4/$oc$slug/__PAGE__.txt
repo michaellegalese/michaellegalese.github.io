@@ -1,0 +1,144 @@
+1:"$Sreact.fragment"
+2:I[90160,["/_next/static/chunks/0ypf.t599.7y6.js","/_next/static/chunks/0t2xr05rlu96l.js","/_next/static/chunks/0uxaa7wo_wmcw.js","/_next/static/chunks/0fl~me.qwn48c.js"],"default"]
+6:I[97367,["/_next/static/chunks/0ypf.t599.7y6.js","/_next/static/chunks/0t2xr05rlu96l.js"],"OutletBoundary"]
+7:"$Sreact.suspense"
+3:T1e6c,<h1>actus</h1>
+<p>An L4 implementation of ACTUS, the Algorithmic Contract Types Unified Standards (<a href="https://www.actusfrf.org">actusfrf.org</a>): types and functions for modelling standardised financial contracts.</p>
+<p><code>IMPORT actus</code> gives you every module below. To use only part of it, import a module by name, such as <code>IMPORT `actus-core` </code>.</p>
+<h2 id="modules">Modules</h2>
+<table>
+<thead>
+<tr>
+<th>Module</th>
+<th>Contents</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>actus</code></td>
+<td>Everything below, plus the evaluation engine</td>
+</tr>
+<tr>
+<td><code>actus-core</code></td>
+<td>Contract types, roles and other enumerations</td>
+</tr>
+<tr>
+<td><code>actus-terms</code></td>
+<td>Contract terms</td>
+</tr>
+<tr>
+<td><code>actus-state</code></td>
+<td>Contract state</td>
+</tr>
+<tr>
+<td><code>actus-events</code></td>
+<td>Event types and events</td>
+</tr>
+<tr>
+<td><code>actus-daycount</code></td>
+<td>Day count conventions and year fractions</td>
+</tr>
+<tr>
+<td><code>actus-schedule</code></td>
+<td>Schedule generation</td>
+</tr>
+</tbody>
+</table>
+<h2 id="core-types-actus-core">Core types (<code>actus-core</code>)</h2>
+<p><strong>Contract Type Taxonomy</strong> (~32 ACTUS contract types organised into families):</p>
+<ul>
+<li><code>Basic Contract Type</code> — PAM, LAM, NAM, ANN, CLM, CSH, STK, UMP, COM</li>
+<li><code>Exotic Basic Contract Type</code> — LAX, NAX, ANX</li>
+<li><code>Combined Contract Type</code> — SWAPS, SWPPV, OPTNS, FUTUR, FXOUT, CAPFL, BCS</li>
+<li><code>Credit Enhancement Contract Type</code> — CEG, CEC, MAR</li>
+</ul>
+<p><strong>Contract Role</strong> — RPA, RPL, CLO, CNO, COL, LG, ST, BUY, SEL, RFL, PFL, RF, PF</p>
+<ul>
+<li><code>`role sign`</code> — sign multiplier for payoff calculations (+1 or -1)</li>
+</ul>
+<p><strong>Contract Performance</strong> — PF (performant), DL (delayed), DQ (delinquent), DF (default), MA (matured), TE (terminated)</p>
+<ul>
+<li><code>`is non-performing`</code>, <code>`is active`</code> — performance predicates</li>
+</ul>
+<p><strong>Day Count Convention</strong> — AA, A360, A365, <code>30E360</code>, <code>30E360ISDA</code>, BUS252; <code>`days in year for`</code> gives the days in a year under a convention</p>
+<p><strong>Other Enums:</strong></p>
+<ul>
+<li><code>End of Month Convention</code> — EOM, SD, EOMP</li>
+<li><code>Business Day Convention</code> — SCR, SCRF, SCRP, SCRMF, SCRMP</li>
+<li><code>Calendar Type</code> — NoCalendar, MondayToFriday, Calendar</li>
+<li><code>Period Unit</code> — Days, Weeks, Months, Quarters, Years</li>
+<li><code>Stub Convention</code> — Long/Short Initial/Final</li>
+<li><code>Interest Payment Convention</code> — PayInterest, CapitalizeInterest</li>
+<li><code>Penalty Type</code> — NoPenalty, AbsolutePenalty, RelativePenalty, InterestPenalty</li>
+<li><code>Option Type</code> / <code>Option Exercise Type</code> — Call, Put, Straddle / European, American, Bermudan</li>
+<li><code>Scaling Effect</code> — NoScaling, InterestScaling, PrincipalScaling, BothScaling</li>
+<li><code>ACTUS Currency</code> — <code>`ACTUS USD`</code>, <code>`ACTUS EUR`</code>, <code>`ACTUS GBP`</code>, <code>`ACTUS JPY`</code>, <code>`ACTUS CHF`</code>, <code>`ACTUS CAD`</code>, <code>`ACTUS AUD`</code>, <code>`ACTUS CNY`</code>, <code>`ACTUS HKD`</code>, <code>`ACTUS SGD`</code>, or <code>`ACTUS Other`</code> with an ISO code; <code>`currency code`</code> gives the ISO 4217 code as a STRING</li>
+</ul>
+<p><strong>ACTUS Amount</strong> — record with <code>value</code> and <code>currency</code>; <code>`ACTUS_USD`</code>, <code>`ACTUS_EUR`</code>, <code>`ACTUS_GBP`</code> and <code>`ACTUS_SGD`</code> build one from a number</p>
+<p><strong>Cycle</strong> — record with <code>period</code>, <code>periodUnit</code>, <code>stub</code>; convenience constructors: <code>`Monthly Cycle`</code>, <code>`Quarterly Cycle`</code>, <code>`Semi-Annual Cycle`</code>, <code>`Annual Cycle`</code></p>
+<h2 id="contract-terms-actus-terms">Contract terms (<code>actus-terms</code>)</h2>
+<ul>
+<li><code>ACTUS Contract Terms</code> — core contract parameters (ID, type, role, dates, principal, rate, day count convention)</li>
+<li><code>FXOUT Terms</code> — FX outright transaction parameters</li>
+<li><code>`implied exchange rate`</code> — derive rate from FX term amounts</li>
+</ul>
+<h2 id="contract-state-actus-state">Contract state (<code>actus-state</code>)</h2>
+<ul>
+<li><code>Contract State</code> — runtime state (statusDate, contractPerformance, notionalPrincipal, accruedInterest, nominalInterestRate, feeAccrued)</li>
+<li><code>`is fully paid`</code>, <code>`is in default`</code>, <code>`outstanding balance`</code> — state predicates</li>
+<li><code>`empty state`</code> — default initial state</li>
+</ul>
+<h2 id="contract-events-actus-events">Contract events (<code>actus-events</code>)</h2>
+<p><strong>Event Types:</strong> IED, PR, PP, MD, IP, IPCI, RR, RRF, FP, PY, TD, XD, STD, DV, CE, AD</p>
+<ul>
+<li><code>Contract Event</code> — record with eventType, eventDate, payoff, currency, notionalPrincipal, nominalInterestRate, accruedInterest</li>
+<li><code>`make event`</code> — event constructor</li>
+<li><code>`event sequence`</code>, <code>`event name`</code>, <code>`event acronym`</code> — event metadata</li>
+<li><code>`is principal event`</code>, <code>`is interest event`</code>, <code>`has cash flow`</code> — event predicates</li>
+<li><code>`total payoff`</code> — sum payoffs across a list of events</li>
+</ul>
+<h2 id="day-count-conventions-actus-daycount">Day count conventions (<code>actus-daycount</code>)</h2>
+<ul>
+<li><code>`year fraction`</code> — Y(S,E) calculation dispatching on convention</li>
+<li><code>`year fraction A365`</code>, <code>`year fraction A360`</code> — specific convention implementations</li>
+<li><code>`days between`</code> — raw day count between two dates</li>
+<li><code>`accrued interest for period`</code> — interest accrual given principal, rate, dates, and convention</li>
+</ul>
+<h2 id="schedule-generation-actus-schedule">Schedule generation (<code>actus-schedule</code>)</h2>
+<ul>
+<li><code>`add days`</code> — date arithmetic on a number of days</li>
+<li><code>`add months`</code> — month arithmetic with month-end clamping; it is defined in <a href="/l4/reference/libraries/daydate"><code>daydate</code></a>, which <code>actus-schedule</code> imports and passes on</li>
+<li><code>`monthly schedule`</code> — generate a list of monthly dates from a start date</li>
+<li><code>`schedule length`</code> — count dates in a schedule</li>
+</ul>
+<h2 id="evaluation-engine-actus">Evaluation engine (<code>actus</code>)</h2>
+<p><strong>Payoff Functions (POF):</strong></p>
+<ul>
+<li><code>`POF_IED`</code> — Initial Exchange Date payoff</li>
+<li><code>`POF_IP`</code> — Interest Payment payoff</li>
+<li><code>`POF_MD`</code> — Maturity payoff</li>
+<li><code>`POF_PR`</code> — Principal Redemption payoff</li>
+</ul>
+<p><strong>State Transition Functions (STF):</strong></p>
+<ul>
+<li><code>`STF_IED`</code> — initialise state after initial exchange</li>
+<li><code>`STF_IP`</code> — reset accrued interest after payment</li>
+<li><code>`STF_MD`</code> — contract reaches maturity</li>
+<li><code>`STF_PR`</code> — reduce notional by redemption amount</li>
+</ul>
+<p><strong>Interest Accrual:</strong></p>
+<ul>
+<li><code>`accrue interest to`</code> — accrue interest from current state date to a target date</li>
+</ul>
+<p><strong>FX Transaction (FXOUT):</strong></p>
+<ul>
+<li><code>`FXOUT pay event`</code>, <code>`FXOUT receive event`</code> — generate FX cash flow events</li>
+</ul>
+<p><strong>Cash Flow Projection:</strong></p>
+<ul>
+<li><code>`net cash flow`</code> — sum all cash flows from a list of events</li>
+</ul>
+0:{"rsc":["$","$1","c",{"children":[["$","$L2",null,{"navSections":[{"title":"","items":[{"title":"Language Reference","href":"reference"},{"title":"Glossary","href":"reference/GLOSSARY"},{"title":"Cheat sheet","href":"reference/cheat-sheet"},{"title":"Types","href":"reference/types","children":[{"title":"DECLARE","href":"reference/types/DECLARE"},{"title":"ASSUME","href":"reference/types/ASSUME"},{"title":"FOR ALL","href":"reference/types/for-all"},{"title":"Coercions","href":"reference/types/coercions"}]},{"title":"Functions","href":"reference/functions","children":[{"title":"DECIDE","href":"reference/functions/DECIDE"},{"title":"GIVEN and GIVETH","href":"reference/functions/GIVEN"},{"title":"MEANS","href":"reference/functions/MEANS"},{"title":"LET and WHERE","href":"reference/functions/LET"},{"title":"YIELD","href":"reference/functions/YIELD"},{"title":"AKA","href":"reference/functions/AKA"}]},{"title":"Control flow","href":"reference/control-flow","children":[{"title":"IF","href":"reference/control-flow/IF"},{"title":"BRANCH","href":"reference/control-flow/BRANCH"},{"title":"CONSIDER","href":"reference/control-flow/CONSIDER"}]},{"title":"Operators","href":"reference/operators","children":[{"title":"AND, OR, NOT, IMPLIES","href":"reference/operators/logical"},{"title":"UNLESS","href":"reference/operators/UNLESS"},{"title":"Arithmetic","href":"reference/operators/arithmetic"},{"title":"Comparisons","href":"reference/operators/comparisons"}]},{"title":"Regulative rules","href":"reference/regulative","children":[{"title":"PARTY, MUST, MAY, SHANT","href":"reference/regulative/PARTY"},{"title":"Deadlines and consequences","href":"reference/regulative/consequences"},{"title":"BECAUSE","href":"reference/regulative/BECAUSE"},{"title":"DEONTIC","href":"reference/regulative/DEONTIC"},{"title":"EVENT","href":"reference/regulative/EVENT"}]},{"title":"Syntax and directives","href":"reference/syntax"},{"title":"Built-in functions","href":"reference/builtins","children":[{"title":"HTTP and JSON","href":"reference/builtins/http-json"}]},{"title":"Standard libraries","href":"reference/libraries","children":[{"title":"prelude","href":"reference/libraries/prelude"},{"title":"math","href":"reference/libraries/math"},{"title":"daydate","href":"reference/libraries/daydate"},{"title":"time","href":"reference/libraries/time"},{"title":"datetime","href":"reference/libraries/datetime"},{"title":"timezone","href":"reference/libraries/timezone"},{"title":"excel-date","href":"reference/libraries/excel-date"},{"title":"currency","href":"reference/libraries/currency"},{"title":"holdings","href":"reference/libraries/holdings"},{"title":"actus","href":"reference/libraries/actus"},{"title":"legal-persons","href":"reference/libraries/legal-persons"},{"title":"jurisdiction","href":"reference/libraries/jurisdiction"},{"title":"llm","href":"reference/libraries/llm"}]},{"title":"Error messages","href":"reference/errors"}]}],"toc":[],"htmlContent":"$3","pager":{"prev":"$0:rsc:props:children:0:props:navSections:0:items:10:children:8","next":"$0:rsc:props:children:0:props:navSections:0:items:10:children:10"}}],["$L4"],"$L5"]}],"isPartial":false,"staleTime":300,"varyParams":null,"buildId":"iJUXAyHcmcW99cMci3ei9"}
+4:["$","script","script-0",{"src":"/_next/static/chunks/0fl~me.qwn48c.js","async":true}]
+5:["$","$L6",null,{"children":["$","$7",null,{"name":"Next.MetadataOutlet","children":"$@8"}]}]
+8:null

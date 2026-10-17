@@ -1,0 +1,216 @@
+1:"$Sreact.fragment"
+2:I[39756,["/_next/static/chunks/0ypf.t599.7y6.js","/_next/static/chunks/0t2xr05rlu96l.js"],"default"]
+3:I[37457,["/_next/static/chunks/0ypf.t599.7y6.js","/_next/static/chunks/0t2xr05rlu96l.js"],"default"]
+4:I[22016,["/_next/static/chunks/0ypf.t599.7y6.js","/_next/static/chunks/0t2xr05rlu96l.js","/_next/static/chunks/11.9ba59t4-it.js"],""]
+5:I[5500,["/_next/static/chunks/0ypf.t599.7y6.js","/_next/static/chunks/0t2xr05rlu96l.js","/_next/static/chunks/11.9ba59t4-it.js"],"Image"]
+10:I[68027,["/_next/static/chunks/0ypf.t599.7y6.js","/_next/static/chunks/0t2xr05rlu96l.js"],"default",1]
+:HL["/_next/static/chunks/0xhryq7f66rdk.css","style"]
+:HL["/_next/static/chunks/0s9wju.j1~_xn.css","style"]
+:HL["/_next/static/media/248e1dc0efc99276-s.p.0ft7o6kv5bp14.woff2","font",{"crossOrigin":"","type":"font/woff2"}]
+:HL["/_next/static/media/83afe278b6a6bb3c-s.p.0q-301v4kxxnr.woff2","font",{"crossOrigin":"","type":"font/woff2"}]
+0:{"P":null,"c":["","l4","concepts","type-system","exhaustiveness"],"q":"","i":false,"f":[[["",{"children":["l4",{"children":[["slug","concepts/type-system/exhaustiveness","oc",null],{"children":["__PAGE__",{}]}]}]},"$undefined","$undefined",16],[["$","$1","c",{"children":[[["$","link","0",{"rel":"stylesheet","href":"/_next/static/chunks/0xhryq7f66rdk.css","precedence":"next","crossOrigin":"$undefined","nonce":"$undefined"}],["$","script","script-0",{"src":"/_next/static/chunks/0ypf.t599.7y6.js","async":true,"nonce":"$undefined"}],["$","script","script-1",{"src":"/_next/static/chunks/0t2xr05rlu96l.js","async":true,"nonce":"$undefined"}]],["$","html",null,{"lang":"en","children":[["$","head",null,{"children":[["$","meta",null,{"httpEquiv":"Content-Security-Policy","content":"default-src 'self' https://legalese.com; script-src 'self' https://legalese.com 'unsafe-inline' https://cdnjs.cloudflare.com; style-src 'self' https://legalese.com 'unsafe-inline'; font-src 'self' https://legalese.com; img-src 'self' https://legalese.com https://workoscdn.com https://*.googleusercontent.com; connect-src 'self' https://legalese.com https://legalese.cloud https://ai.legalese.cloud https://*.workos.com; frame-src 'self' https://legalese.com https://jl4.legalese.com https://*.workos.com; object-src 'none'; base-uri 'self' https://legalese.com"}],["$","link",null,{"rel":"apple-touch-icon","sizes":"180x180","href":"/favicon/apple-touch-icon.png"}],["$","link",null,{"rel":"icon","type":"image/png","sizes":"32x32","href":"/favicon/favicon-32x32.png"}],["$","link",null,{"rel":"icon","type":"image/png","sizes":"16x16","href":"/favicon/favicon-16x16.png"}],["$","link",null,{"rel":"manifest","href":"/favicon/site.webmanifest"}],["$","link",null,{"rel":"shortcut icon","href":"/favicon/favicon.ico"}],["$","meta",null,{"name":"msapplication-TileColor","content":"#000000"}],["$","meta",null,{"name":"msapplication-config","content":"/favicon/browserconfig.xml"}],["$","meta",null,{"name":"theme-color","content":"#000"}],["$","link",null,{"rel":"alternate","type":"application/rss+xml","href":"/feed.xml"}]]}],["$","body",null,{"className":"inter_5901b7c6-module__ec5Qua__variable merriweather_b1e99710-module__84TlHG__variable","children":[["$","div",null,{"className":"min-h-screen","children":["$","$L2",null,{"parallelRouterKey":"children","error":"$undefined","errorStyles":"$undefined","errorScripts":"$undefined","template":["$","$L3",null,{}],"templateStyles":"$undefined","templateScripts":"$undefined","notFound":[["$","div",null,{"className":"min-h-screen flex flex-col","children":["$","div",null,{"className":"container mx-auto px-5 flex-1 flex flex-col","children":[["$","header",null,{"className":"flex flex-col md:flex-row items-center justify-between py-8 mb-6","children":["$","$L4",null,{"href":"/","className":"flex items-center gap-1 hover:opacity-80 transition-opacity","children":[["$","$L5",null,{"src":"/assets/logos/legalese-logo.png","alt":"§","width":42,"height":42,"className":"rounded"}],["$","span",null,{"className":"text-2xl font-bold tracking-tight font-merriweather","children":"Legalese"}]]}]}],["$","div",null,{"className":"flex-1 flex items-center justify-center","children":["$","div",null,{"className":"text-center px-6 py-16","children":[["$","h1",null,{"className":"text-8xl font-bold text-gray-200 mb-4","children":404}],["$","h2",null,{"className":"text-2xl font-semibold text-gray-900 mb-4 font-merriweather","children":"Not Found"}],["$","p",null,{"className":"text-gray-600 mb-8 max-w-md","children":"The page you're looking for doesn't exist or may have been moved."}],["$","$L4",null,{"href":"/","className":"inline-block px-6 py-2 bg-accent text-white rounded-md hover:bg-accent-hover transition-colors","children":"Go to Homepage"}]]}]}]]}]}],[]],"forbidden":"$undefined","unauthorized":"$undefined"}]}],["$","footer",null,{"className":"bg-gray-900 text-white","children":["$","div",null,{"className":"container mx-auto px-5","children":["$","div",null,{"className":"py-16","children":[["$","div",null,{"className":"grid grid-cols-1 md:grid-cols-4 gap-12 mb-12","children":[["$","div",null,{"className":"md:col-span-1","children":[["$","div",null,{"className":"flex items-center","children":[["$","$L5",null,{"src":"/assets/logos/legalese-logo.png","alt":"§","width":36,"height":36,"className":"rounded invert"}],["$","h3",null,{"className":"text-2xl font-bold tracking-tight ml-1","children":"Legalese"}]]}],"$L6"]}],"$L7","$L8","$L9"]}],"$La"]}]}]}]]}]]}]]}],{"children":["$Lb",{"children":["$Lc",{"children":["$Ld",{},null,false,null]},null,false,"$@e"]},null,false,null]},null,false,null],"$Lf",false]],"m":"$undefined","G":["$10",["$L11"]],"S":true,"h":null,"s":"$undefined","l":"$undefined","p":"$undefined","d":"$undefined","b":"iJUXAyHcmcW99cMci3ei9"}
+12:I[79520,["/_next/static/chunks/0ypf.t599.7y6.js","/_next/static/chunks/0t2xr05rlu96l.js","/_next/static/chunks/0uxaa7wo_wmcw.js"],""]
+13:I[85295,["/_next/static/chunks/0ypf.t599.7y6.js","/_next/static/chunks/0t2xr05rlu96l.js","/_next/static/chunks/0uxaa7wo_wmcw.js"],"default"]
+14:I[41529,["/_next/static/chunks/0ypf.t599.7y6.js","/_next/static/chunks/0t2xr05rlu96l.js","/_next/static/chunks/0uxaa7wo_wmcw.js"],"default"]
+16:I[97367,["/_next/static/chunks/0ypf.t599.7y6.js","/_next/static/chunks/0t2xr05rlu96l.js"],"OutletBoundary"]
+17:"$Sreact.suspense"
+1a:I[97367,["/_next/static/chunks/0ypf.t599.7y6.js","/_next/static/chunks/0t2xr05rlu96l.js"],"ViewportBoundary"]
+1c:I[97367,["/_next/static/chunks/0ypf.t599.7y6.js","/_next/static/chunks/0t2xr05rlu96l.js"],"MetadataBoundary"]
+6:["$","p",null,{"className":"text-gray-400 text-sm mb-4","children":"AI is eating law"}]
+7:["$","div",null,{"children":[["$","h4",null,{"className":"font-bold mb-4 text-gray-300","children":"Company"}],["$","ul",null,{"className":"space-y-2","children":[[["$","li","about",{"children":["$","$L4",null,{"href":"/about","className":"text-gray-400 hover:text-white transition-colors text-sm","children":"About us"}]}],["$","li","team",{"children":["$","$L4",null,{"href":"/team","className":"text-gray-400 hover:text-white transition-colors text-sm","children":"Team"}]}],["$","li","media",{"children":["$","$L4",null,{"href":"/media","className":"text-gray-400 hover:text-white transition-colors text-sm","children":"Press & Media"}]}]],[],["$","li",null,{"children":["$","$L4",null,{"href":"/posts","className":"text-gray-400 hover:text-white transition-colors text-sm","children":"Blog"}]}]]}]]}]
+8:["$","div",null,{"children":[["$","h4",null,{"className":"font-bold mb-4 text-gray-300","children":"Resources"}],["$","ul",null,{"className":"space-y-2","children":[["$","li","l4-documentation",{"children":["$","a",null,{"href":"https://legalese.com/l4","target":"_blank","rel":"noopener noreferrer","className":"text-gray-400 hover:text-white transition-colors text-sm","children":"L4 Documentation"}]}],["$","li","vscode-extension",{"children":["$","a",null,{"href":"https://marketplace.visualstudio.com/items?itemName=Legalese.l4-vscode","target":"_blank","rel":"noopener noreferrer","className":"text-gray-400 hover:text-white transition-colors text-sm","children":"L4 VS Code Extension"}]}],["$","li","l4-web-ide",{"children":["$","a",null,{"href":"https://jl4.legalese.com","target":"_blank","rel":"noopener noreferrer","className":"text-gray-400 hover:text-white transition-colors text-sm","children":"L4 Web IDE"}]}],["$","li","l4-console",{"children":["$","a",null,{"href":"https://legalese.com/console","target":"_blank","rel":"noopener noreferrer","className":"text-gray-400 hover:text-white transition-colors text-sm","children":"Cloud Console"}]}],["$","li","l4-console copy",{"children":["$","a",null,{"href":"https://legalese.com/compare","target":"_blank","rel":"noopener noreferrer","className":"text-gray-400 hover:text-white transition-colors text-sm","children":"Compare AI Legal Interpretations"}]}],["$","li","provable",{"children":["$","a",null,{"href":"https://provable.legalese.com","target":"_blank","rel":"noopener noreferrer","className":"text-gray-400 hover:text-white transition-colors text-sm","children":"Provable Skill Marketplace"}]}],["$","li","github",{"children":["$","a",null,{"href":"https://github.com/legalese/l4-ide","target":"_blank","rel":"noopener noreferrer","className":"text-gray-400 hover:text-white transition-colors text-sm","children":"GitHub"}]}]]}]]}]
+9:["$","div",null,{"children":[["$","h4",null,{"className":"font-bold mb-4 text-gray-300","children":"Contact"}],["$","ul",null,{"className":"space-y-2","children":[[["$","li","community",{"children":["$","$L4",null,{"href":"/community","className":"text-gray-400 hover:text-white transition-colors text-sm","children":"Community"}]}],["$","li","code-of-conduct",{"children":["$","$L4",null,{"href":"/code-of-conduct","className":"text-gray-400 hover:text-white transition-colors text-sm","children":"Code of Conduct"}]}]],[["$","li","discord",{"children":["$","a",null,{"href":"https://discord.gg/Q7a7NSEdNy","target":"_blank","rel":"noopener noreferrer","className":"text-gray-400 hover:text-white transition-colors text-sm","children":"Discord"}]}],["$","li","x-twitter",{"children":["$","a",null,{"href":"https://x.com/legalese","target":"_blank","rel":"noopener noreferrer","className":"text-gray-400 hover:text-white transition-colors text-sm","children":"Legalese on X"}]}]]]}]]}]
+a:["$","div",null,{"className":"border-t border-gray-800 pt-8 flex flex-col md:flex-row justify-between items-center gap-4","children":[["$","p",null,{"className":"text-gray-500 text-sm","children":["© ",2026," Legalese Pte. Ltd., Singapore. All rights reserved."]}],["$","div",null,{"className":"flex gap-6","children":[["$","$L4","terms",{"href":"/terms","className":"text-gray-500 hover:text-white transition-colors text-sm","children":"Terms of Use"}],["$","$L4","privacy",{"href":"/privacy","className":"text-gray-500 hover:text-white transition-colors text-sm","children":"Privacy & Cookies"}]]}]]}]
+b:["$","$1","c",{"children":[[["$","link","0",{"rel":"stylesheet","href":"/_next/static/chunks/0s9wju.j1~_xn.css","precedence":"next","crossOrigin":"$undefined","nonce":"$undefined"}],["$","script","script-0",{"src":"/_next/static/chunks/0uxaa7wo_wmcw.js","async":true,"nonce":"$undefined"}]],[["$","$L2",null,{"parallelRouterKey":"children","error":"$undefined","errorStyles":"$undefined","errorScripts":"$undefined","template":["$","$L3",null,{}],"templateStyles":"$undefined","templateScripts":"$undefined","notFound":"$undefined","forbidden":"$undefined","unauthorized":"$undefined"}],["$","$L12",null,{"src":"https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"}],["$","$L12",null,{"src":"/hljs-l4/l4.min.js"}],["$","$L13",null,{}],["$","$L14",null,{}],["$","style",null,{"dangerouslySetInnerHTML":{"__html":"\npre code.hljs{display:block;overflow-x:auto;padding:0.2rem 0.4rem;font-size:13px;color:#104e64;background:#fdfdfd}\ncode.hljs .hljs-keyword{color:#0000ff;font-weight:500}\ncode.hljs .hljs-literal{color:#0000ff}\ncode.hljs .hljs-built_in{color:#267f99}\ncode.hljs .hljs-string{color:#a31515}\ncode.hljs .hljs-number{color:#098658}\ncode.hljs .hljs-comment{color:#008000;font-style:italic}\ncode.hljs .hljs-title{color:#795e26;font-weight:600}\ncode.hljs .hljs-variable{color:#001080}\ncode.hljs .hljs-doctag{color:#ffbd33}\ncode.hljs .hljs-formula{color:#af00db;font-weight:500}\n"}}]]]}]
+c:["$","$1","c",{"children":[null,["$","$L2",null,{"parallelRouterKey":"children","error":"$undefined","errorStyles":"$undefined","errorScripts":"$undefined","template":["$","$L3",null,{}],"templateStyles":"$undefined","templateScripts":"$undefined","notFound":"$undefined","forbidden":"$undefined","unauthorized":"$undefined"}]]}]
+d:["$","$1","c",{"children":["$L15",[["$","script","script-0",{"src":"/_next/static/chunks/0fl~me.qwn48c.js","async":true,"nonce":"$undefined"}]],["$","$L16",null,{"children":["$","$17",null,{"name":"Next.MetadataOutlet","children":"$@18"}]}]]}]
+19:[]
+e:"$W19"
+f:["$","$1","h",{"children":[null,["$","$L1a",null,{"children":"$L1b"}],["$","div",null,{"hidden":true,"children":["$","$L1c",null,{"children":["$","$17",null,{"name":"Next.Metadata","children":"$L1d"}]}]}],["$","meta",null,{"name":"next-size-adjust","content":""}]]}]
+11:["$","link","0",{"rel":"stylesheet","href":"/_next/static/chunks/0xhryq7f66rdk.css","precedence":"next","crossOrigin":"$undefined","nonce":"$undefined"}]
+1e:I[90160,["/_next/static/chunks/0ypf.t599.7y6.js","/_next/static/chunks/0t2xr05rlu96l.js","/_next/static/chunks/0uxaa7wo_wmcw.js","/_next/static/chunks/0fl~me.qwn48c.js"],"default"]
+1f:T357c,<h1>Exhaustiveness</h1>
+<p>Totality as a legal-safety property: every case of a determination handled.</p>
+<hr>
+<h2 id="the-legal-problem">The Legal Problem</h2>
+<p>A legal determination over a closed category must have an answer for <strong>every</strong> member of the category. A visa decision procedure that handles "granted" and "refused" but not "withdrawn" is not a smaller version of the right procedure — it is a procedure with a hole in it. In software, the hole surfaces as an unhandled case at the worst possible moment: on the first real input that falls into the forgotten category.</p>
+<p>Law is unusually exposed to this failure mode, for two reasons:</p>
+<ol>
+<li><strong>Legal categories are closed enumerations.</strong> Statutes define exhaustive lists ("'person' means (a)…, (b)…, or (c)…"), so "cover every case" is a well-defined, checkable demand. See <a href="/l4/concepts/type-system/algebraic-types">Types as legal categories</a> on why these lists become sum types.</li>
+<li><strong>Legal categories change.</strong> Amendments add variants: a new visa class, a new entity type, a new ground of refusal. Every determination written against the old category is now potentially incomplete — and nothing about its text looks wrong.</li>
+</ol>
+<p><strong>Exhaustiveness checking</strong> (totality over the scrutinised type) turns both problems into compiler diagnostics.</p>
+<hr>
+<h2 id="what-the-checker-does">What the Checker Does</h2>
+<p>When a <code>CONSIDER</code> expression scrutinises a value of an algebraic type, L4's type checker compares the branches against the type's full constructor set. A complete match is silent:</p>
+<pre><code class="language-l4">DECLARE `visa status` IS ONE OF
+    Granted
+    Refused HAS reason IS A STRING
+    Withdrawn
+
+GIVEN status IS A `visa status`
+GIVETH A STRING
+`outcome letter` MEANS
+    CONSIDER status
+    WHEN Granted THEN "Your visa has been granted."
+    WHEN Refused r THEN r
+    WHEN Withdrawn THEN "Your application was withdrawn."
+</code></pre>
+<h3 id="missing-branches">Missing branches</h3>
+<p>If a constructor is not covered, the checker emits a warning listing exactly what still needs to be handled:</p>
+<pre><code class="language-l4">GIVEN status IS A `visa status`
+GIVETH A STRING
+`incomplete letter` MEANS
+    CONSIDER status
+    WHEN Granted THEN "Your visa has been granted."
+    WHEN Refused r THEN r
+</code></pre>
+<pre><code>Warning: The following branches still need to be considered:
+
+  WHEN Withdrawn THEN
+</code></pre>
+<h3 id="redundant-branches">Redundant branches</h3>
+<p>The dual check also fires: a branch that can never be reached (for example, a second <code>WHEN Granted</code> after the first) is flagged:</p>
+<pre><code>Warning: The following CONSIDER branch is redundant:
+
+  WHEN Granted THEN "duplicate branch - unreachable"
+</code></pre>
+<p>Redundancy matters legally too — an unreachable branch is usually a sign that the author <em>believed</em> some case was being handled there, when in fact an earlier branch is absorbing it.</p>
+<h3 id="rules-written-as-clauses">Rules written as clauses</h3>
+<p>A rule written as several <code>DECIDE</code> clauses, one per case (see <a href="/l4/reference/functions/DECIDE#several-clauses">DECIDE</a>), is checked the same way, as one group. The warning lists the clauses still needed, ready to paste in and finish:</p>
+<pre><code>This multi-clause definition does not cover all cases. The following clauses are still needed:
+
+  DECIDE `price` Blue IS
+</code></pre>
+<p>L4 tries clauses from the top, so a clause below one that matches every input is never reached. That is warned about too.</p>
+<h3 id="the-amendment-scenario">The amendment scenario</h3>
+<p>The payoff comes when a category grows. Add a fourth variant to <code>`visa status`</code> and every checked <code>CONSIDER</code> site that scrutinises it — every letter template, every fee rule, every appeal-rights determination — immediately warns that the new case "still needs to be considered". The legislature's amendment becomes a checklist of code sites to revisit. This is the property flattened boolean encodings cannot offer: a bundle of independent <code>IF</code> tests has no notion of "covering" a category, so nothing notices when the category changes.</p>
+<hr>
+<h2 id="caveats-and-escape-hatches">Caveats and Escape Hatches</h2>
+<h3 id="numbers-text-and-dates">Numbers, text and dates</h3>
+<p>The check works by listing constructors, and a <code>NUMBER</code>, a <code>STRING</code> or a <code>DATE</code> has none to list: its values never run out. A <code>WHEN 0</code> or a <code>WHEN "Saturday"</code> matches one value, so the only way to complete such a match is a branch that matches everything. In a <code>CONSIDER</code> that is <code>OTHERWISE</code>; in a rule written as clauses it is a clause written with the input's <code>GIVEN</code> name. The warning suggests exactly that:</p>
+<pre><code class="language-l4">GIVEN n IS A NUMBER
+GIVETH A STRING
+`describe count` MEANS
+    CONSIDER n
+    WHEN 0 THEN "none"
+    WHEN 1 THEN "one"
+    -- warns: OTHERWISE
+
+GIVEN n IS A NUMBER
+GIVETH A STRING
+DECIDE `describe number` 0 IS "none"
+DECIDE `describe number` 1 IS "one"
+-- warns: DECIDE `describe number` n IS
+</code></pre>
+<p>The other inputs of a rule are still checked. Over <code>DECLARE Colour IS ONE OF Red, Green, Blue</code>, the clauses <code>DECIDE charge Red 0 IS 0</code>, <code>DECIDE charge Red n IS n</code> and <code>DECIDE charge Green n IS n TIMES 2</code> draw a warning for <code>DECIDE `charge` Blue n IS</code>: the clause for <code>0</code> covers one value, the clause below it the rest of <code>Red</code>, and <code>Blue</code> is still missing.</p>
+<p>A few more details:</p>
+<ul>
+<li><code>EXACTLY</code> of a number, a piece of text or a value of an enumeration is read as that value. An <code>EXACTLY</code> of anything else cannot be counted: over a number, text or date it covers nothing as far as the check knows, and over an enumeration it stops the check for that match.</li>
+<li>In a <code>CONSIDER</code>, a number repeated in another spelling (<code>WHEN 1.0</code> after <code>WHEN 1</code>) is reported as a redundant branch. A repeated value in a rule written as clauses is not reported.</li>
+<li>A type declared as another name for a number, text or date (<code>DECLARE Age IS A NUMBER</code>) is treated like that type.</li>
+</ul>
+<p>The practical consequence: when a statutory category is modelled as a <code>STRING</code> (status codes, category letters), the check can only ask for an <code>OTHERWISE</code>; it cannot tell you which categories you left out. Declare an enumeration instead. It is precisely what makes the completeness of your determinations checkable.</p>
+<h3 id="booleans-maybe-either-and-lists">Booleans, MAYBE, EITHER and lists</h3>
+<p><code>BOOLEAN</code> is checked like an enumeration of <code>TRUE</code> and <code>FALSE</code>: a <code>CONSIDER</code> with only <code>WHEN TRUE</code> warns about the missing <code>WHEN FALSE</code>.</p>
+<p><code>MAYBE</code>, <code>EITHER</code> and lists are checked only inside. Their own constructors are not listed, so a missing <code>WHEN NOTHING</code>, <code>WHEN RIGHT</code> or <code>WHEN EMPTY</code> is not reported. What they hold is checked: <code>WHEN JUST Basic</code> over a <code>MAYBE Tier</code> asks for <code>WHEN JUST Premium</code> and <code>WHEN JUST Gold</code>. A rule written as clauses goes less far. Where a missing case could only be found by telling such values apart, it gets no warning: over a <code>MAYBE Colour</code>, the clauses <code>DECIDE f (JUST Red) IS 1</code> and <code>DECIDE f NOTHING IS 0</code> draw none, while the same two branches in a <code>CONSIDER</code> ask for <code>WHEN JUST Green</code> and <code>WHEN JUST Blue</code>.</p>
+<h3 id="types-from-another-file">Types from another file</h3>
+<p>An enumeration declared in another file and brought in with <code>IMPORT</code> is not analysed. A <code>CONSIDER</code> or a rule written as clauses over it gets no missing-case warning, so cover such a type with extra care, or test every value.</p>
+<h3 id="very-large-tables">Very large tables</h3>
+<p>For a rule written as clauses, the check gives up without a warning when it would have to list more than 64 clauses, or needs more than 10,000 steps to find them. When the clauses match numbers or text, it does not fall silent at that limit, but gives a shorter, coarser list. A large <code>CONSIDER</code> still warns, but may list only some of the missing branches.</p>
+<h3 id="where-the-check-applies">Where the check applies</h3>
+<p>The check applies wherever the <code>CONSIDER</code> appears, in a rule's main body and equally inside <code>WHERE</code>- or <code>LET</code>-bound local definitions. Rules written as clauses are only recognised at the top level of a file or section.</p>
+<h3 id="otherwise-trades-checking-for-coverage">OTHERWISE trades checking for coverage</h3>
+<p><code>OTHERWISE</code> is a catch-all branch. It makes any match complete, and thereby switches the missing-case warning off — including for variants added in the future, which it will absorb without comment. Use it when the remaining cases genuinely share one treatment; avoid it when each case of a determination deserves an explicit decision.</p>
+<h3 id="what-happens-if-a-hole-is-hit-at-runtime">What happens if a hole is hit at runtime</h3>
+<p>Exhaustiveness warnings are compile-time advice, not a runtime guard. If evaluation actually reaches a <code>CONSIDER</code> with no matching branch, that evaluation fails with an error naming the offending value:</p>
+<pre><code>The value
+  Withdrawn
+reached a CONSIDER that has no branch for it.
+Add a WHEN branch for this case, or a catch-all OTHERWISE branch.
+The typechecker's exhaustiveness warning lists all missing branches.
+</code></pre>
+<p>A rule written as clauses fails the same way, with "No clause of <code>describe</code> matches these inputs." and the value it could not match. <code>l4 run</code> exits non-zero when any directive fails this way. The warning exists so you find the hole before an applicant does.</p>
+<hr>
+<h2 id="why-warnings-not-errors">Why Warnings, Not Errors</h2>
+<p>L4 reports incomplete matches as <strong>warnings</strong>: the program still compiles and runs. This is a deliberate choice about how legal encoding actually proceeds.</p>
+<ul>
+<li><strong>Encoding is incremental.</strong> A statute is formalised provision by provision. While the work is in progress, determinations are legitimately partial — the encoder is often deliberately deferring the hard case (the one that needs a policy decision) while validating the easy ones with <code>#EVAL</code>. A hard error would force placeholder branches everywhere, which are worse than an honest warning: a placeholder <em>looks</em> handled.</li>
+<li><strong>Existing code keeps working.</strong> Tightening the checker over time (covering more scrutinee types, sharper redundancy analysis) must not break rulebases that previously compiled. Warnings allow the analysis to improve without invalidating legacy encodings.</li>
+</ul>
+<p>The intended discipline: treat the warnings as a completeness report. A finished, production-ready determination should compile with none — at that point, every case of every closed category it examines has an explicit, reviewed answer.</p>
+<hr>
+<h2 id="summary">Summary</h2>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Behaviour</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Missing case in <code>CONSIDER</code></td>
+<td>Compile-time warning listing the uncovered branches</td>
+</tr>
+<tr>
+<td>Missing case in a multi-clause <code>DECIDE</code></td>
+<td>Compile-time warning listing the clauses still needed</td>
+</tr>
+<tr>
+<td>Unreachable branch</td>
+<td>Compile-time warning that the branch is redundant</td>
+</tr>
+<tr>
+<td><code>NUMBER</code> / <code>STRING</code> / <code>DATE</code> scrutinee</td>
+<td>Analysed; <code>OTHERWISE</code> is suggested when it is missing</td>
+</tr>
+<tr>
+<td>Clauses over a <code>NUMBER</code> or <code>STRING</code> input</td>
+<td>Analysed; the clause with the input's name is suggested when it is missing</td>
+</tr>
+<tr>
+<td><code>BOOLEAN</code> and declared enumerations (<code>IS ONE OF</code>)</td>
+<td>Fully analysed</td>
+</tr>
+<tr>
+<td><code>MAYBE</code> / <code>EITHER</code> / <code>LIST</code> scrutinee</td>
+<td>Their contents analysed; their own constructors not listed</td>
+</tr>
+<tr>
+<td>Enumeration declared in an imported file</td>
+<td>Not analysed</td>
+</tr>
+<tr>
+<td>More than 64 missing clauses</td>
+<td>No warning for a rule written as clauses</td>
+</tr>
+<tr>
+<td><code>CONSIDER</code> inside <code>WHERE</code> / <code>LET</code></td>
+<td>Analysed like any other</td>
+</tr>
+<tr>
+<td><code>OTHERWISE</code></td>
+<td>Completes the match, disables missing-case warnings</td>
+</tr>
+<tr>
+<td>Hole reached at runtime</td>
+<td>Evaluation fails, naming the unmatched value; <code>l4 run</code> exits non-zero</td>
+</tr>
+<tr>
+<td>Severity</td>
+<td>Warning, not error — the file still evaluates and its <code>#EVAL</code>s still run</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h2 id="further-reading">Further Reading</h2>
+<ul>
+<li><a href="/l4/concepts/type-system/algebraic-types">Types as legal categories</a> — Why legal categories become sum types in the first place</li>
+<li><a href="/l4/reference/control-flow/CONSIDER">CONSIDER</a> — Full pattern-matching syntax</li>
+<li><a href="/l4/concepts/legal-modeling/constitutive-vs-regulative">Definitions and duties</a> — Where determinations sit in the larger architecture</li>
+</ul>
+15:["$","$L1e",null,{"navSections":[{"title":"","items":[{"title":"Concepts home","href":"concepts","children":"$undefined"},{"title":"Design principles","href":"concepts/language-design/principles","children":"$undefined"},{"title":"Reading like the law","href":"concepts/language-design/linguistic-syntax","children":"$undefined"},{"title":"Definitions and duties","href":"concepts/legal-modeling/constitutive-vs-regulative","children":"$undefined"},{"title":"Exceptions and defaults","href":"concepts/legal-modeling/default-reasoning","children":"$undefined"},{"title":"How obligations unfold","href":"concepts/legal-modeling/regulative-rules","children":"$undefined"},{"title":"Types as legal categories","href":"concepts/type-system/algebraic-types","children":"$undefined"},{"title":"Exhaustiveness","href":"concepts/type-system/exhaustiveness","children":"$undefined"},{"title":"Type theory","href":"concepts/type-system/type-theory","children":"$undefined"}]}],"toc":[],"htmlContent":"$1f","pager":{"prev":"$15:props:navSections:0:items:6","next":"$15:props:navSections:0:items:8"}}]
+1b:[["$","meta","0",{"charSet":"utf-8"}],["$","meta","1",{"name":"viewport","content":"width=device-width, initial-scale=1"}]]
+18:null
+1d:[["$","title","0",{"children":"Exhaustiveness | L4 Documentation"}],["$","meta","1",{"name":"description","content":"Totality as a legal-safety property: every case of a determination handled."}],["$","meta","2",{"name":"robots","content":"index, follow"}],["$","link","3",{"rel":"canonical","href":"https://legalese.com/l4/concepts/type-system/exhaustiveness"}],["$","meta","4",{"property":"og:title","content":"Exhaustiveness | L4 Documentation"}],["$","meta","5",{"property":"og:description","content":"Totality as a legal-safety property: every case of a determination handled."}],["$","meta","6",{"property":"og:url","content":"https://legalese.com/l4/concepts/type-system/exhaustiveness"}],["$","meta","7",{"property":"og:image","content":"https://legalese.com/opengraph/ai-is-eating-law-v2.jpg"}],["$","meta","8",{"name":"twitter:card","content":"summary_large_image"}],["$","meta","9",{"name":"twitter:title","content":"Exhaustiveness | L4 Documentation"}],["$","meta","10",{"name":"twitter:description","content":"Totality as a legal-safety property: every case of a determination handled."}],["$","meta","11",{"name":"twitter:image","content":"https://legalese.com/opengraph/ai-is-eating-law-v2.jpg"}]]

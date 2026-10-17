@@ -1,0 +1,206 @@
+1:"$Sreact.fragment"
+2:I[90160,["/_next/static/chunks/0ypf.t599.7y6.js","/_next/static/chunks/0t2xr05rlu96l.js","/_next/static/chunks/0uxaa7wo_wmcw.js","/_next/static/chunks/0fl~me.qwn48c.js"],"default"]
+6:I[97367,["/_next/static/chunks/0ypf.t599.7y6.js","/_next/static/chunks/0t2xr05rlu96l.js"],"OutletBoundary"]
+7:"$Sreact.suspense"
+3:T174b,<h1>holdings</h1>
+<p>Debt and equity ownership library for financial structures: cap table representation, vesting, conversion (notes/SAFEs), liquidation preferences, and valuation. Inspired by the ACTUS Financial Research Foundation. Import with <code>IMPORT holdings</code> (also imports prelude, daydate, currency, and legal-persons).</p>
+<h2 id="constants">Constants</h2>
+<p>Security and debt type codes (all <code>STRING</code>):</p>
+<table>
+<thead>
+<tr>
+<th>Constant</th>
+<th>Values</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>Common Stock</code>, <code>Preferred Stock</code>, <code>Convertible Note</code>, <code>SAFE</code>, <code>Warrant</code>, <code>Stock Option</code>, <code>RSU</code></td>
+<td><code>"COMMON_STOCK"</code>, <code>"PREFERRED_STOCK"</code>, <code>"CONVERTIBLE_NOTE"</code>, <code>"SAFE"</code>, <code>"WARRANT"</code>, <code>"STOCK_OPTION"</code>, <code>"RSU"</code></td>
+</tr>
+<tr>
+<td><code>Senior Debt</code>, <code>Subordinated Debt</code>, <code>Convertible Debt</code>, <code>Bridge Loan</code></td>
+<td><code>"SENIOR_DEBT"</code>, <code>"SUBORDINATED_DEBT"</code>, <code>"CONVERTIBLE_DEBT"</code>, <code>"BRIDGE_LOAN"</code></td>
+</tr>
+</tbody>
+</table>
+<h2 id="ownership-calculations">Ownership calculations</h2>
+<table>
+<thead>
+<tr>
+<th>Function</th>
+<th>Signature</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>ownership percentage</code> sharesOwned totalShares</td>
+<td><code>NUMBER → NUMBER → NUMBER</code></td>
+<td>Percentage owned (0 when totalShares is 0)</td>
+</tr>
+<tr>
+<td><code>is dilutive</code> securityType</td>
+<td><code>STRING → BOOLEAN</code></td>
+<td>TRUE for convertibles, SAFEs, warrants, and stock options</td>
+</tr>
+</tbody>
+</table>
+<h2 id="preference-calculations">Preference calculations</h2>
+<table>
+<thead>
+<tr>
+<th>Function</th>
+<th>Signature</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>liquidation preference</code> investmentAmount preferenceMultiple</td>
+<td><code>NUMBER → NUMBER → NUMBER</code></td>
+<td>Preference amount = investment × multiple</td>
+</tr>
+<tr>
+<td><code>preferred payout</code> isParticipating liquidationValue preferenceAmount ownershipPct</td>
+<td><code>BOOLEAN → NUMBER → NUMBER → NUMBER → NUMBER</code></td>
+<td>Participating: preference + pro-rata; otherwise max(preference, pro-rata)</td>
+</tr>
+</tbody>
+</table>
+<h2 id="vesting-calculations">Vesting calculations</h2>
+<table>
+<thead>
+<tr>
+<th>Function</th>
+<th>Signature</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>vested shares</code> totalShares vestingStartDate cliffMonths vestingMonths currentDate</td>
+<td><code>NUMBER → DATE → NUMBER → NUMBER → DATE → NUMBER</code></td>
+<td>Linear monthly vesting: 0 before cliff, all after full vesting period</td>
+</tr>
+<tr>
+<td><code>approximate months since</code> startDate endDate</td>
+<td><code>DATE → DATE → NUMBER</code></td>
+<td>Calendar-month difference (year/month fields only)</td>
+</tr>
+</tbody>
+</table>
+<h2 id="conversion-calculations">Conversion calculations</h2>
+<table>
+<thead>
+<tr>
+<th>Function</th>
+<th>Signature</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>shares from convertible</code> principalAmount interestRate issueDate conversionDate conversionPrice discountPct</td>
+<td><code>NUMBER → NUMBER → DATE → DATE → NUMBER → NUMBER → NUMBER</code></td>
+<td>Shares from a convertible note: principal + simple interest at discounted price</td>
+</tr>
+<tr>
+<td><code>shares from SAFE</code> investmentAmount valuationCap discountPct pricePerShare</td>
+<td><code>NUMBER → NUMBER → NUMBER → NUMBER → NUMBER</code></td>
+<td>Shares from a SAFE: lower of cap price and discounted price</td>
+</tr>
+</tbody>
+</table>
+<h2 id="debt-service-calculations">Debt service calculations</h2>
+<table>
+<thead>
+<tr>
+<th>Function</th>
+<th>Signature</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>accrued interest</code> principalAmount annualRate issueDate currentDate</td>
+<td><code>NUMBER → NUMBER → DATE → DATE → NUMBER</code></td>
+<td>Simple interest over elapsed days (365-day year)</td>
+</tr>
+<tr>
+<td><code>debt service coverage</code> operatingIncome debtPayment</td>
+<td><code>NUMBER → NUMBER → NUMBER</code></td>
+<td>DSCR = income / payment (0 when payment is 0)</td>
+</tr>
+</tbody>
+</table>
+<h2 id="cap-table-aggregations">Cap table aggregations</h2>
+<table>
+<thead>
+<tr>
+<th>Function</th>
+<th>Signature</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>total shares</code> sharesList</td>
+<td><code>LIST OF NUMBER → NUMBER</code></td>
+<td>Sum of share counts</td>
+</tr>
+<tr>
+<td><code>fully diluted shares</code> commonShares preferredShares optionPoolShares convertibleShares</td>
+<td><code>NUMBER → NUMBER → NUMBER → NUMBER → NUMBER</code></td>
+<td>Sum of all share classes</td>
+</tr>
+</tbody>
+</table>
+<h2 id="valuation-calculations">Valuation calculations</h2>
+<table>
+<thead>
+<tr>
+<th>Function</th>
+<th>Signature</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>post-money valuation</code> pricePerShare fullyDilutedShares</td>
+<td><code>NUMBER → NUMBER → NUMBER</code></td>
+<td>Price × fully diluted shares</td>
+</tr>
+<tr>
+<td><code>pre-money valuation</code> postMoneyValuation investmentAmount</td>
+<td><code>NUMBER → NUMBER → NUMBER</code></td>
+<td>Post-money minus investment</td>
+</tr>
+</tbody>
+</table>
+<h2 id="temporal-tracking-helpers">Temporal tracking helpers</h2>
+<table>
+<thead>
+<tr>
+<th>Function</th>
+<th>Signature</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>is active at</code> issuanceDate maturityDate checkDate</td>
+<td><code>DATE → DATE → DATE → BOOLEAN</code></td>
+<td>Check date within [issuance, maturity] (inclusive)</td>
+</tr>
+<tr>
+<td><code>has matured</code> maturityDate checkDate</td>
+<td><code>DATE → DATE → BOOLEAN</code></td>
+<td>Check date strictly after maturity</td>
+</tr>
+</tbody>
+</table>
+0:{"rsc":["$","$1","c",{"children":[["$","$L2",null,{"navSections":[{"title":"","items":[{"title":"Language Reference","href":"reference"},{"title":"Glossary","href":"reference/GLOSSARY"},{"title":"Cheat sheet","href":"reference/cheat-sheet"},{"title":"Types","href":"reference/types","children":[{"title":"DECLARE","href":"reference/types/DECLARE"},{"title":"ASSUME","href":"reference/types/ASSUME"},{"title":"FOR ALL","href":"reference/types/for-all"},{"title":"Coercions","href":"reference/types/coercions"}]},{"title":"Functions","href":"reference/functions","children":[{"title":"DECIDE","href":"reference/functions/DECIDE"},{"title":"GIVEN and GIVETH","href":"reference/functions/GIVEN"},{"title":"MEANS","href":"reference/functions/MEANS"},{"title":"LET and WHERE","href":"reference/functions/LET"},{"title":"YIELD","href":"reference/functions/YIELD"},{"title":"AKA","href":"reference/functions/AKA"}]},{"title":"Control flow","href":"reference/control-flow","children":[{"title":"IF","href":"reference/control-flow/IF"},{"title":"BRANCH","href":"reference/control-flow/BRANCH"},{"title":"CONSIDER","href":"reference/control-flow/CONSIDER"}]},{"title":"Operators","href":"reference/operators","children":[{"title":"AND, OR, NOT, IMPLIES","href":"reference/operators/logical"},{"title":"UNLESS","href":"reference/operators/UNLESS"},{"title":"Arithmetic","href":"reference/operators/arithmetic"},{"title":"Comparisons","href":"reference/operators/comparisons"}]},{"title":"Regulative rules","href":"reference/regulative","children":[{"title":"PARTY, MUST, MAY, SHANT","href":"reference/regulative/PARTY"},{"title":"Deadlines and consequences","href":"reference/regulative/consequences"},{"title":"BECAUSE","href":"reference/regulative/BECAUSE"},{"title":"DEONTIC","href":"reference/regulative/DEONTIC"},{"title":"EVENT","href":"reference/regulative/EVENT"}]},{"title":"Syntax and directives","href":"reference/syntax"},{"title":"Built-in functions","href":"reference/builtins","children":[{"title":"HTTP and JSON","href":"reference/builtins/http-json"}]},{"title":"Standard libraries","href":"reference/libraries","children":[{"title":"prelude","href":"reference/libraries/prelude"},{"title":"math","href":"reference/libraries/math"},{"title":"daydate","href":"reference/libraries/daydate"},{"title":"time","href":"reference/libraries/time"},{"title":"datetime","href":"reference/libraries/datetime"},{"title":"timezone","href":"reference/libraries/timezone"},{"title":"excel-date","href":"reference/libraries/excel-date"},{"title":"currency","href":"reference/libraries/currency"},{"title":"holdings","href":"reference/libraries/holdings"},{"title":"actus","href":"reference/libraries/actus"},{"title":"legal-persons","href":"reference/libraries/legal-persons"},{"title":"jurisdiction","href":"reference/libraries/jurisdiction"},{"title":"llm","href":"reference/libraries/llm"}]},{"title":"Error messages","href":"reference/errors"}]}],"toc":[],"htmlContent":"$3","pager":{"prev":"$0:rsc:props:children:0:props:navSections:0:items:10:children:7","next":"$0:rsc:props:children:0:props:navSections:0:items:10:children:9"}}],["$L4"],"$L5"]}],"isPartial":false,"staleTime":300,"varyParams":null,"buildId":"iJUXAyHcmcW99cMci3ei9"}
+4:["$","script","script-0",{"src":"/_next/static/chunks/0fl~me.qwn48c.js","async":true}]
+5:["$","$L6",null,{"children":["$","$7",null,{"name":"Next.MetadataOutlet","children":"$@8"}]}]
+8:null

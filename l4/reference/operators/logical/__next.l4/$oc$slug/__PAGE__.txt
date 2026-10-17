@@ -1,0 +1,466 @@
+1:"$Sreact.fragment"
+2:I[90160,["/_next/static/chunks/0ypf.t599.7y6.js","/_next/static/chunks/0t2xr05rlu96l.js","/_next/static/chunks/0uxaa7wo_wmcw.js","/_next/static/chunks/0fl~me.qwn48c.js"],"default"]
+6:I[97367,["/_next/static/chunks/0ypf.t599.7y6.js","/_next/static/chunks/0t2xr05rlu96l.js"],"OutletBoundary"]
+7:"$Sreact.suspense"
+3:T2c60,<h1>AND, OR, NOT, IMPLIES</h1>
+<p>The logical operators combine BOOLEAN values.</p>
+<h2 id="forms">Forms</h2>
+<table>
+<thead>
+<tr>
+<th>Operator</th>
+<th>Symbol</th>
+<th>Asyndetic</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>AND</code></td>
+<td><code>&#x26;&#x26;</code></td>
+<td><code>...</code></td>
+<td>both are TRUE</td>
+</tr>
+<tr>
+<td><code>OR</code></td>
+<td><code>||</code></td>
+<td><code>..</code></td>
+<td>at least one is TRUE</td>
+</tr>
+<tr>
+<td><code>NOT</code></td>
+<td></td>
+<td></td>
+<td>the opposite</td>
+</tr>
+<tr>
+<td><code>IMPLIES</code></td>
+<td><code>=></code></td>
+<td></td>
+<td>if the first is TRUE, so is the second</td>
+</tr>
+</tbody>
+</table>
+<p>The word and the symbol mean the same and can be mixed. For <code>...</code> and <code>..</code>, see <a href="/l4/reference/operators#asyndetic-and-and-or">Operators: Asyndetic AND and OR</a>.
+For exceptions ("… unless …"), see <a href="/l4/reference/operators/UNLESS">UNLESS</a>.</p>
+<p><strong>Example files:</strong></p>
+<pre><code class="language-l4-file">-- AND keyword examples
+
+-- Basic AND Operations
+
+#EVAL TRUE AND TRUE
+#EVAL TRUE AND FALSE
+#EVAL FALSE AND TRUE
+#EVAL FALSE AND FALSE
+
+-- Symbolic Alternative (&#x26;&#x26;)
+
+#EVAL TRUE &#x26;&#x26; TRUE
+#EVAL TRUE &#x26;&#x26; FALSE
+
+-- In Conditional Logic
+
+ASSUME age IS A NUMBER
+ASSUME `has license` IS A BOOLEAN
+
+DECIDE `can drive` IS age >= 16 AND `has license`
+
+#CHECK `can drive`
+
+-- Chaining Multiple Conditions
+
+GIVEN a IS A BOOLEAN
+      b IS A BOOLEAN
+      c IS A BOOLEAN
+`all true` a b c MEANS a AND b AND c
+
+#EVAL `all true` TRUE TRUE TRUE
+#EVAL `all true` TRUE TRUE FALSE
+
+-- Layout-Sensitive AND (Vertical Format)
+
+ASSUME `person age` IS A NUMBER
+ASSUME `person income` IS A NUMBER
+ASSUME `has criminal record` IS A BOOLEAN
+
+DECIDE `is eligible` IS
+      `person age` >= 18
+  AND `person income` > 30000
+  AND NOT `has criminal record`
+
+#CHECK `is eligible`
+
+-- Complex Expressions with AND
+
+GIVEN x IS A NUMBER, y IS A NUMBER
+`in range` x y MEANS x >= 0 AND x &#x3C;= 100 AND y >= 0 AND y &#x3C;= 100
+
+#EVAL `in range` 50 50
+#EVAL `in range` 150 50
+
+-- AND with Comparisons
+
+GIVEN score IS A NUMBER
+`passing grade` score MEANS score >= 60 AND score &#x3C;= 100
+
+#EVAL `passing grade` 75
+#EVAL `passing grade` 55
+
+-- AND in IF Expressions
+
+GIVEN `user age` IS A NUMBER, `has permission` IS A BOOLEAN
+`access level` `user age` `has permission` MEANS
+  IF `user age` >= 18 AND `has permission`
+  THEN "full access"
+  ELSE "restricted"
+
+#EVAL `access level` 25 TRUE
+#EVAL `access level` 25 FALSE
+</code></pre>
+<p>,</p>
+<pre><code class="language-l4-file">-- OR keyword examples
+
+-- Basic OR Operations
+
+#EVAL TRUE OR TRUE
+#EVAL TRUE OR FALSE
+#EVAL FALSE OR TRUE
+#EVAL FALSE OR FALSE
+
+-- Symbolic Alternative (||)
+
+#EVAL TRUE || TRUE
+#EVAL TRUE || FALSE
+
+-- In Conditional Logic
+
+ASSUME `is student` IS A BOOLEAN
+ASSUME `is senior` IS A BOOLEAN
+
+DECIDE `gets discount` IS `is student` OR `is senior`
+
+#CHECK `gets discount`
+
+-- Chaining Multiple Conditions
+
+GIVEN a IS A BOOLEAN
+      b IS A BOOLEAN
+      c IS A BOOLEAN
+`any true` a b c MEANS a OR b OR c
+
+#EVAL `any true` FALSE FALSE FALSE
+#EVAL `any true` FALSE TRUE FALSE
+
+-- Layout-Sensitive OR (Vertical Format)
+
+ASSUME `is admin` IS A BOOLEAN
+ASSUME `is owner` IS A BOOLEAN
+ASSUME `has permission` IS A BOOLEAN
+
+DECIDE `has access` IS
+      `is admin`
+  OR  `is owner`
+  OR  `has permission`
+
+#CHECK `has access`
+
+-- Complex Expressions with OR
+
+GIVEN status IS A STRING
+`is terminal status` status MEANS
+      status EQUALS "completed"
+  OR  status EQUALS "cancelled"
+  OR  status EQUALS "failed"
+
+#EVAL `is terminal status` "completed"
+#EVAL `is terminal status` "pending"
+
+-- OR in IF Expressions
+
+GIVEN `user type` IS A STRING, `has VIP` IS A BOOLEAN
+`get priority` `user type` `has VIP` MEANS
+  IF `user type` EQUALS "admin" OR `has VIP`
+  THEN "high"
+  ELSE "normal"
+
+#EVAL `get priority` "user" TRUE
+#EVAL `get priority` "user" FALSE
+
+-- Combining AND and OR
+
+GIVEN x IS A NUMBER, y IS A BOOLEAN
+`complex condition` x y MEANS
+  (x > 0 AND x &#x3C; 100) OR y
+
+#EVAL `complex condition` 50 FALSE
+#EVAL `complex condition` 150 FALSE
+#EVAL `complex condition` 150 TRUE
+</code></pre>
+<p>,</p>
+<pre><code class="language-l4-file">-- NOT examples
+
+-- Basic NOT
+
+#EVAL NOT TRUE
+#EVAL NOT FALSE
+#EVAL NOT NOT TRUE
+
+-- With AND, on separate lines: NOT applies to its own line only
+
+GIVEN age IS A NUMBER
+      `is blocked` IS A BOOLEAN
+GIVETH A BOOLEAN
+`may access` age `is blocked` MEANS
+      age >= 18
+  AND NOT `is blocked`
+
+#EVAL `may access` 30 FALSE
+#EVAL `may access` 30 TRUE
+
+-- On one line, NOT applies to everything after it
+
+GIVEN a IS A BOOLEAN
+      b IS A BOOLEAN
+GIVETH A BOOLEAN
+`not both` a b MEANS NOT a AND b
+-- means NOT (a AND b)
+
+GIVETH A BOOLEAN
+`not a, and b` a b MEANS (NOT a) AND b
+-- parentheses limit NOT to a
+
+#EVAL `not both` TRUE FALSE
+#EVAL `not a, and b` TRUE FALSE
+
+-- With comparisons: no parentheses needed
+
+GIVEN n IS A NUMBER
+GIVETH A BOOLEAN
+`is not zero` n MEANS NOT n EQUALS 0
+
+#EVAL `is not zero` 5
+#EVAL `is not zero` 0
+
+-- In IF expressions
+
+GIVEN flag IS A BOOLEAN
+GIVETH A STRING
+`flag message` flag MEANS
+  IF NOT flag
+  THEN "flag is off"
+  ELSE "flag is on"
+
+#EVAL `flag message` TRUE
+#EVAL `flag message` FALSE
+</code></pre>
+<p>,</p>
+<pre><code class="language-l4-file">-- IMPLIES keyword examples
+
+-- Basic IMPLIES Operations
+
+#EVAL TRUE IMPLIES TRUE
+#EVAL TRUE IMPLIES FALSE
+#EVAL FALSE IMPLIES TRUE
+#EVAL FALSE IMPLIES FALSE
+
+-- Symbolic Alternative (=>)
+
+#EVAL TRUE => TRUE
+#EVAL TRUE => FALSE
+#EVAL FALSE => TRUE
+
+-- Equivalence to NOT A OR B
+
+GIVEN a IS A BOOLEAN
+      b IS A BOOLEAN
+
+-- These are logically equivalent
+`implies version` a b MEANS a IMPLIES b
+`or version` a b MEANS NOT a OR b
+
+-- Test equivalence
+#EVAL `implies version` TRUE TRUE
+#EVAL `or version` TRUE TRUE
+
+#EVAL `implies version` TRUE FALSE
+#EVAL `or version` TRUE FALSE
+
+#EVAL `implies version` FALSE TRUE
+#EVAL `or version` FALSE TRUE
+
+-- Legal Rule Examples
+
+-- "If you are an employee, you must have a badge"
+ASSUME `is employee` IS A BOOLEAN
+ASSUME `has badge` IS A BOOLEAN
+
+DECIDE `badge rule` IS `is employee` IMPLIES `has badge`
+
+#CHECK `badge rule`
+
+-- "A minor must have parental consent"
+ASSUME `person age` IS A NUMBER
+ASSUME `has parental consent` IS A BOOLEAN
+
+DECIDE `consent rule` IS (`person age` &#x3C; 18) IMPLIES `has parental consent`
+
+#CHECK `consent rule`
+
+-- Chained Implications
+
+-- Implication is right-associative: A => B => C means A => (B => C)
+GIVEN x IS A BOOLEAN
+      y IS A BOOLEAN
+      z IS A BOOLEAN
+`chained impl` x y z MEANS x => y => z
+
+#EVAL `chained impl` TRUE TRUE TRUE
+#EVAL `chained impl` TRUE TRUE FALSE
+#EVAL `chained impl` FALSE FALSE FALSE
+
+-- Combined with AND/OR
+
+GIVEN p IS A BOOLEAN
+      q IS A BOOLEAN
+      r IS A BOOLEAN
+
+-- "(P AND Q) implies R"
+`conjunction implies` p q r MEANS (p AND q) IMPLIES r
+
+-- "P implies (Q OR R)"
+`implies disjunction` p q r MEANS p IMPLIES (q OR r)
+
+#EVAL `conjunction implies` TRUE TRUE TRUE
+#EVAL `conjunction implies` TRUE TRUE FALSE
+#EVAL `implies disjunction` TRUE FALSE TRUE
+#EVAL `implies disjunction` TRUE FALSE FALSE
+</code></pre>
+<h2 id="truth-table">Truth table</h2>
+<table>
+<thead>
+<tr>
+<th>A</th>
+<th>B</th>
+<th>A AND B</th>
+<th>A OR B</th>
+<th>NOT A</th>
+<th>A IMPLIES B</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>TRUE</td>
+<td>TRUE</td>
+<td>TRUE</td>
+<td>TRUE</td>
+<td>FALSE</td>
+<td>TRUE</td>
+</tr>
+<tr>
+<td>TRUE</td>
+<td>FALSE</td>
+<td>FALSE</td>
+<td>TRUE</td>
+<td>FALSE</td>
+<td>FALSE</td>
+</tr>
+<tr>
+<td>FALSE</td>
+<td>TRUE</td>
+<td>FALSE</td>
+<td>TRUE</td>
+<td>TRUE</td>
+<td>TRUE</td>
+</tr>
+<tr>
+<td>FALSE</td>
+<td>FALSE</td>
+<td>FALSE</td>
+<td>FALSE</td>
+<td>TRUE</td>
+<td>TRUE</td>
+</tr>
+</tbody>
+</table>
+<h2 id="and">AND</h2>
+<pre><code class="language-l4">GIVEN age IS A NUMBER
+      `has a licence` IS A BOOLEAN
+GIVETH A BOOLEAN
+`may drive` age `has a licence` MEANS age >= 16 AND `has a licence`
+</code></pre>
+<h2 id="or">OR</h2>
+<pre><code class="language-l4">GIVEN `is an employee` IS A BOOLEAN
+      `is a contractor` IS A BOOLEAN
+GIVETH A BOOLEAN
+`may enter` `is an employee` `is a contractor` MEANS `is an employee` OR `is a contractor`
+</code></pre>
+<h2 id="not">NOT</h2>
+<p><code>NOT</code> negates everything after it on its line, and any lines below that are indented further than the <code>NOT</code>:</p>
+<table>
+<thead>
+<tr>
+<th>Written</th>
+<th>Means</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>NOT a AND b</code></td>
+<td><code>NOT (a AND b)</code></td>
+</tr>
+<tr>
+<td><code>a AND NOT b AND c</code></td>
+<td><code>a AND NOT (b AND c)</code></td>
+</tr>
+<tr>
+<td><code>NOT n EQUALS 0</code></td>
+<td><code>NOT (n EQUALS 0)</code></td>
+</tr>
+</tbody>
+</table>
+<p>To negate only one operand on a line, put the <code>NOT</code> and its operand in parentheses: <code>(NOT a) AND b</code>.
+In the vertical layout below, each line is a separate operand, so <code>NOT</code> applies to its own line only.</p>
+<h2 id="implies">IMPLIES</h2>
+<p><code>A IMPLIES B</code> is FALSE only when <code>A</code> is TRUE and <code>B</code> is FALSE. It means the same as <code>NOT A OR B</code>: "if A, then B".</p>
+<pre><code class="language-l4">GIVEN age IS A NUMBER
+      `has parental consent` IS A BOOLEAN
+GIVETH A BOOLEAN
+`consent rule is met` age `has parental consent` MEANS
+  age &#x3C; 18 IMPLIES `has parental consent`
+</code></pre>
+<p><code>IMPLIES</code> groups to the right: <code>a IMPLIES b IMPLIES c</code> means <code>a IMPLIES (b IMPLIES c)</code>.</p>
+<h2 id="several-lines">Several lines</h2>
+<p>A long condition can be written one operand per line, with the operator at the start of each line:</p>
+<pre><code class="language-l4">GIVEN age IS A NUMBER
+      income IS A NUMBER
+      `has a criminal record` IS A BOOLEAN
+GIVETH A BOOLEAN
+`is eligible` age income `has a criminal record` MEANS
+      age >= 18
+  AND income > 30000
+  AND NOT `has a criminal record`
+</code></pre>
+<p>When the operators are in one column, the usual <a href="/l4/reference/operators#precedence">precedence</a> applies.
+An operator written further left than the lines above it applies to all of them together:</p>
+<pre><code class="language-l4">GIVEN a IS A BOOLEAN
+      b IS A BOOLEAN
+      c IS A BOOLEAN
+GIVETH A BOOLEAN
+`grouped by layout` a b c MEANS
+         a
+      OR b
+  AND    c
+</code></pre>
+<p>This means <code>(a OR b) AND c</code>; on one line, <code>a OR b AND c</code> means <code>a OR (b AND c)</code>.</p>
+<h2 id="evaluation-order">Evaluation order</h2>
+<p>The left operand is evaluated first, and the right one only when it is needed: <code>FALSE AND x</code> is FALSE, <code>TRUE OR x</code> is TRUE and <code>FALSE IMPLIES x</code> is TRUE without looking at <code>x</code>.</p>
+<h2 id="related-pages">Related pages</h2>
+<ul>
+<li><a href="/l4/reference/operators/UNLESS">UNLESS</a>: exceptions</li>
+<li><a href="/l4/reference/operators">Operators</a>: precedence and asyndetic forms</li>
+<li><a href="/l4/reference/control-flow/IF">IF</a>: use a condition to choose a value</li>
+</ul>
+0:{"rsc":["$","$1","c",{"children":[["$","$L2",null,{"navSections":[{"title":"","items":[{"title":"Language Reference","href":"reference"},{"title":"Glossary","href":"reference/GLOSSARY"},{"title":"Cheat sheet","href":"reference/cheat-sheet"},{"title":"Types","href":"reference/types","children":[{"title":"DECLARE","href":"reference/types/DECLARE"},{"title":"ASSUME","href":"reference/types/ASSUME"},{"title":"FOR ALL","href":"reference/types/for-all"},{"title":"Coercions","href":"reference/types/coercions"}]},{"title":"Functions","href":"reference/functions","children":[{"title":"DECIDE","href":"reference/functions/DECIDE"},{"title":"GIVEN and GIVETH","href":"reference/functions/GIVEN"},{"title":"MEANS","href":"reference/functions/MEANS"},{"title":"LET and WHERE","href":"reference/functions/LET"},{"title":"YIELD","href":"reference/functions/YIELD"},{"title":"AKA","href":"reference/functions/AKA"}]},{"title":"Control flow","href":"reference/control-flow","children":[{"title":"IF","href":"reference/control-flow/IF"},{"title":"BRANCH","href":"reference/control-flow/BRANCH"},{"title":"CONSIDER","href":"reference/control-flow/CONSIDER"}]},{"title":"Operators","href":"reference/operators","children":[{"title":"AND, OR, NOT, IMPLIES","href":"reference/operators/logical"},{"title":"UNLESS","href":"reference/operators/UNLESS"},{"title":"Arithmetic","href":"reference/operators/arithmetic"},{"title":"Comparisons","href":"reference/operators/comparisons"}]},{"title":"Regulative rules","href":"reference/regulative","children":[{"title":"PARTY, MUST, MAY, SHANT","href":"reference/regulative/PARTY"},{"title":"Deadlines and consequences","href":"reference/regulative/consequences"},{"title":"BECAUSE","href":"reference/regulative/BECAUSE"},{"title":"DEONTIC","href":"reference/regulative/DEONTIC"},{"title":"EVENT","href":"reference/regulative/EVENT"}]},{"title":"Syntax and directives","href":"reference/syntax"},{"title":"Built-in functions","href":"reference/builtins","children":[{"title":"HTTP and JSON","href":"reference/builtins/http-json"}]},{"title":"Standard libraries","href":"reference/libraries","children":[{"title":"prelude","href":"reference/libraries/prelude"},{"title":"math","href":"reference/libraries/math"},{"title":"daydate","href":"reference/libraries/daydate"},{"title":"time","href":"reference/libraries/time"},{"title":"datetime","href":"reference/libraries/datetime"},{"title":"timezone","href":"reference/libraries/timezone"},{"title":"excel-date","href":"reference/libraries/excel-date"},{"title":"currency","href":"reference/libraries/currency"},{"title":"holdings","href":"reference/libraries/holdings"},{"title":"actus","href":"reference/libraries/actus"},{"title":"legal-persons","href":"reference/libraries/legal-persons"},{"title":"jurisdiction","href":"reference/libraries/jurisdiction"},{"title":"llm","href":"reference/libraries/llm"}]},{"title":"Error messages","href":"reference/errors"}]}],"toc":[],"htmlContent":"$3","pager":{"prev":"$0:rsc:props:children:0:props:navSections:0:items:6","next":"$0:rsc:props:children:0:props:navSections:0:items:6:children:1"}}],["$L4"],"$L5"]}],"isPartial":false,"staleTime":300,"varyParams":null,"buildId":"iJUXAyHcmcW99cMci3ei9"}
+4:["$","script","script-0",{"src":"/_next/static/chunks/0fl~me.qwn48c.js","async":true}]
+5:["$","$L6",null,{"children":["$","$7",null,{"name":"Next.MetadataOutlet","children":"$@8"}]}]
+8:null

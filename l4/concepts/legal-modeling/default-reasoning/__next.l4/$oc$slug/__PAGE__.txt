@@ -1,0 +1,128 @@
+1:"$Sreact.fragment"
+2:I[90160,["/_next/static/chunks/0ypf.t599.7y6.js","/_next/static/chunks/0t2xr05rlu96l.js","/_next/static/chunks/0uxaa7wo_wmcw.js","/_next/static/chunks/0fl~me.qwn48c.js"],"default"]
+6:I[97367,["/_next/static/chunks/0ypf.t599.7y6.js","/_next/static/chunks/0t2xr05rlu96l.js"],"OutletBoundary"]
+7:"$Sreact.suspense"
+3:T210b,<h1>Exceptions and defaults</h1>
+<p>How L4 encodes the law's most common shape: a general rule, followed by exceptions.</p>
+<hr>
+<h2 id="law-is-defeasible">Law Is Defeasible</h2>
+<p>Legal rules are rarely absolute. The characteristic pattern of legal drafting is a <strong>general rule subject to exceptions</strong>:</p>
+<blockquote>
+<p>A person who satisfies the residence requirement is eligible for the benefit, <strong>unless</strong> the person has been disqualified under section 12.</p>
+</blockquote>
+<p>The rule holds <em>by default</em>; the exception <em>defeats</em> it in particular cases. Legal theorists call this <strong>defeasibility</strong>, and it runs all the way through statutes and contracts: "unless", "except where", "subject to section 9", "this section does not apply to…".</p>
+<p>Crucially, the legal text keeps the rule and its exceptions <strong>separate</strong>. The general rule states the normal case; each exception is its own clause, often its own subsection, added and amended independently. An encoding that wants to stay reviewable against the text should preserve that separation.</p>
+<hr>
+<h2 id="unless-the-exception-operator">UNLESS: The Exception Operator</h2>
+<p>L4 provides <code>UNLESS</code> for exactly this structure. Semantically it is just conjunction with a negation — <code>A UNLESS B</code> means <code>A AND NOT B</code> — but its <strong>precedence</strong> is what makes it an exception operator: it binds looser than both <code>AND</code> and <code>OR</code>, so it carves its exception out of the <em>entire</em> rule that precedes it.</p>
+<pre><code class="language-l4">ASSUME `is a citizen` IS A BOOLEAN
+ASSUME `has resided for 5 years` IS A BOOLEAN
+ASSUME `has been disqualified` IS A BOOLEAN
+
+DECIDE `is eligible` IF
+      `is a citizen`
+  AND `has resided for 5 years`
+  UNLESS `has been disqualified`
+</code></pre>
+<p>This evaluates as <code>(citizen AND resided) AND NOT disqualified</code> — the whole eligibility test, subject to the exception — without any parentheses. The code has the same shape as the sentence: rule first, exception last.</p>
+<p>See <a href="/l4/reference/operators/UNLESS">UNLESS</a> for the precedence details and truth table.</p>
+<hr>
+<h2 id="why-not-flatten-into-boolean-logic">Why Not Flatten Into Boolean Logic?</h2>
+<p><code>A UNLESS B</code> is logically equivalent to <code>A AND NOT B</code>, so why does the operator matter? Because the two encodings differ in everything <em>except</em> their truth table.</p>
+<p>Consider a rule with an exception that itself has an exception (a very common statutory shape):</p>
+<blockquote>
+<p>The holder of a licence may drive.
+A licence under suspension does not authorise driving —
+unless the suspension has been stayed by court order.</p>
+</blockquote>
+<p>Flattened into one boolean expression:</p>
+<pre><code class="language-l4">-- Correct, but the structure is lost
+DECIDE `may drive (flattened)` IF
+    `holds licence`
+    AND (NOT `licence suspended` OR `suspension stayed by court order`)
+</code></pre>
+<p>This is correct, but the drafting structure is gone. Nothing in the code corresponds to "the suspension provision"; the exception-to-the-exception has been absorbed into a <code>NOT … OR …</code> that has to be mentally re-derived to check against the text. When the legislature adds a second stay condition, there is no obvious place to put it.</p>
+<p>The isomorphic encoding names each layer:</p>
+<pre><code class="language-l4">-- One named rule per provision
+DECIDE `suspension is operative` IF
+    `licence suspended`
+    UNLESS `suspension stayed by court order`
+
+DECIDE `may drive` IF
+    `holds licence`
+    UNLESS `suspension is operative`
+</code></pre>
+<p>Now the code has the same architecture as the statute:</p>
+<ul>
+<li><code>`may drive`</code> is the general rule, with the suspension provision as its exception</li>
+<li><code>`suspension is operative`</code> is the suspension provision, with the stay as <em>its</em> exception</li>
+</ul>
+<p>Each provision of the source text is one named rule; each "unless" in the text is one <code>UNLESS</code> in the code.</p>
+<hr>
+<h2 id="layering-exceptions">Layering Exceptions</h2>
+<p>The named-rule pattern scales to any depth of exception nesting. Each layer follows the same recipe:</p>
+<ol>
+<li>State the rule for the normal case.</li>
+<li>Append <code>UNLESS</code> and name the defeater.</li>
+<li>If the defeater itself has exceptions, define it as its own rule with its own <code>UNLESS</code>.</li>
+</ol>
+<p><code>UNLESS</code> can also be chained directly. Chained <code>UNLESS</code> nests to the right, so each further <code>UNLESS</code> is an exception to the exception before it:</p>
+<pre><code class="language-l4">-- a UNLESS b UNLESS c  ≡  a AND NOT (b AND NOT c)
+`may drive` MEANS
+    `holds licence` UNLESS `licence suspended` UNLESS `suspension stayed by court order`
+</code></pre>
+<p>This one-liner is equivalent to the two named rules above. It is fine for a quick exception-to-an-exception, but beyond one level of nesting, prefer named intermediate rules: the names document which provision each layer encodes, the intermediate conclusions (<code>`suspension is operative`</code>) become independently testable and reusable, and reviewers can trace each rule to its clause.</p>
+<hr>
+<h2 id="why-explicit-exception-structure-wins">Why Explicit Exception Structure Wins</h2>
+<h3 id="amendments-stay-local">Amendments stay local</h3>
+<p>Laws change by amendment, and amendments are usually to exceptions: a new carve-out, a new condition on an existing carve-out. With explicit structure, the code change is as local as the legal change — one new <code>UNLESS</code> clause, or one edit inside the named defeater rule. With flattened logic, every amendment means re-deriving and re-simplifying a compound expression, and the diff no longer resembles the amending act.</p>
+<h3 id="review-is-clause-by-clause">Review is clause-by-clause</h3>
+<p>A lawyer checking the encoding reads the statute one provision at a time. If the code is one named rule per provision, review is a side-by-side comparison. If the code is a normalised boolean formula, the reviewer must verify a logical transformation as well as a transcription — a much harder task, and the one most likely to hide errors.</p>
+<h3 id="burden-structure-is-visible">Burden structure is visible</h3>
+<p>"Rule unless exception" also tracks who typically has to establish what: the claimant proves the elements of the general rule; the party resisting invokes the exception. An encoding that keeps exceptions syntactically separate preserves this practical reading; a flattened formula erases it.</p>
+<h3 id="the-honest-caveat">The honest caveat</h3>
+<p><code>UNLESS</code> is classical logic, not a non-monotonic defeasible logic: L4 does not infer priorities between rules or retract conclusions when new rules are added. What <code>UNLESS</code> gives you is the <em>structure</em> of default-plus-exception, stated explicitly and checked by the type system — which is precisely what you need for an encoding that stays isomorphic to its source text.</p>
+<hr>
+<h2 id="summary">Summary</h2>
+<table>
+<thead>
+<tr>
+<th>Legal drafting pattern</th>
+<th>L4 encoding</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>General rule</td>
+<td><code>DECIDE rule IF conditions</code></td>
+</tr>
+<tr>
+<td>"…unless X"</td>
+<td><code>… UNLESS X</code> appended to the rule</td>
+</tr>
+<tr>
+<td>Exception with its own exception</td>
+<td>Name the exception as its own <code>DECIDE</code> with its own <code>UNLESS</code></td>
+</tr>
+<tr>
+<td>"Subject to section N"</td>
+<td><code>UNLESS</code> naming a rule that encodes section N</td>
+</tr>
+<tr>
+<td>New carve-out enacted</td>
+<td>Add one <code>UNLESS</code> clause or edit one named rule</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h2 id="further-reading">Further Reading</h2>
+<ul>
+<li><a href="/l4/reference/operators/UNLESS">UNLESS Reference</a> — Semantics, precedence, truth table</li>
+<li><a href="/l4/concepts/legal-modeling/constitutive-vs-regulative">Definitions and duties</a> — Where exception structure lives in the larger architecture</li>
+<li><a href="/l4/concepts/language-design/principles">Design principles</a> — Legal isomorphism, the principle this pattern serves</li>
+<li><a href="/l4/tutorials/getting-started/common-patterns">Common patterns</a> — More encoding patterns</li>
+</ul>
+0:{"rsc":["$","$1","c",{"children":[["$","$L2",null,{"navSections":[{"title":"","items":[{"title":"Concepts home","href":"concepts"},{"title":"Design principles","href":"concepts/language-design/principles"},{"title":"Reading like the law","href":"concepts/language-design/linguistic-syntax"},{"title":"Definitions and duties","href":"concepts/legal-modeling/constitutive-vs-regulative"},{"title":"Exceptions and defaults","href":"concepts/legal-modeling/default-reasoning"},{"title":"How obligations unfold","href":"concepts/legal-modeling/regulative-rules"},{"title":"Types as legal categories","href":"concepts/type-system/algebraic-types"},{"title":"Exhaustiveness","href":"concepts/type-system/exhaustiveness"},{"title":"Type theory","href":"concepts/type-system/type-theory"}]}],"toc":[],"htmlContent":"$3","pager":{"prev":"$0:rsc:props:children:0:props:navSections:0:items:3","next":"$0:rsc:props:children:0:props:navSections:0:items:5"}}],["$L4"],"$L5"]}],"isPartial":false,"staleTime":300,"varyParams":null,"buildId":"iJUXAyHcmcW99cMci3ei9"}
+4:["$","script","script-0",{"src":"/_next/static/chunks/0fl~me.qwn48c.js","async":true}]
+5:["$","$L6",null,{"children":["$","$7",null,{"name":"Next.MetadataOutlet","children":"$@8"}]}]
+8:null

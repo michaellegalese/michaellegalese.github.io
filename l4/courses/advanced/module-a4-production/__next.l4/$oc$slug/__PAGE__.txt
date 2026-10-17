@@ -1,0 +1,228 @@
+1:"$Sreact.fragment"
+2:I[90160,["/_next/static/chunks/0ypf.t599.7y6.js","/_next/static/chunks/0t2xr05rlu96l.js","/_next/static/chunks/0uxaa7wo_wmcw.js","/_next/static/chunks/0fl~me.qwn48c.js"],"default"]
+6:I[97367,["/_next/static/chunks/0ypf.t599.7y6.js","/_next/static/chunks/0t2xr05rlu96l.js"],"OutletBoundary"]
+7:"$Sreact.suspense"
+3:T2c1c,<h1>Module A4: Production patterns</h1>
+<p>In this module, you'll learn how to structure a real rulebase so that it stays traceable to its source, easy to test, and ready to deploy.</p>
+<h2 id="learning-objectives">Learning Objectives</h2>
+<p>By the end of this module, you will be able to:</p>
+<ul>
+<li>Organise a rulebase into files and sections that mirror the source text</li>
+<li>Share types between files with <code>IMPORT</code></li>
+<li>Keep tests beside the rules they check, and build test data that is easy to vary</li>
+<li>Isolate a problem quickly</li>
+<li>Get a rulebase ready for deployment</li>
+</ul>
+<hr>
+<h2 id="organizing-a-rulebase">Organizing a Rulebase</h2>
+<h3 id="file-structure">File Structure</h3>
+<p>Keep the layout simple, and let it follow the instrument you are encoding:</p>
+<pre><code>charity-rules/
+├── README.md              # what these rules encode: which instrument, which version
+└── rules/
+    ├── shared-types.l4    # DECLAREs used by several files
+    ├── registration.l4    # Part 2 of the Law, with its §§ Tests section
+    ├── governors.l4       # Part 3, with its §§ Tests section
+    └── enforcement.l4     # Part 5: notices and appeals, with its §§ Tests section
+</code></pre>
+<p>Guidelines:</p>
+<ul>
+<li><strong>Mirror the source text.</strong> One file per part of the statute or per contract, named after it, with <code>§</code> sections that follow the source's numbering. Every change to the code can then be traced to a clause.</li>
+<li><strong>Shared vocabulary in one place.</strong> Put the <code>DECLARE</code>s that several files need in one file, and <code>IMPORT</code> it. A file in the same folder is imported by its name.</li>
+<li><strong>Tests live with the rules.</strong> Keep each rule's checks in a <code>§§ Tests</code> section of the same file, so that a change to a rule and the change to its tests travel together.</li>
+</ul>
+<p><a href="/l4/tutorials/getting-started/version-control-for-rules">Manage rules in git and CI</a> builds on this layout with commit discipline, review, and a CI check for every change.</p>
+<h3 id="sharing-types-with-import">Sharing Types with IMPORT</h3>
+<p>The shared file holds the vocabulary:</p>
+<pre><code class="language-l4">-- shared-types.l4
+§ `Shared types`
+
+DECLARE Person
+    HAS `the name` IS A STRING
+        `the age` IS A NUMBER
+        `is bankrupt` IS A BOOLEAN
+</code></pre>
+<p>Each rule file imports it by name; a name with a hyphen goes in backticks:</p>
+<pre><code class="language-l4">-- governors.l4
+IMPORT `shared-types`
+
+§ `Part 3: Governors`
+
+§§ `Article 19: Who may be a governor`
+
+-- A person may be a governor if they are an adult and not bankrupt.
+GIVEN person IS A Person
+GIVETH A BOOLEAN
+DECIDE `the person may be a governor` IF
+        person's `the age` AT LEAST 18
+    AND NOT person's `is bankrupt`
+
+§§ `Tests`
+
+`an adult` MEANS Person "Ann" 18 FALSE
+`a minor` MEANS Person "Ben" 17 FALSE
+`a bankrupt adult` MEANS Person "Cy" 40 TRUE
+
+#ASSERT `the person may be a governor` `an adult`
+#ASSERT NOT `the person may be a governor` `a minor`
+#ASSERT NOT `the person may be a governor` `a bankrupt adult`
+</code></pre>
+<p><code>l4 run governors.l4</code> reports each assertion as satisfied, or tells you which one failed.</p>
+<hr>
+<h2 id="testing-a-rulebase">Testing a Rulebase</h2>
+<p><a href="/l4/tutorials/getting-started/testing-your-rules">Test your rules</a> covers the testing directives step by step: <code>#EVAL</code> to look at a value, <code>#ASSERT</code> to state what a value must be, <code>#CHECK</code> to confirm a type, and <code>#TRACE</code> to run a regulative rule against a timeline. In a real rulebase, three habits matter most:</p>
+<ul>
+<li><strong>Assert, don't just evaluate.</strong> An <code>#EVAL</code> shows a result for you to read; an <code>#ASSERT</code> fails the run when the result is wrong, so CI can catch it.</li>
+<li><strong>Test both sides of every boundary.</strong> For "at least 18", test 17 and 18. For a deadline of 14 days, trace an event on day 14 and one after it.</li>
+<li><strong>Cover every path of a regulative rule</strong>: compliance, a missed deadline, and each <code>LEST</code> fallback.</li>
+</ul>
+<h3 id="test-data-factory">Test Data Factory</h3>
+<p>A function that builds test data from the one value you want to vary keeps boundary tests short:</p>
+<pre><code class="language-l4">DECLARE Person
+    HAS `the name` IS A STRING
+        `the age` IS A NUMBER
+        `is bankrupt` IS A BOOLEAN
+
+GIVEN person IS A Person
+GIVETH A BOOLEAN
+DECIDE `is adult` IF person's `the age` AT LEAST 18
+
+-- Test data factory
+GIVEN age IS A NUMBER
+GIVETH A Person
+`person with age` MEANS Person "Test" age FALSE
+
+-- Boundary tests
+#ASSERT NOT `is adult` (`person with age` 17)
+#ASSERT `is adult` (`person with age` 18)
+#ASSERT `is adult` (`person with age` 19)
+</code></pre>
+<hr>
+<h2 id="debugging-patterns">Debugging Patterns</h2>
+<p><a href="/l4/tutorials/getting-started/debugging-type-errors">Fix errors</a> explains the common error messages and how to fix each one. Two habits help in a large rulebase:</p>
+<p><strong>When in doubt, add parentheses.</strong> A field access passed to a function needs them:</p>
+<pre><code>length (charity's `the governors`) > 0
+all (GIVEN g YIELD g's `the age` >= 18) (charity's `the governors`)
+</code></pre>
+<p><strong>Isolate the failing part.</strong> When a rule gives a surprising answer, evaluate its parts one at a time, starting from the input:</p>
+<pre><code>#EVAL `the test charity`                                  -- is the input what you think?
+#EVAL `the test charity`'s `the governors`                -- is the field right?
+#EVAL `the person may be a governor` `the first governor` -- does the helper agree?
+</code></pre>
+<hr>
+<h2 id="getting-ready-to-deploy">Getting Ready to Deploy</h2>
+<p>Rules become API endpoints only when you mark them. Place <code>@export</code> directly above a rule to expose it, and add <code>@desc</code> to each input so that callers know what it means:</p>
+<pre><code class="language-l4">DECLARE Person
+    HAS `the age` IS A NUMBER
+        `is bankrupt` IS A BOOLEAN
+
+@export Check whether a person is eligible
+GIVEN person IS A Person @desc The person to check
+GIVETH A BOOLEAN
+DECIDE `is eligible` IF
+    person's `the age` >= 21
+    AND NOT person's `is bankrupt`
+</code></pre>
+<p><a href="/l4/tutorials/deploying-rules/exporting-rules-for-deployment">Deploy your rules</a> takes it from there: deploying from VS Code or the command line, calling the deployed rules over REST, reading the JSON answers, and exposing the rules to AI agents. Test directives such as <code>#ASSERT</code> and <code>#TRACE</code> stay in the file; deployment ignores them. For calling other services from L4, see <a href="/l4/reference/builtins/http-json">HTTP and JSON</a>.</p>
+<h3 id="keep-it-fast">Keep It Fast</h3>
+<ul>
+<li><strong>Prefer library functions to hand-written recursion.</strong> <code>foldl (GIVEN acc, x YIELD acc + x) 0 xs</code> from the prelude says what it does and needs no base case.</li>
+<li><strong>Prefer a formula to a loop</strong> where the law gives one: the sum of 1 to n is <code>n * (n + 1) / 2</code>.</li>
+<li><strong>Keep <code>#TRACE</code> scenarios short.</strong> Test a 30-year loan contract with a version of three instalments; the same rule on a short timeline exercises the same paths.</li>
+</ul>
+<h3 id="deployment-checklist">Deployment Checklist</h3>
+<p><strong>Code quality</strong></p>
+<ul class="contains-task-list">
+<li class="task-list-item"><input type="checkbox" disabled> <code>l4 check</code> passes with no errors</li>
+<li class="task-list-item"><input type="checkbox" disabled> Every <code>#ASSERT</code> is satisfied and every <code>#TRACE</code> gives the expected result</li>
+<li class="task-list-item"><input type="checkbox" disabled> No missing-case warnings left, or each one is deliberate</li>
+<li class="task-list-item"><input type="checkbox" disabled> Sections follow the source, and rules cite the provisions they encode</li>
+</ul>
+<p><strong>Test coverage</strong></p>
+<ul class="contains-task-list">
+<li class="task-list-item"><input type="checkbox" disabled> Happy path tested</li>
+<li class="task-list-item"><input type="checkbox" disabled> Both sides of every boundary tested</li>
+<li class="task-list-item"><input type="checkbox" disabled> Every <code>CONSIDER</code> branch and every <code>LEST</code> fallback reached by a test</li>
+</ul>
+<p><strong>Deployment</strong></p>
+<ul class="contains-task-list">
+<li class="task-list-item"><input type="checkbox" disabled> Rules marked with <code>@export</code>, and every input described with <code>@desc</code></li>
+<li class="task-list-item"><input type="checkbox" disabled> The Deploy tab preview shows the expected rules</li>
+<li class="task-list-item"><input type="checkbox" disabled> A few calls to the deployed API return the answers your tests expect</li>
+</ul>
+<hr>
+<h2 id="exercise-test-a-rule-thoroughly">Exercise: Test a Rule Thoroughly</h2>
+<p>Take this eligibility rule: a person qualifies if they are at least 21 years old and not bankrupt. Build a test data factory, assert the results on both sides of the age boundary and for a bankrupt person, and add the total of a list with a prelude fold instead of hand-written recursion.</p>
+<details>
+<summary>Solution</summary>
+<pre><code class="language-l4">IMPORT prelude
+
+DECLARE Person
+    HAS `the name` IS A STRING
+        `the age` IS A NUMBER
+        `is bankrupt` IS A BOOLEAN
+
+GIVEN person IS A Person
+GIVETH A BOOLEAN
+DECIDE `is eligible` IF
+    person's `the age` >= 21
+    AND NOT person's `is bankrupt`
+
+§§ `Tests`
+
+-- Test data factory
+GIVEN age IS A NUMBER
+GIVETH A Person
+`person with age` MEANS Person "Test" age FALSE
+
+-- Boundary tests
+#ASSERT NOT `is eligible` (`person with age` 20)
+#ASSERT `is eligible` (`person with age` 21)
+#ASSERT `is eligible` (`person with age` 22)
+#ASSERT NOT `is eligible` (Person "Bankrupt" 40 TRUE)
+
+-- Prelude fold instead of manual recursion
+GIVEN xs IS A LIST OF NUMBER
+GIVETH A NUMBER
+`total of` MEANS foldl (GIVEN acc, x YIELD acc + x) 0 xs
+
+#ASSERT `total of` (LIST 1, 2, 3) EQUALS 6
+</code></pre>
+</details>
+<hr>
+<h2 id="summary">Summary</h2>
+<table>
+<thead>
+<tr>
+<th>Area</th>
+<th>Best Practice</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Organization</strong></td>
+<td>One file per part of the source, <code>§</code> sections, shared types IMPORTed</td>
+</tr>
+<tr>
+<td><strong>Testing</strong></td>
+<td><code>#ASSERT</code> in a <code>§§ Tests</code> section of each file; test every boundary</td>
+</tr>
+<tr>
+<td><strong>Debugging</strong></td>
+<td>Isolate with <code>#EVAL</code>; add parentheses</td>
+</tr>
+<tr>
+<td><strong>Deployment</strong></td>
+<td><code>@export</code> and <code>@desc</code>, then deploy to Legalese Cloud</td>
+</tr>
+<tr>
+<td><strong>Performance</strong></td>
+<td>Prefer library functions and formulas; keep traces short</td>
+</tr>
+</tbody>
+</table>
+<p>You have completed the Advanced course. For a specific task, see the <a href="/l4/tutorials">Tutorials</a>; for the theory behind L4, <a href="/l4/concepts">Concepts</a>.</p>
+0:{"rsc":["$","$1","c",{"children":[["$","$L2",null,{"navSections":[{"title":"","items":[{"title":"Overview","href":"courses"},{"title":"Overview","href":"courses/foundation"},{"title":"0. Introduction to L4","href":"courses/foundation/module-0-introduction"},{"title":"1. Your first legal rule","href":"courses/foundation/module-1-first-rule"},{"title":"2. Legal entities and relationships","href":"courses/foundation/module-2-entities"},{"title":"3. Control flow","href":"courses/foundation/module-3-control-flow"},{"title":"4. Decision logic","href":"courses/foundation/module-4-decision-logic"},{"title":"5. Functions","href":"courses/foundation/module-5-functions"},{"title":"6. Regulative rules","href":"courses/foundation/module-6-regulative"},{"title":"7. Putting it together","href":"courses/foundation/module-7-capstone"},{"title":"Overview","href":"courses/advanced"},{"title":"A1. Real regulatory schemes","href":"courses/advanced/module-a1-regulatory"},{"title":"A2. Cross-cutting concerns","href":"courses/advanced/module-a2-cross-cutting"},{"title":"A3. Contracts in depth","href":"courses/advanced/module-a3-contracts"},{"title":"A4. Production patterns","href":"courses/advanced/module-a4-production"}]}],"toc":[],"htmlContent":"$3","pager":{"prev":"$0:rsc:props:children:0:props:navSections:0:items:13"}}],["$L4"],"$L5"]}],"isPartial":false,"staleTime":300,"varyParams":null,"buildId":"iJUXAyHcmcW99cMci3ei9"}
+4:["$","script","script-0",{"src":"/_next/static/chunks/0fl~me.qwn48c.js","async":true}]
+5:["$","$L6",null,{"children":["$","$7",null,{"name":"Next.MetadataOutlet","children":"$@8"}]}]
+8:null
