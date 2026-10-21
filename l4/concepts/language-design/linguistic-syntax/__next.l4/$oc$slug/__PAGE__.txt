@@ -1,6 +1,6 @@
 1:"$Sreact.fragment"
-2:I[90160,["/_next/static/chunks/0ypf.t599.7y6.js","/_next/static/chunks/0t2xr05rlu96l.js","/_next/static/chunks/0uxaa7wo_wmcw.js","/_next/static/chunks/0fl~me.qwn48c.js"],"default"]
-6:I[97367,["/_next/static/chunks/0ypf.t599.7y6.js","/_next/static/chunks/0t2xr05rlu96l.js"],"OutletBoundary"]
+2:I[90160,["/_next/static/chunks/0k9p8qe2_c6el.js","/_next/static/chunks/0i.l9589uvx0j.js","/_next/static/chunks/0hpy9y_1sdd42.js","/_next/static/chunks/0ixaclxzy-hn_.js"],"default"]
+6:I[897367,["/_next/static/chunks/0k9p8qe2_c6el.js","/_next/static/chunks/0i.l9589uvx0j.js"],"OutletBoundary"]
 7:"$Sreact.suspense"
 3:T3e04,<h1>Reading like the law</h1>
 <p>How L4 borrows from natural language linguistics to make legal code readable.</p>
@@ -198,7 +198,7 @@ mom and dad `have a baby named` kid MEANS
 <li><a href="/l4/reference/GLOSSARY">Glossary</a> -- Complete feature index</li>
 <li><a href="/l4/courses/foundation">Foundation course</a> -- Learn L4 from scratch</li>
 </ul>
-0:{"rsc":["$","$1","c",{"children":[["$","$L2",null,{"navSections":[{"title":"","items":[{"title":"Concepts home","href":"concepts"},{"title":"Design principles","href":"concepts/language-design/principles"},{"title":"Reading like the law","href":"concepts/language-design/linguistic-syntax"},{"title":"Definitions and duties","href":"concepts/legal-modeling/constitutive-vs-regulative"},{"title":"Exceptions and defaults","href":"concepts/legal-modeling/default-reasoning"},{"title":"How obligations unfold","href":"concepts/legal-modeling/regulative-rules"},{"title":"Types as legal categories","href":"concepts/type-system/algebraic-types"},{"title":"Exhaustiveness","href":"concepts/type-system/exhaustiveness"},{"title":"Type theory","href":"concepts/type-system/type-theory"}]}],"toc":[],"htmlContent":"$3","pager":{"prev":"$0:rsc:props:children:0:props:navSections:0:items:1","next":"$0:rsc:props:children:0:props:navSections:0:items:3"}}],["$L4"],"$L5"]}],"isPartial":false,"staleTime":300,"varyParams":null,"buildId":"q-f07vQeTR9HcEdU9JcE6"}
-4:["$","script","script-0",{"src":"/_next/static/chunks/0fl~me.qwn48c.js","async":true}]
+0:{"rsc":["$","$1","c",{"children":[["$","$L2",null,{"navSections":[{"title":"","items":[{"title":"Concepts home","href":"concepts"},{"title":"Design principles","href":"concepts/language-design/principles"},{"title":"Reading like the law","href":"concepts/language-design/linguistic-syntax"},{"title":"Definitions and duties","href":"concepts/legal-modeling/constitutive-vs-regulative"},{"title":"Exceptions and defaults","href":"concepts/legal-modeling/default-reasoning"},{"title":"How obligations unfold","href":"concepts/legal-modeling/regulative-rules"},{"title":"Types as legal categories","href":"concepts/type-system/algebraic-types"},{"title":"Exhaustiveness","href":"concepts/type-system/exhaustiveness"},{"title":"Type theory","href":"concepts/type-system/type-theory"}]}],"toc":[],"htmlContent":"$3","pager":{"prev":"$0:rsc:props:children:0:props:navSections:0:items:1","next":"$0:rsc:props:children:0:props:navSections:0:items:3"}}],["$L4"],"$L5"]}],"isPartial":false,"staleTime":300,"varyParams":null,"buildId":"PUTTaNyKDqSJ-jGr83omm"}
+4:["$","script","script-0",{"src":"/_next/static/chunks/0ixaclxzy-hn_.js","async":true}]
 5:["$","$L6",null,{"children":["$","$7",null,{"name":"Next.MetadataOutlet","children":"$@8"}]}]
 8:null

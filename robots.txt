@@ -1,2 +1,14 @@
-User-agent: *
-Disallow: /
+User-Agent: *
+Allow: /
+
+User-Agent: GPTBot
+User-Agent: ChatGPT-User
+User-Agent: Google-Extended
+User-Agent: Claude-Web
+User-Agent: anthropic-ai
+User-Agent: CCBot
+User-Agent: PerplexityBot
+User-Agent: Bytespider
+User-Agent: cohere-ai
+
+Sitemap: https://legalese.com/sitemap.xml

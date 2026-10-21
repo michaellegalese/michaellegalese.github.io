@@ -1,6 +1,6 @@
 1:"$Sreact.fragment"
-2:I[90160,["/_next/static/chunks/0ypf.t599.7y6.js","/_next/static/chunks/0t2xr05rlu96l.js","/_next/static/chunks/0uxaa7wo_wmcw.js","/_next/static/chunks/0fl~me.qwn48c.js"],"default"]
-6:I[97367,["/_next/static/chunks/0ypf.t599.7y6.js","/_next/static/chunks/0t2xr05rlu96l.js"],"OutletBoundary"]
+2:I[90160,["/_next/static/chunks/0k9p8qe2_c6el.js","/_next/static/chunks/0i.l9589uvx0j.js","/_next/static/chunks/0hpy9y_1sdd42.js","/_next/static/chunks/0ixaclxzy-hn_.js"],"default"]
+6:I[897367,["/_next/static/chunks/0k9p8qe2_c6el.js","/_next/static/chunks/0i.l9589uvx0j.js"],"OutletBoundary"]
 7:"$Sreact.suspense"
 3:T3ca8,<h1>Type theory</h1>
 <p>The formal foundations of L4's type system. This page is for readers who know some type theory or functional programming and want the precise mechanics behind L4's type checking, inference and evaluation.</p>
@@ -287,7 +287,7 @@ factorial MEANS
 <li><strong><a href="/l4/reference/regulative">Regulative rules</a></strong> -- MUST, MAY, SHANT and regulative rule structure</li>
 <li><strong><a href="/l4/reference/GLOSSARY">Glossary</a></strong> -- Complete language feature index</li>
 </ul>
-0:{"rsc":["$","$1","c",{"children":[["$","$L2",null,{"navSections":[{"title":"","items":[{"title":"Concepts home","href":"concepts"},{"title":"Design principles","href":"concepts/language-design/principles"},{"title":"Reading like the law","href":"concepts/language-design/linguistic-syntax"},{"title":"Definitions and duties","href":"concepts/legal-modeling/constitutive-vs-regulative"},{"title":"Exceptions and defaults","href":"concepts/legal-modeling/default-reasoning"},{"title":"How obligations unfold","href":"concepts/legal-modeling/regulative-rules"},{"title":"Types as legal categories","href":"concepts/type-system/algebraic-types"},{"title":"Exhaustiveness","href":"concepts/type-system/exhaustiveness"},{"title":"Type theory","href":"concepts/type-system/type-theory"}]}],"toc":[],"htmlContent":"$3","pager":{"prev":"$0:rsc:props:children:0:props:navSections:0:items:7"}}],["$L4"],"$L5"]}],"isPartial":false,"staleTime":300,"varyParams":null,"buildId":"q-f07vQeTR9HcEdU9JcE6"}
-4:["$","script","script-0",{"src":"/_next/static/chunks/0fl~me.qwn48c.js","async":true}]
+0:{"rsc":["$","$1","c",{"children":[["$","$L2",null,{"navSections":[{"title":"","items":[{"title":"Concepts home","href":"concepts"},{"title":"Design principles","href":"concepts/language-design/principles"},{"title":"Reading like the law","href":"concepts/language-design/linguistic-syntax"},{"title":"Definitions and duties","href":"concepts/legal-modeling/constitutive-vs-regulative"},{"title":"Exceptions and defaults","href":"concepts/legal-modeling/default-reasoning"},{"title":"How obligations unfold","href":"concepts/legal-modeling/regulative-rules"},{"title":"Types as legal categories","href":"concepts/type-system/algebraic-types"},{"title":"Exhaustiveness","href":"concepts/type-system/exhaustiveness"},{"title":"Type theory","href":"concepts/type-system/type-theory"}]}],"toc":[],"htmlContent":"$3","pager":{"prev":"$0:rsc:props:children:0:props:navSections:0:items:7"}}],["$L4"],"$L5"]}],"isPartial":false,"staleTime":300,"varyParams":null,"buildId":"PUTTaNyKDqSJ-jGr83omm"}
+4:["$","script","script-0",{"src":"/_next/static/chunks/0ixaclxzy-hn_.js","async":true}]
 5:["$","$L6",null,{"children":["$","$7",null,{"name":"Next.MetadataOutlet","children":"$@8"}]}]
 8:null

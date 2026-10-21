@@ -1,0 +1,1 @@
+(globalThis.TURBOPACK||(globalThis.TURBOPACK=[])).push(["object"==typeof document?document.currentScript:void 0,289920,e=>{"use strict";var o=e.i(271645);e.s(["default",0,function(){return(0,o.useEffect)(()=>{window.location.replace("/console")},[]),null}])}]);
