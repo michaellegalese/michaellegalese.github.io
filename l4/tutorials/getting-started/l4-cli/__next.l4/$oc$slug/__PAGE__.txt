@@ -2,8 +2,8 @@
 2:I[90160,["/_next/static/chunks/0k9p8qe2_c6el.js","/_next/static/chunks/0i.l9589uvx0j.js","/_next/static/chunks/0hpy9y_1sdd42.js","/_next/static/chunks/0ixaclxzy-hn_.js"],"default"]
 6:I[897367,["/_next/static/chunks/0k9p8qe2_c6el.js","/_next/static/chunks/0i.l9589uvx0j.js"],"OutletBoundary"]
 7:"$Sreact.suspense"
-3:T6e8a,<h1>Using the l4 CLI</h1>
-<p>Run, check, format, render, and deploy L4 files from the command line.</p>
+3:T78e2,<h1>Using the l4 CLI</h1>
+<p>Run, check, render, and deploy L4 files from the command line.</p>
 <p><strong>Prerequisites:</strong> <a href="/l4/tutorials/getting-started/first-l4-file">Install L4 and write your first rule</a></p>
 <hr>
 <h2 id="what-youll-learn">What You'll Learn</h2>
@@ -32,7 +32,7 @@ Available commands:
   run                      Typecheck and evaluate an L4 file (prints diagnostics
                            + #EVAL results)
   check                    Typecheck an L4 file only (fast path; no evaluation)
-  format                   Reformat an L4 file and print to stdout
+  format                   Print an L4 file to stdout exactly as written
   ast                      Dump the parsed AST of an L4 file
   batch                    Evaluate an @export function against many input rows
                            (json|yaml|csv in, NDJSON streaming out)
@@ -109,7 +109,9 @@ Evaluation[2] @ late-fee.l4:28:1-39
 Result:
   50
 </code></pre>
-<p>Each <code>Evaluation[n]</code> block corresponds to one <code>#EVAL</code> directive, in file order, with the source range it came from. Diagnostics (errors, warnings) are printed to stderr; results go to stdout. The exit code is <code>0</code> when the file typechecks and every directive evaluates without crashing; type errors and runtime evaluation errors (such as a <code>CONSIDER</code> with no matching branch) exit non-zero. Warnings alone do not change the exit code — a file with warnings still evaluates.</p>
+<p>Each <code>Evaluation[n]</code> block shows the result of one <code>#EVAL</code>, in file order. Results go to standard output; errors and warnings go to standard error.</p>
+<p><code>l4 run</code> fails when the file, or a file it imports, has an error, or when a directive can't be worked out, such as a <code>CONSIDER</code> with no matching branch or a division by zero. The other directives still show their results. Warnings, and an <code>#ASSERT</code> that comes out false, don't make it fail.</p>
+<p>If a <code>FETCH</code> or <code>POST</code> can't reach its server, <code>l4 run</code> fails and shows no results for any directive in the file. To see the other results, move the directives that make requests to a file of their own.</p>
 <p>As a convenience, <code>l4 late-fee.l4</code> (no subcommand) is shorthand for <code>l4 run late-fee.l4</code>.</p>
 <h3 id="machine-readable-output">Machine-readable output</h3>
 <p>Add <code>--json</code> for a single JSON envelope, useful for editors, CI, and other tools:</p>
@@ -136,7 +138,10 @@ Result:
 </code></pre>
 <pre><code>Check succeeded.
 </code></pre>
-<p>Exit code <code>0</code> means the file is valid L4; non-zero means there were errors (printed as diagnostics). <code>--json</code> and <code>--fixed-now</code> work here too.</p>
+<p>Exit code <code>0</code> means the file is valid L4; non-zero means there were errors (printed as diagnostics).
+<code>--json</code> and <code>--fixed-now</code> work here too.
+<code>l4 check</code> also checks every file your file imports, so use it as the check in CI for a project of several files. Other commands, such as <code>l4 render</code> and <code>l4 nlg</code>, don't stop on an error in an imported file.
+Files can't import each other in a ring; <a href="/l4/reference/errors#import-cycle">Import cycle</a> says how to fix one.</p>
 <hr>
 <h2 id="step-5-libraries-and-jl4_library_path">Step 5: Libraries and <code>JL4_LIBRARY_PATH</code></h2>
 <p>When a file says <code>IMPORT daydate</code> (or <code>time</code>, <code>currency</code>, ...), the tools resolve the library module by checking, in order:</p>
@@ -169,8 +174,8 @@ Result:
 <p>See the <a href="/l4/reference/libraries">library reference</a> for what each library provides.</p>
 <hr>
 <h2 id="step-6-the-other-subcommands">Step 6: The Other Subcommands</h2>
-<h3 id="l4-format-canonical-formatting"><code>l4 format</code> — canonical formatting</h3>
-<p>Reformats a file and prints the result to stdout (like <code>gofmt</code>):</p>
+<h3 id="l4-format-print-a-file-as-written"><code>l4 format</code> — print a file as written</h3>
+<p>Prints a file to stdout exactly as it is written: the same layout, comments, line endings and spelling of every literal. It does not change the layout. It only parses the file, without type-checking it (use <code>l4 check</code> for that); if the file does not parse, it prints the parse errors instead and exits with status 1.</p>
 <pre><code class="language-bash">l4 format late-fee.l4
 </code></pre>
 <h3 id="l4-render-a-readable-document"><code>l4 render</code> — a readable document</h3>
@@ -195,7 +200,27 @@ Provisions
     - otherwise, if the invoice's days overdue is at most 30: the invoice's amount × 0.02
     - otherwise: the invoice's amount × 0.05
 </code></pre>
-<p>Options: <code>--format html|text|json|plan</code>, <code>-o/--output FILE</code>, <code>--toc</code> (table of contents), <code>--number-sections</code>, <code>--number-clauses</code>, and <code>--include-unused</code>.</p>
+<p>Options: <code>--format html|text|json|plan|akn</code> (<code>xml</code> is accepted as a synonym for <code>akn</code>, which emits Akoma Ntoso 3.0), <code>-o/--output FILE</code>, <code>--toc</code> (table of contents), <code>--number-sections</code>, <code>--number-clauses</code>, <code>--include-unused</code>, and <code>--lang SUBTAG</code> (render the <code>@nlg:SUBTAG</code> wordings; in <code>html</code> this also sets <code>&#x3C;html lang=…></code> and, for a right-to-left language, <code>dir="rtl"</code>, and in <code>akn</code> the language of the FRBR Expression URIs).</p>
+<h3 id="l4-nlg-the-directives-as-sentences"><code>l4 nlg</code> — the directives, as sentences</h3>
+<p>Writes each <code>#EVAL</code>, <code>#ASSERT</code> and other directive of a file as one line of prose.
+It is the quick way to read what a set of test cases says without running them.
+Where a definition has an <code>@nlg</code> wording, <code>l4 nlg</code> uses it in place of the name.</p>
+<pre><code class="language-l4">GIVEN days_overdue IS A NUMBER
+GIVETH A BOOLEAN
+DECIDE `is late` @nlg the invoice is late
+  IF days_overdue GREATER THAN 30
+
+#EVAL `is late` 45
+#EVAL NOT `is late` 5
+</code></pre>
+<pre><code class="language-bash">l4 nlg is-late.l4
+</code></pre>
+<pre><code>the invoice is late with 45
+not the invoice is late with 5
+</code></pre>
+<p><code>l4 nlg</code> prints nothing and exits non-zero if the file does not typecheck, rather than writing prose about a module that does not hold together.
+Options: <code>-o/--output FILE</code> writes to a file instead of standard output, and <code>--lang SUBTAG</code> uses the <code>@nlg:SUBTAG</code> wordings for the rules that have them (and the module's default wording for those that do not).
+See <a href="/l4/tutorials/natural-language-functions/optimising-natural-language-generation#one-encoding-several-languages">one encoding, several languages</a>.</p>
 <h3 id="l4-batch-many-cases-at-once"><code>l4 batch</code> — many cases at once</h3>
 <p>Evaluates one <code>@export</code> function against many input rows, streaming one NDJSON result line per row. Given this exported rule:</p>
 <pre><code class="language-l4">@export Calculate the late fee for an overdue invoice
@@ -315,7 +340,7 @@ Deployed 'late-fee' (version 1.0.0) with 1 function:
   fee
 API: https://api.legalese.cloud/acme/late-fee
 </code></pre>
-<p>The deployment is named after the file unless you pass <code>--name</code>. <code>l4</code> typechecks the file first, then uploads it with the files it imports. The standard libraries are not uploaded: a deployment finds <code>prelude</code>, <code>daydate</code> and the others in the copy built into the service.</p>
+<p>The deployment is named after the file unless you pass <code>--name</code>. <code>l4</code> runs the same check as <code>l4 check</code> on the file first; if it finds an error, nothing is uploaded. Otherwise it uploads the file with the files it imports. The standard libraries are not uploaded: a deployment finds <code>prelude</code>, <code>daydate</code> and the others in the copy built into the service.</p>
 <table>
 <thead>
 <tr>
@@ -376,7 +401,7 @@ API: https://api.legalese.cloud/acme/late-fee
 <li><a href="/l4/tutorials/getting-started/debugging-type-errors">Debugging Type Errors</a> — reading and fixing the errors <code>l4 check</code> reports</li>
 <li><a href="/l4/tutorials/deploying-rules/exporting-rules-for-deployment">Exporting Rules for Deployment</a> — turn a file into a live API</li>
 </ul>
-0:{"rsc":["$","$1","c",{"children":[["$","$L2",null,{"navSections":[{"title":"","items":[{"title":"Overview","href":"tutorials"},{"title":"Install L4 and write your first rule","href":"tutorials/getting-started/first-l4-file"},{"title":"Draft rules with Legalese AI","href":"tutorials/llm-integration/composing-l4-with-ai"},{"title":"Test your rules","href":"tutorials/getting-started/testing-your-rules"},{"title":"Fix errors","href":"tutorials/getting-started/debugging-type-errors"},{"title":"Encode legislation","href":"tutorials/getting-started/encoding-legislation"},{"title":"Make rules read like law","href":"tutorials/natural-language-functions/optimising-natural-language-generation"},{"title":"Common patterns","href":"tutorials/getting-started/common-patterns"},{"title":"Deploy your rules","href":"tutorials/deploying-rules/exporting-rules-for-deployment"},{"title":"Choose an integration","href":"tutorials/legalese-cloud"},{"title":"Connect an AI agent","href":"tutorials/legalese-cloud/ai-agents"},{"title":"Chat with your rules","href":"tutorials/legalese-cloud/openai-compatible-api"},{"title":"Call rules over REST","href":"tutorials/legalese-cloud/openapi-spec"},{"title":"Embed rules in a website","href":"tutorials/legalese-cloud/webmcp-embed"},{"title":"Using the l4 CLI","href":"tutorials/getting-started/l4-cli"},{"title":"Manage rules in git and CI","href":"tutorials/getting-started/version-control-for-rules"}]}],"toc":[],"htmlContent":"$3","pager":{"prev":"$0:rsc:props:children:0:props:navSections:0:items:13","next":"$0:rsc:props:children:0:props:navSections:0:items:15"}}],["$L4"],"$L5"]}],"isPartial":false,"staleTime":300,"varyParams":null,"buildId":"c1rwd8Zxwz2MECBEiYenP"}
+0:{"rsc":["$","$1","c",{"children":[["$","$L2",null,{"navSections":[{"title":"","items":[{"title":"Overview","href":"tutorials"},{"title":"Install L4 and write your first rule","href":"tutorials/getting-started/first-l4-file"},{"title":"Draft rules with Legalese AI","href":"tutorials/llm-integration/composing-l4-with-ai"},{"title":"Test your rules","href":"tutorials/getting-started/testing-your-rules"},{"title":"Fix errors","href":"tutorials/getting-started/debugging-type-errors"},{"title":"Encode legislation","href":"tutorials/getting-started/encoding-legislation"},{"title":"Make rules read like law","href":"tutorials/natural-language-functions/optimising-natural-language-generation"},{"title":"Common patterns","href":"tutorials/getting-started/common-patterns"},{"title":"Deploy your rules","href":"tutorials/deploying-rules/exporting-rules-for-deployment"},{"title":"Choose an integration","href":"tutorials/legalese-cloud"},{"title":"Connect an AI agent","href":"tutorials/legalese-cloud/ai-agents"},{"title":"Chat with your rules","href":"tutorials/legalese-cloud/openai-compatible-api"},{"title":"Call rules over REST","href":"tutorials/legalese-cloud/openapi-spec"},{"title":"Embed rules in a website","href":"tutorials/legalese-cloud/webmcp-embed"},{"title":"Using the l4 CLI","href":"tutorials/getting-started/l4-cli"},{"title":"Manage rules in git and CI","href":"tutorials/getting-started/version-control-for-rules"}]}],"toc":[],"htmlContent":"$3","pager":{"prev":"$0:rsc:props:children:0:props:navSections:0:items:13","next":"$0:rsc:props:children:0:props:navSections:0:items:15"}}],["$L4"],"$L5"]}],"isPartial":false,"staleTime":300,"varyParams":null,"buildId":"VTaVxEBA4A2zUV3rXvhf1"}
 4:["$","script","script-0",{"src":"/_next/static/chunks/0ixaclxzy-hn_.js","async":true}]
 5:["$","$L6",null,{"children":["$","$7",null,{"name":"Next.MetadataOutlet","children":"$@8"}]}]
 8:null

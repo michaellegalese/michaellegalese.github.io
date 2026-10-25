@@ -1,0 +1,1533 @@
+# Module A2: Cross-cutting concerns
+
+In this module, you'll learn patterns for concerns that span multiple rules: timing, notices, appeals, and escalation. Find a full working example at the end.
+
+## Learning Objectives
+
+By the end of this module, you will be able to:
+
+- Model complex timing requirements
+- Implement notice-and-cure patterns
+- Build appeal procedures
+- Create escalation chains
+
+---
+
+## Cross-Cutting Concerns
+
+Some patterns appear repeatedly across legal rules:
+
+| Concern           | Example                                        |
+| ----------------- | ---------------------------------------------- |
+| **Timing**        | "within 30 days", "as soon as practicable"     |
+| **Notices**       | "Commissioner may issue notice", "cure period" |
+| **Appeals**       | "may appeal within 21 days"                    |
+| **Escalation**    | Warning → Penalty → Suspension → Removal       |
+| **Grace Periods** | "10-day grace period before late fee"          |
+
+Rather than copy-paste these patterns, we create reusable abstractions.
+
+---
+
+## Timing Patterns
+
+### Basic Deadlines
+
+```l4
+-- Simple deadline: fixed number of days
+GIVEN party IS A Actor
+      action IS A Action
+      deadline IS A NUMBER
+GIVETH A DEONTIC Actor Action
+`obligation within days` MEANS
+    PARTY party
+    MUST action
+    WITHIN deadline
+    HENCE FULFILLED
+    LEST BREACH
+```
+
+### Relative Deadlines
+
+Deadlines relative to events:
+
+```l4
+-- "Within 30 days of receiving notice"
+GIVEN party IS A Actor
+      action IS A Action
+      `the trigger date` IS A NUMBER  -- Day number when trigger occurred
+      `the day limit` IS A NUMBER
+GIVETH A DEONTIC Actor Action
+`obligation after trigger` MEANS
+    PARTY party
+    MUST action
+    WITHIN (`the trigger date` + `the day limit`)
+    HENCE FULFILLED
+    LEST BREACH
+```
+
+### "As Soon As Practicable"
+
+Vague statutory language requires interpretation:
+
+```l4
+-- Common interpretations of "as soon as practicable"
+DECLARE `Practicable Deadline` IS ONE OF
+    Immediate  -- Within 24 hours
+    Prompt     -- Within 7 days
+    Reasonable -- Within 14 days
+    Extended   -- Within 30 days
+
+GIVEN timing IS A `Practicable Deadline`
+GIVETH A NUMBER
+`practicable days` MEANS
+    CONSIDER timing
+    WHEN Immediate THEN 1
+    WHEN Prompt THEN 7
+    WHEN Reasonable THEN 14
+    WHEN Extended THEN 30
+```
+
+### Business Days vs Calendar Days
+
+```l4
+-- Rough conversion: 5 business days ≈ 7 calendar days
+GIVEN `business days` IS A NUMBER
+GIVETH A NUMBER
+`to calendar days` MEANS
+    (`business days` * 7) / 5
+
+-- 10 business days
+`ten business days` MEANS `to calendar days` 10  -- ≈ 14 calendar days
+```
+
+---
+
+## Notice-and-Cure Pattern
+
+Many regulations follow a notice-and-cure pattern:
+
+1. **Violation detected**
+2. **Notice issued** with deadline
+3. **Cure period** to fix the issue
+4. **Consequence** if not cured
+
+### Generic Notice-and-Cure
+
+```l4
+GIVEN regulator IS A Actor
+      regulated IS A Actor
+      violation IS A STRING
+      `the cure period` IS A NUMBER
+      `the consequence` IS A Action
+GIVETH A DEONTIC Actor Action
+`notice and cure` MEANS
+    PARTY regulator
+    MAY `issue warning notice` violation
+    HENCE
+        PARTY regulated
+        MUST `cure violation`
+        WITHIN `the cure period`
+        HENCE FULFILLED
+        LEST
+            PARTY regulator
+            MAY `the consequence`
+            HENCE BREACH BY regulated BECAUSE "failed to cure violation"
+    -- If notice not issued, no further action required
+```
+
+### Real Example: Required Steps Notice
+
+From the Jersey Charities Law:
+
+```l4
+-- Article 27: Required Steps Notice procedure
+
+DECLARE `Required Steps Notice`
+    HAS `the notice id` IS A STRING
+        `the issued date` IS A NUMBER
+        `the steps` IS A LIST OF STRING
+        `the deadline` IS A NUMBER
+
+GIVEN charity IS A `Registered Charity`
+      notice IS A `Required Steps Notice`
+GIVETH A DEONTIC Actor Action
+`required steps procedure` MEANS
+    -- Commissioner issues notice
+    PARTY `the Commissioner`
+    MUST `serve Required Steps Notice`
+    WITHIN 30
+    HENCE (
+        -- Charity must comply
+        PARTY `the charity` charity
+        MUST `take required steps` notice
+        WITHIN notice's `the deadline`
+        HENCE
+            -- If complied, Commissioner MUST publish
+            PARTY `the Commissioner`
+            MUST `publish compliance`
+            WITHIN 14
+            HENCE FULFILLED
+            LEST BREACH BY `the Commissioner` BECAUSE "failed to publish compliance"
+        LEST
+            -- If not complied, Commissioner MAY deregister
+            PARTY `the Commissioner`
+            MAY `deregister charity`
+            HENCE BREACH BY (`the charity` charity) BECAUSE "failed to take required steps"
+        )
+    LEST BREACH BY `the Commissioner` BECAUSE "failed to serve notice"
+```
+
+---
+
+## Appeal Procedures
+
+Appeals are a special pattern: they suspend the original decision and create a new proceeding.
+
+### Generic Appeal Structure
+
+```l4
+-- Standard appeal pattern
+DECLARE `Appeal Outcome` IS ONE OF
+    `appeal allowed`
+    `appeal dismissed`
+    `appeal partially allowed` HAS `the modifications` IS A STRING
+
+GIVEN appellant IS A Actor
+      `the appeal deadline` IS A NUMBER
+GIVETH A DEONTIC Actor Action
+`right to appeal` MEANS
+    PARTY appellant
+    MAY `lodge appeal`
+    WITHIN `the appeal deadline`
+    HENCE
+        -- Appeal body must decide
+        PARTY `the appeal body`
+        MUST `determine appeal`
+        WITHIN 90  -- Typical statutory deadline
+        HENCE FULFILLED
+        LEST BREACH BY `the appeal body` BECAUSE "failed to determine appeal in time"
+```
+
+### Appeal with Suspension Effect
+
+```l4
+-- Appeal suspends the original decision
+GIVEN decision IS A Decision
+      appellant IS A Actor
+      `the appeal deadline` IS A NUMBER
+GIVETH A DEONTIC Actor Action
+`suspensive appeal` MEANS
+    PARTY appellant
+    MAY `lodge appeal against` decision
+    WITHIN `the appeal deadline`
+    HENCE
+        -- Appeal must be determined
+        PARTY `the appeal body`
+        MUST `determine appeal against` decision
+        WITHIN 90
+        HENCE FULFILLED
+        LEST BREACH BY `the appeal body` BECAUSE "failed to determine appeal"
+```
+
+### Real Example: Charity Decision Appeals
+
+Article 33 lets a charity appeal a decision of the Commissioner to the Royal Court within 21 days. What happens next depends on what the court decides, so the court's action carries its outcome (`` `decide the appeal` HAS `the outcome` IS A `Court Decision` ``), and the rule names that outcome and passes it on:
+
+```l4
+-- What the Royal Court's decision leads to
+GIVEN outcome IS A `Court Decision`
+GIVETH A DEONTIC Actor Action
+`the effect of the court's decision` MEANS
+    CONSIDER outcome
+    WHEN Upheld THEN FULFILLED
+    WHEN Quashed THEN
+        PARTY  `the Commissioner`
+        MUST   `withdraw the decision`
+        WITHIN 7
+    WHEN Varied `the new decision` THEN
+        PARTY  `the Commissioner`
+        MUST   `make the varied decision` (EXACTLY `the new decision`)
+        WITHIN 7
+
+-- Article 33: Appeal Commissioner decision to Royal Court
+GIVEN charity IS A `Registered Charity`
+      decision IS A `Commissioner Decision`
+GIVETH A DEONTIC Actor Action
+`appeal commissioner decision` MEANS
+    PARTY  `the charity` charity
+    MAY    `appeal to the Royal Court` (EXACTLY decision)
+    WITHIN 21  -- 21 days from notification
+    HENCE
+        -- No statutory deadline for the hearing, so no WITHIN
+        PARTY `the Royal Court`
+        MUST  `decide the appeal` outcome
+        HENCE `the effect of the court's decision` outcome
+```
+
+In ``MUST `decide the appeal` outcome``, `outcome` is a new name: it matches whatever outcome the court's event carries, and `HENCE` can use it. `EXACTLY` does the opposite: `(EXACTLY decision)` only matches an appeal against this decision. The tests at the end of the 
+
+```l4-file
+-- Module A2: Cross-Cutting Concerns - Examples
+-- This file demonstrates patterns for concerns that span multiple rules:
+-- timing, notices, appeals, escalation, and grace periods.
+
+--------------------------------------------------------------------------------
+-- SECTION 1: Type Definitions
+--------------------------------------------------------------------------------
+
+-- Actor types for various procedures
+DECLARE Actor IS ONE OF
+    `the Commissioner`
+    `the charity` HAS `the charity record` IS A `Registered Charity`
+    `the regulator`
+    `the appeal body`
+    `the Royal Court`
+
+-- Separate party type for licence procedures
+DECLARE `Licence Party` IS ONE OF
+    Holder HAS `the holder name` IS A STRING
+
+-- Action types for regulatory procedures
+DECLARE Action IS ONE OF
+    `take action`
+    `comply with requirement`
+    `issue warning notice` HAS `the violation` IS A STRING
+    `cure violation`
+    `impose penalty`
+    `serve Required Steps Notice`
+    `take required steps` HAS `the notice` IS A `Required Steps Notice`
+    `publish compliance`
+    `deregister charity`
+    `lodge appeal`
+    `determine appeal`
+    `lodge appeal against` HAS `the decision` IS A Decision
+    `determine appeal against` HAS `the decision` IS A Decision
+    `appeal to the Royal Court` HAS `the decision appealed` IS A `Commissioner Decision`
+    `decide the appeal` HAS `the outcome` IS A `Court Decision`
+    `withdraw the decision`
+    `make the varied decision` HAS `the varied decision` IS A Decision
+    `issue warning`
+    `comply with warning`
+    `impose fine`
+    `pay fine and comply`
+    `suspend registration`
+    `remedy and apply for reinstatement`
+    `remove from register`
+    `suspend immediately`
+    `pay` HAS `the payment amount` IS A NUMBER
+    `pay with late fee` HAS `the total amount` IS A NUMBER
+
+-- Licence actions
+DECLARE `Licence Action` IS ONE OF
+    `apply for renewal`
+    `apply with late fee`
+    `apply for reinstatement`
+    `lodge licence appeal`
+
+-- Severity levels for violations
+DECLARE Severity IS ONE OF
+    Minor
+    Serious
+    Critical
+
+-- Violation record
+DECLARE Violation
+    HAS `the description` IS A STRING
+        `the penalty` IS A NUMBER
+        `the severity` IS A Severity
+
+-- Charity types
+DECLARE `Charity Status` IS ONE OF
+    Active
+    Suspended
+    Dissolved
+
+DECLARE `Registered Charity`
+    HAS `the charity name` IS A STRING
+        `the registration number` IS A STRING
+        `the status` IS A `Charity Status`
+
+-- Decision types
+DECLARE Decision
+    HAS `the decision id` IS A STRING
+        `the description` IS A STRING
+
+DECLARE `Commissioner Decision`
+    HAS `the decision id` IS A STRING
+        `the decision type` IS A STRING
+        `the affected charity` IS A `Registered Charity`
+
+-- Court decision outcomes
+DECLARE `Court Decision` IS ONE OF
+    Upheld
+    Quashed
+    Varied HAS `the new decision` IS A Decision
+
+-- Notice types
+DECLARE `Required Steps Notice`
+    HAS `the notice id` IS A STRING
+        `the issued date` IS A NUMBER
+        `the steps` IS A LIST OF STRING
+        `the deadline` IS A NUMBER
+
+-- Practicable deadline interpretations
+DECLARE `Practicable Deadline` IS ONE OF
+    Immediate  -- Within 24 hours
+    Prompt     -- Within 7 days
+    Reasonable -- Within 14 days
+    Extended   -- Within 30 days
+
+--------------------------------------------------------------------------------
+-- SECTION 2: Timing Patterns
+--------------------------------------------------------------------------------
+
+-- Convert "as soon as practicable" to specific day count
+GIVEN timing IS A `Practicable Deadline`
+GIVETH A NUMBER
+`practicable days` MEANS
+    CONSIDER timing
+    WHEN Immediate THEN 1
+    WHEN Prompt THEN 7
+    WHEN Reasonable THEN 14
+    WHEN Extended THEN 30
+
+-- Convert business days to calendar days (approximate)
+-- 5 business days ≈ 7 calendar days
+GIVEN `business days` IS A NUMBER
+GIVETH A NUMBER
+`to calendar days` MEANS (`business days` * 7) / 5
+
+-- Example: 10 business days converted
+`ten business days` MEANS `to calendar days` 10  -- ≈ 14 calendar days
+
+--------------------------------------------------------------------------------
+-- SECTION 3: Basic Deadline Obligations
+--------------------------------------------------------------------------------
+
+-- Simple deadline: fixed number of days
+GIVEN party IS A Actor
+      action IS A Action
+      deadline IS A NUMBER
+GIVETH A DEONTIC Actor Action
+`obligation within days` MEANS
+    PARTY party
+    MUST action
+    WITHIN deadline
+    HENCE FULFILLED
+    LEST BREACH
+
+-- Relative deadline: within N days after a trigger event
+GIVEN party IS A Actor
+      action IS A Action
+      `the trigger date` IS A NUMBER  -- Day number when trigger occurred
+      `the day limit` IS A NUMBER
+GIVETH A DEONTIC Actor Action
+`obligation after trigger` MEANS
+    PARTY party
+    MUST action
+    WITHIN (`the trigger date` + `the day limit`)
+    HENCE FULFILLED
+    LEST BREACH
+
+--------------------------------------------------------------------------------
+-- SECTION 4: Notice-and-Cure Pattern
+--------------------------------------------------------------------------------
+
+-- Generic notice-and-cure: violation detected, notice issued, cure period,
+-- then consequence if not cured
+GIVEN regulator IS A Actor
+      regulated IS A Actor
+      violation IS A STRING
+      `the cure period` IS A NUMBER
+      `the consequence` IS A Action
+GIVETH A DEONTIC Actor Action
+`notice and cure` MEANS
+    PARTY regulator
+    MAY `issue warning notice` violation
+    HENCE
+        PARTY regulated
+        MUST `cure violation`
+        WITHIN `the cure period`
+        HENCE FULFILLED
+        LEST
+            PARTY regulator
+            MAY `the consequence`
+            HENCE BREACH BY regulated BECAUSE "failed to cure violation"
+    -- If notice not issued, no further action required
+
+--------------------------------------------------------------------------------
+-- SECTION 5: Required Steps Notice (Jersey Charities Law Example)
+--------------------------------------------------------------------------------
+
+-- Article 27: Required Steps Notice procedure
+GIVEN charity IS A `Registered Charity`
+      notice IS A `Required Steps Notice`
+GIVETH A DEONTIC Actor Action
+`required steps procedure` MEANS
+    -- Commissioner issues notice
+    PARTY `the Commissioner`
+    MUST `serve Required Steps Notice`
+    WITHIN 30
+    HENCE (
+        -- Charity must comply
+        PARTY `the charity` charity
+        MUST `take required steps` notice
+        WITHIN notice's `the deadline`
+        HENCE
+            -- If complied, Commissioner MUST publish
+            PARTY `the Commissioner`
+            MUST `publish compliance`
+            WITHIN 14
+            HENCE FULFILLED
+            LEST BREACH BY `the Commissioner` BECAUSE "failed to publish compliance"
+        LEST
+            -- If not complied, Commissioner MAY deregister
+            PARTY `the Commissioner`
+            MAY `deregister charity`
+            HENCE BREACH BY (`the charity` charity) BECAUSE "failed to take required steps"
+        )
+    LEST
+        BREACH BY `the Commissioner` BECAUSE "failed to serve notice"
+
+--------------------------------------------------------------------------------
+-- SECTION 6: Appeal Procedures
+--------------------------------------------------------------------------------
+
+-- Standard appeal pattern
+DECLARE `Appeal Outcome` IS ONE OF
+    `appeal allowed`
+    `appeal dismissed`
+    `appeal partially allowed` HAS `the modifications` IS A STRING
+
+-- Right to appeal with deadline
+GIVEN appellant IS A Actor
+      `the appeal deadline` IS A NUMBER
+GIVETH A DEONTIC Actor Action
+`right to appeal` MEANS
+    PARTY appellant
+    MAY `lodge appeal`
+    WITHIN `the appeal deadline`
+    HENCE
+        -- Appeal body must decide
+        PARTY `the appeal body`
+        MUST `determine appeal`
+        WITHIN 90  -- Typical statutory deadline
+        HENCE FULFILLED
+        LEST BREACH BY `the appeal body` BECAUSE "failed to determine appeal in time"
+
+-- Appeal with suspension effect
+GIVEN decision IS A Decision
+      appellant IS A Actor
+      `the appeal deadline` IS A NUMBER
+GIVETH A DEONTIC Actor Action
+`suspensive appeal` MEANS
+    PARTY appellant
+    MAY `lodge appeal against` decision
+    WITHIN `the appeal deadline`
+    HENCE
+        -- Appeal must be determined
+        PARTY `the appeal body`
+        MUST `determine appeal against` decision
+        WITHIN 90
+        HENCE FULFILLED
+        LEST BREACH BY `the appeal body` BECAUSE "failed to determine appeal"
+
+--------------------------------------------------------------------------------
+-- SECTION 7: Article 33 - Appeal to Royal Court (Jersey Charities Law)
+--------------------------------------------------------------------------------
+
+-- What the Royal Court's decision leads to
+GIVEN outcome IS A `Court Decision`
+GIVETH A DEONTIC Actor Action
+`the effect of the court's decision` MEANS
+    CONSIDER outcome
+    WHEN Upheld THEN FULFILLED
+    WHEN Quashed THEN
+        PARTY  `the Commissioner`
+        MUST   `withdraw the decision`
+        WITHIN 7
+    WHEN Varied `the new decision` THEN
+        PARTY  `the Commissioner`
+        MUST   `make the varied decision` (EXACTLY `the new decision`)
+        WITHIN 7
+
+-- Article 33: Appeal Commissioner decision to Royal Court
+GIVEN charity IS A `Registered Charity`
+      decision IS A `Commissioner Decision`
+GIVETH A DEONTIC Actor Action
+`appeal commissioner decision` MEANS
+    PARTY  `the charity` charity
+    MAY    `appeal to the Royal Court` (EXACTLY decision)
+    WITHIN 21  -- 21 days from notification
+    HENCE
+        -- No statutory deadline for the hearing, so no WITHIN
+        PARTY `the Royal Court`
+        MUST  `decide the appeal` outcome
+        HENCE `the effect of the court's decision` outcome
+
+--------------------------------------------------------------------------------
+-- SECTION 8: Escalation Chains
+--------------------------------------------------------------------------------
+
+-- Escalation: Warning → Fine → Suspension → Removal
+GIVEN subject IS A Actor
+GIVETH A DEONTIC Actor Action
+`escalation chain` MEANS
+    -- Level 1: Warning
+    PARTY `the regulator`
+    MAY `issue warning`
+    HENCE
+        PARTY subject
+        MUST `comply with warning`
+        WITHIN 30
+        HENCE FULFILLED
+        LEST
+            -- Level 2: Fine
+            PARTY `the regulator`
+            MAY `impose fine`
+            HENCE
+                PARTY subject
+                MUST `pay fine and comply`
+                WITHIN 14
+                HENCE FULFILLED
+                LEST
+                    -- Level 3: Suspension
+                    PARTY `the regulator`
+                    MAY `suspend registration`
+                    HENCE
+                        PARTY subject
+                        MUST `remedy and apply for reinstatement`
+                        WITHIN 60
+                        HENCE FULFILLED
+                        LEST
+                            -- Level 4: Removal
+                            PARTY `the regulator`
+                            MUST `remove from register`
+                            HENCE BREACH
+
+-- Escalation with bypass for serious violations
+GIVEN violation IS A Violation
+      subject IS A Actor
+GIVETH A DEONTIC Actor Action
+`enforcement response` MEANS
+    IF violation's `the severity` EQUALS Critical
+    THEN
+        -- Immediate suspension for critical violations
+        PARTY `the regulator`
+        MUST `suspend immediately`
+        HENCE FULFILLED
+        LEST BREACH BY `the regulator` BECAUSE "failed to suspend critical violation"
+    ELSE IF violation's `the severity` EQUALS Serious
+         THEN
+             -- Skip warning for serious violations, go straight to fine
+             PARTY `the regulator`
+             MAY `impose fine`
+             HENCE
+                 PARTY subject
+                 MUST `pay fine and comply`
+                 WITHIN 14
+                 HENCE FULFILLED
+                 LEST BREACH BY subject BECAUSE "failed to pay fine"
+         ELSE
+             -- Start with warning for minor violations
+             `escalation chain` subject
+
+--------------------------------------------------------------------------------
+-- SECTION 9: Grace Periods
+--------------------------------------------------------------------------------
+
+-- Payment with grace period before late fee applies
+GIVEN debtor IS A Actor
+      amount IS A NUMBER
+      `the due date` IS A NUMBER
+      `the grace period` IS A NUMBER
+      `the late fee rate` IS A NUMBER
+GIVETH A DEONTIC Actor Action
+`payment with grace` MEANS
+    PARTY debtor
+    MUST `pay` amount
+    WITHIN `the due date`
+    HENCE FULFILLED
+    LEST
+        -- Grace period with late fee
+        PARTY debtor
+        MUST `pay with late fee` `the late amount`
+        WITHIN `the grace period`
+        HENCE FULFILLED
+        LEST BREACH BY debtor BECAUSE "failed to pay within grace period"
+    WHERE
+        `the late amount` MEANS amount * (1 + `the late fee rate`)
+
+--------------------------------------------------------------------------------
+-- SECTION 10: Licence Renewal Procedure (Exercise Solution)
+--------------------------------------------------------------------------------
+
+-- Complete licence renewal procedure with:
+-- 1. Apply 30 days before expiry
+-- 2. 14-day grace period with late fee
+-- 3. Suspension after grace period
+-- 4. 60-day reinstatement window
+-- 5. Revocation with 21-day appeal right
+
+-- Placeholder functions for licence status changes
+`licence suspended` MEANS FULFILLED
+`licence revoked` MEANS FULFILLED
+`appeal procedure` MEANS FULFILLED
+
+GIVEN holder IS A `Licence Party`
+      `the expiry date` IS A NUMBER
+GIVETH A DEONTIC `Licence Party` `Licence Action`
+`licence renewal procedure` MEANS
+    PARTY holder
+    MUST `apply for renewal`
+    WITHIN (`the expiry date` - 30)  -- 30 days before expiry
+    HENCE FULFILLED
+    LEST
+        -- Grace period with late fee
+        PARTY holder
+        MUST `apply with late fee`
+        WITHIN 14  -- 14 day grace period, from when the first deadline is missed
+        HENCE FULFILLED
+        LEST
+            -- Reinstatement period after suspension
+            -- DO: an option. Doing it leads to HENCE, letting the time pass to LEST.
+            -- (A MAY would never reach its LEST.)
+            PARTY holder
+            DO `apply for reinstatement`
+            WITHIN 60
+            HENCE FULFILLED
+            LEST
+                -- Revocation with appeal right
+                PARTY holder
+                MAY `lodge licence appeal`
+                WITHIN 21
+                HENCE FULFILLED
+                -- If no appeal filed, licence is revoked
+
+--------------------------------------------------------------------------------
+-- SECTION 11: Test Cases
+--------------------------------------------------------------------------------
+
+-- Test charity for examples
+`the test charity` MEANS `Registered Charity` "Test Charity" "TC-001" Active
+
+-- Test notice
+`the test notice` MEANS `Required Steps Notice` "RSN-001" 0 (LIST "Update records", "Submit report") 30
+
+-- Test violations
+`a minor violation` MEANS Violation "Late filing" 500 Minor
+`a serious violation` MEANS Violation "Missing records" 2000 Serious
+`a critical violation` MEANS Violation "Fraud detected" 10000 Critical
+
+-- Test 1: Basic deadline obligation fulfilled
+#TRACE `obligation within days` `the Commissioner` `take action` 14 AT 0 WITH
+    PARTY `the Commissioner` DOES `take action` AT 10
+
+-- Test 2: Basic deadline obligation breached
+#TRACE `obligation within days` `the Commissioner` `take action` 14 AT 0 WITH
+    PARTY `the Commissioner` DOES `take action` AT 20
+
+-- Test 3: Required steps procedure - charity complies
+#TRACE `required steps procedure` `the test charity` `the test notice` AT 0 WITH
+    PARTY `the Commissioner` DOES `serve Required Steps Notice` AT 1
+    PARTY (`the charity` `the test charity`) DOES `take required steps` `the test notice` AT 20
+    PARTY `the Commissioner` DOES `publish compliance` AT 30
+
+-- Test 4: Required steps procedure - charity fails to comply
+#TRACE `required steps procedure` `the test charity` `the test notice` AT 0 WITH
+    PARTY `the Commissioner` DOES `serve Required Steps Notice` AT 1
+    PARTY `the Commissioner` DOES `deregister charity` AT 40
+
+-- Test 5: Payment with grace period - paid on time
+#TRACE `payment with grace` `the Commissioner` 1000 30 10 0.1 AT 0 WITH
+    PARTY `the Commissioner` DOES `pay` 1000 AT 25
+
+-- Test 6: Payment with grace period - the payment on day 32 misses the
+-- 30-day deadline and opens the 10-day grace period; the payment with the
+-- late fee on day 38 is within it
+#TRACE `payment with grace` `the Commissioner` 1000 30 10 0.1 AT 0 WITH
+    PARTY `the Commissioner` DOES `pay` 1000 AT 32
+    PARTY `the Commissioner` DOES `pay with late fee` 1100 AT 38
+
+-- Test 7: Escalation chain - complies at warning stage
+#TRACE `escalation chain` `the Commissioner` AT 0 WITH
+    PARTY `the regulator` DOES `issue warning` AT 1
+    PARTY `the Commissioner` DOES `comply with warning` AT 20
+
+-- Test 8: Enforcement response for minor violation
+#TRACE `enforcement response` `a minor violation` `the Commissioner` AT 0 WITH
+    PARTY `the regulator` DOES `issue warning` AT 1
+    PARTY `the Commissioner` DOES `comply with warning` AT 20
+
+-- Test 9: Enforcement response for critical violation
+#TRACE `enforcement response` `a critical violation` `the Commissioner` AT 0 WITH
+    PARTY `the regulator` DOES `suspend immediately` AT 1
+
+-- Test 10: Licence renewal - on time
+`the test holder` MEANS Holder "Test Holder"
+#TRACE `licence renewal procedure` `the test holder` 100 AT 0 WITH
+    PARTY `the test holder` DOES `apply for renewal` AT 60
+
+-- Test 11: Licence renewal - late with fee: the application on day 75 misses
+-- the day-70 deadline and opens the 14-day grace period; the late-fee
+-- application on day 80 is within it
+#TRACE `licence renewal procedure` `the test holder` 100 AT 0 WITH
+    PARTY `the test holder` DOES `apply for renewal` AT 75
+    PARTY `the test holder` DOES `apply with late fee` AT 80
+
+-- Test 12: Licence renewal - reinstatement: both deadlines are missed
+-- (day 75, then day 95), and the holder applies for reinstatement on day 100
+#TRACE `licence renewal procedure` `the test holder` 100 AT 0 WITH
+    PARTY `the test holder` DOES `apply for renewal` AT 75
+    PARTY `the test holder` DOES `apply with late fee` AT 95
+    PARTY `the test holder` DOES `apply for reinstatement` AT 100
+
+-- Test 13: Article 33 appeal - the Royal Court quashes the decision,
+-- and the Commissioner withdraws it within 7 days
+`the test decision` MEANS `Commissioner Decision` "CD-001" "deregistration" `the test charity`
+#TRACE `appeal commissioner decision` `the test charity` `the test decision` AT 0 WITH
+    PARTY (`the charity` `the test charity`) DOES `appeal to the Royal Court` `the test decision` AT 10
+    PARTY `the Royal Court` DOES `decide the appeal` Quashed AT 60
+    PARTY `the Commissioner` DOES `withdraw the decision` AT 62
+
+-- Test 14: Article 33 appeal - the Royal Court varies the decision; the
+-- result is the Commissioner's duty to make the varied decision
+`the varied test decision` MEANS Decision "CD-001-V" "suspension for 3 months"
+#TRACE `appeal commissioner decision` `the test charity` `the test decision` AT 0 WITH
+    PARTY (`the charity` `the test charity`) DOES `appeal to the Royal Court` `the test decision` AT 10
+    PARTY `the Royal Court` DOES `decide the appeal` (Varied `the varied test decision`) AT 60
+```
+
+ run an appeal that is quashed and one that is varied.
+
+---
+
+## Escalation Chains
+
+Many enforcement regimes have graduated responses:
+
+### Generic Escalation
+
+```l4
+-- Escalation: Warning → Fine → Suspension → Removal
+
+GIVEN subject IS A Actor
+GIVETH A DEONTIC Actor Action
+`escalation chain` MEANS
+    -- Level 1: Warning
+    PARTY `the regulator`
+    MAY `issue warning`
+    HENCE
+        PARTY subject
+        MUST `comply with warning`
+        WITHIN 30
+        HENCE FULFILLED
+        LEST
+            -- Level 2: Fine
+            PARTY `the regulator`
+            MAY `impose fine`
+            HENCE
+                PARTY subject
+                MUST `pay fine and comply`
+                WITHIN 14
+                HENCE FULFILLED
+                LEST
+                    -- Level 3: Suspension
+                    PARTY `the regulator`
+                    MAY `suspend registration`
+                    HENCE
+                        PARTY subject
+                        MUST `remedy and apply for reinstatement`
+                        WITHIN 60
+                        HENCE FULFILLED
+                        LEST
+                            -- Level 4: Removal
+                            PARTY `the regulator`
+                            MUST `remove from register`
+                            HENCE BREACH
+```
+
+### Escalation with Bypass
+
+Sometimes serious violations skip early steps:
+
+```l4
+GIVEN violation IS A Violation
+      subject IS A Actor
+GIVETH A DEONTIC Actor Action
+`enforcement response` MEANS
+    IF violation's `the severity` EQUALS Critical
+    THEN
+        -- Immediate suspension for critical violations
+        PARTY `the regulator`
+        MUST `suspend immediately`
+        HENCE FULFILLED
+        LEST BREACH BY `the regulator` BECAUSE "failed to suspend critical violation"
+    ELSE IF violation's `the severity` EQUALS Serious
+         THEN
+             -- Skip warning for serious violations, go straight to fine
+             PARTY `the regulator`
+             MAY `impose fine`
+             HENCE
+                 PARTY subject
+                 MUST `pay fine and comply`
+                 WITHIN 14
+                 HENCE FULFILLED
+                 LEST BREACH BY subject BECAUSE "failed to pay fine"
+         ELSE
+             -- Start with warning for minor violations
+             `escalation chain` subject
+```
+
+---
+
+## Grace Periods
+
+Grace periods delay consequences:
+
+```l4
+-- Payment with grace period before late fee applies
+GIVEN debtor IS A Actor
+      amount IS A NUMBER
+      `the due date` IS A NUMBER
+      `the grace period` IS A NUMBER
+      `the late fee rate` IS A NUMBER
+GIVETH A DEONTIC Actor Action
+`payment with grace` MEANS
+    PARTY debtor
+    MUST `pay` amount
+    WITHIN `the due date`
+    HENCE FULFILLED
+    LEST
+        -- Grace period with late fee
+        PARTY debtor
+        MUST `pay with late fee` `the late amount`
+        WITHIN `the grace period`
+        HENCE FULFILLED
+        LEST BREACH BY debtor BECAUSE "failed to pay within grace period"
+    WHERE
+        `the late amount` MEANS amount * (1 + `the late fee rate`)
+```
+
+The grace period's `WITHIN` counts from the moment the first deadline is found to have passed, so it is `` `the grace period` `` itself, not the due date plus the grace period.
+
+---
+
+## Exercise: Model a Procedure
+
+Encode this procedure:
+
+> **Licence Renewal Procedure:**
+>
+> 1. Licence holder must apply for renewal 30 days before expiry
+> 2. If not applied in time, 14-day grace period with late fee
+> 3. After grace period, licence suspended
+> 4. Suspended licence can be reinstated within 60 days by paying reinstatement fee
+> 5. After 60 days, licence is revoked with right to appeal within 21 days
+
+<details>
+<summary>Solution</summary>
+
+```l4
+-- Separate party type for licence procedures
+DECLARE `Licence Party` IS ONE OF
+    Holder HAS `the holder name` IS A STRING
+
+-- Licence actions
+DECLARE `Licence Action` IS ONE OF
+    `apply for renewal`
+    `apply with late fee`
+    `apply for reinstatement`
+    `lodge licence appeal`
+
+GIVEN holder IS A `Licence Party`
+      `the expiry date` IS A NUMBER
+GIVETH A DEONTIC `Licence Party` `Licence Action`
+`licence renewal procedure` MEANS
+    PARTY holder
+    MUST `apply for renewal`
+    WITHIN (`the expiry date` - 30)  -- 30 days before expiry
+    HENCE FULFILLED
+    LEST
+        -- Grace period with late fee
+        PARTY holder
+        MUST `apply with late fee`
+        WITHIN 14  -- 14 day grace period, from when the first deadline is missed
+        HENCE FULFILLED
+        LEST
+            -- Reinstatement period after suspension
+            -- DO: an option. Doing it leads to HENCE, letting the time pass to LEST.
+            -- (A MAY would never reach its LEST.)
+            PARTY holder
+            DO `apply for reinstatement`
+            WITHIN 60
+            HENCE FULFILLED
+            LEST
+                -- Revocation with appeal right
+                PARTY holder
+                MAY `lodge licence appeal`
+                WITHIN 21
+                HENCE FULFILLED
+                -- If no appeal filed, licence is revoked
+```
+
+</details>
+
+---
+
+## Full Example
+
+
+
+```l4-file
+-- Module A2: Cross-Cutting Concerns - Examples
+-- This file demonstrates patterns for concerns that span multiple rules:
+-- timing, notices, appeals, escalation, and grace periods.
+
+--------------------------------------------------------------------------------
+-- SECTION 1: Type Definitions
+--------------------------------------------------------------------------------
+
+-- Actor types for various procedures
+DECLARE Actor IS ONE OF
+    `the Commissioner`
+    `the charity` HAS `the charity record` IS A `Registered Charity`
+    `the regulator`
+    `the appeal body`
+    `the Royal Court`
+
+-- Separate party type for licence procedures
+DECLARE `Licence Party` IS ONE OF
+    Holder HAS `the holder name` IS A STRING
+
+-- Action types for regulatory procedures
+DECLARE Action IS ONE OF
+    `take action`
+    `comply with requirement`
+    `issue warning notice` HAS `the violation` IS A STRING
+    `cure violation`
+    `impose penalty`
+    `serve Required Steps Notice`
+    `take required steps` HAS `the notice` IS A `Required Steps Notice`
+    `publish compliance`
+    `deregister charity`
+    `lodge appeal`
+    `determine appeal`
+    `lodge appeal against` HAS `the decision` IS A Decision
+    `determine appeal against` HAS `the decision` IS A Decision
+    `appeal to the Royal Court` HAS `the decision appealed` IS A `Commissioner Decision`
+    `decide the appeal` HAS `the outcome` IS A `Court Decision`
+    `withdraw the decision`
+    `make the varied decision` HAS `the varied decision` IS A Decision
+    `issue warning`
+    `comply with warning`
+    `impose fine`
+    `pay fine and comply`
+    `suspend registration`
+    `remedy and apply for reinstatement`
+    `remove from register`
+    `suspend immediately`
+    `pay` HAS `the payment amount` IS A NUMBER
+    `pay with late fee` HAS `the total amount` IS A NUMBER
+
+-- Licence actions
+DECLARE `Licence Action` IS ONE OF
+    `apply for renewal`
+    `apply with late fee`
+    `apply for reinstatement`
+    `lodge licence appeal`
+
+-- Severity levels for violations
+DECLARE Severity IS ONE OF
+    Minor
+    Serious
+    Critical
+
+-- Violation record
+DECLARE Violation
+    HAS `the description` IS A STRING
+        `the penalty` IS A NUMBER
+        `the severity` IS A Severity
+
+-- Charity types
+DECLARE `Charity Status` IS ONE OF
+    Active
+    Suspended
+    Dissolved
+
+DECLARE `Registered Charity`
+    HAS `the charity name` IS A STRING
+        `the registration number` IS A STRING
+        `the status` IS A `Charity Status`
+
+-- Decision types
+DECLARE Decision
+    HAS `the decision id` IS A STRING
+        `the description` IS A STRING
+
+DECLARE `Commissioner Decision`
+    HAS `the decision id` IS A STRING
+        `the decision type` IS A STRING
+        `the affected charity` IS A `Registered Charity`
+
+-- Court decision outcomes
+DECLARE `Court Decision` IS ONE OF
+    Upheld
+    Quashed
+    Varied HAS `the new decision` IS A Decision
+
+-- Notice types
+DECLARE `Required Steps Notice`
+    HAS `the notice id` IS A STRING
+        `the issued date` IS A NUMBER
+        `the steps` IS A LIST OF STRING
+        `the deadline` IS A NUMBER
+
+-- Practicable deadline interpretations
+DECLARE `Practicable Deadline` IS ONE OF
+    Immediate  -- Within 24 hours
+    Prompt     -- Within 7 days
+    Reasonable -- Within 14 days
+    Extended   -- Within 30 days
+
+--------------------------------------------------------------------------------
+-- SECTION 2: Timing Patterns
+--------------------------------------------------------------------------------
+
+-- Convert "as soon as practicable" to specific day count
+GIVEN timing IS A `Practicable Deadline`
+GIVETH A NUMBER
+`practicable days` MEANS
+    CONSIDER timing
+    WHEN Immediate THEN 1
+    WHEN Prompt THEN 7
+    WHEN Reasonable THEN 14
+    WHEN Extended THEN 30
+
+-- Convert business days to calendar days (approximate)
+-- 5 business days ≈ 7 calendar days
+GIVEN `business days` IS A NUMBER
+GIVETH A NUMBER
+`to calendar days` MEANS (`business days` * 7) / 5
+
+-- Example: 10 business days converted
+`ten business days` MEANS `to calendar days` 10  -- ≈ 14 calendar days
+
+--------------------------------------------------------------------------------
+-- SECTION 3: Basic Deadline Obligations
+--------------------------------------------------------------------------------
+
+-- Simple deadline: fixed number of days
+GIVEN party IS A Actor
+      action IS A Action
+      deadline IS A NUMBER
+GIVETH A DEONTIC Actor Action
+`obligation within days` MEANS
+    PARTY party
+    MUST action
+    WITHIN deadline
+    HENCE FULFILLED
+    LEST BREACH
+
+-- Relative deadline: within N days after a trigger event
+GIVEN party IS A Actor
+      action IS A Action
+      `the trigger date` IS A NUMBER  -- Day number when trigger occurred
+      `the day limit` IS A NUMBER
+GIVETH A DEONTIC Actor Action
+`obligation after trigger` MEANS
+    PARTY party
+    MUST action
+    WITHIN (`the trigger date` + `the day limit`)
+    HENCE FULFILLED
+    LEST BREACH
+
+--------------------------------------------------------------------------------
+-- SECTION 4: Notice-and-Cure Pattern
+--------------------------------------------------------------------------------
+
+-- Generic notice-and-cure: violation detected, notice issued, cure period,
+-- then consequence if not cured
+GIVEN regulator IS A Actor
+      regulated IS A Actor
+      violation IS A STRING
+      `the cure period` IS A NUMBER
+      `the consequence` IS A Action
+GIVETH A DEONTIC Actor Action
+`notice and cure` MEANS
+    PARTY regulator
+    MAY `issue warning notice` violation
+    HENCE
+        PARTY regulated
+        MUST `cure violation`
+        WITHIN `the cure period`
+        HENCE FULFILLED
+        LEST
+            PARTY regulator
+            MAY `the consequence`
+            HENCE BREACH BY regulated BECAUSE "failed to cure violation"
+    -- If notice not issued, no further action required
+
+--------------------------------------------------------------------------------
+-- SECTION 5: Required Steps Notice (Jersey Charities Law Example)
+--------------------------------------------------------------------------------
+
+-- Article 27: Required Steps Notice procedure
+GIVEN charity IS A `Registered Charity`
+      notice IS A `Required Steps Notice`
+GIVETH A DEONTIC Actor Action
+`required steps procedure` MEANS
+    -- Commissioner issues notice
+    PARTY `the Commissioner`
+    MUST `serve Required Steps Notice`
+    WITHIN 30
+    HENCE (
+        -- Charity must comply
+        PARTY `the charity` charity
+        MUST `take required steps` notice
+        WITHIN notice's `the deadline`
+        HENCE
+            -- If complied, Commissioner MUST publish
+            PARTY `the Commissioner`
+            MUST `publish compliance`
+            WITHIN 14
+            HENCE FULFILLED
+            LEST BREACH BY `the Commissioner` BECAUSE "failed to publish compliance"
+        LEST
+            -- If not complied, Commissioner MAY deregister
+            PARTY `the Commissioner`
+            MAY `deregister charity`
+            HENCE BREACH BY (`the charity` charity) BECAUSE "failed to take required steps"
+        )
+    LEST
+        BREACH BY `the Commissioner` BECAUSE "failed to serve notice"
+
+--------------------------------------------------------------------------------
+-- SECTION 6: Appeal Procedures
+--------------------------------------------------------------------------------
+
+-- Standard appeal pattern
+DECLARE `Appeal Outcome` IS ONE OF
+    `appeal allowed`
+    `appeal dismissed`
+    `appeal partially allowed` HAS `the modifications` IS A STRING
+
+-- Right to appeal with deadline
+GIVEN appellant IS A Actor
+      `the appeal deadline` IS A NUMBER
+GIVETH A DEONTIC Actor Action
+`right to appeal` MEANS
+    PARTY appellant
+    MAY `lodge appeal`
+    WITHIN `the appeal deadline`
+    HENCE
+        -- Appeal body must decide
+        PARTY `the appeal body`
+        MUST `determine appeal`
+        WITHIN 90  -- Typical statutory deadline
+        HENCE FULFILLED
+        LEST BREACH BY `the appeal body` BECAUSE "failed to determine appeal in time"
+
+-- Appeal with suspension effect
+GIVEN decision IS A Decision
+      appellant IS A Actor
+      `the appeal deadline` IS A NUMBER
+GIVETH A DEONTIC Actor Action
+`suspensive appeal` MEANS
+    PARTY appellant
+    MAY `lodge appeal against` decision
+    WITHIN `the appeal deadline`
+    HENCE
+        -- Appeal must be determined
+        PARTY `the appeal body`
+        MUST `determine appeal against` decision
+        WITHIN 90
+        HENCE FULFILLED
+        LEST BREACH BY `the appeal body` BECAUSE "failed to determine appeal"
+
+--------------------------------------------------------------------------------
+-- SECTION 7: Article 33 - Appeal to Royal Court (Jersey Charities Law)
+--------------------------------------------------------------------------------
+
+-- What the Royal Court's decision leads to
+GIVEN outcome IS A `Court Decision`
+GIVETH A DEONTIC Actor Action
+`the effect of the court's decision` MEANS
+    CONSIDER outcome
+    WHEN Upheld THEN FULFILLED
+    WHEN Quashed THEN
+        PARTY  `the Commissioner`
+        MUST   `withdraw the decision`
+        WITHIN 7
+    WHEN Varied `the new decision` THEN
+        PARTY  `the Commissioner`
+        MUST   `make the varied decision` (EXACTLY `the new decision`)
+        WITHIN 7
+
+-- Article 33: Appeal Commissioner decision to Royal Court
+GIVEN charity IS A `Registered Charity`
+      decision IS A `Commissioner Decision`
+GIVETH A DEONTIC Actor Action
+`appeal commissioner decision` MEANS
+    PARTY  `the charity` charity
+    MAY    `appeal to the Royal Court` (EXACTLY decision)
+    WITHIN 21  -- 21 days from notification
+    HENCE
+        -- No statutory deadline for the hearing, so no WITHIN
+        PARTY `the Royal Court`
+        MUST  `decide the appeal` outcome
+        HENCE `the effect of the court's decision` outcome
+
+--------------------------------------------------------------------------------
+-- SECTION 8: Escalation Chains
+--------------------------------------------------------------------------------
+
+-- Escalation: Warning → Fine → Suspension → Removal
+GIVEN subject IS A Actor
+GIVETH A DEONTIC Actor Action
+`escalation chain` MEANS
+    -- Level 1: Warning
+    PARTY `the regulator`
+    MAY `issue warning`
+    HENCE
+        PARTY subject
+        MUST `comply with warning`
+        WITHIN 30
+        HENCE FULFILLED
+        LEST
+            -- Level 2: Fine
+            PARTY `the regulator`
+            MAY `impose fine`
+            HENCE
+                PARTY subject
+                MUST `pay fine and comply`
+                WITHIN 14
+                HENCE FULFILLED
+                LEST
+                    -- Level 3: Suspension
+                    PARTY `the regulator`
+                    MAY `suspend registration`
+                    HENCE
+                        PARTY subject
+                        MUST `remedy and apply for reinstatement`
+                        WITHIN 60
+                        HENCE FULFILLED
+                        LEST
+                            -- Level 4: Removal
+                            PARTY `the regulator`
+                            MUST `remove from register`
+                            HENCE BREACH
+
+-- Escalation with bypass for serious violations
+GIVEN violation IS A Violation
+      subject IS A Actor
+GIVETH A DEONTIC Actor Action
+`enforcement response` MEANS
+    IF violation's `the severity` EQUALS Critical
+    THEN
+        -- Immediate suspension for critical violations
+        PARTY `the regulator`
+        MUST `suspend immediately`
+        HENCE FULFILLED
+        LEST BREACH BY `the regulator` BECAUSE "failed to suspend critical violation"
+    ELSE IF violation's `the severity` EQUALS Serious
+         THEN
+             -- Skip warning for serious violations, go straight to fine
+             PARTY `the regulator`
+             MAY `impose fine`
+             HENCE
+                 PARTY subject
+                 MUST `pay fine and comply`
+                 WITHIN 14
+                 HENCE FULFILLED
+                 LEST BREACH BY subject BECAUSE "failed to pay fine"
+         ELSE
+             -- Start with warning for minor violations
+             `escalation chain` subject
+
+--------------------------------------------------------------------------------
+-- SECTION 9: Grace Periods
+--------------------------------------------------------------------------------
+
+-- Payment with grace period before late fee applies
+GIVEN debtor IS A Actor
+      amount IS A NUMBER
+      `the due date` IS A NUMBER
+      `the grace period` IS A NUMBER
+      `the late fee rate` IS A NUMBER
+GIVETH A DEONTIC Actor Action
+`payment with grace` MEANS
+    PARTY debtor
+    MUST `pay` amount
+    WITHIN `the due date`
+    HENCE FULFILLED
+    LEST
+        -- Grace period with late fee
+        PARTY debtor
+        MUST `pay with late fee` `the late amount`
+        WITHIN `the grace period`
+        HENCE FULFILLED
+        LEST BREACH BY debtor BECAUSE "failed to pay within grace period"
+    WHERE
+        `the late amount` MEANS amount * (1 + `the late fee rate`)
+
+--------------------------------------------------------------------------------
+-- SECTION 10: Licence Renewal Procedure (Exercise Solution)
+--------------------------------------------------------------------------------
+
+-- Complete licence renewal procedure with:
+-- 1. Apply 30 days before expiry
+-- 2. 14-day grace period with late fee
+-- 3. Suspension after grace period
+-- 4. 60-day reinstatement window
+-- 5. Revocation with 21-day appeal right
+
+-- Placeholder functions for licence status changes
+`licence suspended` MEANS FULFILLED
+`licence revoked` MEANS FULFILLED
+`appeal procedure` MEANS FULFILLED
+
+GIVEN holder IS A `Licence Party`
+      `the expiry date` IS A NUMBER
+GIVETH A DEONTIC `Licence Party` `Licence Action`
+`licence renewal procedure` MEANS
+    PARTY holder
+    MUST `apply for renewal`
+    WITHIN (`the expiry date` - 30)  -- 30 days before expiry
+    HENCE FULFILLED
+    LEST
+        -- Grace period with late fee
+        PARTY holder
+        MUST `apply with late fee`
+        WITHIN 14  -- 14 day grace period, from when the first deadline is missed
+        HENCE FULFILLED
+        LEST
+            -- Reinstatement period after suspension
+            -- DO: an option. Doing it leads to HENCE, letting the time pass to LEST.
+            -- (A MAY would never reach its LEST.)
+            PARTY holder
+            DO `apply for reinstatement`
+            WITHIN 60
+            HENCE FULFILLED
+            LEST
+                -- Revocation with appeal right
+                PARTY holder
+                MAY `lodge licence appeal`
+                WITHIN 21
+                HENCE FULFILLED
+                -- If no appeal filed, licence is revoked
+
+--------------------------------------------------------------------------------
+-- SECTION 11: Test Cases
+--------------------------------------------------------------------------------
+
+-- Test charity for examples
+`the test charity` MEANS `Registered Charity` "Test Charity" "TC-001" Active
+
+-- Test notice
+`the test notice` MEANS `Required Steps Notice` "RSN-001" 0 (LIST "Update records", "Submit report") 30
+
+-- Test violations
+`a minor violation` MEANS Violation "Late filing" 500 Minor
+`a serious violation` MEANS Violation "Missing records" 2000 Serious
+`a critical violation` MEANS Violation "Fraud detected" 10000 Critical
+
+-- Test 1: Basic deadline obligation fulfilled
+#TRACE `obligation within days` `the Commissioner` `take action` 14 AT 0 WITH
+    PARTY `the Commissioner` DOES `take action` AT 10
+
+-- Test 2: Basic deadline obligation breached
+#TRACE `obligation within days` `the Commissioner` `take action` 14 AT 0 WITH
+    PARTY `the Commissioner` DOES `take action` AT 20
+
+-- Test 3: Required steps procedure - charity complies
+#TRACE `required steps procedure` `the test charity` `the test notice` AT 0 WITH
+    PARTY `the Commissioner` DOES `serve Required Steps Notice` AT 1
+    PARTY (`the charity` `the test charity`) DOES `take required steps` `the test notice` AT 20
+    PARTY `the Commissioner` DOES `publish compliance` AT 30
+
+-- Test 4: Required steps procedure - charity fails to comply
+#TRACE `required steps procedure` `the test charity` `the test notice` AT 0 WITH
+    PARTY `the Commissioner` DOES `serve Required Steps Notice` AT 1
+    PARTY `the Commissioner` DOES `deregister charity` AT 40
+
+-- Test 5: Payment with grace period - paid on time
+#TRACE `payment with grace` `the Commissioner` 1000 30 10 0.1 AT 0 WITH
+    PARTY `the Commissioner` DOES `pay` 1000 AT 25
+
+-- Test 6: Payment with grace period - the payment on day 32 misses the
+-- 30-day deadline and opens the 10-day grace period; the payment with the
+-- late fee on day 38 is within it
+#TRACE `payment with grace` `the Commissioner` 1000 30 10 0.1 AT 0 WITH
+    PARTY `the Commissioner` DOES `pay` 1000 AT 32
+    PARTY `the Commissioner` DOES `pay with late fee` 1100 AT 38
+
+-- Test 7: Escalation chain - complies at warning stage
+#TRACE `escalation chain` `the Commissioner` AT 0 WITH
+    PARTY `the regulator` DOES `issue warning` AT 1
+    PARTY `the Commissioner` DOES `comply with warning` AT 20
+
+-- Test 8: Enforcement response for minor violation
+#TRACE `enforcement response` `a minor violation` `the Commissioner` AT 0 WITH
+    PARTY `the regulator` DOES `issue warning` AT 1
+    PARTY `the Commissioner` DOES `comply with warning` AT 20
+
+-- Test 9: Enforcement response for critical violation
+#TRACE `enforcement response` `a critical violation` `the Commissioner` AT 0 WITH
+    PARTY `the regulator` DOES `suspend immediately` AT 1
+
+-- Test 10: Licence renewal - on time
+`the test holder` MEANS Holder "Test Holder"
+#TRACE `licence renewal procedure` `the test holder` 100 AT 0 WITH
+    PARTY `the test holder` DOES `apply for renewal` AT 60
+
+-- Test 11: Licence renewal - late with fee: the application on day 75 misses
+-- the day-70 deadline and opens the 14-day grace period; the late-fee
+-- application on day 80 is within it
+#TRACE `licence renewal procedure` `the test holder` 100 AT 0 WITH
+    PARTY `the test holder` DOES `apply for renewal` AT 75
+    PARTY `the test holder` DOES `apply with late fee` AT 80
+
+-- Test 12: Licence renewal - reinstatement: both deadlines are missed
+-- (day 75, then day 95), and the holder applies for reinstatement on day 100
+#TRACE `licence renewal procedure` `the test holder` 100 AT 0 WITH
+    PARTY `the test holder` DOES `apply for renewal` AT 75
+    PARTY `the test holder` DOES `apply with late fee` AT 95
+    PARTY `the test holder` DOES `apply for reinstatement` AT 100
+
+-- Test 13: Article 33 appeal - the Royal Court quashes the decision,
+-- and the Commissioner withdraws it within 7 days
+`the test decision` MEANS `Commissioner Decision` "CD-001" "deregistration" `the test charity`
+#TRACE `appeal commissioner decision` `the test charity` `the test decision` AT 0 WITH
+    PARTY (`the charity` `the test charity`) DOES `appeal to the Royal Court` `the test decision` AT 10
+    PARTY `the Royal Court` DOES `decide the appeal` Quashed AT 60
+    PARTY `the Commissioner` DOES `withdraw the decision` AT 62
+
+-- Test 14: Article 33 appeal - the Royal Court varies the decision; the
+-- result is the Commissioner's duty to make the varied decision
+`the varied test decision` MEANS Decision "CD-001-V" "suspension for 3 months"
+#TRACE `appeal commissioner decision` `the test charity` `the test decision` AT 0 WITH
+    PARTY (`the charity` `the test charity`) DOES `appeal to the Royal Court` `the test decision` AT 10
+    PARTY `the Royal Court` DOES `decide the appeal` (Varied `the varied test decision`) AT 60
+```
+
+
+
+---
+
+## Summary
+
+| Pattern             | When to Use                              |
+| ------------------- | ---------------------------------------- |
+| **Timing**          | Any deadline requirement                 |
+| **Notice-and-Cure** | Violations with opportunity to fix       |
+| **Appeals**         | Decisions that can be challenged         |
+| **Escalation**      | Graduated enforcement responses          |
+| **Grace Periods**   | Soft deadlines with delayed consequences |
+
+Key principle: **Abstract common patterns** into reusable functions rather than duplicating code.
+
+---
+
+Next, [Module A3: Contracts in depth](/l4/courses/advanced/module-a3-contracts.md) covers complex payment terms, recursive obligations and penalty structures.

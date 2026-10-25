@@ -4,11 +4,11 @@
 4:I[522016,["/_next/static/chunks/0k9p8qe2_c6el.js","/_next/static/chunks/0i.l9589uvx0j.js","/_next/static/chunks/07lev92j7.i4g.js"],""]
 5:I[605500,["/_next/static/chunks/0k9p8qe2_c6el.js","/_next/static/chunks/0i.l9589uvx0j.js","/_next/static/chunks/07lev92j7.i4g.js"],"Image"]
 10:I[168027,["/_next/static/chunks/0k9p8qe2_c6el.js","/_next/static/chunks/0i.l9589uvx0j.js"],"default",1]
-:HL["/_next/static/chunks/0iehx52onefyc.css","style"]
+:HL["/_next/static/chunks/0gwpoiy1ig8rp.css","style"]
 :HL["/_next/static/chunks/0s9wju.j1~_xn.css","style"]
 :HL["/_next/static/media/248e1dc0efc99276-s.p.0ft7o6kv5bp14.woff2","font",{"crossOrigin":"","type":"font/woff2"}]
 :HL["/_next/static/media/83afe278b6a6bb3c-s.p.0q-301v4kxxnr.woff2","font",{"crossOrigin":"","type":"font/woff2"}]
-0:{"P":null,"c":["","l4","reference","builtins"],"q":"","i":false,"f":[[["",{"children":["l4",{"children":[["slug","reference/builtins","oc",null],{"children":["__PAGE__",{}]}]}]},"$undefined","$undefined",16],[["$","$1","c",{"children":[[["$","link","0",{"rel":"stylesheet","href":"/_next/static/chunks/0iehx52onefyc.css","precedence":"next","crossOrigin":"$undefined","nonce":"$undefined"}],["$","script","script-0",{"src":"/_next/static/chunks/0k9p8qe2_c6el.js","async":true,"nonce":"$undefined"}],["$","script","script-1",{"src":"/_next/static/chunks/0i.l9589uvx0j.js","async":true,"nonce":"$undefined"}]],["$","html",null,{"lang":"en","children":[["$","head",null,{"children":[["$","meta",null,{"httpEquiv":"Content-Security-Policy","content":"default-src 'self' https://legalese.com; script-src 'self' https://legalese.com 'unsafe-inline' https://cdnjs.cloudflare.com; style-src 'self' https://legalese.com 'unsafe-inline'; font-src 'self' https://legalese.com; img-src 'self' https://legalese.com https://workoscdn.com https://*.googleusercontent.com; connect-src 'self' https://legalese.com https://legalese.cloud https://ai.legalese.cloud https://*.legalese.cloud https://legalese.legalese.cloud https://*.workos.com; frame-src 'self' https://legalese.com https://jl4.legalese.com https://*.workos.com; object-src 'none'; base-uri 'self' https://legalese.com"}],["$","link",null,{"rel":"apple-touch-icon","sizes":"180x180","href":"/favicon/apple-touch-icon.png"}],["$","link",null,{"rel":"icon","type":"image/png","sizes":"32x32","href":"/favicon/favicon-32x32.png"}],["$","link",null,{"rel":"icon","type":"image/png","sizes":"16x16","href":"/favicon/favicon-16x16.png"}],["$","link",null,{"rel":"manifest","href":"/favicon/site.webmanifest"}],["$","link",null,{"rel":"shortcut icon","href":"/favicon/favicon.ico"}],["$","meta",null,{"name":"msapplication-TileColor","content":"#000000"}],["$","meta",null,{"name":"msapplication-config","content":"/favicon/browserconfig.xml"}],["$","meta",null,{"name":"theme-color","content":"#000"}],["$","link",null,{"rel":"alternate","type":"application/rss+xml","href":"/feed.xml"}]]}],["$","body",null,{"className":"inter_5901b7c6-module__ec5Qua__variable merriweather_b1e99710-module__84TlHG__variable","children":[["$","div",null,{"className":"min-h-screen","children":["$","$L2",null,{"parallelRouterKey":"children","error":"$undefined","errorStyles":"$undefined","errorScripts":"$undefined","template":["$","$L3",null,{}],"templateStyles":"$undefined","templateScripts":"$undefined","notFound":[["$","div",null,{"className":"min-h-screen flex flex-col","children":["$","div",null,{"className":"container mx-auto px-5 flex-1 flex flex-col","children":[["$","header",null,{"className":"flex flex-col md:flex-row items-center justify-between py-8 mb-6","children":["$","$L4",null,{"href":"/","className":"flex items-center gap-1 hover:opacity-80 transition-opacity","children":[["$","$L5",null,{"src":"/assets/logos/legalese-logo.png","alt":"§","width":42,"height":42,"className":"rounded"}],["$","span",null,{"className":"text-2xl font-bold tracking-tight font-merriweather","children":"Legalese"}]]}]}],["$","div",null,{"className":"flex-1 flex items-center justify-center","children":["$","div",null,{"className":"text-center px-6 py-16","children":[["$","h1",null,{"className":"text-8xl font-bold text-gray-200 mb-4","children":404}],["$","h2",null,{"className":"text-2xl font-semibold text-gray-900 mb-4 font-merriweather","children":"Not Found"}],["$","p",null,{"className":"text-gray-600 mb-8 max-w-md","children":"The page you're looking for doesn't exist or may have been moved."}],["$","$L4",null,{"href":"/","className":"inline-block px-6 py-2 bg-accent text-white rounded-md hover:bg-accent-hover transition-colors","children":"Go to Homepage"}]]}]}]]}]}],[]],"forbidden":"$undefined","unauthorized":"$undefined"}]}],["$","footer",null,{"className":"bg-gray-900 text-white","children":["$","div",null,{"className":"container mx-auto px-5","children":["$","div",null,{"className":"py-16","children":[["$","div",null,{"className":"grid grid-cols-1 md:grid-cols-4 gap-12 mb-12","children":[["$","div",null,{"className":"md:col-span-1","children":[["$","div",null,{"className":"flex items-center","children":[["$","$L5",null,{"src":"/assets/logos/legalese-logo.png","alt":"§","width":36,"height":36,"className":"rounded invert"}],["$","h3",null,{"className":"text-2xl font-bold tracking-tight ml-1","children":"Legalese"}]]}],"$L6"]}],"$L7","$L8","$L9"]}],"$La"]}]}]}]]}]]}]]}],{"children":["$Lb",{"children":["$Lc",{"children":["$Ld",{},null,false,null]},null,false,"$@e"]},null,false,null]},null,false,null],"$Lf",false]],"m":"$undefined","G":["$10",["$L11"]],"S":true,"h":null,"s":"$undefined","l":"$undefined","p":"$undefined","d":"$undefined","b":"c1rwd8Zxwz2MECBEiYenP"}
+0:{"P":null,"c":["","l4","reference","builtins"],"q":"","i":false,"f":[[["",{"children":["l4",{"children":[["slug","reference/builtins","oc",null],{"children":["__PAGE__",{}]}]}]},"$undefined","$undefined",16],[["$","$1","c",{"children":[[["$","link","0",{"rel":"stylesheet","href":"/_next/static/chunks/0gwpoiy1ig8rp.css","precedence":"next","crossOrigin":"$undefined","nonce":"$undefined"}],["$","script","script-0",{"src":"/_next/static/chunks/0k9p8qe2_c6el.js","async":true,"nonce":"$undefined"}],["$","script","script-1",{"src":"/_next/static/chunks/0i.l9589uvx0j.js","async":true,"nonce":"$undefined"}]],["$","html",null,{"lang":"en","children":[["$","head",null,{"children":[["$","meta",null,{"httpEquiv":"Content-Security-Policy","content":"default-src 'self' https://legalese.com; script-src 'self' https://legalese.com 'unsafe-inline' https://cdnjs.cloudflare.com; style-src 'self' https://legalese.com 'unsafe-inline'; font-src 'self' https://legalese.com; img-src 'self' https://legalese.com https://workoscdn.com https://*.googleusercontent.com; connect-src 'self' https://legalese.com https://legalese.cloud https://ai.legalese.cloud https://*.legalese.cloud https://legalese.legalese.cloud https://*.workos.com; frame-src 'self' https://legalese.com https://jl4.legalese.com https://*.workos.com; object-src 'none'; base-uri 'self' https://legalese.com"}],["$","link",null,{"rel":"apple-touch-icon","sizes":"180x180","href":"/favicon/apple-touch-icon.png"}],["$","link",null,{"rel":"icon","type":"image/png","sizes":"32x32","href":"/favicon/favicon-32x32.png"}],["$","link",null,{"rel":"icon","type":"image/png","sizes":"16x16","href":"/favicon/favicon-16x16.png"}],["$","link",null,{"rel":"manifest","href":"/favicon/site.webmanifest"}],["$","link",null,{"rel":"shortcut icon","href":"/favicon/favicon.ico"}],["$","meta",null,{"name":"msapplication-TileColor","content":"#000000"}],["$","meta",null,{"name":"msapplication-config","content":"/favicon/browserconfig.xml"}],["$","meta",null,{"name":"theme-color","content":"#000"}],["$","link",null,{"rel":"alternate","type":"application/rss+xml","href":"/feed.xml"}]]}],["$","body",null,{"className":"inter_5901b7c6-module__ec5Qua__variable merriweather_b1e99710-module__84TlHG__variable","children":[["$","div",null,{"className":"min-h-screen","children":["$","$L2",null,{"parallelRouterKey":"children","error":"$undefined","errorStyles":"$undefined","errorScripts":"$undefined","template":["$","$L3",null,{}],"templateStyles":"$undefined","templateScripts":"$undefined","notFound":[["$","div",null,{"className":"min-h-screen flex flex-col","children":["$","div",null,{"className":"container mx-auto px-5 flex-1 flex flex-col","children":[["$","header",null,{"className":"flex flex-col md:flex-row items-center justify-between py-8 mb-6","children":["$","$L4",null,{"href":"/","className":"flex items-center gap-1 hover:opacity-80 transition-opacity","children":[["$","$L5",null,{"src":"/assets/logos/legalese-logo.png","alt":"§","width":42,"height":42,"className":"rounded"}],["$","span",null,{"className":"text-2xl font-bold tracking-tight font-merriweather","children":"Legalese"}]]}]}],["$","div",null,{"className":"flex-1 flex items-center justify-center","children":["$","div",null,{"className":"text-center px-6 py-16","children":[["$","h1",null,{"className":"text-8xl font-bold text-gray-200 mb-4","children":404}],["$","h2",null,{"className":"text-2xl font-semibold text-gray-900 mb-4 font-merriweather","children":"Not Found"}],["$","p",null,{"className":"text-gray-600 mb-8 max-w-md","children":"The page you're looking for doesn't exist or may have been moved."}],["$","$L4",null,{"href":"/","className":"inline-block px-6 py-2 bg-accent text-white rounded-md hover:bg-accent-hover transition-colors","children":"Go to Homepage"}]]}]}]]}]}],[]],"forbidden":"$undefined","unauthorized":"$undefined"}]}],["$","footer",null,{"className":"bg-gray-900 text-white","children":["$","div",null,{"className":"container mx-auto px-5","children":["$","div",null,{"className":"py-16","children":[["$","div",null,{"className":"grid grid-cols-1 md:grid-cols-4 gap-12 mb-12","children":[["$","div",null,{"className":"md:col-span-1","children":[["$","div",null,{"className":"flex items-center","children":[["$","$L5",null,{"src":"/assets/logos/legalese-logo.png","alt":"§","width":36,"height":36,"className":"rounded invert"}],["$","h3",null,{"className":"text-2xl font-bold tracking-tight ml-1","children":"Legalese"}]]}],"$L6"]}],"$L7","$L8","$L9"]}],"$La"]}]}]}]]}]]}]]}],{"children":["$Lb",{"children":["$Lc",{"children":["$Ld",{},null,false,null]},null,false,"$@e"]},null,false,null]},null,false,null],"$Lf",false]],"m":"$undefined","G":["$10",["$L11"]],"S":true,"h":null,"s":"$undefined","l":"$undefined","p":"$undefined","d":"$undefined","b":"VTaVxEBA4A2zUV3rXvhf1"}
 12:I[479520,["/_next/static/chunks/0k9p8qe2_c6el.js","/_next/static/chunks/0i.l9589uvx0j.js","/_next/static/chunks/0hpy9y_1sdd42.js"],""]
 13:I[585295,["/_next/static/chunks/0k9p8qe2_c6el.js","/_next/static/chunks/0i.l9589uvx0j.js","/_next/static/chunks/0hpy9y_1sdd42.js"],"default"]
 14:I[841529,["/_next/static/chunks/0k9p8qe2_c6el.js","/_next/static/chunks/0i.l9589uvx0j.js","/_next/static/chunks/0hpy9y_1sdd42.js"],"default"]
@@ -27,9 +27,9 @@ d:["$","$1","c",{"children":["$L15",[["$","script","script-0",{"src":"/_next/sta
 19:[]
 e:"$W19"
 f:["$","$1","h",{"children":[null,["$","$L1a",null,{"children":"$L1b"}],["$","div",null,{"hidden":true,"children":["$","$L1c",null,{"children":["$","$17",null,{"name":"Next.Metadata","children":"$L1d"}]}]}],["$","meta",null,{"name":"next-size-adjust","content":""}]]}]
-11:["$","link","0",{"rel":"stylesheet","href":"/_next/static/chunks/0iehx52onefyc.css","precedence":"next","crossOrigin":"$undefined","nonce":"$undefined"}]
+11:["$","link","0",{"rel":"stylesheet","href":"/_next/static/chunks/0gwpoiy1ig8rp.css","precedence":"next","crossOrigin":"$undefined","nonce":"$undefined"}]
 1e:I[90160,["/_next/static/chunks/0k9p8qe2_c6el.js","/_next/static/chunks/0i.l9589uvx0j.js","/_next/static/chunks/0hpy9y_1sdd42.js","/_next/static/chunks/0ixaclxzy-hn_.js"],"default"]
-1f:T3879,<h1>Built-in functions</h1>
+1f:T29d2,<h1>Built-in functions</h1>
 <p>Built-in functions are part of the language, so they work in every file without an <code>IMPORT</code>. Functions that come from a library, such as <code>map</code>, <code>sum</code> or <code>Date</code>, are listed under <a href="/l4/reference/libraries">Standard libraries</a>.</p>
 <p>Operators (<code>+</code>, <code>AND</code>, <code>EQUALS</code>, <code>UNLESS</code>, <code>FOLLOWED BY</code> and the rest) are described under <a href="/l4/reference/operators">Operators</a>. The conversions <code>TOSTRING</code>, <code>TONUMBER</code>, <code>TODATE</code>, <code>TOTIME</code>, <code>TODATETIME</code> and <code>AS STRING</code> are described under <a href="/l4/reference/types/coercions">Coercions</a>.</p>
 <h2 id="numbers">Numbers</h2>
@@ -44,7 +44,7 @@ f:["$","$1","h",{"children":[null,["$","$L1a",null,{"children":"$L1b"}],["$","di
 </thead>
 <tbody>
 <tr>
-<td><code>IS INTEGER</code></td>
+<td><code>ISINTEGER</code></td>
 <td>NUMBER</td>
 <td>BOOLEAN</td>
 <td>TRUE if the number has no fractional part</td>
@@ -390,126 +390,6 @@ f:["$","$1","h",{"children":[null,["$","$L1a",null,{"children":"$L1b"}],["$","di
 </tbody>
 </table>
 <p><code>TIMEZONE IS</code> is a line of its own at the top level of a file that sets the document's time zone, such as <code>TIMEZONE IS "Asia/Singapore"</code>. The <a href="/l4/reference/libraries/timezone">timezone</a> library has constants for common zones, and <a href="/l4/reference/libraries/datetime">datetime</a> builds on these functions.</p>
-<h2 id="looking-across-days">Looking across days</h2>
-<p>These functions change the date at which an expression is evaluated. While a predicate is checked for a day, the valid time and the date the rules are in effect are both set to that day. Ranges include both ends.</p>
-<p><strong>Example:</strong></p>
-<pre><code class="language-l4-file">-- Temporal built-ins: looking at a predicate over a range of days,
--- and advancing contract time in a trace.
-IMPORT daydate
-
-GIVEN d IS A DATE
-GIVETH A BOOLEAN
-`falls on a weekend` d MEANS `is weekend` d
-
--- 5 to 7 January 2024 runs Friday to Sunday
-#EVAL `EVER BETWEEN` (Date 5 1 2024) (Date 7 1 2024) `falls on a weekend`
-#EVAL `ALWAYS BETWEEN` (Date 5 1 2024) (Date 7 1 2024) `falls on a weekend`
-#EVAL `WHEN NEXT` (Date 10 1 2024) `falls on a weekend`
-#EVAL `WHEN LAST` (Date 10 1 2024) `falls on a weekend`
-#EVAL `VALUE AT` (Date 4 7 1776) (GIVEN d YIELD d)
-
--- WAIT UNTIL in a trace: the seller delivers at time 2, then nothing
--- happens until time 10. The buyer has not paid by time 5, so the
--- trace ends in a breach.
-DECLARE Party IS ONE OF Seller, Buyer
-DECLARE Action IS ONE OF `deliver the goods`, `pay`
-
-GIVETH A DEONTIC Party Action
-`the sale` MEANS
-  PARTY Seller
-  MUST `deliver the goods`
-  WITHIN 5
-  HENCE
-    PARTY Buyer
-    MUST `pay`
-    WITHIN 3
-    HENCE FULFILLED
-    LEST BREACH
-  LEST BREACH
-
-#TRACE `the sale` AT 0 WITH
-  PARTY Seller DOES `deliver the goods` AT 2
-  (`WAIT UNTIL` 10)
-</code></pre>
-<table>
-<thead>
-<tr>
-<th>Function</th>
-<th>Inputs</th>
-<th>Gives</th>
-<th>What it does</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code>EVER BETWEEN</code></td>
-<td>DATE, DATE, FUNCTION FROM DATE TO BOOLEAN</td>
-<td>BOOLEAN</td>
-<td>TRUE if the predicate holds on any day from the start to the end; FALSE if the start is after the end</td>
-</tr>
-<tr>
-<td><code>ALWAYS BETWEEN</code></td>
-<td>DATE, DATE, FUNCTION FROM DATE TO BOOLEAN</td>
-<td>BOOLEAN</td>
-<td>TRUE if the predicate holds on every day from the start to the end; TRUE if the start is after the end</td>
-</tr>
-<tr>
-<td><code>WHEN LAST</code></td>
-<td>DATE, FUNCTION FROM DATE TO BOOLEAN</td>
-<td>MAYBE DATE</td>
-<td>The latest day on or before the date on which the predicate holds, or <code>NOTHING</code></td>
-</tr>
-<tr>
-<td><code>WHEN NEXT</code></td>
-<td>DATE, FUNCTION FROM DATE TO BOOLEAN</td>
-<td>MAYBE DATE</td>
-<td>The earliest day on or after the date on which the predicate holds (up to 31 December 9999), or <code>NOTHING</code></td>
-</tr>
-<tr>
-<td><code>VALUE AT</code></td>
-<td>DATE, FUNCTION FROM DATE TO a</td>
-<td>a</td>
-<td>The function evaluated at the date, with the valid time and rules date set to it</td>
-</tr>
-</tbody>
-</table>
-<p>The <code>EVAL ...</code> functions evaluate an expression in a different temporal setting and then restore the original one. The first input is a serial number (see <code>DATE_SERIAL</code> and <code>DATETIME_SERIAL</code>); the second is the expression.</p>
-<table>
-<thead>
-<tr>
-<th>Function</th>
-<th>Inputs</th>
-<th>Gives</th>
-<th>What it does</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code>EVAL AS OF SYSTEM TIME</code></td>
-<td>NUMBER, a</td>
-<td>a</td>
-<td>Evaluates as if the system time were the given moment</td>
-</tr>
-<tr>
-<td><code>EVAL UNDER VALID TIME</code></td>
-<td>NUMBER, a</td>
-<td>a</td>
-<td>Evaluates with the valid time set to the given date</td>
-</tr>
-<tr>
-<td><code>EVAL UNDER RULES EFFECTIVE AT</code></td>
-<td>NUMBER, a</td>
-<td>a</td>
-<td>Evaluates under the version of the rules in effect on the given date</td>
-</tr>
-<tr>
-<td><code>EVAL UNDER RULES ENCODED AT</code></td>
-<td>NUMBER, a</td>
-<td>a</td>
-<td>Evaluates under the rules as they were written at the given moment</td>
-</tr>
-</tbody>
-</table>
 <h2 id="regulative-traces">Regulative traces</h2>
 <table>
 <thead>
@@ -522,7 +402,7 @@ GIVETH A DEONTIC Party Action
 </thead>
 <tbody>
 <tr>
-<td><code>WAIT UNTIL</code></td>
+<td><code>WAITUNTIL</code></td>
 <td>NUMBER</td>
 <td>EVENT a b</td>
 <td>An event that matches no party and no action; in a <code>#TRACE</code> it moves time forward to the given time</td>

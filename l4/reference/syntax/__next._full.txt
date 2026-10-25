@@ -4,11 +4,11 @@
 4:I[522016,["/_next/static/chunks/0k9p8qe2_c6el.js","/_next/static/chunks/0i.l9589uvx0j.js","/_next/static/chunks/07lev92j7.i4g.js"],""]
 5:I[605500,["/_next/static/chunks/0k9p8qe2_c6el.js","/_next/static/chunks/0i.l9589uvx0j.js","/_next/static/chunks/07lev92j7.i4g.js"],"Image"]
 10:I[168027,["/_next/static/chunks/0k9p8qe2_c6el.js","/_next/static/chunks/0i.l9589uvx0j.js"],"default",1]
-:HL["/_next/static/chunks/0iehx52onefyc.css","style"]
+:HL["/_next/static/chunks/0gwpoiy1ig8rp.css","style"]
 :HL["/_next/static/chunks/0s9wju.j1~_xn.css","style"]
 :HL["/_next/static/media/248e1dc0efc99276-s.p.0ft7o6kv5bp14.woff2","font",{"crossOrigin":"","type":"font/woff2"}]
 :HL["/_next/static/media/83afe278b6a6bb3c-s.p.0q-301v4kxxnr.woff2","font",{"crossOrigin":"","type":"font/woff2"}]
-0:{"P":null,"c":["","l4","reference","syntax"],"q":"","i":false,"f":[[["",{"children":["l4",{"children":[["slug","reference/syntax","oc",null],{"children":["__PAGE__",{}]}]}]},"$undefined","$undefined",16],[["$","$1","c",{"children":[[["$","link","0",{"rel":"stylesheet","href":"/_next/static/chunks/0iehx52onefyc.css","precedence":"next","crossOrigin":"$undefined","nonce":"$undefined"}],["$","script","script-0",{"src":"/_next/static/chunks/0k9p8qe2_c6el.js","async":true,"nonce":"$undefined"}],["$","script","script-1",{"src":"/_next/static/chunks/0i.l9589uvx0j.js","async":true,"nonce":"$undefined"}]],["$","html",null,{"lang":"en","children":[["$","head",null,{"children":[["$","meta",null,{"httpEquiv":"Content-Security-Policy","content":"default-src 'self' https://legalese.com; script-src 'self' https://legalese.com 'unsafe-inline' https://cdnjs.cloudflare.com; style-src 'self' https://legalese.com 'unsafe-inline'; font-src 'self' https://legalese.com; img-src 'self' https://legalese.com https://workoscdn.com https://*.googleusercontent.com; connect-src 'self' https://legalese.com https://legalese.cloud https://ai.legalese.cloud https://*.legalese.cloud https://legalese.legalese.cloud https://*.workos.com; frame-src 'self' https://legalese.com https://jl4.legalese.com https://*.workos.com; object-src 'none'; base-uri 'self' https://legalese.com"}],["$","link",null,{"rel":"apple-touch-icon","sizes":"180x180","href":"/favicon/apple-touch-icon.png"}],["$","link",null,{"rel":"icon","type":"image/png","sizes":"32x32","href":"/favicon/favicon-32x32.png"}],["$","link",null,{"rel":"icon","type":"image/png","sizes":"16x16","href":"/favicon/favicon-16x16.png"}],["$","link",null,{"rel":"manifest","href":"/favicon/site.webmanifest"}],["$","link",null,{"rel":"shortcut icon","href":"/favicon/favicon.ico"}],["$","meta",null,{"name":"msapplication-TileColor","content":"#000000"}],["$","meta",null,{"name":"msapplication-config","content":"/favicon/browserconfig.xml"}],["$","meta",null,{"name":"theme-color","content":"#000"}],["$","link",null,{"rel":"alternate","type":"application/rss+xml","href":"/feed.xml"}]]}],["$","body",null,{"className":"inter_5901b7c6-module__ec5Qua__variable merriweather_b1e99710-module__84TlHG__variable","children":[["$","div",null,{"className":"min-h-screen","children":["$","$L2",null,{"parallelRouterKey":"children","error":"$undefined","errorStyles":"$undefined","errorScripts":"$undefined","template":["$","$L3",null,{}],"templateStyles":"$undefined","templateScripts":"$undefined","notFound":[["$","div",null,{"className":"min-h-screen flex flex-col","children":["$","div",null,{"className":"container mx-auto px-5 flex-1 flex flex-col","children":[["$","header",null,{"className":"flex flex-col md:flex-row items-center justify-between py-8 mb-6","children":["$","$L4",null,{"href":"/","className":"flex items-center gap-1 hover:opacity-80 transition-opacity","children":[["$","$L5",null,{"src":"/assets/logos/legalese-logo.png","alt":"§","width":42,"height":42,"className":"rounded"}],["$","span",null,{"className":"text-2xl font-bold tracking-tight font-merriweather","children":"Legalese"}]]}]}],["$","div",null,{"className":"flex-1 flex items-center justify-center","children":["$","div",null,{"className":"text-center px-6 py-16","children":[["$","h1",null,{"className":"text-8xl font-bold text-gray-200 mb-4","children":404}],["$","h2",null,{"className":"text-2xl font-semibold text-gray-900 mb-4 font-merriweather","children":"Not Found"}],["$","p",null,{"className":"text-gray-600 mb-8 max-w-md","children":"The page you're looking for doesn't exist or may have been moved."}],["$","$L4",null,{"href":"/","className":"inline-block px-6 py-2 bg-accent text-white rounded-md hover:bg-accent-hover transition-colors","children":"Go to Homepage"}]]}]}]]}]}],[]],"forbidden":"$undefined","unauthorized":"$undefined"}]}],["$","footer",null,{"className":"bg-gray-900 text-white","children":["$","div",null,{"className":"container mx-auto px-5","children":["$","div",null,{"className":"py-16","children":[["$","div",null,{"className":"grid grid-cols-1 md:grid-cols-4 gap-12 mb-12","children":[["$","div",null,{"className":"md:col-span-1","children":[["$","div",null,{"className":"flex items-center","children":[["$","$L5",null,{"src":"/assets/logos/legalese-logo.png","alt":"§","width":36,"height":36,"className":"rounded invert"}],["$","h3",null,{"className":"text-2xl font-bold tracking-tight ml-1","children":"Legalese"}]]}],"$L6"]}],"$L7","$L8","$L9"]}],"$La"]}]}]}]]}]]}]]}],{"children":["$Lb",{"children":["$Lc",{"children":["$Ld",{},null,false,null]},null,false,"$@e"]},null,false,null]},null,false,null],"$Lf",false]],"m":"$undefined","G":["$10",["$L11"]],"S":true,"h":null,"s":"$undefined","l":"$undefined","p":"$undefined","d":"$undefined","b":"c1rwd8Zxwz2MECBEiYenP"}
+0:{"P":null,"c":["","l4","reference","syntax"],"q":"","i":false,"f":[[["",{"children":["l4",{"children":[["slug","reference/syntax","oc",null],{"children":["__PAGE__",{}]}]}]},"$undefined","$undefined",16],[["$","$1","c",{"children":[[["$","link","0",{"rel":"stylesheet","href":"/_next/static/chunks/0gwpoiy1ig8rp.css","precedence":"next","crossOrigin":"$undefined","nonce":"$undefined"}],["$","script","script-0",{"src":"/_next/static/chunks/0k9p8qe2_c6el.js","async":true,"nonce":"$undefined"}],["$","script","script-1",{"src":"/_next/static/chunks/0i.l9589uvx0j.js","async":true,"nonce":"$undefined"}]],["$","html",null,{"lang":"en","children":[["$","head",null,{"children":[["$","meta",null,{"httpEquiv":"Content-Security-Policy","content":"default-src 'self' https://legalese.com; script-src 'self' https://legalese.com 'unsafe-inline' https://cdnjs.cloudflare.com; style-src 'self' https://legalese.com 'unsafe-inline'; font-src 'self' https://legalese.com; img-src 'self' https://legalese.com https://workoscdn.com https://*.googleusercontent.com; connect-src 'self' https://legalese.com https://legalese.cloud https://ai.legalese.cloud https://*.legalese.cloud https://legalese.legalese.cloud https://*.workos.com; frame-src 'self' https://legalese.com https://jl4.legalese.com https://*.workos.com; object-src 'none'; base-uri 'self' https://legalese.com"}],["$","link",null,{"rel":"apple-touch-icon","sizes":"180x180","href":"/favicon/apple-touch-icon.png"}],["$","link",null,{"rel":"icon","type":"image/png","sizes":"32x32","href":"/favicon/favicon-32x32.png"}],["$","link",null,{"rel":"icon","type":"image/png","sizes":"16x16","href":"/favicon/favicon-16x16.png"}],["$","link",null,{"rel":"manifest","href":"/favicon/site.webmanifest"}],["$","link",null,{"rel":"shortcut icon","href":"/favicon/favicon.ico"}],["$","meta",null,{"name":"msapplication-TileColor","content":"#000000"}],["$","meta",null,{"name":"msapplication-config","content":"/favicon/browserconfig.xml"}],["$","meta",null,{"name":"theme-color","content":"#000"}],["$","link",null,{"rel":"alternate","type":"application/rss+xml","href":"/feed.xml"}]]}],["$","body",null,{"className":"inter_5901b7c6-module__ec5Qua__variable merriweather_b1e99710-module__84TlHG__variable","children":[["$","div",null,{"className":"min-h-screen","children":["$","$L2",null,{"parallelRouterKey":"children","error":"$undefined","errorStyles":"$undefined","errorScripts":"$undefined","template":["$","$L3",null,{}],"templateStyles":"$undefined","templateScripts":"$undefined","notFound":[["$","div",null,{"className":"min-h-screen flex flex-col","children":["$","div",null,{"className":"container mx-auto px-5 flex-1 flex flex-col","children":[["$","header",null,{"className":"flex flex-col md:flex-row items-center justify-between py-8 mb-6","children":["$","$L4",null,{"href":"/","className":"flex items-center gap-1 hover:opacity-80 transition-opacity","children":[["$","$L5",null,{"src":"/assets/logos/legalese-logo.png","alt":"§","width":42,"height":42,"className":"rounded"}],["$","span",null,{"className":"text-2xl font-bold tracking-tight font-merriweather","children":"Legalese"}]]}]}],["$","div",null,{"className":"flex-1 flex items-center justify-center","children":["$","div",null,{"className":"text-center px-6 py-16","children":[["$","h1",null,{"className":"text-8xl font-bold text-gray-200 mb-4","children":404}],["$","h2",null,{"className":"text-2xl font-semibold text-gray-900 mb-4 font-merriweather","children":"Not Found"}],["$","p",null,{"className":"text-gray-600 mb-8 max-w-md","children":"The page you're looking for doesn't exist or may have been moved."}],["$","$L4",null,{"href":"/","className":"inline-block px-6 py-2 bg-accent text-white rounded-md hover:bg-accent-hover transition-colors","children":"Go to Homepage"}]]}]}]]}]}],[]],"forbidden":"$undefined","unauthorized":"$undefined"}]}],["$","footer",null,{"className":"bg-gray-900 text-white","children":["$","div",null,{"className":"container mx-auto px-5","children":["$","div",null,{"className":"py-16","children":[["$","div",null,{"className":"grid grid-cols-1 md:grid-cols-4 gap-12 mb-12","children":[["$","div",null,{"className":"md:col-span-1","children":[["$","div",null,{"className":"flex items-center","children":[["$","$L5",null,{"src":"/assets/logos/legalese-logo.png","alt":"§","width":36,"height":36,"className":"rounded invert"}],["$","h3",null,{"className":"text-2xl font-bold tracking-tight ml-1","children":"Legalese"}]]}],"$L6"]}],"$L7","$L8","$L9"]}],"$La"]}]}]}]]}]]}]]}],{"children":["$Lb",{"children":["$Lc",{"children":["$Ld",{},null,false,null]},null,false,"$@e"]},null,false,null]},null,false,null],"$Lf",false]],"m":"$undefined","G":["$10",["$L11"]],"S":true,"h":null,"s":"$undefined","l":"$undefined","p":"$undefined","d":"$undefined","b":"VTaVxEBA4A2zUV3rXvhf1"}
 12:I[479520,["/_next/static/chunks/0k9p8qe2_c6el.js","/_next/static/chunks/0i.l9589uvx0j.js","/_next/static/chunks/0hpy9y_1sdd42.js"],""]
 13:I[585295,["/_next/static/chunks/0k9p8qe2_c6el.js","/_next/static/chunks/0i.l9589uvx0j.js","/_next/static/chunks/0hpy9y_1sdd42.js"],"default"]
 14:I[841529,["/_next/static/chunks/0k9p8qe2_c6el.js","/_next/static/chunks/0i.l9589uvx0j.js","/_next/static/chunks/0hpy9y_1sdd42.js"],"default"]
@@ -27,9 +27,9 @@ d:["$","$1","c",{"children":["$L15",[["$","script","script-0",{"src":"/_next/sta
 19:[]
 e:"$W19"
 f:["$","$1","h",{"children":[null,["$","$L1a",null,{"children":"$L1b"}],["$","div",null,{"hidden":true,"children":["$","$L1c",null,{"children":["$","$17",null,{"name":"Next.Metadata","children":"$L1d"}]}]}],["$","meta",null,{"name":"next-size-adjust","content":""}]]}]
-11:["$","link","0",{"rel":"stylesheet","href":"/_next/static/chunks/0iehx52onefyc.css","precedence":"next","crossOrigin":"$undefined","nonce":"$undefined"}]
+11:["$","link","0",{"rel":"stylesheet","href":"/_next/static/chunks/0gwpoiy1ig8rp.css","precedence":"next","crossOrigin":"$undefined","nonce":"$undefined"}]
 1e:I[90160,["/_next/static/chunks/0k9p8qe2_c6el.js","/_next/static/chunks/0i.l9589uvx0j.js","/_next/static/chunks/0hpy9y_1sdd42.js","/_next/static/chunks/0ixaclxzy-hn_.js"],"default"]
-1f:T424f,<h1>Syntax and directives</h1>
+1f:Tad95,<h1>Syntax and directives</h1>
 <p>This page covers how an L4 file is written: layout, comments, names, literals, annotations, directives and the special forms that make rules read like legal text.
 For how to write rules that read well, see <a href="/l4/concepts/language-design/principles#writing-in-the-l4-style">Writing in the L4 style</a>.</p>
 <h2 id="layout">Layout</h2>
@@ -142,6 +142,278 @@ GIVETH A NUMBER
 </code></pre>
 <p>Text in square brackets after a name, as in <code>DECIDE `the limit` [the statutory limit] IS 5</code>, is a short inline wording for that name.
 How to use <code>@nlg</code> well: <a href="/l4/tutorials/natural-language-functions/optimising-natural-language-generation">Make rules read like law</a>.</p>
+<h4 id="where-to-put-it">Where to put it</h4>
+<p>An annotation describes the thing it sits with, and there are two places to sit:</p>
+<pre><code class="language-l4">-- trailing: describes `amount`
+GIVEN amount IS A NUMBER @nlg the claim amount
+
+GIVETH A BOOLEAN
+-- own line: describes the rule
+@nlg the claim of %amount% is large
+DECIDE `is large` IF amount GREATER THAN 100
+</code></pre>
+<p><strong>Trailing a line, it describes what is on that line.</strong>
+<strong>Starting a line of its own, it describes what follows.</strong>
+That holds whether the thing is a rule, an input, a field or a type declaration, with two exceptions, for a list of fields and a list of inputs, below.</p>
+<p><strong>Put a rule's sentence trailing its head, or on its own line between its <code>GIVEN</code> block and the <code>DECIDE</code>, never above the <code>GIVEN</code>.</strong>
+An annotation on its own line above a <code>GIVEN</code> is not the rule's, because the <code>GIVEN</code> comes between them.
+When something written just before it can take it, such as an <code>IMPORT</code> or a section heading, it is read as that one's and nothing is reported; when nothing can, L4 warns "Not attached to any valid syntax node".</p>
+<p><strong>An annotation belongs to the name it sits with, not to a type nearby.</strong>
+In <code>GIVEN a IS A STRING @nlg the amount</code> the wording is <code>a</code>'s, not <code>STRING</code>'s, and it labels <code>a</code> wherever a call lists its inputs: <code>#EVAL `is large` WITH a IS "x"</code> reads <code>… where the amount is x</code>.
+An annotation on its own line between a <code>GIVETH</code> and its <code>DECIDE</code> belongs to the rule, not to the type written after the <code>GIVETH</code>.
+A record field works the same way: in <code>HAS dob IS A DATE @nlg date of birth</code> the wording is <code>dob</code>'s, as it would be under the field.</p>
+<p><strong>An empty <code>@nlg</code> is ignored, and says so.</strong>
+A rendering replaces what it annotates, so <code>@nlg</code> with nothing after it would erase the name from the output rather than leave it alone.
+L4 drops it and warns instead.</p>
+<p><strong>Two wordings in one language on one field collide.</strong>
+<code>head [the first item] IS AN a [an element]</code> gives <code>head</code> two wordings, one before its type and one after it, so L4 warns and uses neither, as it does for two on an input.</p>
+<p><strong>A field list is an exception to "own line describes what follows".</strong>
+Underneath a field, an annotation describes <em>that</em> field, the one above it, not the next one:</p>
+<pre><code class="language-l4">DECLARE Employee
+  HAS dob  IS A DATE
+      -- describes `dob`
+      @nlg date of birth
+      `start date` IS A DATE
+</code></pre>
+<p>A field list is a column of things rather than a sequence of declarations, and writing the gloss under the field it belongs to is what authors do.</p>
+<p><strong>A field's wording is read after the name of its owner.</strong>
+A rule that reads <code>e's dob</code>, for an input <code>e</code> that is an <code>Employee</code>, says "the employee's date of birth": the record type's name, then <code>'s</code>, then the field's wording.
+So a field's wording is only the words that follow the owner.
+<code>@nlg the employee's date of birth</code> under <code>dob</code> would read "the employee's the employee's date of birth" wherever the field is used.</p>
+<p><strong>A <code>GIVEN</code> list is the other exception, last input included.</strong>
+Underneath an input, an annotation describes that input.
+Under the LAST input, with no <code>GIVETH</code> before the rule, the same line is also the line above the rule, so the column decides: indented further than the <code>GIVEN</code> keyword, the annotation describes the input; at the keyword's column or left of it, it describes the rule.</p>
+<pre><code class="language-l4">GIVEN floor  IS A NUMBER
+      amount IS A NUMBER
+      @nlg the sum of money
+@nlg the claim of %amount% is over %floor%
+DECIDE `is large` IF amount GREATER THAN floor
+</code></pre>
+<p>Here <code>the sum of money</code> is <code>amount</code>'s gloss and the second annotation is the rule's sentence.
+It is the <code>GIVEN</code> keyword's column that counts, not the left margin, so a <code>GIVEN</code> indented under a section heading or inside a <code>WHERE</code> reads the same way.
+The column is all it reads: a rule's sentence indented under the last input, by even one space, becomes that input's gloss, and nothing warns.
+The exceptions are confined to those two lists: between <code>GIVETH</code> and <code>DECIDE</code>, an annotation on its own line describes the rule below it at any indentation.</p>
+<p><strong>The last field of a record, and an <code>ASSUME</code>, are read by the same column.</strong>
+The last field of a record, and the last field of the last constructor of an enum, have no field after them, so the line under them is also the line above whatever is written next.
+An annotation indented further than the <code>DECLARE</code> keyword describes that field; at the keyword's column or left of it, it describes what follows.
+An <code>ASSUME</code> is read the same way: an annotation trailing it, or indented under it, is its own, and one at the margin is the next declaration's.
+After an enum whose last value has no fields, an annotation at the margin is read as that value's: nothing is reported unless the value already carries a note, and the rule written below it loses the annotation.
+Write the rule's sentence trailing the rule's head instead, as in <code>DECIDE `passes` @nlg the test is passed</code>.</p>
+<h4 id="writing-a-literal-or">Writing a literal <code>%</code> or <code>]</code></h4>
+<p>Inside <code>@nlg</code>, <code>%</code> marks an input to fill in, and <code>%age%</code> is replaced by the value of <code>age</code>.
+A <code>]</code> ends a bracketed annotation.
+To write either character as itself, put a backslash in front of it.</p>
+<table>
+<thead>
+<tr>
+<th>you write</th>
+<th>you get</th>
+<th>without the backslash</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>10\%and\%20</code></td>
+<td><code>10%and%20</code></td>
+<td><code>and</code> is read as an input name</td>
+</tr>
+<tr>
+<td><code>[rate \] per unit]</code></td>
+<td><code>rate ] per unit</code></td>
+<td>the annotation ends early</td>
+</tr>
+<tr>
+<td><code>[see note \[3\] here]</code></td>
+<td><code>see note [3] here</code></td>
+<td>—</td>
+</tr>
+<tr>
+<td><code>\\</code></td>
+<td><code>\</code></td>
+<td>—</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Most of the time you do not need this.</strong>
+A percent sign with a space after it is ordinary text, so <code>a 5% levy on %amount%</code> works as written and fills in <code>amount</code>.
+The backslash is for the case with no space, such as <code>10%and%20</code>, where L4 cannot tell a written-out range from an input.</p>
+<p><strong>The two mistakes fail very differently, and the quiet one is the one to watch.</strong>
+A stray <code>]</code> ends the annotation early and you get a parse error pointing at the leftover text, which is annoying but tells you.
+A stray <code>%</code> pair with no spaces inside it tells you nothing.
+If the word between the two percent signs happens to name one of your inputs, L4 quietly substitutes that value, and your sentence comes out with a number where you wrote a word.
+Nothing is reported, and the rule runs.</p>
+<p><strong>A pair with spaces inside it, such as <code>% amount %</code>, is plain text, and L4 warns.</strong>
+A slot is <code>%amount%</code> with no spaces, so <code>% amount %</code> prints as plain text and the slot is lost.
+<code>l4 check</code> succeeds, and the warning names the pair and the slot to write instead.
+In <code>5% with %amount%</code> the second percent sign opens the slot <code>%amount%</code>, so L4 does not warn.</p>
+<p><strong>An opening <code>[</code> never needs escaping, and you may escape it anyway.</strong>
+A closing <code>]</code> ends the annotation unless it is written <code>\]</code>, so <code>[see note [3\] here]</code> is correct as written, and so is <code>[see note \[3\] here]</code>.
+<code>\[</code> means a literal <code>[</code>, exactly as the bare character does, so the two spellings come out the same.</p>
+<p><strong>To end an annotation with a backslash, write <code>\\</code>.</strong>
+A backslash immediately before the closing <code>]</code> is an escape, so <code>\]</code> is a literal <code>]</code> and the annotation goes on.
+Any other character after a backslash is left completely alone: <code>\q</code> is a backslash followed by a <code>q</code>.</p>
+<h4 id="labelling-the-language-nlghe">Labelling the language: <code>@nlg:he</code></h4>
+<p>An <code>@nlg</code> annotation can say which language its prose is in, by putting a language subtag straight after <code>@nlg</code>:</p>
+<pre><code class="language-l4">GIVEN amount IS A NUMBER
+GIVETH A BOOLEAN
+DECIDE `is large` @nlg:en the amount %amount% is large
+  IF amount GREATER THAN 100
+</code></pre>
+<p><strong>L4 has no idea what language you are writing in.</strong>
+The renderer prints whatever the annotation says, so an annotation written in Hebrew produces Hebrew output, with or without a tag.
+The tag does not translate anything.
+What it does is let you attach <em>more than one</em> rendering to the same rule and say which is which.</p>
+<p><strong>The bare inline form cannot be tagged.</strong>
+<code>[…]</code> has nowhere to put a subtag, so <code>@nlg:he</code> is available only on the <code>@nlg</code> form.</p>
+<p><strong>A word glued to the colon is a tag, and a colon with a space after it is ordinary text.</strong>
+A subtag is letters, digits and hyphens, so <code>@nlg:he</code> and <code>@nlg:zh-Hant</code> are tags, while <code>@nlg: see below</code> has no tag and the colon is simply the first character of the prose.
+So <code>@nlg:total of the first</code> has the tag <code>total</code> and the prose <code>of the first</code>, and <code>@nlg:Test</code> on its own is a tag with no prose, which is ignored with a warning.
+L4 does not check that a tag names a real language: an English sentence that begins with a colon-joined word, as in <code>@nlg:the employee pays</code>, takes <code>the</code> for its tag, and the sentence reads <code>employee pays</code>.
+So L4 warns when a rule, input or field has only one wording and nothing in the module backs its tag as a language.
+A tag is backed when:</p>
+<ul>
+<li>a <code>@lang</code> line declares it;</li>
+<li>some rule, input or field has a wording in it beside a wording in another language; or</li>
+<li>it is <code>en</code>, <code>he</code> or a language a <code>@lang</code> line declares, with nothing after it but a script or a region: <code>en-GB</code>, <code>he-IL</code>, <code>zh-Hant</code>, and <code>pt-BR</code> in a module that declares <code>@lang pt</code>. <code>en</code> and <code>he</code> count in any case.</li>
+</ul>
+<p>So <code>@nlg:en-route for %days% days</code> draws the warning, because <code>route</code> is neither a script nor a region, and so does a word used as the tag of several rules when none of them has another wording.
+If the tag was the first word of the sentence, drop the colon, and if you want the colon as text, leave a space after it.</p>
+<h4 id="writing-the-same-rule-in-two-languages">Writing the same rule in two languages</h4>
+<p>Put the second rendering on the continuation line, under the first:</p>
+<pre><code class="language-l4">GIVEN amount IS A NUMBER
+GIVETH A BOOLEAN
+DECIDE `is large` @nlg:en the amount %amount% is large
+                  @nlg:he %amount% עולה על הסף
+  IF amount GREATER THAN 100
+</code></pre>
+<p>Then ask for one:</p>
+<pre><code class="language-console">$ l4 nlg --lang he mymodule.l4
+$ l4 render --format html --lang he mymodule.l4 -o mymodule.he.html
+</code></pre>
+<p><code>l4 nlg</code> gives the file's directives as plain prose; <code>l4 render</code> gives the formatted document, in any of its formats.
+Both take <code>--lang</code>, and so does the Render tab of the VS Code extension, which shows a language menu beside its imports menu when the file has wordings in more than one language.</p>
+<p><strong>A request reads a wording in its language, whatever region either names.</strong>
+<code>--lang he</code> reads a wording tagged <code>he-IL</code> when the rule has none tagged <code>he</code>, and <code>--lang he-IL</code> reads one tagged <code>he</code>.
+A wording tagged exactly as asked comes first, then one whose tag the request extends (<code>he</code> for <code>he-IL</code>), then any other in the same language.
+The language is compared as written, so <code>HE</code> is not <code>he</code>.
+Two runs of the same command over the same source produce the two documents, and nothing about the rule is duplicated, only its wording.</p>
+<p>In both, a call to a rule that has an <code>@nlg</code> wording reads as that wording with the call's arguments in its <code>%slots%</code>: <code>#EVAL `is large` 150</code> reads as <code>the amount 150 is large</code>.
+An argument the wording does not mention is not dropped; it follows the sentence as <code>with …</code>, so a wording written without slots shows every value the call supplied.
+A wording written on the <code>GIVEN</code> name is a gloss for that input, not a sentence for the rule, and is never used for the rule.</p>
+<p><code>l4 nlg</code> also writes a date given as literals as a date: <code>Date 16 7 2025</code> reads <code>16 July 2025</code>.
+That covers only daydate's own <code>Date</code>, only when all three arguments are whole numbers, and only when they name a real day.
+Anything else stays a call, so <code>Date 31 2 2025</code>, which rolls forward to March, reads as <code>`Date` with 31, 2 and 2025</code> and not as a day that is not in the text.
+A percentage reads <code>50%</code>.</p>
+<p><strong>The words L4 itself puts around your sentences follow <code>--lang</code> in <code>l4 nlg</code>:</strong> "is equal to", "not", "with", a month's name.
+For <code>#EVAL `is large` 150 EQUALS TRUE</code> over the rule above, <code>l4 nlg --lang he</code> prints <code>150 עולה על הסף שווה ל־`TRUE` </code> where <code>l4 nlg</code> prints <code>the amount 150 is large is equal to `TRUE` </code>.
+They come from a table of phrases, not a grammar, so the English word order stays: a Hebrew line is Hebrew words in the order English would put them.
+A word the table has no entry for stays English, and <code>l4 nlg</code> names it on stderr, so you can see what was not translated.
+The table is small and fixed, and it gives each connecting word one rendering whatever the sentence around it, so have a Hebrew speaker read the Hebrew output before you rely on it.
+Hebrew is the one language with a table, and it serves every Hebrew tag, <code>he-IL</code> as well as <code>he</code>.
+For every other language, <code>--lang</code> selects your own wordings and leaves L4's own connecting words in English.
+<code>l4 render</code> does not use the table.
+Without <code>--lang</code>, the connecting words are English.</p>
+<p>In the <code>html</code> format the document says which language it is in: <code>&#x3C;html lang="he" dir="rtl"></code>.
+<code>lang</code> is the <code>--lang</code> you asked for, or the module's <code>@lang</code> if you asked for nothing, or <code>en</code>.
+<code>dir="rtl"</code> is added for a right-to-left language, decided from the script subtag when the tag carries one, so <code>he-Latn</code> is left-to-right and <code>az-Arab</code> is not, and omitted for every other, left-to-right being HTML's own default.
+Asking for a language <strong>nothing</strong> in the module renders does not relabel the document: it keeps the language it declares, and <code>render</code> says so on stderr.
+The <code>akn</code> format reports the same choice as the language component of its FRBR URIs (<code>/akn/doc/main/heb@</code>).
+The <code>--lang</code> value is checked, because it ends up in markup: a trailing space is trimmed, the first subtag is lowercased, and anything that is not a language tag is refused.</p>
+<p><strong>A rule with no rendering in the language you ask for appears in its default one.</strong>
+<code>--lang he</code> falls back to a rule's default rendering when it has no Hebrew one, so a half-finished translation produces a whole document with some of it in the original language, rather than a document with holes in it.</p>
+<p><strong>Which rendering is the default</strong>, the one you get with no <code>--lang</code> at all, is the one in the module's own language (<code>en</code> unless the module says otherwise), and otherwise the first in the file.
+A rule with exactly one annotation has only that rendering, tagged or not, and every <code>--lang</code> gets it.</p>
+<p><strong>Two renderings in the same language are a warning, and neither is used.</strong>
+Two <code>@nlg:he</code> on one rule, or two untagged ones, are a genuine ambiguity.
+<code>l4 check</code> succeeds, but L4 warns, names both wordings, and attaches neither, because picking one would silently throw away a sentence you wrote.
+The rule is then read by its name, with its arguments after it.
+A clash in one language does not affect the others: two <code>@nlg:he</code> and one <code>@nlg:en</code> leave the English rendering working.</p>
+<h4 id="declaring-the-modules-language-lang-he">Declaring the module's language: <code>@lang he</code></h4>
+<p>Tagging every <code>@nlg</code> gets repetitive the moment a whole module is in one language.
+Say it once instead, on a line of its own:</p>
+<pre><code class="language-l4">@lang he
+
+GIVEN amount IS A NUMBER
+GIVETH A BOOLEAN
+DECIDE `is large` @nlg %amount% עולה על הסף
+                  @nlg:en the claim of %amount% exceeds the threshold
+  IF amount GREATER THAN 100
+</code></pre>
+<p><strong><code>@lang he</code> means "every untagged <code>@nlg</code> in this module is Hebrew".</strong>
+It is not a separate mechanism with its own precedence: it is exactly equivalent to writing <code>:he</code> on each of those <code>@nlg</code> annotations, and you can mix the two freely.
+An <code>@nlg</code> that names its own language keeps it, which is how the English rendering above survives in a Hebrew module.</p>
+<p><strong><code>@lang</code> does not translate anything.</strong>
+It labels what you wrote.</p>
+<p><strong>A module that declares nothing is <code>en</code>.</strong>
+That is a default, not a detection: L4 cannot tell what language you are writing in, so a Hebrew module with no <code>@lang</code> is <em>labelled</em> English while it <em>renders</em> Hebrew.
+The label has a visible cost: <code>l4 render --format html</code> puts it in <code>&#x3C;html lang="en"></code> and emits no <code>dir</code>, so the Hebrew renders left-to-right with its punctuation at the wrong end of the line, and <code>--format akn</code> identifies the document as an English expression.
+So declare it if your module is not English.</p>
+<p><strong>Do not write <code>@lang en</code>: it says what every module without a declaration is.</strong>
+<code>l4 check</code> and your editor put a hint on the line: "A module that declares nothing is English; this line can go."
+It is only a hint: <code>l4 check</code> succeeds with the line or without it.
+A module that also declares another language gets no hint, and neither does a tag other than <code>en</code>.</p>
+<p><strong>A module declares one language.</strong>
+If two <code>@lang</code> lines name different languages, L4 uses the last one in the file and warns on each of the others.
+The warning names both languages and the line that is used, and the earlier line has no effect.
+Two <code>@lang</code> lines that name the same language are not reported.</p>
+<p><strong>It applies to the whole file, wherever you write it</strong>, including annotations above the declaration.
+Convention is the top; nothing breaks if it is not.</p>
+<p><strong>Two renderings in the module's own language collide.</strong>
+<code>@lang he</code> together with an explicit <code>@nlg:he</code> on the same rule is two Hebrew renderings, and is reported as such.</p>
+<h4 id="a-rule-that-names-its-inputs-in-the-head">A rule that names its inputs in the head</h4>
+<p>A rule may name its inputs twice, once in the <code>GIVEN</code> and again in the head, and an annotation written after an input's name in the head lands on that INPUT rather than on the rule.
+It is read as the rule's sentence anyway:</p>
+<pre><code class="language-l4">GIVEN amount IS A NUMBER
+GIVETH A BOOLEAN
+`is large` amount @nlg the claim of %amount% is large
+  MEANS amount GREATER THAN 100
+</code></pre>
+<p>reads as <code>the claim of `amount` is large</code> at every call site, in <code>l4 nlg</code> and in <code>l4 render</code> alike.
+A call written with <code>WITH</code> keeps its <code>where</code> clause and takes the sentence as its heading.
+A rule whose own name carries an annotation keeps that one, and the one on the input stays the input's gloss.</p>
+<p><strong>An annotation on an <code>AKA</code> name is the rule's sentence too</strong>, and a call through the alias reads it.</p>
+<p><strong>An annotation in the <code>GIVEN</code> is an input gloss, never the rule's sentence.</strong>
+It labels the input in a <code>WITH</code> call's <code>where</code> clause.
+When the rule's head names the input too, as in <code>`is large` amount MEANS …</code>, L4 takes the input from the head, so a gloss written in the <code>GIVEN</code> of that rule labels nothing.
+Put a sentence for the rule on the rule, and a gloss for an input in the <code>GIVEN</code> of a head that does not repeat it.</p>
+<p><strong>Two annotations in the same language on one input collide</strong>: L4 warns, naming the input, and uses neither.
+<code>l4 nlg</code> and <code>l4 render</code> then read the input under its own name, and the rule as they would read it with no annotations.</p>
+<p>Where a wording sits decides whose it is:</p>
+<table>
+<thead>
+<tr>
+<th>where you write it</th>
+<th>whose wording it is</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>trailing the rule's name: <code>DECIDE `is large` @nlg …</code> or <code>`is large` @nlg … MEANS</code></td>
+<td>the rule's sentence</td>
+</tr>
+<tr>
+<td>on its own line above the head</td>
+<td>the rule's sentence</td>
+</tr>
+<tr>
+<td>after an input named in the head: <code>`is large` amount @nlg … MEANS</code></td>
+<td>the rule's sentence</td>
+</tr>
+<tr>
+<td>on its own line below an input, or below an <code>AKA</code>, in the head</td>
+<td>the rule's sentence</td>
+</tr>
+<tr>
+<td>in the <code>GIVEN</code>, trailing an input's name or on its own line indented under it, when the head does not repeat the input</td>
+<td>that input's gloss</td>
+</tr>
+<tr>
+<td>above the head and also after an input in the head</td>
+<td>the one above is the rule's sentence; the other is the input's gloss</td>
+</tr>
+</tbody>
+</table>
+<p>Each of the rule's-sentence placements reads the same in <code>l4 nlg</code> and in <code>l4 render</code>.</p>
 <h3 id="ref">@ref</h3>
 <p><code>@ref</code> cites a legal source: the provision a rule, a type or an input comes from.</p>
 <ul>
@@ -188,6 +460,35 @@ A <code>@ref</code> after the last construct of the file has nothing to attach t
 <blockquote>
 <p>This @ref (<code>Section 4(1)(a) of the Act</code>) is at the end of the file, so there is nothing after it to attach to.</p>
 </blockquote>
+<h4 id="writing-a-literal">Writing a literal <code>>></code></h4>
+<p>The inline form ends at <code>>></code>, so a citation that contains those two characters would otherwise stop halfway.
+Put a backslash before the angle bracket:</p>
+<table>
+<thead>
+<tr>
+<th>you write</th>
+<th>you get</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>&#x3C;&#x3C;see s.5 \>> onward>></code></td>
+<td><code>see s.5 >> onward</code></td>
+</tr>
+<tr>
+<td><code>&#x3C;&#x3C;\\>></code></td>
+<td><code>\</code></td>
+</tr>
+</tbody>
+</table>
+<p><strong>A single <code>></code> needs nothing.</strong>
+<code>&#x3C;&#x3C;s.5 > s.3>></code> is one citation: only the doubled <code>>></code> closes it, so a lone <code>></code> is ordinary text.</p>
+<p><strong>To end a citation with a backslash, write <code>\\</code>.</strong>
+A backslash immediately before <code>>></code> is an escape, so <code>\></code> is a literal <code>></code> and the citation goes on.
+Any other character after a backslash is left alone, so <code>\q</code> is a backslash followed by a <code>q</code>.</p>
+<p>This is the same idea as the <code>\%</code> and <code>\]</code> escapes in <code>@nlg</code>, but the set of characters is deliberately different.
+<code>%</code> and <code>]</code> are ordinary text in a citation, and <code>></code> is ordinary text in an <code>@nlg</code> annotation.
+Each annotation escapes only what would otherwise be read as punctuation in that annotation.</p>
 <h3 id="export">@export</h3>
 <p><code>@export</code> marks a function to be published as an endpoint when the file is deployed. The rest of the line is the function's description. Functions without <code>@export</code> stay internal.</p>
 <pre><code class="language-l4">@export Check whether a person is old enough to apply
@@ -219,6 +520,38 @@ DECIDE `is old enough` IF age >= 18
 
 #EVAL `the greater of` 3 7
 #EVAL `is old enough` 20
+
+-- A literal percent sign or close bracket in an `@nlg` annotation is written
+-- with a backslash in front of it. Here the rate range `10%and%20` would
+-- otherwise read `and` as a parameter name, silently.
+GIVEN amount IS A NUMBER
+GIVETH A NUMBER
+`the levy on` amount [a rate between 10\%and\%20 applied to %amount%]
+MEANS amount TIMES 0.15
+
+#EVAL `the levy on` 100
+
+-- A citation containing a literal `>>` needs a backslash before the angle
+-- bracket, or the inline `@ref` form would end halfway through it.
+GIVEN claimant IS A BOOLEAN
+GIVETH A BOOLEAN
+`is eligible` claimant MEANS
+  &#x3C;&#x3C;Section 4(1)(a) \>> as amended>>
+  claimant
+
+#EVAL `is eligible` TRUE
+
+-- An `@nlg` may carry a language subtag, and one rule may carry a
+-- rendering per language. `l4 nlg --lang he` and `l4 render --lang he` select
+-- the Hebrew one; with no flag, or for a rule that has none in that language,
+-- the default rendering is used.
+GIVEN amount IS A NUMBER
+GIVETH A BOOLEAN
+DECIDE `is a large amount` @nlg:en the amount %amount% is large
+                           @nlg:he %amount% עולה על הסף
+  IF amount GREATER THAN 100
+
+#EVAL `is a large amount` 150
 </code></pre>
 <h2 id="directives">Directives</h2>
 <p>Directives are instructions to the tools, written at the top level of a file. <code>l4 run</code> and the editor carry them out; <code>l4 check</code> only type-checks them.</p>
@@ -244,7 +577,7 @@ DECIDE `is old enough` IF age >= 18
 </tr>
 <tr>
 <td><code>#ASSERT</code></td>
-<td>evaluates an expression and reports "assertion failed" when it is not TRUE</td>
+<td>evaluates an expression and reports whether it is TRUE (<a href="#what-assert-reports">what it reports</a>)</td>
 </tr>
 <tr>
 <td><code>#TRACE</code></td>
@@ -307,6 +640,45 @@ GIVETH A DEONTIC Person Action
 #TRACE `delivery duty` AT 0 WITH
   PARTY Seller DOES delivery AT 2
 </code></pre>
+<h3 id="what-assert-reports">What <code>#ASSERT</code> reports</h3>
+<p>An <code>#ASSERT</code> has one of three outcomes:</p>
+<table>
+<thead>
+<tr>
+<th>When the expression…</th>
+<th>It prints</th>
+<th>The editor shows</th>
+<th><code>l4 run</code> exit code</th>
+<th>In <code>l4 run --json</code></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>is TRUE</td>
+<td><code>assertion satisfied</code></td>
+<td>information</td>
+<td>not affected</td>
+<td><code>"value": true</code></td>
+</tr>
+<tr>
+<td>is FALSE</td>
+<td><code>assertion failed</code></td>
+<td>an error</td>
+<td>not affected</td>
+<td><code>"value": false</code></td>
+</tr>
+<tr>
+<td>cannot be evaluated: a division by zero, a <code>CONSIDER</code> with no matching branch, a term that is only <code>ASSUME</code>d</td>
+<td><code>assertion could not be evaluated:</code> and the reason</td>
+<td>an error, with the reason</td>
+<td>non-zero</td>
+<td><code>"value": null</code>, with the reason under <code>"error"</code></td>
+</tr>
+</tbody>
+</table>
+<p>In <code>--json</code> the result's <code>"kind"</code> is <code>"assertion"</code> in all three.</p>
+<p>An assertion that cannot be evaluated is not a verdict, so <code>#ASSERT P</code> and <code>#ASSERT NOT P</code> then report the same thing. Asserting an <code>ASSUME</code>d <code>BOOLEAN</code> directly, as in <code>#ASSERT b</code>, is one such case: <code>b</code> has no value to check.
+<a href="/l4/tutorials/getting-started/testing-your-rules#what-an-error-looks-like">Testing your rules</a> shows an example.</p>
 <h2 id="sections">Sections</h2>
 <p><code>§</code> starts a section, like a part or section of a statute; <code>§§</code> starts a subsection, <code>§§§</code> a sub-subsection, and so on. The heading is the name after the marks.</p>
 <pre><code class="language-l4">§ `Part VII`
@@ -350,25 +722,27 @@ GIVETH A BOOLEAN
 <p><code>'s</code> reads a field of a record, as in English: <code>`the applicant`'s age</code>. It can be chained: <code>`the applicant`'s address's city</code>.
 <code>age OF `the applicant` </code> means the same.</p>
 <p><strong>Example:</strong></p>
-<pre><code class="language-l4-file">-- Example: Genitive ('s) for field access
--- Demonstrates possessive syntax for record fields
+<pre><code class="language-l4-file">-- Genitive: 's reads a field of a record, as in English
+
+DECLARE Address
+  HAS city IS A STRING
 
 DECLARE Person
   HAS `full name` IS A STRING
       age         IS A NUMBER
+      address     IS AN Address
 
 DECIDE `the applicant` IS Person WITH
-  `full name` IS "John Doe"
+  `full name` IS "Kim Tan"
   age         IS 30
+  address     IS Address WITH city IS "Singapore"
 
--- Using genitive (reads like English)
-DECIDE `applicant age using genitive` IS `the applicant`'s age
+-- A field is also a function of its record, so these two mean the same
+#EVAL `the applicant`'s age
+#EVAL age OF `the applicant`
 
--- Equivalent to using THE ... OF
-DECIDE `applicant age using THE OF` IS age OF `the applicant`
-
-#EVAL `applicant age using genitive`
-#EVAL `applicant age using THE OF`
+-- 's can be chained
+#EVAL `the applicant`'s address's city
 </code></pre>
 <h2 id="of">OF</h2>
 <p><code>OF</code> introduces arguments separated by commas: <code>add OF 3, 4</code> means the same as <code>add 3 4</code>.

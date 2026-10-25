@@ -2,7 +2,7 @@
 2:I[90160,["/_next/static/chunks/0k9p8qe2_c6el.js","/_next/static/chunks/0i.l9589uvx0j.js","/_next/static/chunks/0hpy9y_1sdd42.js","/_next/static/chunks/0ixaclxzy-hn_.js"],"default"]
 6:I[897367,["/_next/static/chunks/0k9p8qe2_c6el.js","/_next/static/chunks/0i.l9589uvx0j.js"],"OutletBoundary"]
 7:"$Sreact.suspense"
-3:T7062,<h1>PARTY, MUST, MAY, SHANT</h1>
+3:T6f54,<h1>PARTY, MUST, MAY, SHANT</h1>
 <p>Every regulative rule starts with <code>PARTY</code>, the one the rule applies to, followed by a modal that says whether the action is required, allowed or forbidden.</p>
 <h2 id="syntax">Syntax</h2>
 <pre><code class="language-text">PARTY party MUST action
@@ -11,8 +11,7 @@ PARTY party SHANT action
 PARTY party MUST NOT action
 PARTY party DO action
 </code></pre>
-<p>After <code>MUST</code>, <code>MAY</code>, <code>SHANT</code> and <code>MUST NOT</code>, a <code>DO</code> may be added: <code>MUST DO action</code> means the same as <code>MUST action</code>.
-The rest of the rule (<code>PROVIDED</code>, <code>WITHIN</code>, <code>HENCE</code>, <code>LEST</code>) is described in <a href="/l4/reference/regulative/consequences">Deadlines and consequences</a>.</p>
+<p>The rest of the rule (<code>PROVIDED</code>, <code>WITHIN</code>, <code>HENCE</code>, <code>LEST</code>) is described in <a href="/l4/reference/regulative/consequences">Deadlines and consequences</a>.</p>
 <p><strong>Example files:</strong></p>
 <pre><code class="language-l4-file">-- PARTY keyword examples (regulative rules for legal contracts)
 --
@@ -130,7 +129,7 @@ DECLARE `Contract Action` IS ONE OF
 
 -- Test 2: Payment obligation breached (no payment before the deadline)
 #TRACE `payment obligation` AT 0 WITH
-  (`WAIT UNTIL` 31)
+  WAITUNTIL 31
 
 -- Test 3: Early termination right exercised
 #TRACE `early termination right` AT 0 WITH
@@ -138,11 +137,11 @@ DECLARE `Contract Action` IS ONE OF
 
 -- Test 4: Confidentiality maintained until the period ends (no breach)
 #TRACE `confidentiality obligation` AT 0 WITH
-  (`WAIT UNTIL` 731)
+  WAITUNTIL 731
 
 -- Test 5: Payment with penalty - paid in grace period
 #TRACE `payment with penalty clause` AT 0 WITH
-  (`WAIT UNTIL` 31)
+  WAITUNTIL 31
   PARTY `The Borrower` DOES `make payment` 1100 AT 40
 
 -- Test 6: Purchase and delivery - happy path
@@ -308,7 +307,7 @@ DECLARE `Contract Action` IS ONE OF
 
 -- Test 2: Basic obligation breached (no payment made; time passes the deadline)
 #TRACE `monthly loan payment` AT 0 WITH
-  (`WAIT UNTIL` 31)
+  WAITUNTIL 31
 
 -- Test 3: Conditional obligation - full chain executed
 #TRACE `purchase and delivery agreement` AT 0 WITH
@@ -317,13 +316,13 @@ DECLARE `Contract Action` IS ONE OF
 
 -- Test 4: Payment with late fee - paid during grace period
 #TRACE `payment with late fee` AT 0 WITH
-  (`WAIT UNTIL` 31)
+  WAITUNTIL 31
   PARTY `The Borrower` DOES `make payment` 12000 AT 40
 
 -- Test 5: Payment with late fee - breached (no payment at all)
 #TRACE `payment with late fee` AT 0 WITH
-  (`WAIT UNTIL` 31)
-  (`WAIT UNTIL` 50)
+  WAITUNTIL 31
+  WAITUNTIL 50
 
 -- Test 6: Staged service contract - complete workflow
 #TRACE `staged service contract` AT 0 WITH
@@ -350,7 +349,7 @@ DECLARE `Contract Action` IS ONE OF
 
 -- Test 10: Landlord repair obligation - landlord misses the deadline, so the tenant must notify
 #TRACE `landlord repair obligation` AT 0 WITH
-  (`WAIT UNTIL` 15)
+  WAITUNTIL 15
 </code></pre>
 <p>,</p>
 <pre><code class="language-l4-file">-- MAY Keyword Examples - Permissions and Options in Contracts
@@ -505,7 +504,7 @@ DECLARE `Contract Action` IS ONE OF
 
 -- Test 2: Prepayment option not exercised before the deadline (valid - no breach)
 #TRACE `prepayment option` AT 0 WITH
-  (`WAIT UNTIL` 366)
+  WAITUNTIL 366
 
 -- Test 3: Purchase with warranty - full path
 #TRACE `purchase with warranty` AT 0 WITH
@@ -527,7 +526,7 @@ DECLARE `Contract Action` IS ONE OF
 
 -- Test 7: Acceleration right triggered by breach
 #TRACE `payment with acceleration right` AT 0 WITH
-  (`WAIT UNTIL` 31)
+  WAITUNTIL 31
   PARTY `The Lender` DOES `demand acceleration` AT 35
 
 -- Test 8: Acceleration right not needed (payment made)
@@ -548,7 +547,7 @@ DECLARE `Contract Action` IS ONE OF
 
 -- Test 12: Early termination not exercised before the deadline
 #TRACE `early termination clause` AT 0 WITH
-  (`WAIT UNTIL` 181)
+  WAITUNTIL 181
 
 -- Test 13: Warranty claim process - complete workflow
 #TRACE `warranty claim process` AT 0 WITH
@@ -661,7 +660,7 @@ DECLARE `Prohibited Action` IS ONE OF
 
 -- Test 1: Prohibition complied with (no action taken until the period ends - this is success)
 #TRACE `confidentiality obligation` AT 0 WITH
-  (`WAIT UNTIL` 1826)
+  WAITUNTIL 1826
 
 -- Test 2: Prohibition violated (action taken - this should result in breach)
 #TRACE `confidentiality obligation` AT 0 WITH
@@ -760,7 +759,7 @@ GIVETH A DEONTIC Party Action
   WITHIN 730
 </code></pre>
 <h2 id="do">DO</h2>
-<p><code>DO</code> without a modal names an action that is neither required nor forbidden. It is meant for rules that give both <code>HENCE</code> and <code>LEST</code>; when they are left out, it behaves like <code>MUST</code>.</p>
+<p><code>DO</code> names an action that is neither required nor forbidden. It is meant for rules that give both <code>HENCE</code> and <code>LEST</code>; when they are left out, it behaves like <code>MUST</code>.</p>
 <h2 id="summary">Summary</h2>
 <table>
 <thead>
@@ -804,7 +803,7 @@ GIVETH A DEONTIC Party Action
 <li><a href="/l4/reference/regulative/consequences">Deadlines and consequences</a>: <code>WITHIN</code>, <code>HENCE</code>, <code>LEST</code>, <code>PROVIDED</code>, <code>EXACTLY</code>, <code>RAND</code>, <code>ROR</code></li>
 <li><a href="/l4/reference/regulative/BECAUSE">BECAUSE</a>: reasons for a breach</li>
 </ul>
-0:{"rsc":["$","$1","c",{"children":[["$","$L2",null,{"navSections":[{"title":"","items":[{"title":"Language Reference","href":"reference"},{"title":"Glossary","href":"reference/GLOSSARY"},{"title":"Cheat sheet","href":"reference/cheat-sheet"},{"title":"Types","href":"reference/types","children":[{"title":"DECLARE","href":"reference/types/DECLARE"},{"title":"ASSUME","href":"reference/types/ASSUME"},{"title":"FOR ALL","href":"reference/types/for-all"},{"title":"Coercions","href":"reference/types/coercions"}]},{"title":"Functions","href":"reference/functions","children":[{"title":"DECIDE","href":"reference/functions/DECIDE"},{"title":"GIVEN and GIVETH","href":"reference/functions/GIVEN"},{"title":"MEANS","href":"reference/functions/MEANS"},{"title":"LET and WHERE","href":"reference/functions/LET"},{"title":"YIELD","href":"reference/functions/YIELD"},{"title":"AKA","href":"reference/functions/AKA"}]},{"title":"Control flow","href":"reference/control-flow","children":[{"title":"IF","href":"reference/control-flow/IF"},{"title":"BRANCH","href":"reference/control-flow/BRANCH"},{"title":"CONSIDER","href":"reference/control-flow/CONSIDER"}]},{"title":"Operators","href":"reference/operators","children":[{"title":"AND, OR, NOT, IMPLIES","href":"reference/operators/logical"},{"title":"UNLESS","href":"reference/operators/UNLESS"},{"title":"Arithmetic","href":"reference/operators/arithmetic"},{"title":"Comparisons","href":"reference/operators/comparisons"}]},{"title":"Regulative rules","href":"reference/regulative","children":[{"title":"PARTY, MUST, MAY, SHANT","href":"reference/regulative/PARTY"},{"title":"Deadlines and consequences","href":"reference/regulative/consequences"},{"title":"BECAUSE","href":"reference/regulative/BECAUSE"},{"title":"DEONTIC","href":"reference/regulative/DEONTIC"},{"title":"EVENT","href":"reference/regulative/EVENT"}]},{"title":"Syntax and directives","href":"reference/syntax"},{"title":"Built-in functions","href":"reference/builtins","children":[{"title":"HTTP and JSON","href":"reference/builtins/http-json"}]},{"title":"Standard libraries","href":"reference/libraries","children":[{"title":"prelude","href":"reference/libraries/prelude"},{"title":"math","href":"reference/libraries/math"},{"title":"daydate","href":"reference/libraries/daydate"},{"title":"time","href":"reference/libraries/time"},{"title":"datetime","href":"reference/libraries/datetime"},{"title":"timezone","href":"reference/libraries/timezone"},{"title":"excel-date","href":"reference/libraries/excel-date"},{"title":"currency","href":"reference/libraries/currency"},{"title":"holdings","href":"reference/libraries/holdings"},{"title":"actus","href":"reference/libraries/actus"},{"title":"legal-persons","href":"reference/libraries/legal-persons"},{"title":"jurisdiction","href":"reference/libraries/jurisdiction"},{"title":"llm","href":"reference/libraries/llm"}]},{"title":"Error messages","href":"reference/errors"}]}],"toc":[],"htmlContent":"$3","pager":{"prev":"$0:rsc:props:children:0:props:navSections:0:items:7","next":"$0:rsc:props:children:0:props:navSections:0:items:7:children:1"}}],["$L4"],"$L5"]}],"isPartial":false,"staleTime":300,"varyParams":null,"buildId":"c1rwd8Zxwz2MECBEiYenP"}
+0:{"rsc":["$","$1","c",{"children":[["$","$L2",null,{"navSections":[{"title":"","items":[{"title":"Language Reference","href":"reference"},{"title":"Glossary","href":"reference/GLOSSARY"},{"title":"Cheat sheet","href":"reference/cheat-sheet"},{"title":"Types","href":"reference/types","children":[{"title":"DECLARE","href":"reference/types/DECLARE"},{"title":"ASSUME","href":"reference/types/ASSUME"},{"title":"FOR ALL","href":"reference/types/for-all"},{"title":"Coercions","href":"reference/types/coercions"}]},{"title":"Functions","href":"reference/functions","children":[{"title":"DECIDE","href":"reference/functions/DECIDE"},{"title":"GIVEN and GIVETH","href":"reference/functions/GIVEN"},{"title":"MEANS","href":"reference/functions/MEANS"},{"title":"LET and WHERE","href":"reference/functions/LET"},{"title":"YIELD","href":"reference/functions/YIELD"},{"title":"AKA","href":"reference/functions/AKA"}]},{"title":"Control flow","href":"reference/control-flow","children":[{"title":"IF","href":"reference/control-flow/IF"},{"title":"BRANCH","href":"reference/control-flow/BRANCH"},{"title":"CONSIDER","href":"reference/control-flow/CONSIDER"}]},{"title":"Operators","href":"reference/operators","children":[{"title":"AND, OR, NOT, IMPLIES","href":"reference/operators/logical"},{"title":"UNLESS","href":"reference/operators/UNLESS"},{"title":"Arithmetic","href":"reference/operators/arithmetic"},{"title":"Comparisons","href":"reference/operators/comparisons"}]},{"title":"Regulative rules","href":"reference/regulative","children":[{"title":"PARTY, MUST, MAY, SHANT","href":"reference/regulative/PARTY"},{"title":"Deadlines and consequences","href":"reference/regulative/consequences"},{"title":"BECAUSE","href":"reference/regulative/BECAUSE"},{"title":"DEONTIC","href":"reference/regulative/DEONTIC"},{"title":"EVENT","href":"reference/regulative/EVENT"}]},{"title":"Syntax and directives","href":"reference/syntax"},{"title":"Built-in functions","href":"reference/builtins","children":[{"title":"HTTP and JSON","href":"reference/builtins/http-json"}]},{"title":"Standard libraries","href":"reference/libraries","children":[{"title":"prelude","href":"reference/libraries/prelude"},{"title":"math","href":"reference/libraries/math"},{"title":"daydate","href":"reference/libraries/daydate"},{"title":"time","href":"reference/libraries/time"},{"title":"datetime","href":"reference/libraries/datetime"},{"title":"timezone","href":"reference/libraries/timezone"},{"title":"excel-date","href":"reference/libraries/excel-date"},{"title":"currency","href":"reference/libraries/currency"},{"title":"holdings","href":"reference/libraries/holdings"},{"title":"actus","href":"reference/libraries/actus"},{"title":"legal-persons","href":"reference/libraries/legal-persons"},{"title":"jurisdiction","href":"reference/libraries/jurisdiction"},{"title":"llm","href":"reference/libraries/llm"}]},{"title":"Error messages","href":"reference/errors"}]}],"toc":[],"htmlContent":"$3","pager":{"prev":"$0:rsc:props:children:0:props:navSections:0:items:7","next":"$0:rsc:props:children:0:props:navSections:0:items:7:children:1"}}],["$L4"],"$L5"]}],"isPartial":false,"staleTime":300,"varyParams":null,"buildId":"VTaVxEBA4A2zUV3rXvhf1"}
 4:["$","script","script-0",{"src":"/_next/static/chunks/0ixaclxzy-hn_.js","async":true}]
 5:["$","$L6",null,{"children":["$","$7",null,{"name":"Next.MetadataOutlet","children":"$@8"}]}]
 8:null

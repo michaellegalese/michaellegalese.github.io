@@ -1,0 +1,232 @@
+# Coercions
+
+These built-in functions convert values from one type to another. They need no `IMPORT`.
+Functions that parse text return a `MAYBE`: `JUST` the value, or `NOTHING` when the text cannot be read.
+
+## Functions
+
+### TOSTRING
+
+Converts a value to its string representation.
+
+**Signature:** `NUMBER | BOOLEAN | DATE | TIME | DATETIME | STRING → STRING`
+
+**Behavior:**
+
+- Numbers render with canonical decimal text (no trailing zeros)
+- Booleans render as `TRUE` or `FALSE`
+- Dates render as `YYYY-MM-DD`
+- Times render as `HH:MM:SS`
+- DateTimes render as ISO-8601 with an offset (e.g., `2024-06-15T02:30:00+0000`)
+- Strings pass through unchanged
+
+**Example:**
+
+
+
+```l4-file
+-- Type Coercion Example: Built-in conversion functions
+IMPORT daydate
+
+-- TOSTRING: Convert values to strings
+DECIDE numberText IS TOSTRING 1.20
+#EVAL numberText  -- "1.2" (no trailing zeros)
+
+DECIDE boolText IS TOSTRING TRUE
+#EVAL boolText  -- "TRUE"
+
+DECIDE dateText IS TOSTRING (Date 29 2 2024)
+#EVAL dateText  -- "2024-02-29"
+
+-- AS STRING: Inline syntax (same as TOSTRING)
+DECIDE boolAsString IS TRUE AS STRING
+#EVAL boolAsString  -- "TRUE"
+
+DECIDE dateAsString IS (Date 1 1 2024) AS STRING
+#EVAL dateAsString  -- "2024-01-01"
+
+-- TONUMBER: Parse strings to numbers
+DECIDE parsedGood IS TONUMBER "  -12.50 "
+#EVAL parsedGood  -- JUST -12.5
+
+DECIDE parsedSci IS TONUMBER "1.2E3"
+#EVAL parsedSci  -- JUST 1200
+
+DECIDE parsedBad IS TONUMBER "oops"
+#EVAL parsedBad  -- NOTHING
+
+-- TODATE: Parse strings to dates
+DECIDE parsedISODate IS TODATE "2024-02-29"
+#EVAL parsedISODate  -- JUST (Date 29 2 2024)
+
+DECIDE parsedSlashDate IS TODATE "15/01/2024"
+#EVAL parsedSlashDate  -- JUST (Date 15 1 2024)
+
+DECIDE parsedNamedDate IS TODATE "Feb 01, 2024"
+#EVAL parsedNamedDate  -- JUST (Date 1 2 2024)
+
+DECIDE parsedBadDate IS TODATE "31/02/2024"
+#EVAL parsedBadDate  -- NOTHING (Feb 31 doesn't exist)
+
+-- TRUNC: Truncate decimal places
+DECIDE truncWhole IS TRUNC 12.987 0
+#EVAL truncWhole  -- 12
+
+DECIDE truncDecimals IS TRUNC 12.987 2
+#EVAL truncDecimals  -- 12.98
+
+DECIDE truncNegativeDigits IS TRUNC 123.45 (0 MINUS 1)
+#EVAL truncNegativeDigits  -- 120
+
+DECIDE truncNegativeNumber IS TRUNC (0 MINUS 123.45) 1
+#EVAL truncNegativeNumber  -- -123.4
+
+-- Combining coercions with pattern matching
+GIVEN input IS A STRING
+GIVETH A STRING
+parseAndDouble input MEANS
+    CONSIDER TONUMBER input
+    WHEN NOTHING THEN "Invalid number"
+    WHEN JUST n THEN TOSTRING (n TIMES 2)
+
+#EVAL parseAndDouble "21"    -- "42"
+#EVAL parseAndDouble "abc"   -- "Invalid number"
+```
+
+
+
+---
+
+### TONUMBER
+
+Parses a string to a number.
+
+**Signature:** `STRING → MAYBE NUMBER`
+
+**Behavior:**
+
+- Accepts trimmed ASCII numeric literals
+- Supports optional sign (`+` or `-`)
+- Supports decimal point
+- Supports scientific notation (e.g., `1.2E3`)
+- Returns `NOTHING` on parse failure
+
+**Accepted formats:**
+
+- `"42"` → `JUST 42`
+- `"-12.50"` → `JUST -12.5`
+- `"  3.14  "` → `JUST 3.14` (whitespace trimmed)
+- `"1.2E3"` → `JUST 1200`
+- `"oops"` → `NOTHING`
+
+---
+
+### TODATE
+
+Parses a string to a date.
+
+**Signature:** `STRING → MAYBE DATE`
+
+**Accepted formats:**
+
+- `YYYY-MM-DD` (ISO 8601): `"2024-02-29"`
+- `YYYY/MM/DD`: `"2024/02/29"`
+- `DD-MMM-YYYY`: `"29-Feb-2024"`
+- `DD/MM/YYYY`: `"29/02/2024"`
+- `MMM DD, YYYY`: `"Feb 29, 2024"`
+
+**Behavior:**
+
+- Month names are case-insensitive
+- Rejects dates outside `0001-01-01` to `9999-12-31`
+- Returns `NOTHING` for invalid dates (e.g., `"31/02/2024"`)
+
+---
+
+### TOTIME
+
+Parses a string to a time.
+
+**Signature:** `STRING → MAYBE TIME`
+
+**Accepted formats (24-hour clock only):**
+
+- `HH:MM:SS`: `"14:30:00"`, also with fractions of a second: `"14:30:00.5"`
+- `HH:MM`: `"14:30"`
+
+**Behavior:**
+
+- Returns `NOTHING` for anything else, including 12-hour times such as `"2:30 PM"`
+
+---
+
+### TODATETIME
+
+Parses a string to a datetime.
+
+**Signature:** `STRING → MAYBE DATETIME`
+
+**Accepted formats:**
+
+- ISO-8601 with an offset: `"2024-06-15T10:30:00+08:00"`
+- ISO-8601 with Z (UTC): `"2024-06-15T10:30:00Z"`
+- A space in place of the `T`: `"2024-06-15 10:30:00Z"`
+
+**Behavior:**
+
+- Returns `NOTHING` for invalid datetime strings
+- The value is stored in UTC: `"2024-06-15T10:30:00+08:00"` becomes `2024-06-15T02:30:00+0000`
+
+---
+
+### TRUNC
+
+Truncates a number toward zero.
+
+**Signature:** `NUMBER, NUMBER → NUMBER`
+
+**Parameters:**
+
+- `value` - The number to truncate
+- `digits` - Number of decimal places to keep (rounded to nearest integer)
+
+**Behavior:**
+
+- Non-negative `digits` truncate fractional places
+- Negative `digits` truncate to the left of the decimal point
+- Truncates toward zero (not floor/ceiling)
+
+**Examples:**
+
+- `TRUNC 12.987 0` → `12`
+- `TRUNC 12.987 2` → `12.98`
+- `TRUNC 123.45 (-1)` → `120`
+- `TRUNC (-12.987) 1` → `-12.9`
+
+---
+
+### AS STRING
+
+Inline syntax for type conversion, equivalent to `TOSTRING`.
+
+**Syntax:** `value AS STRING`
+
+**Examples:**
+
+- `42 AS STRING` → `"42"`
+- `TRUE AS STRING` → `"TRUE"`
+- `(Date 1 1 2024) AS STRING` → `"2024-01-01"` (`Date` comes from [daydate](/l4/reference/libraries/daydate.md))
+
+---
+
+## Locale independence
+
+All coercion functions give the same result on every system: they do not depend on the locale.
+
+---
+
+## Related pages
+
+- [Types](/l4/reference/types.md)
+- [Built-in functions](/l4/reference/builtins.md)
+- [daydate](/l4/reference/libraries/daydate.md), [time](/l4/reference/libraries/time.md), [datetime](/l4/reference/libraries/datetime.md): more on dates and times

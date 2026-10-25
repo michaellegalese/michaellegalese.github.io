@@ -1,0 +1,322 @@
+# Types as legal categories
+
+Why L4 builds its data model from algebraic data types — and why those types are a natural fit for legal structure.
+
+---
+
+## What Are Algebraic Types?
+
+**Algebraic data types** (ADTs) are types built from two fundamental operations:
+
+1. **Product types**: Combine multiple values (AND)
+2. **Sum types**: Choose between alternatives (OR)
+
+L4 uses ADTs extensively because they naturally map to legal structures. This article explains the mapping; for the full syntax of declaring and using types, see [Types](/l4/reference/types.md) and [DECLARE](/l4/reference/types/DECLARE.md).
+
+---
+
+## Product Types: Records
+
+A **product type** combines multiple values together. In L4, these are **records**:
+
+```l4
+DECLARE Person
+    HAS `name` IS A STRING
+        `age` IS A NUMBER
+        `email` IS A STRING
+```
+
+The set of possible `Person` values is the **product** (cross-product) of all field types:
+
+```
+Person = STRING × NUMBER × STRING
+       = {all possible names} × {all possible ages} × {all possible emails}
+```
+
+Records model legal entities — the bundle of facts a legal instrument cares about:
+
+```l4
+DECLARE Contract
+    HAS parties IS A LIST OF Party
+        `effective date` IS A DATE
+        obligations IS A LIST OF Obligation
+```
+
+For record construction and field access syntax (`Person "Alice Smith" 30 "alice@example.com"`, `alice's name`), see [Types](/l4/reference/types.md).
+
+---
+
+## Sum Types: Enumerations
+
+A **sum type** represents a choice between alternatives. In L4, we use `IS ONE OF`:
+
+```l4
+DECLARE Status IS ONE OF
+    Active
+    Suspended
+    Terminated
+```
+
+The set of possible `Status` values is the **sum** (union) of the variants:
+
+```
+Status = Active ∪ Suspended ∪ Terminated
+       = 3 possible values
+```
+
+Variants can also carry data of their own:
+
+```l4
+DECLARE `payment status` IS ONE OF
+    Pending
+    Paid HAS `date paid` IS A DATE
+             amount IS A NUMBER
+    Rejected HAS reason IS A STRING
+```
+
+A `Paid` value always has a date and an amount; a `Rejected` value always has a reason; a `Pending` value carries nothing. Each alternative carries exactly the data that is relevant to it — there are no unused or "not applicable" fields.
+
+For the full enumeration syntax, see [DECLARE](/l4/reference/types/DECLARE.md) and the 
+
+```l4-file
+-- Example: Enum type declaration
+-- Demonstrates sum types with named constructors
+
+DECLARE Color IS ONE OF
+  Red
+  Green
+  Blue
+
+-- Example usage
+`my favorite color` MEANS Red
+
+`name of the color` MEANS
+  CONSIDER `my favorite color`
+  WHEN Red   THEN "red"
+  WHEN Green THEN "green"
+  WHEN Blue  THEN "blue"
+
+#EVAL `name of the color`
+```
+
+.
+
+---
+
+## Pattern Matching and Exhaustiveness
+
+To work with sum types, use `CONSIDER`:
+
+```l4
+GIVEN status IS A `payment status`
+GIVETH A STRING
+`describe status` MEANS
+    CONSIDER status
+    WHEN Pending THEN "Payment pending"
+    WHEN Paid d a THEN "Paid"
+    WHEN Rejected r THEN r
+```
+
+Because a sum type lists all of its alternatives, L4 can check that a `CONSIDER` handles every one of them, and it warns when one is missing. That is the code form of a legal demand: a determination over a closed category must say what happens in every case. When an amendment adds a category and the new variant is added to the declaration, every determination that has not yet decided how to handle it is flagged. A catch-all `OTHERWISE` switches this check off, and would absorb the new variant without comment. [Exhaustiveness](/l4/concepts/type-system/exhaustiveness.md) explains the check, its limits, and why it warns rather than fails.
+
+---
+
+## Why Algebraic Types Map to Legal Structure
+
+This is the conceptual heart of the matter: legal drafting already uses the algebra, just informally.
+
+### Closed enumerations are statutory categories
+
+Legal definitions are typically **closed lists**:
+
+> A "person" means—
+> (a) a natural person; or
+> (b) a body corporate; or
+> (c) a partnership.
+
+This maps directly to a sum type:
+
+```l4
+DECLARE Person IS ONE OF
+    `natural person` HAS ...
+    `body corporate` HAS ...
+    partnership HAS ...
+```
+
+The closure is the point. Nothing is a `Person` unless it is one of the three listed alternatives — and nothing becomes one without amending the declaration, just as nothing enters the statutory definition without amending the statute. An open-ended encoding (say, a `STRING` holding "natural person") cannot express this: it admits values the law never defined, and the type checker has no way to notice.
+
+### Sum types are alternative legal statuses
+
+A legal status is usually **mutually exclusive**: a contract is draft _or_ executed _or_ terminated; a payment is pending _or_ paid _or_ rejected — never two at once. A sum type builds that exclusivity into the data model.
+
+Compare the flattened alternative — a record of booleans:
+
+```l4
+-- Admits impossible states
+DECLARE `contract flags`
+    HAS `is draft` IS A BOOLEAN
+        `is executed` IS A BOOLEAN
+        `is terminated` IS A BOOLEAN
+```
+
+This type has 8 possible values, of which at most 3 describe a legally coherent contract. What does it mean for a contract to be simultaneously draft and terminated? The sum type version has exactly the 3 values the law contemplates. Illegal states are not merely avoided — they are **unrepresentable**.
+
+### Products are required particulars
+
+Where legal text prescribes what an entity must comprise, that is a product type:
+
+> A "registered charity" must have—
+>
+> - a registered name
+> - a registration number
+> - at least one charitable purpose
+
+```l4
+DECLARE `registered charity`
+    HAS `name` IS A STRING
+        `registration number` IS A STRING
+        purposes IS A LIST OF Purpose
+```
+
+A value of this type cannot be constructed with a particular missing — the type checker enforces the completeness that the statute demands.
+
+### Variants with data mirror case-specific particulars
+
+Legal consequences often depend on _which_ alternative applies, and each alternative comes with its own relevant facts: a rejected application has grounds for rejection; a granted one has a grant date. Attaching data to variants keeps each case's facts with that case, instead of a wide record where most fields are meaningless most of the time.
+
+---
+
+## Combining Product and Sum
+
+Real models nest both freely:
+
+```l4
+-- Sum type whose variants are products
+DECLARE Employment IS ONE OF
+    Employed HAS employer IS A Company
+                 `start date` IS A DATE
+                 salary IS A NUMBER
+    `Self-employed` HAS `business name` IS A STRING
+    Unemployed HAS since IS A DATE
+
+-- Product type containing a sum type
+DECLARE Worker
+    HAS `name` IS A STRING
+        `employment status` IS AN Employment
+```
+
+And pattern matching reaches inside:
+
+```l4
+GIVEN worker IS A Worker
+GIVETH A BOOLEAN
+`is currently employed` MEANS
+    CONSIDER worker's `employment status`
+    WHEN Employed e s sal THEN TRUE
+    OTHERWISE FALSE
+```
+
+---
+
+## Recursive Types
+
+Types can reference themselves, which is how nested, tree-shaped legal structures are modeled — most obviously the structure of a legal document itself:
+
+```l4
+DECLARE `legal document` IS ONE OF
+    Section HAS number IS A STRING
+                title IS A STRING
+                content IS A LIST OF `legal document`
+    Paragraph HAS text IS A STRING
+    Definition HAS term IS A STRING
+                   meaning IS A STRING
+```
+
+A section contains subsections, which contain paragraphs and definitions — arbitrarily deep, out of one three-variant declaration. [Type theory](/l4/concepts/type-system/type-theory.md#fixed-points-and-recursion) gives the formal reading of such a type as a fixed point.
+
+---
+
+## Common Patterns
+
+### Optional Values: MAYBE
+
+```l4
+DECLARE Person
+    HAS `name` IS A STRING
+        `middle name` IS A MAYBE STRING  -- Optional
+```
+
+`MAYBE` is itself a sum type — conceptually:
+
+```
+MAYBE a  =  NOTHING  |  JUST a
+```
+
+Optionality is explicit in the type, so there is no null: to use the value, a `CONSIDER` takes it apart with `WHEN NOTHING` and `WHEN JUST x`. Write both branches; the [exhaustiveness check](/l4/concepts/type-system/exhaustiveness.md) looks inside a `MAYBE` but does not report a missing `WHEN NOTHING`. See the 
+
+```l4-file
+-- Example: Maybe type usage
+-- Demonstrates optional values with JUST and NOTHING
+
+`value is present` MEANS JUST OF 42
+`value is absent` MEANS NOTHING
+
+`get the value or default to zero` MEANS
+  CONSIDER `value is present`
+  WHEN JUST OF x THEN x
+  WHEN NOTHING THEN 0
+
+#EVAL `get the value or default to zero`
+```
+
+.
+
+### Lists
+
+Lists are also algebraic — conceptually a sum of "empty" and "an element followed by a rest", matched with:
+
+```l4
+CONSIDER items
+WHEN EMPTY THEN "no items"
+WHEN x FOLLOWED BY rest THEN "at least one item"
+```
+
+See the 
+
+```l4-file
+-- Example: List type usage
+-- Demonstrates list literals and cons operator
+
+-- List literal syntax
+`first list` MEANS LIST 1, 2, 3
+
+-- Cons operator (FOLLOWED BY)
+`second list` MEANS 1 FOLLOWED BY 2 FOLLOWED BY 3 FOLLOWED BY EMPTY
+
+#EVAL `first list`
+#EVAL `second list`
+```
+
+.
+
+---
+
+## Summary
+
+| Concept       | L4 Syntax                      | Mathematical View | Legal Reading             |
+| ------------- | ------------------------------ | ----------------- | ------------------------- |
+| Product type  | `DECLARE X HAS field1, field2` | X = A × B         | Required particulars      |
+| Sum type      | `DECLARE X IS ONE OF A, B, C`  | X = A + B + C     | Closed statutory category |
+| Sum with data | `A HAS field IS A Type`        | Tagged union      | Case-specific particulars |
+| Pattern match | `CONSIDER x WHEN ...`          | Case analysis     | Complete determination    |
+| Optional      | `MAYBE Type`                   | 1 + Type          | Explicitly optional fact  |
+| List          | `LIST OF Type`                 | 1 + (Type × List) | Repeating particulars     |
+
+---
+
+## Further Reading
+
+- [Exhaustiveness](/l4/concepts/type-system/exhaustiveness.md) - Totality of determinations as a legal-safety property
+- [Types](/l4/reference/types.md) - Detailed type reference
+- [Type theory](/l4/concepts/type-system/type-theory.md) - Formal foundations of the type system
+- [Module 2: Legal entities and relationships](/l4/courses/foundation/module-2-entities.md) - Hands-on with types
