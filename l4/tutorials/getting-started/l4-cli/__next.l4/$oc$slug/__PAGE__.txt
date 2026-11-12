@@ -2,7 +2,7 @@
 2:I[90160,["/_next/static/chunks/0k9p8qe2_c6el.js","/_next/static/chunks/0i.l9589uvx0j.js","/_next/static/chunks/0hpy9y_1sdd42.js","/_next/static/chunks/0ixaclxzy-hn_.js"],"default"]
 6:I[897367,["/_next/static/chunks/0k9p8qe2_c6el.js","/_next/static/chunks/0i.l9589uvx0j.js"],"OutletBoundary"]
 7:"$Sreact.suspense"
-3:T78e2,<h1>Using the l4 CLI</h1>
+3:T7e7f,<h1>Using the l4 CLI</h1>
 <p>Run, check, render, and deploy L4 files from the command line.</p>
 <p><strong>Prerequisites:</strong> <a href="/l4/tutorials/getting-started/first-l4-file">Install L4 and write your first rule</a></p>
 <hr>
@@ -140,7 +140,7 @@ Result:
 </code></pre>
 <p>Exit code <code>0</code> means the file is valid L4; non-zero means there were errors (printed as diagnostics).
 <code>--json</code> and <code>--fixed-now</code> work here too.
-<code>l4 check</code> also checks every file your file imports, so use it as the check in CI for a project of several files. Other commands, such as <code>l4 render</code> and <code>l4 nlg</code>, don't stop on an error in an imported file.
+<code>l4 check</code> also checks every file your file imports, so use it as the check in CI for a project of several files. <code>l4 render</code> still writes its document when an imported file has an error, and then exits with status 1. Other commands, such as <code>l4 nlg</code>, don't stop on an error in an imported file.
 Files can't import each other in a ring; <a href="/l4/reference/errors#import-cycle">Import cycle</a> says how to fix one.</p>
 <hr>
 <h2 id="step-5-libraries-and-jl4_library_path">Step 5: Libraries and <code>JL4_LIBRARY_PATH</code></h2>
@@ -186,21 +186,26 @@ Result:
 ===============
 
 
-Definitions
+§ 1  Interpretation
 
-• Invoice means a record with:
-    - amount — NUMBER
-    - days overdue — NUMBER
+In this document, unless the context otherwise requires:
+
+1. Invoice consists of:
+    - amount — number
+    - days overdue — number
 
 
-Provisions
+§ 2  Provisions
 
-• Late fee means:
-    - if the invoice's days overdue is at most 0: 0
-    - otherwise, if the invoice's days overdue is at most 30: the invoice's amount × 0.02
-    - otherwise: the invoice's amount × 0.05
+1. Late fee is:
+    | Condition                                              | Result                      |
+    |--------------------------------------------------------|-----------------------------|
+    | the invoice's days overdue is at most 0                | 0                           |
+    | otherwise, if the invoice's days overdue is at most 30 | the invoice's amount × 0.02 |
+    | otherwise                                              | the invoice's amount × 0.05 |
 </code></pre>
-<p>Options: <code>--format html|text|json|plan|akn</code> (<code>xml</code> is accepted as a synonym for <code>akn</code>, which emits Akoma Ntoso 3.0), <code>-o/--output FILE</code>, <code>--toc</code> (table of contents), <code>--number-sections</code>, <code>--number-clauses</code>, <code>--include-unused</code>, and <code>--lang SUBTAG</code> (render the <code>@nlg:SUBTAG</code> wordings; in <code>html</code> this also sets <code>&#x3C;html lang=…></code> and, for a right-to-left language, <code>dir="rtl"</code>, and in <code>akn</code> the language of the FRBR Expression URIs).</p>
+<p>Options: <code>--format html|text|json|plan|akn</code> (<code>xml</code> is accepted as a synonym for <code>akn</code>, which emits Akoma Ntoso 3.0), <code>-o/--output FILE</code>, <code>--toc</code> (table of contents), <code>--no-number-sections</code>, <code>--no-number-clauses</code>, <code>--include-unused</code>, and <code>--lang SUBTAG</code> (render the <code>@nlg:SUBTAG</code> wordings; in <code>html</code> this also sets <code>&#x3C;html lang=…></code> and, for a right-to-left language, <code>dir="rtl"</code>, and in <code>akn</code> the language of the FRBR Expression URIs).</p>
+<p>With no flags, <code>l4 render</code> writes the same document as the VS Code Render tab: sections and clauses numbered, and the file's own rules only. Imported modules still decide how those rules read. Definitions and assumptions open the document as an interpretation section, branches with short results become decision tables, long constant lists move to numbered Schedules at the end, and a citation with a <code>@ref-map</code> entry is a link in <code>html</code>. <code>--include-imports</code> adds the imported rules the document uses, <code>--include-import NAME</code> adds those of one module, and <code>--include-unused</code> adds everything.</p>
 <h3 id="l4-nlg-the-directives-as-sentences"><code>l4 nlg</code> — the directives, as sentences</h3>
 <p>Writes each <code>#EVAL</code>, <code>#ASSERT</code> and other directive of a file as one line of prose.
 It is the quick way to read what a set of test cases says without running them.
@@ -273,12 +278,13 @@ A CSV cell for any other kind of parameter is typed by its content: <code>true</
 <li><code>status</code> says how the case went, as below.</li>
 <li><code>diagnostics</code> is the list of messages for a case that did not succeed, and <code>[]</code> for one that did.</li>
 </ul>
-<p><code>status</code> is one of two words:</p>
+<p><code>status</code> is one of three words:</p>
 <ul>
 <li><code>success</code>: the rules gave an answer.</li>
 <li><code>error</code>: the rules could not be run on the case, or raised an error. A fact is missing, a value cannot be read as the type the fact declares, a CSV line has a different number of cells from the header, or the rules themselves failed (the <code>result</code> is then an object holding the message); <code>diagnostics</code> says which. The batch stops after the first such case unless you pass <code>--continue-on-error</code>.</li>
+<li><code>refused</code>: the rules declined to answer the case with a <a href="/l4/reference/control-flow/REFUSE"><code>REFUSE</code></a>, which is not an error. The <code>result</code> is then an object holding the reason, <code>{"refused": {"reason": …}}</code>, and <code>diagnostics</code> gives the reason too. The batch goes on to the next case.</li>
 </ul>
-<p>The command exits with status 0 when every case was <code>success</code>, and 1 when any case was <code>error</code>, once every case that was going to run has run.</p>
+<p>The command exits with status 1 when any case was <code>error</code>, and 0 when none was, once every case that was going to run has run.</p>
 <h4 id="checking-cases-without-running-them">Checking cases without running them</h4>
 <p><code>--validate-only</code> checks each case against the facts the rules need, and runs nothing. Its lines have three keys, not four: <code>input</code>, <code>status</code> (<code>valid</code> or <code>invalid</code>) and <code>errors</code>, the list of problems, which is <code>[]</code> for a valid case. The command exits with status 1 when any case is <code>invalid</code>, and <code>--continue-on-error</code> works as it does in a run.</p>
 <p>It checks that every fact the rules need, other than a <code>MAYBE</code>, is in the case and is not <code>null</code>, and that a value given for a <code>NUMBER</code>, <code>BOOLEAN</code> or <code>STRING</code> fact, or a <code>MAYBE</code> of one, is of that type, counting text that spells a number or a boolean as a run does. A fact declared through a synonym (<code>DECLARE Year IS A NUMBER</code>) is judged as the type the synonym stands for, and so is a synonym for a <code>MAYBE</code>. A synonym that takes a type (<code>Optional OF NUMBER</code>) is not: a case can be <code>valid</code> that a run refuses, and <code>invalid</code> that a run answers.</p>
@@ -401,7 +407,7 @@ API: https://api.legalese.cloud/acme/late-fee
 <li><a href="/l4/tutorials/getting-started/debugging-type-errors">Debugging Type Errors</a> — reading and fixing the errors <code>l4 check</code> reports</li>
 <li><a href="/l4/tutorials/deploying-rules/exporting-rules-for-deployment">Exporting Rules for Deployment</a> — turn a file into a live API</li>
 </ul>
-0:{"rsc":["$","$1","c",{"children":[["$","$L2",null,{"navSections":[{"title":"","items":[{"title":"Overview","href":"tutorials"},{"title":"Install L4 and write your first rule","href":"tutorials/getting-started/first-l4-file"},{"title":"Draft rules with Legalese AI","href":"tutorials/llm-integration/composing-l4-with-ai"},{"title":"Test your rules","href":"tutorials/getting-started/testing-your-rules"},{"title":"Fix errors","href":"tutorials/getting-started/debugging-type-errors"},{"title":"Encode legislation","href":"tutorials/getting-started/encoding-legislation"},{"title":"Make rules read like law","href":"tutorials/natural-language-functions/optimising-natural-language-generation"},{"title":"Common patterns","href":"tutorials/getting-started/common-patterns"},{"title":"Deploy your rules","href":"tutorials/deploying-rules/exporting-rules-for-deployment"},{"title":"Choose an integration","href":"tutorials/legalese-cloud"},{"title":"Connect an AI agent","href":"tutorials/legalese-cloud/ai-agents"},{"title":"Chat with your rules","href":"tutorials/legalese-cloud/openai-compatible-api"},{"title":"Call rules over REST","href":"tutorials/legalese-cloud/openapi-spec"},{"title":"Embed rules in a website","href":"tutorials/legalese-cloud/webmcp-embed"},{"title":"Using the l4 CLI","href":"tutorials/getting-started/l4-cli"},{"title":"Manage rules in git and CI","href":"tutorials/getting-started/version-control-for-rules"}]}],"toc":[],"htmlContent":"$3","pager":{"prev":"$0:rsc:props:children:0:props:navSections:0:items:13","next":"$0:rsc:props:children:0:props:navSections:0:items:15"}}],["$L4"],"$L5"]}],"isPartial":false,"staleTime":300,"varyParams":null,"buildId":"S__BF4ItHv_mD8HJYzclX"}
+0:{"rsc":["$","$1","c",{"children":[["$","$L2",null,{"navSections":[{"title":"","items":[{"title":"Overview","href":"tutorials"},{"title":"Install L4 and write your first rule","href":"tutorials/getting-started/first-l4-file"},{"title":"Draft rules with Legalese AI","href":"tutorials/llm-integration/composing-l4-with-ai"},{"title":"Test your rules","href":"tutorials/getting-started/testing-your-rules"},{"title":"Fix errors","href":"tutorials/getting-started/debugging-type-errors"},{"title":"Encode legislation","href":"tutorials/getting-started/encoding-legislation"},{"title":"Make rules read like law","href":"tutorials/natural-language-functions/optimising-natural-language-generation","children":[{"title":"Fix wording with @nlg","href":"tutorials/natural-language-functions/fix-wording-with-nlg"}]},{"title":"Common patterns","href":"tutorials/getting-started/common-patterns"},{"title":"Deploy your rules","href":"tutorials/deploying-rules/exporting-rules-for-deployment"},{"title":"Choose an integration","href":"tutorials/legalese-cloud"},{"title":"Connect an AI agent","href":"tutorials/legalese-cloud/ai-agents"},{"title":"Chat with your rules","href":"tutorials/legalese-cloud/openai-compatible-api"},{"title":"Call rules over REST","href":"tutorials/legalese-cloud/openapi-spec"},{"title":"Embed rules in a website","href":"tutorials/legalese-cloud/webmcp-embed"},{"title":"Using the l4 CLI","href":"tutorials/getting-started/l4-cli"},{"title":"Manage rules in git and CI","href":"tutorials/getting-started/version-control-for-rules"}]}],"toc":[],"htmlContent":"$3","pager":{"prev":"$0:rsc:props:children:0:props:navSections:0:items:13","next":"$0:rsc:props:children:0:props:navSections:0:items:15"}}],["$L4"],"$L5"]}],"isPartial":false,"staleTime":300,"varyParams":null,"buildId":"ydI8tQ1nsjF6OZ84JMIgJ"}
 4:["$","script","script-0",{"src":"/_next/static/chunks/0ixaclxzy-hn_.js","async":true}]
 5:["$","$L6",null,{"children":["$","$7",null,{"name":"Next.MetadataOutlet","children":"$@8"}]}]
 8:null

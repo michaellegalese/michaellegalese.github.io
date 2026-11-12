@@ -45,6 +45,7 @@ Choose between cases.
 | [IF](/l4/reference/control-flow/IF.md)             | A choice between two values; several conditions                  |
 | [BRANCH](/l4/reference/control-flow/BRANCH.md)     | Several conditions checked in order, with an OTHERWISE           |
 | [CONSIDER](/l4/reference/control-flow/CONSIDER.md) | Choosing by the shape of a value; missing and redundant branches |
+| [REFUSE](/l4/reference/control-flow/REFUSE.md)     | Declining to answer, with a reason; testing a refusal            |
 
 ### [Operators](/l4/reference/operators.md)
 
@@ -75,7 +76,7 @@ How an L4 file is written, on one page:
 
 - **Text and layout:** [layout](/l4/reference/syntax.md#layout), [comments](/l4/reference/syntax.md#comments), [identifiers](/l4/reference/syntax.md#identifiers), [literals](/l4/reference/syntax.md#literals)
 - **Files:** [IMPORT](/l4/reference/syntax.md#import), [§ sections](/l4/reference/syntax.md#sections)
-- **Annotations:** [`@desc`, `@nlg`, `@ref`, `@export`](/l4/reference/syntax.md#annotations)
+- **Annotations:** [`@desc`, `@ref`, `@export`](/l4/reference/syntax.md#annotations), [`@nlg`](/l4/reference/syntax/nlg.md)
 - **Directives:** [`#EVAL`, `#CHECK`, `#ASSERT`, `#TRACE`](/l4/reference/syntax.md#directives)
 - **Legal phrasing:** [genitive 's](/l4/reference/syntax.md#genitive), [OF](/l4/reference/syntax.md#of), [ditto ^](/l4/reference/syntax.md#ditto), [AND and OR over several lines](/l4/reference/syntax.md#asyndetic-and-and-or)
 

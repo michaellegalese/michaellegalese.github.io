@@ -8,7 +8,7 @@
 :HL["/_next/static/chunks/0s9wju.j1~_xn.css","style"]
 :HL["/_next/static/media/248e1dc0efc99276-s.p.0ft7o6kv5bp14.woff2","font",{"crossOrigin":"","type":"font/woff2"}]
 :HL["/_next/static/media/83afe278b6a6bb3c-s.p.0q-301v4kxxnr.woff2","font",{"crossOrigin":"","type":"font/woff2"}]
-0:{"P":null,"c":["","l4","reference","errors"],"q":"","i":false,"f":[[["",{"children":["l4",{"children":[["slug","reference/errors","oc",null],{"children":["__PAGE__",{}]}]}]},"$undefined","$undefined",16],[["$","$1","c",{"children":[[["$","link","0",{"rel":"stylesheet","href":"/_next/static/chunks/0gwpoiy1ig8rp.css","precedence":"next","crossOrigin":"$undefined","nonce":"$undefined"}],["$","script","script-0",{"src":"/_next/static/chunks/0k9p8qe2_c6el.js","async":true,"nonce":"$undefined"}],["$","script","script-1",{"src":"/_next/static/chunks/0i.l9589uvx0j.js","async":true,"nonce":"$undefined"}]],["$","html",null,{"lang":"en","children":[["$","head",null,{"children":[["$","meta",null,{"httpEquiv":"Content-Security-Policy","content":"default-src 'self' https://legalese.com; script-src 'self' https://legalese.com 'unsafe-inline' https://cdnjs.cloudflare.com; style-src 'self' https://legalese.com 'unsafe-inline'; font-src 'self' https://legalese.com; img-src 'self' https://legalese.com https://workoscdn.com https://*.googleusercontent.com; connect-src 'self' https://legalese.com https://legalese.cloud https://ai.legalese.cloud https://*.legalese.cloud https://legalese.legalese.cloud https://*.workos.com; frame-src 'self' https://legalese.com https://jl4.legalese.com https://*.workos.com; object-src 'none'; base-uri 'self' https://legalese.com"}],["$","link",null,{"rel":"apple-touch-icon","sizes":"180x180","href":"/favicon/apple-touch-icon.png"}],["$","link",null,{"rel":"icon","type":"image/png","sizes":"32x32","href":"/favicon/favicon-32x32.png"}],["$","link",null,{"rel":"icon","type":"image/png","sizes":"16x16","href":"/favicon/favicon-16x16.png"}],["$","link",null,{"rel":"manifest","href":"/favicon/site.webmanifest"}],["$","link",null,{"rel":"shortcut icon","href":"/favicon/favicon.ico"}],["$","meta",null,{"name":"msapplication-TileColor","content":"#000000"}],["$","meta",null,{"name":"msapplication-config","content":"/favicon/browserconfig.xml"}],["$","meta",null,{"name":"theme-color","content":"#000"}],["$","link",null,{"rel":"alternate","type":"application/rss+xml","href":"/feed.xml"}]]}],["$","body",null,{"className":"inter_5901b7c6-module__ec5Qua__variable merriweather_b1e99710-module__84TlHG__variable","children":[["$","div",null,{"className":"min-h-screen","children":["$","$L2",null,{"parallelRouterKey":"children","error":"$undefined","errorStyles":"$undefined","errorScripts":"$undefined","template":["$","$L3",null,{}],"templateStyles":"$undefined","templateScripts":"$undefined","notFound":[["$","div",null,{"className":"min-h-screen flex flex-col","children":["$","div",null,{"className":"container mx-auto px-5 flex-1 flex flex-col","children":[["$","header",null,{"className":"flex flex-col md:flex-row items-center justify-between py-8 mb-6","children":["$","$L4",null,{"href":"/","className":"flex items-center gap-1 hover:opacity-80 transition-opacity","children":[["$","$L5",null,{"src":"/assets/logos/legalese-logo.png","alt":"§","width":42,"height":42,"className":"rounded"}],["$","span",null,{"className":"text-2xl font-bold tracking-tight font-merriweather","children":"Legalese"}]]}]}],["$","div",null,{"className":"flex-1 flex items-center justify-center","children":["$","div",null,{"className":"text-center px-6 py-16","children":[["$","h1",null,{"className":"text-8xl font-bold text-gray-200 mb-4","children":404}],["$","h2",null,{"className":"text-2xl font-semibold text-gray-900 mb-4 font-merriweather","children":"Not Found"}],["$","p",null,{"className":"text-gray-600 mb-8 max-w-md","children":"The page you're looking for doesn't exist or may have been moved."}],["$","$L4",null,{"href":"/","className":"inline-block px-6 py-2 bg-accent text-white rounded-md hover:bg-accent-hover transition-colors","children":"Go to Homepage"}]]}]}]]}]}],[]],"forbidden":"$undefined","unauthorized":"$undefined"}]}],["$","footer",null,{"className":"bg-gray-900 text-white","children":["$","div",null,{"className":"container mx-auto px-5","children":["$","div",null,{"className":"py-16","children":[["$","div",null,{"className":"grid grid-cols-1 md:grid-cols-4 gap-12 mb-12","children":[["$","div",null,{"className":"md:col-span-1","children":[["$","div",null,{"className":"flex items-center","children":[["$","$L5",null,{"src":"/assets/logos/legalese-logo.png","alt":"§","width":36,"height":36,"className":"rounded invert"}],["$","h3",null,{"className":"text-2xl font-bold tracking-tight ml-1","children":"Legalese"}]]}],"$L6"]}],"$L7","$L8","$L9"]}],"$La"]}]}]}]]}]]}]]}],{"children":["$Lb",{"children":["$Lc",{"children":["$Ld",{},null,false,null]},null,false,"$@e"]},null,false,null]},null,false,null],"$Lf",false]],"m":"$undefined","G":["$10",["$L11"]],"S":true,"h":null,"s":"$undefined","l":"$undefined","p":"$undefined","d":"$undefined","b":"S__BF4ItHv_mD8HJYzclX"}
+0:{"P":null,"c":["","l4","reference","errors"],"q":"","i":false,"f":[[["",{"children":["l4",{"children":[["slug","reference/errors","oc",null],{"children":["__PAGE__",{}]}]}]},"$undefined","$undefined",16],[["$","$1","c",{"children":[[["$","link","0",{"rel":"stylesheet","href":"/_next/static/chunks/0gwpoiy1ig8rp.css","precedence":"next","crossOrigin":"$undefined","nonce":"$undefined"}],["$","script","script-0",{"src":"/_next/static/chunks/0k9p8qe2_c6el.js","async":true,"nonce":"$undefined"}],["$","script","script-1",{"src":"/_next/static/chunks/0i.l9589uvx0j.js","async":true,"nonce":"$undefined"}]],["$","html",null,{"lang":"en","children":[["$","head",null,{"children":[["$","meta",null,{"httpEquiv":"Content-Security-Policy","content":"default-src 'self' https://legalese.com; script-src 'self' https://legalese.com 'unsafe-inline' https://cdnjs.cloudflare.com; style-src 'self' https://legalese.com 'unsafe-inline'; font-src 'self' https://legalese.com; img-src 'self' https://legalese.com https://workoscdn.com https://*.googleusercontent.com; connect-src 'self' https://legalese.com https://legalese.cloud https://ai.legalese.cloud https://*.legalese.cloud https://legalese.legalese.cloud https://*.workos.com; frame-src 'self' https://legalese.com https://jl4.legalese.com https://*.workos.com; object-src 'none'; base-uri 'self' https://legalese.com"}],["$","link",null,{"rel":"apple-touch-icon","sizes":"180x180","href":"/favicon/apple-touch-icon.png"}],["$","link",null,{"rel":"icon","type":"image/png","sizes":"32x32","href":"/favicon/favicon-32x32.png"}],["$","link",null,{"rel":"icon","type":"image/png","sizes":"16x16","href":"/favicon/favicon-16x16.png"}],["$","link",null,{"rel":"manifest","href":"/favicon/site.webmanifest"}],["$","link",null,{"rel":"shortcut icon","href":"/favicon/favicon.ico"}],["$","meta",null,{"name":"msapplication-TileColor","content":"#000000"}],["$","meta",null,{"name":"msapplication-config","content":"/favicon/browserconfig.xml"}],["$","meta",null,{"name":"theme-color","content":"#000"}],["$","link",null,{"rel":"alternate","type":"application/rss+xml","href":"/feed.xml"}]]}],["$","body",null,{"className":"inter_5901b7c6-module__ec5Qua__variable merriweather_b1e99710-module__84TlHG__variable","children":[["$","div",null,{"className":"min-h-screen","children":["$","$L2",null,{"parallelRouterKey":"children","error":"$undefined","errorStyles":"$undefined","errorScripts":"$undefined","template":["$","$L3",null,{}],"templateStyles":"$undefined","templateScripts":"$undefined","notFound":[["$","div",null,{"className":"min-h-screen flex flex-col","children":["$","div",null,{"className":"container mx-auto px-5 flex-1 flex flex-col","children":[["$","header",null,{"className":"flex flex-col md:flex-row items-center justify-between py-8 mb-6","children":["$","$L4",null,{"href":"/","className":"flex items-center gap-1 hover:opacity-80 transition-opacity","children":[["$","$L5",null,{"src":"/assets/logos/legalese-logo.png","alt":"§","width":42,"height":42,"className":"rounded"}],["$","span",null,{"className":"text-2xl font-bold tracking-tight font-merriweather","children":"Legalese"}]]}]}],["$","div",null,{"className":"flex-1 flex items-center justify-center","children":["$","div",null,{"className":"text-center px-6 py-16","children":[["$","h1",null,{"className":"text-8xl font-bold text-gray-200 mb-4","children":404}],["$","h2",null,{"className":"text-2xl font-semibold text-gray-900 mb-4 font-merriweather","children":"Not Found"}],["$","p",null,{"className":"text-gray-600 mb-8 max-w-md","children":"The page you're looking for doesn't exist or may have been moved."}],["$","$L4",null,{"href":"/","className":"inline-block px-6 py-2 bg-accent text-white rounded-md hover:bg-accent-hover transition-colors","children":"Go to Homepage"}]]}]}]]}]}],[]],"forbidden":"$undefined","unauthorized":"$undefined"}]}],["$","footer",null,{"className":"bg-gray-900 text-white","children":["$","div",null,{"className":"container mx-auto px-5","children":["$","div",null,{"className":"py-16","children":[["$","div",null,{"className":"grid grid-cols-1 md:grid-cols-4 gap-12 mb-12","children":[["$","div",null,{"className":"md:col-span-1","children":[["$","div",null,{"className":"flex items-center","children":[["$","$L5",null,{"src":"/assets/logos/legalese-logo.png","alt":"§","width":36,"height":36,"className":"rounded invert"}],["$","h3",null,{"className":"text-2xl font-bold tracking-tight ml-1","children":"Legalese"}]]}],"$L6"]}],"$L7","$L8","$L9"]}],"$La"]}]}]}]]}]]}]]}],{"children":["$Lb",{"children":["$Lc",{"children":["$Ld",{},null,false,null]},null,false,"$@e"]},null,false,null]},null,false,null],"$Lf",false]],"m":"$undefined","G":["$10",["$L11"]],"S":true,"h":null,"s":"$undefined","l":"$undefined","p":"$undefined","d":"$undefined","b":"ydI8tQ1nsjF6OZ84JMIgJ"}
 12:I[479520,["/_next/static/chunks/0k9p8qe2_c6el.js","/_next/static/chunks/0i.l9589uvx0j.js","/_next/static/chunks/0hpy9y_1sdd42.js"],""]
 13:I[585295,["/_next/static/chunks/0k9p8qe2_c6el.js","/_next/static/chunks/0i.l9589uvx0j.js","/_next/static/chunks/0hpy9y_1sdd42.js"],"default"]
 14:I[841529,["/_next/static/chunks/0k9p8qe2_c6el.js","/_next/static/chunks/0i.l9589uvx0j.js","/_next/static/chunks/0hpy9y_1sdd42.js"],"default"]
@@ -29,7 +29,7 @@ e:"$W19"
 f:["$","$1","h",{"children":[null,["$","$L1a",null,{"children":"$L1b"}],["$","div",null,{"hidden":true,"children":["$","$L1c",null,{"children":["$","$17",null,{"name":"Next.Metadata","children":"$L1d"}]}]}],["$","meta",null,{"name":"next-size-adjust","content":""}]]}]
 11:["$","link","0",{"rel":"stylesheet","href":"/_next/static/chunks/0gwpoiy1ig8rp.css","precedence":"next","crossOrigin":"$undefined","nonce":"$undefined"}]
 1e:I[90160,["/_next/static/chunks/0k9p8qe2_c6el.js","/_next/static/chunks/0i.l9589uvx0j.js","/_next/static/chunks/0hpy9y_1sdd42.js","/_next/static/chunks/0ixaclxzy-hn_.js"],"default"]
-1f:Tb488,<h1>Error messages</h1>
+1f:Tcc6c,<h1>Error messages</h1>
 <p>This page lists the messages L4 gives when a file does not parse, does not type-check or stops while it runs, and the warnings it gives about code that probably does not do what you meant. Each entry quotes the message, says what causes it and how to fix it. Search the page for a phrase from your message.</p>
 <ul>
 <li>An <strong>error</strong> stops the file: it is not checked further, and its <code>#EVAL</code> lines do not run.</li>
@@ -53,6 +53,7 @@ f:["$","$1","h",{"children":[null,["$","$L1a",null,{"children":"$L1b"}],["$","di
 <li><a href="#branch-type-mismatch">Branch type mismatch</a></li>
 <li><a href="#wrong-number-of-arguments">Wrong number of arguments</a></li>
 <li><a href="#argument-of-the-wrong-type">Argument of the wrong type</a></li>
+<li><a href="#two-types-with-the-same-name">Two types with the same name</a></li>
 <li><a href="#several-definitions-with-the-same-name">Several definitions with the same name</a></li>
 </ul>
 <p><strong>Names and imports</strong></p>
@@ -84,10 +85,12 @@ f:["$","$1","h",{"children":[null,["$","$L1a",null,{"children":"$L1b"}],["$","di
 <p><strong>Export</strong></p>
 <ul>
 <li><a href="#an-export-of-clauses-with-no-given">An @export of clauses with no GIVEN</a></li>
+<li><a href="#an-export-that-takes-or-returns-an-event">An @export that takes or returns an EVENT</a></li>
 </ul>
 <hr>
 <h2 id="layout-and-syntax">Layout and syntax</h2>
 <p>L4 is layout-sensitive, like Python: indentation decides what belongs to what. Use spaces, not tabs, and indent a continuation line further than the line it continues.</p>
+<p><a id="parse-indentation"></a></p>
 <h3 id="incorrect-indentation">Incorrect indentation</h3>
 <p><strong>Error:</strong> <code>incorrect indentation (got 5, should be greater than 9)</code></p>
 <p>The line named is not indented far enough for the place it is in. Two common causes:</p>
@@ -193,6 +196,7 @@ GIVETH A BOOLEAN
   all (GIVEN g YIELD g's age >= 18) (charity's governors)
 </code></pre>
 <hr>
+<p><a id="parse-unexpected-double-equals"></a></p>
 <h3 id="double-equals-sign">Double equals sign</h3>
 <p><strong>Error:</strong> <code>unexpected ==</code></p>
 <pre><code class="language-l4">GIVEN x IS A NUMBER
@@ -254,6 +258,7 @@ result x MEANS
         OTHERWISE "positive"
 </code></pre>
 <hr>
+<p><a id="check-wrong-argument-count"></a></p>
 <h3 id="wrong-number-of-arguments">Wrong number of arguments</h3>
 <p><strong>Error:</strong> <code>The function add (defined at ...) expects 2 arguments, but you are applying it to 3 arguments here.</code></p>
 <p>A call gives a function more or fewer arguments than its <code>GIVEN</code> names.</p>
@@ -266,6 +271,7 @@ add a b MEANS a + b
 #EVAL add 1 2
 </code></pre>
 <hr>
+<p><a id="check-type-mismatch"></a></p>
 <h3 id="argument-of-the-wrong-type">Argument of the wrong type</h3>
 <p><strong>Error:</strong> <code>The first argument of function append (defined at ...) is expected to be of type LIST OF a but is here of type STRING</code></p>
 <p>A function was given a value of a type it does not take. A common case is mixing up two prelude functions with similar names:</p>
@@ -301,6 +307,25 @@ DECIDE numbers IS append (LIST 1, 2) (LIST 3, 4)
 DECIDE `the same greeting` IS CONCAT "hello", " world"
 </code></pre>
 <hr>
+<h3 id="two-types-with-the-same-name">Two types with the same name</h3>
+<p><strong>Error:</strong> a type mismatch whose two types are spelled the same, each followed by where it was declared, such as <code>Verdict (Verdict defined at verdicts.l4:1:9-16)</code> against <code>Verdict (Verdict defined at verdicts.l4:3:9-16)</code></p>
+<pre><code class="language-l4">DECLARE Verdict IS ONE OF yes, no
+
+DECLARE Verdict IS ONE OF maybe, perhaps
+
+GIVEN x IS A BOOLEAN
+`pick` MEANS IF x THEN yes ELSE maybe
+</code></pre>
+<p>The file declares two different types called <code>Verdict</code>, and <code>yes</code> belongs to the first and <code>maybe</code> to the second.
+So the two branches of the <code>IF</code> have different types, though both are called <code>Verdict</code>.
+When the two types of a mismatch are spelled the same, L4 adds where each was declared, so that you can tell them apart.
+The numbers after the file name are the line, then the columns.</p>
+<p>Writing the name of such a type, in a <code>GIVETH</code> for example, gives a different message: <a href="#several-definitions-with-the-same-name">several definitions with the same name</a>, because L4 cannot tell which of the two you mean.</p>
+<p><strong>How to fix it:</strong> Declare each name once.
+Rename one of the two types, or delete the <code>DECLARE</code> that repeats the other.</p>
+<hr>
+<p><a id="check-ambiguous-identifier"></a></p>
+<p><a id="check-ambiguous-type"></a></p>
 <h3 id="several-definitions-with-the-same-name">Several definitions with the same name</h3>
 <p><strong>Error:</strong> <code>There are multiple definitions for the identifier Date and I do not have sufficient information to make a choice between them.</code>, followed by the candidates and their types</p>
 <p>Some names have several definitions told apart by their types, such as <code>Date</code> and <code>Time</code> in the date and time libraries. When L4 cannot tell from the context which one is meant, it asks. This often happens when such a call is followed by a word written between two inputs, as in <code>Date 10 1 2024 `is before` Date 11 1 2024</code>.</p>
@@ -309,8 +334,14 @@ DECIDE `the same greeting` IS CONCAT "hello", " world"
 
 #EVAL (Date 10 1 2024) `is before` (Date 11 1 2024)
 </code></pre>
+<p>A type you declare yourself is ambiguous in the same way when it has the same name and the same number of parameters as a built-in type.
+<code>DECLARE EVENT party action HAS ...</code> clashes with the built-in <code>EVENT</code>, and <code>DECLARE MAYBE a HAS ...</code> with the built-in <code>MAYBE</code>.
+L4 then reports this error at each place that names the type, with your type and the built-in one as the two options, and nothing else about the use.
+Give your type another name.
+A type called <code>EVENT</code> with no parameters is not affected, because the built-in <code>EVENT</code> takes two.</p>
 <hr>
 <h2 id="names-and-imports">Names and imports</h2>
+<p><a id="check-unknown-identifier"></a></p>
 <h3 id="i-could-not-find-a-definition-for-the-identifier">I could not find a definition for the identifier</h3>
 <p><strong>Error:</strong> <code>I could not find a definition for the identifier</code>, then the name, then <code>which I have inferred to be of type:</code> and the type L4 expected it to have</p>
 <p>L4 met a name that nothing in scope defines. The usual causes:</p>
@@ -320,6 +351,7 @@ DECIDE `the same greeting` IS CONCAT "hello", " world"
 <li><strong>The wrong case.</strong> Keywords and built-in values are upper case: <code>TRUE</code> and <code>FALSE</code>, not <code>True</code> or <code>true</code>; <code>NOTHING</code>, <code>JUST</code>, <code>LEFT</code>, <code>RIGHT</code>.</li>
 <li><strong>An <code>IMPORT</code> below a section heading.</strong> <code>IMPORT</code> lines count only before the first <code>§</code>; one placed after it is ignored, so the names it should bring in are not defined. Move it to the top of the file.</li>
 <li><strong>A name defined somewhere it cannot be seen.</strong> A name defined in the <code>WHERE</code> or <code>LET</code> of one definition exists only inside that definition.</li>
+<li><strong>A type that was never declared</strong>, such as <code>Money</code> in <code>GIVEN amount IS A Money</code>. L4 reports the type at every place it is written, each at its own position, and nothing else about it: a <code>Money</code> in two <code>GIVEN</code>s and a <code>GIVETH</code> is three errors, and the rule that uses a <code>Money</code> is not also reported as having the wrong type.</li>
 </ul>
 <p><strong>How to fix it:</strong> Correct the spelling, or add the <code>IMPORT</code>:</p>
 <pre><code class="language-l4">IMPORT prelude
@@ -328,6 +360,7 @@ DECIDE total IS sum (LIST 1, 2, 3)
 DECIDE `is ready` IS TRUE
 </code></pre>
 <hr>
+<p><a id="import-module-not-found"></a></p>
 <h3 id="module-not-found">Module not found</h3>
 <p><strong>Error:</strong> <code>I could not find a module with this name: helpers</code>, then <code>I have tried the following locations:</code> and the places that were tried. The list ends with the standard library built into <code>l4</code>, for example <code>the stdlib embedded in this binary (20 modules, not among them)</code>, or <code>the stdlib embedded in this binary (skipped: JL4_LIBRARY_PATH is set)</code> when that variable is set. On the command line, <code>l4</code> also prints <code>Warning | [Import Resolution] Module not found: helpers</code>.</p>
 <p>An <code>IMPORT</code> names a module that is neither a standard library nor a file <code>helpers.l4</code> in your project's root folder or beside the importing file.
@@ -340,6 +373,8 @@ This stops <code>l4 check</code>, <code>l4 run</code> and deploying, even if not
 </ul>
 <p><a href="/l4/reference/libraries#import">IMPORT</a> describes module names and where they are found; <a href="/l4/reference/libraries/resolution">How IMPORT finds libraries</a> gives the full search order for operators and library developers.</p>
 <hr>
+<p><a id="import-cycle"></a></p>
+<p><a id="import-self-import"></a></p>
 <h3 id="import-cycle">Import cycle</h3>
 <p><strong>Error:</strong> <code>This IMPORT makes a ring of imports: a.l4 -> b.l4 -> a.l4.</code> or <code>A file cannot import itself.</code></p>
 <p>Files import each other in a ring, directly or through other files. L4 checks the files a file imports before the file itself, so a ring can never be checked. The error is on the <code>IMPORT</code> that closes the ring. Files that import a file in the ring get an error on that <code>IMPORT</code> too.</p>
@@ -417,6 +452,7 @@ The definition lines are left alone, and the rules they define are called as usu
 A use of the word inside another rule is still read as a use of the mixfix rule: with <code>a `plus` b</code> in the file, the body <code>total plus y</code> of a rule whose inputs are <code>plus</code> and <code>y</code> is read as <code>total `plus` y</code>, and fails to check ("The first argument of function <code>plus</code> is expected to be of type NUMBER but is here of type FUNCTION FROM NUMBER AND NUMBER TO NUMBER").
 Give that input another name, and the body means what it says.</p>
 <hr>
+<p><a id="check-clause-pattern-count"></a></p>
 <h3 id="clauses-with-more-or-fewer-patterns-than-the-given-names">Clauses with more or fewer patterns than the GIVEN names</h3>
 <p><strong>Error:</strong></p>
 <pre><code>Each clause of `g` has 2 patterns, but its GIVEN names 1 input.
@@ -451,6 +487,7 @@ DECIDE g Green d   IS 2
 L4 then works out the type of each input from the patterns and the clause bodies, and where it has to name an input, as <code>l4 render</code> does, it calls them <code>input 1</code>, <code>input 2</code>, and so on.
 Such clauses cannot be published with <code>@export</code>, even a single one; see <a href="#an-export-of-clauses-with-no-given">An @export of clauses with no GIVEN</a>.</p>
 <hr>
+<p><a id="lint-non-exhaustive-clauses"></a></p>
 <h3 id="multi-clause-decide-does-not-cover-all-cases">Multi-clause DECIDE does not cover all cases</h3>
 <p><strong>Warning:</strong></p>
 <pre><code>This multi-clause definition does not cover all cases. The following clauses are still needed:
@@ -486,6 +523,7 @@ A rule whose clauses match enumeration values only gets no warning when it would
 A rule of one clause that is not checked keeps whatever warning a CONSIDER would give (see <a href="#non-exhaustive-pattern-match">Non-exhaustive pattern match</a>), listing WHEN branches, now at the clause; a CONSIDER reads numbers, texts and <code>EXACTLY</code> the same way, so a missing case over them is reported in either spelling; the two can differ for a repeated value, and where a branch or clause names a constructor of a <code>MAYBE</code>, an <code>EITHER</code>, a list or a type from another file (see <a href="/l4/reference/control-flow/CONSIDER">CONSIDER</a>).
 See <a href="/l4/reference/functions/DECIDE#several-clauses">Several clauses</a>.</p>
 <hr>
+<p><a id="lint-unreachable-clause"></a></p>
 <h3 id="clause-that-is-never-used">Clause that is never used</h3>
 <p><strong>Warning:</strong></p>
 <pre><code>This clause of `describe` is never used, and neither is the clause after it.
@@ -516,6 +554,7 @@ A new name inside a larger pattern draws no warning: after <code>(JUST Gren)</co
 There is no warning for a clause that repeats one above it.</p>
 <p><strong>How to fix it:</strong> Put the clauses for particular cases first and the clause that matches anything last, or remove the clause that can never be reached.</p>
 <hr>
+<p><a id="lint-misplaced-clause-annotation"></a></p>
 <h3 id="annotation-above-a-later-clause">Annotation above a later clause</h3>
 <p><strong>Warning:</strong></p>
 <pre><code>This @export is above the second clause of `colour code`, where it is not used.
@@ -539,6 +578,7 @@ The warning appears once at each such annotation.</p>
 An <code>@desc</code> or <code>@export</code> goes above the rule's <code>GIVEN</code>, or above its first clause if it has no <code>GIVEN</code>.
 An <code>@nlg</code> goes on the line above the first clause.</p>
 <hr>
+<p><a id="lint-clause-arity-changed"></a></p>
 <h3 id="a-definition-after-clauses-that-is-not-another-clause">A definition after clauses that is not another clause</h3>
 <p><strong>Warning:</strong></p>
 <pre><code>This definition of `f` is not another clause of the clauses above it.
@@ -569,6 +609,7 @@ GIVETH A NUMBER
 f c d MEANS 3
 </code></pre>
 <hr>
+<p><a id="eval-infinite-loop"></a></p>
 <h3 id="infinite-loop-detected">Infinite loop detected</h3>
 <p><strong>Error:</strong> <code>Infinite loop detected while trying to evaluate: x PLUS 1</code></p>
 <pre><code class="language-l4">x MEANS x + 1
@@ -588,6 +629,7 @@ factorial n MEANS
 <p>If you did not, you probably meant another name on the right-hand side.</p>
 <hr>
 <h2 id="pattern-matching">Pattern matching</h2>
+<p><a id="lint-non-exhaustive-match"></a></p>
 <h3 id="non-exhaustive-pattern-match">Non-exhaustive pattern match</h3>
 <p><strong>Warning:</strong></p>
 <pre><code>The following branches still need to be considered:
@@ -624,6 +666,7 @@ describe status MEANS
 </ul>
 <p><a href="/l4/reference/control-flow/CONSIDER#missing-and-redundant-branches">CONSIDER</a> gives the full rules, and <a href="/l4/concepts/type-system/exhaustiveness">Exhaustiveness</a> explains why the check works this way.</p>
 <hr>
+<p><a id="lint-redundant-branch"></a></p>
 <h3 id="redundant-pattern-match-branch">Redundant pattern match branch</h3>
 <p><strong>Warning:</strong> <code>The following CONSIDER branch is redundant:</code>, followed by the branch</p>
 <pre><code class="language-l4">DECLARE Colour IS ONE OF Red, Green, Blue
@@ -639,6 +682,7 @@ label c MEANS
 <p>A branch can never be reached, because the branches above it, here the OTHERWISE, already cover every value it could match. A number repeated in another spelling (<code>WHEN 1.0</code> after <code>WHEN 1</code>) is also redundant.</p>
 <p><strong>How to fix it:</strong> Delete the branch, or move it above the more general one.</p>
 <hr>
+<p><a id="eval-non-exhaustive-patterns"></a></p>
 <h3 id="non-exhaustive-patterns-at-runtime">Non-exhaustive patterns at runtime</h3>
 <p><strong>Error:</strong></p>
 <pre><code>The value
@@ -678,6 +722,7 @@ GIVETH A DEONTIC Party Action
 <p>This gives <code>FULFILLED</code>. See <a href="/l4/reference/regulative">Regulative rules</a> and <a href="/l4/reference/regulative/EVENT">EVENT</a>.</p>
 <hr>
 <h2 id="export">Export</h2>
+<p><a id="check-export-clauses-without-given"></a></p>
 <h3 id="an-export-of-clauses-with-no-given">An @export of clauses with no GIVEN</h3>
 <p><strong>Error:</strong></p>
 <pre><code>`size` is published with @export, but its inputs have no names: add a GIVEN that names and types each one.
@@ -710,7 +755,52 @@ DECIDE size Blue  n IS 0
 </code></pre>
 <p>The rule is then published with the inputs <code>c</code> and <code>n</code>.
 Or remove the <code>@export</code>, if the rule is not meant to be published.</p>
-15:["$","$L1e",null,{"navSections":[{"title":"","items":[{"title":"Language Reference","href":"reference","children":"$undefined"},{"title":"Glossary","href":"reference/GLOSSARY","children":"$undefined"},{"title":"Cheat sheet","href":"reference/cheat-sheet","children":"$undefined"},{"title":"Types","href":"reference/types","children":[{"title":"DECLARE","href":"reference/types/DECLARE","children":"$undefined"},{"title":"ASSUME","href":"reference/types/ASSUME","children":"$undefined"},{"title":"FOR ALL","href":"reference/types/for-all","children":"$undefined"},{"title":"Coercions","href":"reference/types/coercions","children":"$undefined"}]},{"title":"Functions","href":"reference/functions","children":[{"title":"DECIDE","href":"reference/functions/DECIDE","children":"$undefined"},{"title":"GIVEN and GIVETH","href":"reference/functions/GIVEN","children":"$undefined"},{"title":"MEANS","href":"reference/functions/MEANS","children":"$undefined"},{"title":"LET and WHERE","href":"reference/functions/LET","children":"$undefined"},{"title":"YIELD","href":"reference/functions/YIELD","children":"$undefined"},{"title":"AKA","href":"reference/functions/AKA","children":"$undefined"}]},{"title":"Control flow","href":"reference/control-flow","children":[{"title":"IF","href":"reference/control-flow/IF","children":"$undefined"},{"title":"BRANCH","href":"reference/control-flow/BRANCH","children":"$undefined"},{"title":"CONSIDER","href":"reference/control-flow/CONSIDER","children":"$undefined"}]},{"title":"Operators","href":"reference/operators","children":[{"title":"AND, OR, NOT, IMPLIES","href":"reference/operators/logical","children":"$undefined"},{"title":"UNLESS","href":"reference/operators/UNLESS","children":"$undefined"},{"title":"Arithmetic","href":"reference/operators/arithmetic","children":"$undefined"},{"title":"Comparisons","href":"reference/operators/comparisons","children":"$undefined"}]},{"title":"Regulative rules","href":"reference/regulative","children":[{"title":"PARTY, MUST, MAY, SHANT","href":"reference/regulative/PARTY","children":"$undefined"},{"title":"Deadlines and consequences","href":"reference/regulative/consequences","children":"$undefined"},{"title":"BECAUSE","href":"reference/regulative/BECAUSE","children":"$undefined"},{"title":"DEONTIC","href":"reference/regulative/DEONTIC","children":"$undefined"},{"title":"EVENT","href":"reference/regulative/EVENT","children":"$undefined"}]},{"title":"Syntax and directives","href":"reference/syntax","children":"$undefined"},{"title":"Built-in functions","href":"reference/builtins","children":[{"title":"HTTP and JSON","href":"reference/builtins/http-json","children":"$undefined"}]},{"title":"Standard libraries","href":"reference/libraries","children":[{"title":"prelude","href":"reference/libraries/prelude","children":"$undefined"},{"title":"math","href":"reference/libraries/math","children":"$undefined"},{"title":"daydate","href":"reference/libraries/daydate","children":"$undefined"},{"title":"time","href":"reference/libraries/time","children":"$undefined"},{"title":"datetime","href":"reference/libraries/datetime","children":"$undefined"},{"title":"timezone","href":"reference/libraries/timezone","children":"$undefined"},{"title":"excel-date","href":"reference/libraries/excel-date","children":"$undefined"},{"title":"currency","href":"reference/libraries/currency","children":"$undefined"},{"title":"holdings","href":"reference/libraries/holdings","children":"$undefined"},{"title":"actus","href":"reference/libraries/actus","children":"$undefined"},{"title":"legal-persons","href":"reference/libraries/legal-persons","children":"$undefined"},{"title":"jurisdiction","href":"reference/libraries/jurisdiction","children":"$undefined"},{"title":"llm","href":"reference/libraries/llm","children":"$undefined"}]},{"title":"Error messages","href":"reference/errors","children":"$undefined"}]}],"toc":[],"htmlContent":"$1f","pager":{"prev":"$15:props:navSections:0:items:10:children:12","next":"$undefined"}}]
+<hr>
+<p><a id="check-export-event-type"></a></p>
+<h3 id="an-export-that-takes-or-returns-an-event">An @export that takes or returns an EVENT</h3>
+<p><strong>Error:</strong></p>
+<pre><code>`who acted` is published with @export, but its input `e` has a type that is or contains an EVENT.
+@export does not support an EVENT as an input yet.
+</code></pre>
+<p>For a result, the second line reads <code>@export does not support an EVENT as a result yet.</code></p>
+<p><strong>What you wrote:</strong></p>
+<pre><code class="language-l4">DECLARE Party IS ONE OF alice, bob
+DECLARE Act IS ONE OF ping, pong
+
+@export Who acted
+GIVEN e IS AN EVENT Party Act
+GIVETH A Party
+`who acted` MEANS
+  CONSIDER e
+  WHEN EVENT p a n THEN p
+</code></pre>
+<p><strong>What went wrong:</strong> <code>@export</code> publishes a rule as a web endpoint, and a request to it supplies each input as a value written in JSON.
+L4 has no JSON form for an <a href="/l4/reference/regulative/EVENT">EVENT</a>, so the input would be published as a bare <code>object</code>, and no request could give the rule an event.
+The same goes for a result, and for an <code>EVENT</code> inside a <code>LIST OF</code> or a <code>MAYBE OF</code>, or named through a type that you declared as another name for it.
+So an <code>@export</code> of such a rule is an error, reported at the <code>@export</code> line.
+The error stops the whole file from checking: <code>l4 run</code> and <code>l4 batch</code> refuse the file, the <code>#EVAL</code>s of its other rules included, and jl4-service will not deploy it, until you remove the <code>@export</code> or the <code>EVENT</code>.
+A rule that builds or reads an <code>EVENT</code> inside its body, and does not name one in its inputs or its result, is published as usual.
+A record that you declare with an <code>EVENT</code> among its fields is not looked into, so a rule that takes such a record is not refused.</p>
+<p><strong>How to fix it:</strong> Take the parts of the event as separate inputs, and build the event inside the rule if it needs one.
+A helper that is not published can still take an <code>EVENT</code>:</p>
+<pre><code class="language-l4">DECLARE Party IS ONE OF alice, bob
+DECLARE Act IS ONE OF ping, pong
+
+GIVEN e IS AN EVENT Party Act
+GIVETH A NUMBER
+`event time` MEANS
+  CONSIDER e
+  WHEN EVENT p a n THEN n
+
+@export When it happened
+GIVEN who IS A Party
+      what IS AN Act
+      time IS A NUMBER
+GIVETH A NUMBER
+`when it happened` MEANS `event time` (EVENT who what time)
+</code></pre>
+<p>Or remove the <code>@export</code>, if the rule is not meant to be published.</p>
+15:["$","$L1e",null,{"navSections":[{"title":"","items":[{"title":"Language Reference","href":"reference","children":"$undefined"},{"title":"Glossary","href":"reference/GLOSSARY","children":"$undefined"},{"title":"Cheat sheet","href":"reference/cheat-sheet","children":"$undefined"},{"title":"Types","href":"reference/types","children":[{"title":"DECLARE","href":"reference/types/DECLARE","children":"$undefined"},{"title":"ASSUME","href":"reference/types/ASSUME","children":"$undefined"},{"title":"FOR ALL","href":"reference/types/for-all","children":"$undefined"},{"title":"Coercions","href":"reference/types/coercions","children":"$undefined"}]},{"title":"Functions","href":"reference/functions","children":[{"title":"DECIDE","href":"reference/functions/DECIDE","children":"$undefined"},{"title":"GIVEN and GIVETH","href":"reference/functions/GIVEN","children":"$undefined"},{"title":"MEANS","href":"reference/functions/MEANS","children":"$undefined"},{"title":"LET and WHERE","href":"reference/functions/LET","children":"$undefined"},{"title":"YIELD","href":"reference/functions/YIELD","children":"$undefined"},{"title":"AKA","href":"reference/functions/AKA","children":"$undefined"}]},{"title":"Control flow","href":"reference/control-flow","children":[{"title":"IF","href":"reference/control-flow/IF","children":"$undefined"},{"title":"BRANCH","href":"reference/control-flow/BRANCH","children":"$undefined"},{"title":"CONSIDER","href":"reference/control-flow/CONSIDER","children":"$undefined"},{"title":"REFUSE","href":"reference/control-flow/REFUSE","children":"$undefined"}]},{"title":"Operators","href":"reference/operators","children":[{"title":"AND, OR, NOT, IMPLIES","href":"reference/operators/logical","children":"$undefined"},{"title":"UNLESS","href":"reference/operators/UNLESS","children":"$undefined"},{"title":"Arithmetic","href":"reference/operators/arithmetic","children":"$undefined"},{"title":"Comparisons","href":"reference/operators/comparisons","children":"$undefined"}]},{"title":"Regulative rules","href":"reference/regulative","children":[{"title":"PARTY, MUST, MAY, SHANT","href":"reference/regulative/PARTY","children":"$undefined"},{"title":"Deadlines and consequences","href":"reference/regulative/consequences","children":"$undefined"},{"title":"BECAUSE","href":"reference/regulative/BECAUSE","children":"$undefined"},{"title":"DEONTIC","href":"reference/regulative/DEONTIC","children":"$undefined"},{"title":"EVENT","href":"reference/regulative/EVENT","children":"$undefined"}]},{"title":"Syntax and directives","href":"reference/syntax","children":[{"title":"@nlg","href":"reference/syntax/nlg","children":"$undefined"}]},{"title":"Built-in functions","href":"reference/builtins","children":[{"title":"HTTP and JSON","href":"reference/builtins/http-json","children":"$undefined"}]},{"title":"Standard libraries","href":"reference/libraries","children":[{"title":"prelude","href":"reference/libraries/prelude","children":"$undefined"},{"title":"math","href":"reference/libraries/math","children":"$undefined"},{"title":"daydate","href":"reference/libraries/daydate","children":"$undefined"},{"title":"time","href":"reference/libraries/time","children":"$undefined"},{"title":"datetime","href":"reference/libraries/datetime","children":"$undefined"},{"title":"timezone","href":"reference/libraries/timezone","children":"$undefined"},{"title":"excel-date","href":"reference/libraries/excel-date","children":"$undefined"},{"title":"currency","href":"reference/libraries/currency","children":"$undefined"},{"title":"holdings","href":"reference/libraries/holdings","children":"$undefined"},{"title":"actus","href":"reference/libraries/actus","children":"$undefined"},{"title":"legal-persons","href":"reference/libraries/legal-persons","children":"$undefined"},{"title":"jurisdiction","href":"reference/libraries/jurisdiction","children":"$undefined"},{"title":"llm","href":"reference/libraries/llm","children":"$undefined"}]},{"title":"Error messages","href":"reference/errors","children":"$undefined"}]}],"toc":[],"htmlContent":"$1f","pager":{"prev":"$15:props:navSections:0:items:10:children:12","next":"$undefined"}}]
 1b:[["$","meta","0",{"charSet":"utf-8"}],["$","meta","1",{"name":"viewport","content":"width=device-width, initial-scale=1"}]]
 18:null
 1d:[["$","title","0",{"children":"Error messages | L4 Documentation"}],["$","meta","1",{"name":"description","content":"This page lists the messages L4 gives when a file does not parse, does not type-check or stops while it runs, and the warnings it gives about code that…"}],["$","meta","2",{"name":"robots","content":"index, follow"}],["$","link","3",{"rel":"canonical","href":"https://legalese.com/l4/reference/errors"}],["$","meta","4",{"property":"og:title","content":"Error messages | L4 Documentation"}],["$","meta","5",{"property":"og:description","content":"This page lists the messages L4 gives when a file does not parse, does not type-check or stops while it runs, and the warnings it gives about code that…"}],["$","meta","6",{"property":"og:url","content":"https://legalese.com/l4/reference/errors"}],["$","meta","7",{"property":"og:image","content":"https://legalese.com/opengraph/ai-is-eating-law-v2.jpg"}],["$","meta","8",{"name":"twitter:card","content":"summary_large_image"}],["$","meta","9",{"name":"twitter:title","content":"Error messages | L4 Documentation"}],["$","meta","10",{"name":"twitter:description","content":"This page lists the messages L4 gives when a file does not parse, does not type-check or stops while it runs, and the warnings it gives about code that…"}],["$","meta","11",{"name":"twitter:image","content":"https://legalese.com/opengraph/ai-is-eating-law-v2.jpg"}]]

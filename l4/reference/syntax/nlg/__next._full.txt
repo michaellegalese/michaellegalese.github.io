@@ -1,0 +1,273 @@
+1:"$Sreact.fragment"
+2:I[339756,["/_next/static/chunks/0k9p8qe2_c6el.js","/_next/static/chunks/0i.l9589uvx0j.js"],"default"]
+3:I[837457,["/_next/static/chunks/0k9p8qe2_c6el.js","/_next/static/chunks/0i.l9589uvx0j.js"],"default"]
+4:I[522016,["/_next/static/chunks/0k9p8qe2_c6el.js","/_next/static/chunks/0i.l9589uvx0j.js","/_next/static/chunks/07lev92j7.i4g.js"],""]
+5:I[605500,["/_next/static/chunks/0k9p8qe2_c6el.js","/_next/static/chunks/0i.l9589uvx0j.js","/_next/static/chunks/07lev92j7.i4g.js"],"Image"]
+10:I[168027,["/_next/static/chunks/0k9p8qe2_c6el.js","/_next/static/chunks/0i.l9589uvx0j.js"],"default",1]
+:HL["/_next/static/chunks/0gwpoiy1ig8rp.css","style"]
+:HL["/_next/static/chunks/0s9wju.j1~_xn.css","style"]
+:HL["/_next/static/media/248e1dc0efc99276-s.p.0ft7o6kv5bp14.woff2","font",{"crossOrigin":"","type":"font/woff2"}]
+:HL["/_next/static/media/83afe278b6a6bb3c-s.p.0q-301v4kxxnr.woff2","font",{"crossOrigin":"","type":"font/woff2"}]
+0:{"P":null,"c":["","l4","reference","syntax","nlg"],"q":"","i":false,"f":[[["",{"children":["l4",{"children":[["slug","reference/syntax/nlg","oc",null],{"children":["__PAGE__",{}]}]}]},"$undefined","$undefined",16],[["$","$1","c",{"children":[[["$","link","0",{"rel":"stylesheet","href":"/_next/static/chunks/0gwpoiy1ig8rp.css","precedence":"next","crossOrigin":"$undefined","nonce":"$undefined"}],["$","script","script-0",{"src":"/_next/static/chunks/0k9p8qe2_c6el.js","async":true,"nonce":"$undefined"}],["$","script","script-1",{"src":"/_next/static/chunks/0i.l9589uvx0j.js","async":true,"nonce":"$undefined"}]],["$","html",null,{"lang":"en","children":[["$","head",null,{"children":[["$","meta",null,{"httpEquiv":"Content-Security-Policy","content":"default-src 'self' https://legalese.com; script-src 'self' https://legalese.com 'unsafe-inline' https://cdnjs.cloudflare.com; style-src 'self' https://legalese.com 'unsafe-inline'; font-src 'self' https://legalese.com; img-src 'self' https://legalese.com https://workoscdn.com https://*.googleusercontent.com; connect-src 'self' https://legalese.com https://legalese.cloud https://ai.legalese.cloud https://*.legalese.cloud https://legalese.legalese.cloud https://*.workos.com; frame-src 'self' https://legalese.com https://jl4.legalese.com https://*.workos.com; object-src 'none'; base-uri 'self' https://legalese.com"}],["$","link",null,{"rel":"apple-touch-icon","sizes":"180x180","href":"/favicon/apple-touch-icon.png"}],["$","link",null,{"rel":"icon","type":"image/png","sizes":"32x32","href":"/favicon/favicon-32x32.png"}],["$","link",null,{"rel":"icon","type":"image/png","sizes":"16x16","href":"/favicon/favicon-16x16.png"}],["$","link",null,{"rel":"manifest","href":"/favicon/site.webmanifest"}],["$","link",null,{"rel":"shortcut icon","href":"/favicon/favicon.ico"}],["$","meta",null,{"name":"msapplication-TileColor","content":"#000000"}],["$","meta",null,{"name":"msapplication-config","content":"/favicon/browserconfig.xml"}],["$","meta",null,{"name":"theme-color","content":"#000"}],["$","link",null,{"rel":"alternate","type":"application/rss+xml","href":"/feed.xml"}]]}],["$","body",null,{"className":"inter_5901b7c6-module__ec5Qua__variable merriweather_b1e99710-module__84TlHG__variable","children":[["$","div",null,{"className":"min-h-screen","children":["$","$L2",null,{"parallelRouterKey":"children","error":"$undefined","errorStyles":"$undefined","errorScripts":"$undefined","template":["$","$L3",null,{}],"templateStyles":"$undefined","templateScripts":"$undefined","notFound":[["$","div",null,{"className":"min-h-screen flex flex-col","children":["$","div",null,{"className":"container mx-auto px-5 flex-1 flex flex-col","children":[["$","header",null,{"className":"flex flex-col md:flex-row items-center justify-between py-8 mb-6","children":["$","$L4",null,{"href":"/","className":"flex items-center gap-1 hover:opacity-80 transition-opacity","children":[["$","$L5",null,{"src":"/assets/logos/legalese-logo.png","alt":"§","width":42,"height":42,"className":"rounded"}],["$","span",null,{"className":"text-2xl font-bold tracking-tight font-merriweather","children":"Legalese"}]]}]}],["$","div",null,{"className":"flex-1 flex items-center justify-center","children":["$","div",null,{"className":"text-center px-6 py-16","children":[["$","h1",null,{"className":"text-8xl font-bold text-gray-200 mb-4","children":404}],["$","h2",null,{"className":"text-2xl font-semibold text-gray-900 mb-4 font-merriweather","children":"Not Found"}],["$","p",null,{"className":"text-gray-600 mb-8 max-w-md","children":"The page you're looking for doesn't exist or may have been moved."}],["$","$L4",null,{"href":"/","className":"inline-block px-6 py-2 bg-accent text-white rounded-md hover:bg-accent-hover transition-colors","children":"Go to Homepage"}]]}]}]]}]}],[]],"forbidden":"$undefined","unauthorized":"$undefined"}]}],["$","footer",null,{"className":"bg-gray-900 text-white","children":["$","div",null,{"className":"container mx-auto px-5","children":["$","div",null,{"className":"py-16","children":[["$","div",null,{"className":"grid grid-cols-1 md:grid-cols-4 gap-12 mb-12","children":[["$","div",null,{"className":"md:col-span-1","children":[["$","div",null,{"className":"flex items-center","children":[["$","$L5",null,{"src":"/assets/logos/legalese-logo.png","alt":"§","width":36,"height":36,"className":"rounded invert"}],["$","h3",null,{"className":"text-2xl font-bold tracking-tight ml-1","children":"Legalese"}]]}],"$L6"]}],"$L7","$L8","$L9"]}],"$La"]}]}]}]]}]]}]]}],{"children":["$Lb",{"children":["$Lc",{"children":["$Ld",{},null,false,null]},null,false,"$@e"]},null,false,null]},null,false,null],"$Lf",false]],"m":"$undefined","G":["$10",["$L11"]],"S":true,"h":null,"s":"$undefined","l":"$undefined","p":"$undefined","d":"$undefined","b":"ydI8tQ1nsjF6OZ84JMIgJ"}
+12:I[479520,["/_next/static/chunks/0k9p8qe2_c6el.js","/_next/static/chunks/0i.l9589uvx0j.js","/_next/static/chunks/0hpy9y_1sdd42.js"],""]
+13:I[585295,["/_next/static/chunks/0k9p8qe2_c6el.js","/_next/static/chunks/0i.l9589uvx0j.js","/_next/static/chunks/0hpy9y_1sdd42.js"],"default"]
+14:I[841529,["/_next/static/chunks/0k9p8qe2_c6el.js","/_next/static/chunks/0i.l9589uvx0j.js","/_next/static/chunks/0hpy9y_1sdd42.js"],"default"]
+16:I[897367,["/_next/static/chunks/0k9p8qe2_c6el.js","/_next/static/chunks/0i.l9589uvx0j.js"],"OutletBoundary"]
+17:"$Sreact.suspense"
+1a:I[897367,["/_next/static/chunks/0k9p8qe2_c6el.js","/_next/static/chunks/0i.l9589uvx0j.js"],"ViewportBoundary"]
+1c:I[897367,["/_next/static/chunks/0k9p8qe2_c6el.js","/_next/static/chunks/0i.l9589uvx0j.js"],"MetadataBoundary"]
+6:["$","p",null,{"className":"text-gray-400 text-sm mb-4","children":"AI is eating law"}]
+7:["$","div",null,{"children":[["$","h4",null,{"className":"font-bold mb-4 text-gray-300","children":"Company"}],["$","ul",null,{"className":"space-y-2","children":[[["$","li","about",{"children":["$","$L4",null,{"href":"/about","className":"text-gray-400 hover:text-white transition-colors text-sm","children":"About us"}]}],["$","li","team",{"children":["$","$L4",null,{"href":"/team","className":"text-gray-400 hover:text-white transition-colors text-sm","children":"Team"}]}],["$","li","media",{"children":["$","$L4",null,{"href":"/media","className":"text-gray-400 hover:text-white transition-colors text-sm","children":"Press & Media"}]}]],[],["$","li",null,{"children":["$","$L4",null,{"href":"/posts","className":"text-gray-400 hover:text-white transition-colors text-sm","children":"Blog"}]}]]}]]}]
+8:["$","div",null,{"children":[["$","h4",null,{"className":"font-bold mb-4 text-gray-300","children":"Resources"}],["$","ul",null,{"className":"space-y-2","children":[["$","li","l4-documentation",{"children":["$","a",null,{"href":"https://legalese.com/l4","target":"_blank","rel":"noopener noreferrer","className":"text-gray-400 hover:text-white transition-colors text-sm","children":"L4 Documentation"}]}],["$","li","vscode-extension",{"children":["$","a",null,{"href":"https://marketplace.visualstudio.com/items?itemName=Legalese.l4-vscode","target":"_blank","rel":"noopener noreferrer","className":"text-gray-400 hover:text-white transition-colors text-sm","children":"L4 VS Code Extension"}]}],["$","li","l4-web-ide",{"children":["$","a",null,{"href":"https://jl4.legalese.com","target":"_blank","rel":"noopener noreferrer","className":"text-gray-400 hover:text-white transition-colors text-sm","children":"L4 Web IDE"}]}],["$","li","l4-console",{"children":["$","a",null,{"href":"https://legalese.com/console","target":"_blank","rel":"noopener noreferrer","className":"text-gray-400 hover:text-white transition-colors text-sm","children":"Cloud Console"}]}],["$","li","l4-console copy",{"children":["$","a",null,{"href":"https://legalese.com/compare","target":"_blank","rel":"noopener noreferrer","className":"text-gray-400 hover:text-white transition-colors text-sm","children":"Compare AI Legal Interpretations"}]}],["$","li","provable",{"children":["$","a",null,{"href":"https://provable.legalese.com","target":"_blank","rel":"noopener noreferrer","className":"text-gray-400 hover:text-white transition-colors text-sm","children":"Provable Skill Marketplace"}]}],["$","li","github",{"children":["$","a",null,{"href":"https://github.com/legalese/l4-ide","target":"_blank","rel":"noopener noreferrer","className":"text-gray-400 hover:text-white transition-colors text-sm","children":"GitHub"}]}]]}]]}]
+9:["$","div",null,{"children":[["$","h4",null,{"className":"font-bold mb-4 text-gray-300","children":"Contact"}],["$","ul",null,{"className":"space-y-2","children":[[["$","li","community",{"children":["$","$L4",null,{"href":"/community","className":"text-gray-400 hover:text-white transition-colors text-sm","children":"Community"}]}],["$","li","code-of-conduct",{"children":["$","$L4",null,{"href":"/code-of-conduct","className":"text-gray-400 hover:text-white transition-colors text-sm","children":"Code of Conduct"}]}]],[["$","li","discord",{"children":["$","a",null,{"href":"https://discord.gg/Q7a7NSEdNy","target":"_blank","rel":"noopener noreferrer","className":"text-gray-400 hover:text-white transition-colors text-sm","children":"Discord"}]}],["$","li","x-twitter",{"children":["$","a",null,{"href":"https://x.com/legalese","target":"_blank","rel":"noopener noreferrer","className":"text-gray-400 hover:text-white transition-colors text-sm","children":"Legalese on X"}]}]]]}]]}]
+a:["$","div",null,{"className":"border-t border-gray-800 pt-8 flex flex-col md:flex-row justify-between items-center gap-4","children":[["$","p",null,{"className":"text-gray-500 text-sm","children":["© ",2026," Legalese Pte. Ltd., Singapore. All rights reserved."]}],["$","div",null,{"className":"flex gap-6","children":[["$","$L4","terms",{"href":"/terms","className":"text-gray-500 hover:text-white transition-colors text-sm","children":"Terms of Use"}],["$","$L4","privacy",{"href":"/privacy","className":"text-gray-500 hover:text-white transition-colors text-sm","children":"Privacy & Cookies"}]]}]]}]
+b:["$","$1","c",{"children":[[["$","link","0",{"rel":"stylesheet","href":"/_next/static/chunks/0s9wju.j1~_xn.css","precedence":"next","crossOrigin":"$undefined","nonce":"$undefined"}],["$","script","script-0",{"src":"/_next/static/chunks/0hpy9y_1sdd42.js","async":true,"nonce":"$undefined"}]],[["$","$L2",null,{"parallelRouterKey":"children","error":"$undefined","errorStyles":"$undefined","errorScripts":"$undefined","template":["$","$L3",null,{}],"templateStyles":"$undefined","templateScripts":"$undefined","notFound":"$undefined","forbidden":"$undefined","unauthorized":"$undefined"}],["$","$L12",null,{"src":"https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"}],["$","$L12",null,{"src":"/hljs-l4/l4.min.js"}],["$","$L13",null,{}],["$","$L14",null,{}],["$","style",null,{"dangerouslySetInnerHTML":{"__html":"\npre code.hljs{display:block;overflow-x:auto;padding:0.2rem 0.4rem;font-size:13px;color:#104e64;background:#fdfdfd}\ncode.hljs .hljs-keyword{color:#0000ff;font-weight:500}\ncode.hljs .hljs-literal{color:#0000ff}\ncode.hljs .hljs-built_in{color:#267f99}\ncode.hljs .hljs-string{color:#a31515}\ncode.hljs .hljs-number{color:#098658}\ncode.hljs .hljs-comment{color:#008000;font-style:italic}\ncode.hljs .hljs-title{color:#795e26;font-weight:600}\ncode.hljs .hljs-variable{color:#001080}\ncode.hljs .hljs-doctag{color:#ffbd33}\ncode.hljs .hljs-formula{color:#af00db;font-weight:500}\n"}}]]]}]
+c:["$","$1","c",{"children":[null,["$","$L2",null,{"parallelRouterKey":"children","error":"$undefined","errorStyles":"$undefined","errorScripts":"$undefined","template":["$","$L3",null,{}],"templateStyles":"$undefined","templateScripts":"$undefined","notFound":"$undefined","forbidden":"$undefined","unauthorized":"$undefined"}]]}]
+d:["$","$1","c",{"children":["$L15",[["$","script","script-0",{"src":"/_next/static/chunks/0ixaclxzy-hn_.js","async":true,"nonce":"$undefined"}]],["$","$L16",null,{"children":["$","$17",null,{"name":"Next.MetadataOutlet","children":"$@18"}]}]]}]
+19:[]
+e:"$W19"
+f:["$","$1","h",{"children":[null,["$","$L1a",null,{"children":"$L1b"}],["$","div",null,{"hidden":true,"children":["$","$L1c",null,{"children":["$","$17",null,{"name":"Next.Metadata","children":"$L1d"}]}]}],["$","meta",null,{"name":"next-size-adjust","content":""}]]}]
+11:["$","link","0",{"rel":"stylesheet","href":"/_next/static/chunks/0gwpoiy1ig8rp.css","precedence":"next","crossOrigin":"$undefined","nonce":"$undefined"}]
+1e:I[90160,["/_next/static/chunks/0k9p8qe2_c6el.js","/_next/static/chunks/0i.l9589uvx0j.js","/_next/static/chunks/0hpy9y_1sdd42.js","/_next/static/chunks/0ixaclxzy-hn_.js"],"default"]
+1f:T32a8,<h1>@nlg</h1>
+<p><code>@nlg</code> gives a definition its wording in natural language.
+<code>l4 render</code>, <code>l4 nlg</code> and the editor read that wording in place of the name.</p>
+<pre><code class="language-l4">GIVEN x IS A NUMBER, y IS A NUMBER
+GIVETH A NUMBER
+@nlg the greater of %x% and %y%
+`the greater of` x y MEANS IF x >= y THEN x ELSE y
+</code></pre>
+<p><code>#EVAL `the greater of` 3 7</code> reads "the greater of 3 and 7".</p>
+<ul>
+<li><strong>To fix wording in a document:</strong> <a href="/l4/tutorials/natural-language-functions/fix-wording-with-nlg">Fix wording with @nlg</a></li>
+<li><strong>To write rules that read well:</strong> <a href="/l4/tutorials/natural-language-functions/optimising-natural-language-generation">Make rules read like law</a></li>
+<li><strong>Example:</strong></li>
+</ul>
+<pre><code class="language-l4-file">-- An `@nlg` sentence on a mixfix function, and what reads it.
+-- See the `@nlg` section of the syntax reference.
+
+GIVEN a IS A NUMBER, b IS A NUMBER
+GIVETH A NUMBER
+`the lower of` a `and` b @nlg the smaller of %a% and %b%
+  MEANS IF a AT MOST b THEN a ELSE b
+
+GIVEN price IS A NUMBER
+GIVETH A NUMBER
+`the price we charge` price MEANS `the lower of` price `and` 100
+
+#EVAL `the lower of` 840 `and` 160
+</code></pre>
+<p>Text in square brackets after a name is a short form: <code>DECIDE `the limit` [the statutory limit] IS 5</code>.</p>
+<h2 id="slots">Slots</h2>
+<p><code>%name%</code> is filled with the call's argument.</p>
+<ul>
+<li>An input with spaces in its name keeps its backticks: <code>%`the amount`%</code>.</li>
+<li>A slot has no spaces inside. <code>% amount %</code> is plain text, and L4 warns.</li>
+<li>An input with no slot is not dropped. It follows the sentence: "the threshold is passed with 5".</li>
+</ul>
+<p>To write <code>%</code> or <code>]</code> as itself, put a backslash before it:</p>
+<table>
+<thead>
+<tr>
+<th>You write</th>
+<th>You get</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>10\%and\%20</code></td>
+<td><code>10%and%20</code></td>
+</tr>
+<tr>
+<td><code>[rate \] per unit]</code></td>
+<td><code>rate ] per unit</code></td>
+</tr>
+<tr>
+<td><code>[see note \[3\] here]</code></td>
+<td><code>see note [3] here</code></td>
+</tr>
+<tr>
+<td><code>\\</code></td>
+<td><code>\</code></td>
+</tr>
+</tbody>
+</table>
+<p>You need this only where a <code>%</code> touches a word: <code>a 5% levy on %amount%</code> works as written.
+Take care with <code>%word%</code>: if <code>word</code> names an input, L4 fills it in and nothing warns.</p>
+<h2 id="where-to-put-it">Where to put it</h2>
+<table>
+<thead>
+<tr>
+<th>Where</th>
+<th>Whose wording it is</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>On its own line, between the <code>GIVEN</code> or <code>GIVETH</code> and the rule</td>
+<td>The rule's sentence</td>
+</tr>
+<tr>
+<td>After the rule's name: <code>DECIDE `is large` @nlg …</code></td>
+<td>The rule's sentence</td>
+</tr>
+<tr>
+<td>After an input named in the head: <code>`is large` amount @nlg …</code></td>
+<td>The rule's sentence</td>
+</tr>
+<tr>
+<td>On an <code>AKA</code> name</td>
+<td>The rule's sentence</td>
+</tr>
+<tr>
+<td>After an input in the <code>GIVEN</code>, or indented under it</td>
+<td>That input's</td>
+</tr>
+<tr>
+<td>After a field, or under it</td>
+<td>That field's</td>
+</tr>
+<tr>
+<td>On its own line above a <code>GIVEN</code></td>
+<td>Not the rule's</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li><strong>Trailing a line, it describes that line. On its own line, it describes what follows.</strong> Fields and inputs are the exception: an annotation under one describes that one.</li>
+<li><strong>Under the last input, field or <code>ASSUME</code>, the column decides.</strong> Indented past the <code>GIVEN</code>, <code>DECLARE</code> or <code>ASSUME</code> keyword, it describes that item. At the keyword's column or left of it, it describes what comes next. One extra space turns a rule's sentence into an input's wording, and nothing warns.</li>
+<li><strong>After an enum whose last value has no fields,</strong> a line at the margin belongs to that value. Put the next rule's sentence after its name instead.</li>
+<li><strong>Empty or duplicated:</strong> an empty <code>@nlg</code> is ignored with a warning. Two wordings in one language on one thing warn, and neither is used.</li>
+<li><strong>In the head and above it:</strong> the one above is the rule's sentence, and the one on the input is that input's wording.</li>
+<li><strong>A head that repeats an input</strong> takes the input from the head, so a wording in the <code>GIVEN</code> labels nothing.</li>
+</ul>
+<h2 id="how-it-reads">How it reads</h2>
+<table>
+<thead>
+<tr>
+<th>You annotate</th>
+<th>It reads</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>A rule</td>
+<td>The sentence heads the rule and the body follows. Every call reads as the sentence.</td>
+</tr>
+<tr>
+<td>A rule that calls itself, or an imported one</td>
+<td>The sentence stands in for the body.</td>
+</tr>
+<tr>
+<td>An input</td>
+<td>Its label in a <code>WITH</code> call: <code>… where the amount is x</code>.</td>
+</tr>
+<tr>
+<td>A field</td>
+<td>After its owner: <code>@nlg date of birth</code> reads "the employee's date of birth".</td>
+</tr>
+<tr>
+<td>A <code>BOOLEAN</code> field</td>
+<td>On its own, with no owner, so write a whole statement.</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li><strong>In a rule's own sentence,</strong> an input of a built-in type reads as a blank, <code>[x]</code>. An input of your own type reads as the rule's body calls it, such as "the application kind".</li>
+<li><strong>A <code>WITH</code> call</strong> reads the sentence, then each argument by name: "the smaller of a and b where a is price and b is 100".</li>
+<li><strong>A call reads the sentence of the definition it resolved to,</strong> not of another definition with the same name.</li>
+<li><strong>A unit of time after a slot agrees with the number:</strong> "%n% months" reads "1 month" for 1.</li>
+<li><strong><code>l4 nlg</code> writes literal dates as dates:</strong> <code>Date 16 7 2025</code> reads <code>16 July 2025</code>. A date that does not exist, such as <code>Date 31 2 2025</code>, stays a call.</li>
+</ul>
+<h2 id="when-a-slot-gets-brackets">When a slot gets brackets</h2>
+<p>A sentence's own words can read as part of what fills its slot.
+So a slot gets brackets when two things hold: the sentence goes on after the slot, and what fills it has no word to close it.</p>
+<p>The sentence goes on after a slot when its words or another of its slots come after it.
+With <code>@nlg %a%, %b%</code> on <code>comma</code>, <code>`comma` (NOT (`fb` p)) q</code> reads "(it is not the case that fb for p), [q]".
+A slot at the end of a sentence has nothing after it, so it gets no brackets.
+With <code>@nlg %a% is told %b%</code> on <code>told</code>, and <code>@nlg %p% is shown</code> on <code>shown</code>, <code>`told` p (NOT (`shown` q))</code> reads "[p] is told it is not the case that [q] is shown".</p>
+<p>These have no closing word. Each example is in <code>l4 render</code>, where <code>shown</code> and <code>told</code> have the sentences above and <code>fb</code> has none.</p>
+<table>
+<thead>
+<tr>
+<th>What fills the slot</th>
+<th>You write</th>
+<th>It reads</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>An <code>OR</code> or an <code>AND</code></td>
+<td><code>`shown` (p OR q)</code></td>
+<td>"(p or q) is shown"</td>
+</tr>
+<tr>
+<td>A denial</td>
+<td><code>`shown` (NOT (`fb` p))</code></td>
+<td>"(it is not the case that fb for p) is shown"</td>
+</tr>
+<tr>
+<td>An <code>IMPLIES</code></td>
+<td><code>`shown` (p IMPLIES q)</code></td>
+<td>"(p implies q) is shown"</td>
+</tr>
+<tr>
+<td>A call with no sentence that ends with one of these</td>
+<td><code>`shown` (`fb` (p AND q))</code></td>
+<td>"(fb for p and q) is shown"</td>
+</tr>
+<tr>
+<td>A call with a sentence whose last slot holds one</td>
+<td><code>`shown` (`told` p (NOT (`fb` q)))</code></td>
+<td>"([p] is told it is not the case that fb for q) is shown"</td>
+</tr>
+</tbody>
+</table>
+<p><code>l4 nlg</code> brackets the same slots, with names in backticks: <code>`shown` (TRUE OR FALSE)</code> reads "(<code>TRUE</code> or <code>FALSE</code>) is shown".
+It also brackets an <code>IF</code>: <code>`shown` (IF TRUE THEN FALSE ELSE TRUE)</code> reads "(if <code>TRUE</code> then <code>FALSE</code> else <code>TRUE</code>) is shown".
+<code>l4 render</code> moves a call into the branches of an <code>IF</code> instead.</p>
+<p>Wording can still read two ways in these cases:</p>
+<ul>
+<li><strong>A denial of one condition in <code>l4 render</code></strong> reads "p is false" and gets no brackets, so <code>`shown` (NOT p)</code> reads "p is false is shown".</li>
+<li><strong>The slot at the end of a sentence</strong> can run on into what follows the sentence: <code>((`told` p (NOT (`fb` q))) OR r) IMPLIES r</code> reads "[p] is told it is not the case that fb for q or r implies r".</li>
+<li><strong>A sentence that ends with its slot, in <code>l4 nlg</code>:</strong> with <code>@nlg it is shown that %x%</code> on <code>shown that</code>, <code>(`shown that` TRUE) AND FALSE</code> and <code>`shown that` (TRUE AND FALSE)</code> both read "it is shown that <code>TRUE</code> and <code>FALSE</code>".</li>
+<li><strong>A condition given to a call with no sentence</strong> gets no brackets: <code>NOT (p OR (`fb` (q AND r)))</code> reads "neither p nor fb for q and r".</li>
+</ul>
+<p>If a rule reads two ways because of one of these, give the condition a rule of its own, with a sentence, and call that.</p>
+<h2 id="limits">Limits</h2>
+<ul>
+<li><strong>An <code>ASSUME</code>d function has no named inputs,</strong> so it has no slots, and a call reads as its name and arguments. Use a <code>BOOLEAN</code> field or a rule instead.</li>
+<li><strong>A function passed on, or named without being called,</strong> reads as its name. In <code>filter even xs</code>, <code>even</code> reads <code>even</code>.</li>
+<li><strong>A sentence inside another call is spliced in without brackets,</strong> so nested calls can read alike: with <code>@nlg %a% doubled</code> on <code>dbl</code>, <code>`f2` 2 (`dbl` 3)</code> and <code>`dbl` (`f2` 2 3)</code> both read "<code>f2</code> with 2 and 3 doubled". Set slots off with words that cannot be part of an argument, and read the output of nested calls. A sentence that ends with a condition is the exception: see <a href="#when-a-slot-gets-brackets">When a slot gets brackets</a>. Arithmetic is bracketed, and so is anything beside it that does not say where it ends: "10 minus (5 minus 2)", "(5 doubled) minus 2", "twice (5 minus 2)", "(f2 for 2 and x) − 3".</li>
+<li><strong>A function with no sentence</strong> reads as its pattern: <code>`_ LESS _` with 100 and 20</code>.</li>
+</ul>
+<h2 id="several-languages">Several languages</h2>
+<p>Tag each wording with its language, and ask for one with <code>--lang</code>:</p>
+<pre><code class="language-l4">GIVEN amount IS A NUMBER
+GIVETH A BOOLEAN
+DECIDE `is large` @nlg:en the amount %amount% is large
+                  @nlg:he %amount% עולה על הסף
+  IF amount GREATER THAN 100
+</code></pre>
+<pre><code class="language-console">$ l4 nlg --lang he mymodule.l4
+$ l4 render --format html --lang he mymodule.l4 -o mymodule.he.html
+</code></pre>
+<p>The Render tab in VS Code has a language menu when a file has wordings in more than one language.</p>
+<ul>
+<li><strong>L4 does not translate.</strong> It picks among the wordings you wrote.</li>
+<li><strong>Regions match.</strong> <code>--lang he</code> reads a <code>he-IL</code> wording, and <code>--lang he-IL</code> reads a <code>he</code> one. An exact match comes first.</li>
+<li><strong>A missing wording falls back</strong> to the rule's default: the one in the module's language, otherwise the first in the file.</li>
+<li><strong>The square-bracket form cannot be tagged.</strong></li>
+<li><strong>A word glued to the colon is a tag.</strong> <code>@nlg:the employee pays</code> has the tag <code>the</code>. L4 warns when nothing backs a tag as a language. Leave a space after the colon to keep it as text.</li>
+</ul>
+<p><strong><code>@lang he</code></strong> on a line of its own means every untagged <code>@nlg</code> in the module is Hebrew. It applies to the whole file.</p>
+<ul>
+<li>A module that declares nothing is <code>en</code>, so <code>@lang en</code> is not needed, and L4 hints that it can go.</li>
+<li>Declare the language of a module that is not English: it sets <code>&#x3C;html lang=…></code>, right-to-left <code>dir</code> and the Akoma Ntoso language.</li>
+<li>If two <code>@lang</code> lines disagree, the last one is used, and L4 warns.</li>
+</ul>
+<p><strong>L4's own words,</strong> such as "is equal to", "if" and "with", follow <code>--lang</code> where L4 has a table for the language. Hebrew is the only one. It is small and keeps English word order, so have a Hebrew speaker read the output. A word with no entry stays English, and <code>l4 nlg</code> names it on stderr.</p>
+15:["$","$L1e",null,{"navSections":[{"title":"","items":[{"title":"Language Reference","href":"reference","children":"$undefined"},{"title":"Glossary","href":"reference/GLOSSARY","children":"$undefined"},{"title":"Cheat sheet","href":"reference/cheat-sheet","children":"$undefined"},{"title":"Types","href":"reference/types","children":[{"title":"DECLARE","href":"reference/types/DECLARE","children":"$undefined"},{"title":"ASSUME","href":"reference/types/ASSUME","children":"$undefined"},{"title":"FOR ALL","href":"reference/types/for-all","children":"$undefined"},{"title":"Coercions","href":"reference/types/coercions","children":"$undefined"}]},{"title":"Functions","href":"reference/functions","children":[{"title":"DECIDE","href":"reference/functions/DECIDE","children":"$undefined"},{"title":"GIVEN and GIVETH","href":"reference/functions/GIVEN","children":"$undefined"},{"title":"MEANS","href":"reference/functions/MEANS","children":"$undefined"},{"title":"LET and WHERE","href":"reference/functions/LET","children":"$undefined"},{"title":"YIELD","href":"reference/functions/YIELD","children":"$undefined"},{"title":"AKA","href":"reference/functions/AKA","children":"$undefined"}]},{"title":"Control flow","href":"reference/control-flow","children":[{"title":"IF","href":"reference/control-flow/IF","children":"$undefined"},{"title":"BRANCH","href":"reference/control-flow/BRANCH","children":"$undefined"},{"title":"CONSIDER","href":"reference/control-flow/CONSIDER","children":"$undefined"},{"title":"REFUSE","href":"reference/control-flow/REFUSE","children":"$undefined"}]},{"title":"Operators","href":"reference/operators","children":[{"title":"AND, OR, NOT, IMPLIES","href":"reference/operators/logical","children":"$undefined"},{"title":"UNLESS","href":"reference/operators/UNLESS","children":"$undefined"},{"title":"Arithmetic","href":"reference/operators/arithmetic","children":"$undefined"},{"title":"Comparisons","href":"reference/operators/comparisons","children":"$undefined"}]},{"title":"Regulative rules","href":"reference/regulative","children":[{"title":"PARTY, MUST, MAY, SHANT","href":"reference/regulative/PARTY","children":"$undefined"},{"title":"Deadlines and consequences","href":"reference/regulative/consequences","children":"$undefined"},{"title":"BECAUSE","href":"reference/regulative/BECAUSE","children":"$undefined"},{"title":"DEONTIC","href":"reference/regulative/DEONTIC","children":"$undefined"},{"title":"EVENT","href":"reference/regulative/EVENT","children":"$undefined"}]},{"title":"Syntax and directives","href":"reference/syntax","children":[{"title":"@nlg","href":"reference/syntax/nlg","children":"$undefined"}]},{"title":"Built-in functions","href":"reference/builtins","children":[{"title":"HTTP and JSON","href":"reference/builtins/http-json","children":"$undefined"}]},{"title":"Standard libraries","href":"reference/libraries","children":[{"title":"prelude","href":"reference/libraries/prelude","children":"$undefined"},{"title":"math","href":"reference/libraries/math","children":"$undefined"},{"title":"daydate","href":"reference/libraries/daydate","children":"$undefined"},{"title":"time","href":"reference/libraries/time","children":"$undefined"},{"title":"datetime","href":"reference/libraries/datetime","children":"$undefined"},{"title":"timezone","href":"reference/libraries/timezone","children":"$undefined"},{"title":"excel-date","href":"reference/libraries/excel-date","children":"$undefined"},{"title":"currency","href":"reference/libraries/currency","children":"$undefined"},{"title":"holdings","href":"reference/libraries/holdings","children":"$undefined"},{"title":"actus","href":"reference/libraries/actus","children":"$undefined"},{"title":"legal-persons","href":"reference/libraries/legal-persons","children":"$undefined"},{"title":"jurisdiction","href":"reference/libraries/jurisdiction","children":"$undefined"},{"title":"llm","href":"reference/libraries/llm","children":"$undefined"}]},{"title":"Error messages","href":"reference/errors","children":"$undefined"}]}],"toc":[],"htmlContent":"$1f","pager":{"prev":"$15:props:navSections:0:items:8","next":"$15:props:navSections:0:items:9"}}]
+1b:[["$","meta","0",{"charSet":"utf-8"}],["$","meta","1",{"name":"viewport","content":"width=device-width, initial-scale=1"}]]
+18:null
+1d:[["$","title","0",{"children":"@nlg | L4 Documentation"}],["$","meta","1",{"name":"description","content":"@nlg gives a definition its wording in natural language. l4 render, l4 nlg and the editor read that wording in place of the name."}],["$","meta","2",{"name":"robots","content":"index, follow"}],["$","link","3",{"rel":"canonical","href":"https://legalese.com/l4/reference/syntax/nlg"}],["$","meta","4",{"property":"og:title","content":"@nlg | L4 Documentation"}],["$","meta","5",{"property":"og:description","content":"@nlg gives a definition its wording in natural language. l4 render, l4 nlg and the editor read that wording in place of the name."}],["$","meta","6",{"property":"og:url","content":"https://legalese.com/l4/reference/syntax/nlg"}],["$","meta","7",{"property":"og:image","content":"https://legalese.com/opengraph/ai-is-eating-law-v2.jpg"}],["$","meta","8",{"name":"twitter:card","content":"summary_large_image"}],["$","meta","9",{"name":"twitter:title","content":"@nlg | L4 Documentation"}],["$","meta","10",{"name":"twitter:description","content":"@nlg gives a definition its wording in natural language. l4 render, l4 nlg and the editor read that wording in place of the name."}],["$","meta","11",{"name":"twitter:image","content":"https://legalese.com/opengraph/ai-is-eating-law-v2.jpg"}]]

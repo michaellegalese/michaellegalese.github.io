@@ -2,7 +2,7 @@
 2:I[90160,["/_next/static/chunks/0k9p8qe2_c6el.js","/_next/static/chunks/0i.l9589uvx0j.js","/_next/static/chunks/0hpy9y_1sdd42.js","/_next/static/chunks/0ixaclxzy-hn_.js"],"default"]
 6:I[897367,["/_next/static/chunks/0k9p8qe2_c6el.js","/_next/static/chunks/0i.l9589uvx0j.js"],"OutletBoundary"]
 7:"$Sreact.suspense"
-3:T2a89,<h1>Manage rules in git and CI</h1>
+3:T2b45,<h1>Manage rules in git and CI</h1>
 <p>Keep L4 rules in git: repository layout, commits, review, automatic checks, and safe redeployment.</p>
 <p><strong>Before you start:</strong> <a href="/l4/tutorials/getting-started/testing-your-rules">Test your rules</a>, and basic git.</p>
 <hr>
@@ -98,7 +98,7 @@ jobs:
             l4 check "$f"
           done
 
-      - name: Run tests (fail on failed assertions and on assertions that cannot be evaluated)
+      - name: Run tests (fail on failed, refused and unevaluable assertions)
         run: |
           status=0
           for f in $(git ls-files '*.l4'); do
@@ -106,8 +106,8 @@ jobs:
               echo "::error file=$f::l4 run failed for $f (a type error, or a directive that could not be evaluated)"
               echo "$out"
               status=1
-            elif echo "$out" | grep -q "assertion failed"; then
-              echo "::error file=$f::assertion failed in $f"
+            elif echo "$out" | grep -qE "assertion (failed|refused)"; then
+              echo "::error file=$f::an assertion failed or was refused in $f"
               echo "$out"
               status=1
             fi
@@ -118,7 +118,7 @@ jobs:
 <p>Two details worth knowing:</p>
 <ul>
 <li><code>l4 check</code> exits non-zero on any parse or type error, so the typecheck step needs no extra logic.</li>
-<li><code>l4 run</code> exits non-zero on type errors and on directives that crash during evaluation (an <code>#ASSERT</code> whose expression raises is one), but <strong>not</strong> on failed assertions — a failing <code>#ASSERT</code> prints <code>assertion failed</code> while the file still typechecks. That is why the test step checks two things: the exit code, which catches the type errors and the assertions that could not be evaluated, and a grep for <code>assertion failed</code>, which catches the verdicts (alternatively, use <code>l4 run --json</code> and inspect results of <code>"kind": "assertion"</code>).</li>
+<li><code>l4 run</code> exits non-zero on type errors and on directives that crash during evaluation (an <code>#ASSERT</code> whose expression raises is one), but <strong>not</strong> on failed or refused assertions — a failing <code>#ASSERT</code> prints <code>assertion failed</code>, and one the rules decline to answer prints <code>assertion refused</code>, while the file still typechecks. That is why the test step checks two things: the exit code, which catches the type errors and the assertions that could not be evaluated, and a grep for <code>assertion failed</code> and <code>assertion refused</code>, which catches the verdicts and the refusals (alternatively, use <code>l4 run --json</code> and check that each result of <code>"kind": "assertion"</code> has <code>"value": true</code>).</li>
 </ul>
 <p>If rules use <code>NOW</code> or <code>TODAY</code>, add <code>--fixed-now &#x3C;ISO8601></code> to the <code>l4 run</code> calls so CI results do not depend on the day the job runs.</p>
 <hr>
@@ -157,7 +157,7 @@ jobs:
 <li><a href="/l4/tutorials/deploying-rules/exporting-rules-for-deployment">Deploy your rules</a>: the deployment this page protects.</li>
 <li><a href="/l4/tutorials/getting-started/l4-cli">Using the l4 CLI</a>: every command used in the workflow.</li>
 </ul>
-0:{"rsc":["$","$1","c",{"children":[["$","$L2",null,{"navSections":[{"title":"","items":[{"title":"Overview","href":"tutorials"},{"title":"Install L4 and write your first rule","href":"tutorials/getting-started/first-l4-file"},{"title":"Draft rules with Legalese AI","href":"tutorials/llm-integration/composing-l4-with-ai"},{"title":"Test your rules","href":"tutorials/getting-started/testing-your-rules"},{"title":"Fix errors","href":"tutorials/getting-started/debugging-type-errors"},{"title":"Encode legislation","href":"tutorials/getting-started/encoding-legislation"},{"title":"Make rules read like law","href":"tutorials/natural-language-functions/optimising-natural-language-generation"},{"title":"Common patterns","href":"tutorials/getting-started/common-patterns"},{"title":"Deploy your rules","href":"tutorials/deploying-rules/exporting-rules-for-deployment"},{"title":"Choose an integration","href":"tutorials/legalese-cloud"},{"title":"Connect an AI agent","href":"tutorials/legalese-cloud/ai-agents"},{"title":"Chat with your rules","href":"tutorials/legalese-cloud/openai-compatible-api"},{"title":"Call rules over REST","href":"tutorials/legalese-cloud/openapi-spec"},{"title":"Embed rules in a website","href":"tutorials/legalese-cloud/webmcp-embed"},{"title":"Using the l4 CLI","href":"tutorials/getting-started/l4-cli"},{"title":"Manage rules in git and CI","href":"tutorials/getting-started/version-control-for-rules"}]}],"toc":[],"htmlContent":"$3","pager":{"prev":"$0:rsc:props:children:0:props:navSections:0:items:14"}}],["$L4"],"$L5"]}],"isPartial":false,"staleTime":300,"varyParams":null,"buildId":"S__BF4ItHv_mD8HJYzclX"}
+0:{"rsc":["$","$1","c",{"children":[["$","$L2",null,{"navSections":[{"title":"","items":[{"title":"Overview","href":"tutorials"},{"title":"Install L4 and write your first rule","href":"tutorials/getting-started/first-l4-file"},{"title":"Draft rules with Legalese AI","href":"tutorials/llm-integration/composing-l4-with-ai"},{"title":"Test your rules","href":"tutorials/getting-started/testing-your-rules"},{"title":"Fix errors","href":"tutorials/getting-started/debugging-type-errors"},{"title":"Encode legislation","href":"tutorials/getting-started/encoding-legislation"},{"title":"Make rules read like law","href":"tutorials/natural-language-functions/optimising-natural-language-generation","children":[{"title":"Fix wording with @nlg","href":"tutorials/natural-language-functions/fix-wording-with-nlg"}]},{"title":"Common patterns","href":"tutorials/getting-started/common-patterns"},{"title":"Deploy your rules","href":"tutorials/deploying-rules/exporting-rules-for-deployment"},{"title":"Choose an integration","href":"tutorials/legalese-cloud"},{"title":"Connect an AI agent","href":"tutorials/legalese-cloud/ai-agents"},{"title":"Chat with your rules","href":"tutorials/legalese-cloud/openai-compatible-api"},{"title":"Call rules over REST","href":"tutorials/legalese-cloud/openapi-spec"},{"title":"Embed rules in a website","href":"tutorials/legalese-cloud/webmcp-embed"},{"title":"Using the l4 CLI","href":"tutorials/getting-started/l4-cli"},{"title":"Manage rules in git and CI","href":"tutorials/getting-started/version-control-for-rules"}]}],"toc":[],"htmlContent":"$3","pager":{"prev":"$0:rsc:props:children:0:props:navSections:0:items:14"}}],["$L4"],"$L5"]}],"isPartial":false,"staleTime":300,"varyParams":null,"buildId":"ydI8tQ1nsjF6OZ84JMIgJ"}
 4:["$","script","script-0",{"src":"/_next/static/chunks/0ixaclxzy-hn_.js","async":true}]
 5:["$","$L6",null,{"children":["$","$7",null,{"name":"Next.MetadataOutlet","children":"$@8"}]}]
 8:null

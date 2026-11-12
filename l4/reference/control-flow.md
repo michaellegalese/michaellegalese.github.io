@@ -8,6 +8,7 @@ L4 has no statements, only expressions, so choosing between results is done with
 - [IF](/l4/reference/control-flow/IF.md): `IF … THEN … ELSE`, one condition and two outcomes
 - [BRANCH](/l4/reference/control-flow/BRANCH.md): several conditions, tried from top to bottom, with `OTHERWISE`
 - [CONSIDER](/l4/reference/control-flow/CONSIDER.md): pattern matching with `WHEN … THEN` and `OTHERWISE`, and the check for missing branches
+- [REFUSE](/l4/reference/control-flow/REFUSE.md): `REFUSE "reason"`, declining to answer for a case the rules do not encode, and `#ASSERT REFUSED`, which tests it
 
 A function can also be written as [several clauses](/l4/reference/functions/DECIDE.md#several-clauses), one per case, which means the same as a `CONSIDER`.
 Conditions are combined with [AND, OR, NOT, IMPLIES](/l4/reference/operators/logical.md) and [UNLESS](/l4/reference/operators/UNLESS.md).

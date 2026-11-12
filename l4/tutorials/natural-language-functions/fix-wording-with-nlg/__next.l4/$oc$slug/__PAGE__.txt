@@ -1,0 +1,215 @@
+1:"$Sreact.fragment"
+2:I[90160,["/_next/static/chunks/0k9p8qe2_c6el.js","/_next/static/chunks/0i.l9589uvx0j.js","/_next/static/chunks/0hpy9y_1sdd42.js","/_next/static/chunks/0ixaclxzy-hn_.js"],"default"]
+6:I[897367,["/_next/static/chunks/0k9p8qe2_c6el.js","/_next/static/chunks/0i.l9589uvx0j.js"],"OutletBoundary"]
+7:"$Sreact.suspense"
+3:T2541,<h1>Fix wording with @nlg</h1>
+<p>L4 never rewrites your words, so a rule can read badly in a rendered document.
+This page shows the fix for each problem.</p>
+<p><strong>Before you start:</strong> <a href="/l4/tutorials/natural-language-functions/optimising-natural-language-generation">Make rules read like law</a>.</p>
+<p><strong>Examples:</strong></p>
+<pre><code class="language-l4-file">-- Rules that render badly. fix-wording-after.l4 is the same file with the fixes.
+
+IMPORT daydate
+
+DECLARE Employee
+    HAS `the start date`               IS A NUMBER
+        `I am or have been married`    IS A BOOLEAN
+        `a member of a pension scheme` IS A BOOLEAN
+        `the section engaged`          IS A NUMBER
+        `is on leave`                  IS A BOOLEAN
+
+ASSUME `is aged 16 or over` IS A FUNCTION FROM Employee TO BOOLEAN
+
+GIVEN `the employee` IS AN Employee
+GIVETH A BOOLEAN
+`is authorised` MEANS `the employee`'s `the start date` AT LEAST 1
+
+GIVEN `the section` IS A NUMBER
+GIVETH A BOOLEAN
+`is one of sections 9 to 14` MEANS
+    `the section` AT LEAST 9 AND `the section` AT MOST 14
+
+GIVEN `the employee` IS AN Employee
+GIVETH A BOOLEAN
+`may opt out` MEANS
+      `is authorised` `the employee`
+  AND `is aged 16 or over` `the employee`
+  AND NOT `the employee`'s `I am or have been married`
+  AND NOT `the employee`'s `a member of a pension scheme`
+  AND NOT `the employee`'s `is on leave`
+  AND NOT (`is one of sections 9 to 14` (`the employee`'s `the section engaged`) AND `is authorised` `the employee`)
+
+GIVEN last IS A DATE, next IS A DATE, agrees IS A BOOLEAN
+GIVETH A BOOLEAN
+DECIDE `the change is at least 92 days after the last, last` last `, next` next `, employer agrees:` agrees IF
+    agrees OR Day next MINUS Day last AT LEAST 92
+</code></pre>
+<p>and</p>
+<pre><code class="language-l4-file">-- The rules of fix-wording-before.l4, with their wording fixed.
+
+IMPORT daydate
+
+DECLARE Employee
+    HAS `the start date`               IS A NUMBER
+          @nlg start date
+        `I am or have been married`    IS A BOOLEAN
+          @nlg the employee is or has been married
+        `a member of a pension scheme` IS A BOOLEAN
+          @nlg the employee is a member of a pension scheme
+        `the section engaged`          IS A NUMBER
+          @nlg section engaged
+        `is aged 16 or over`           IS A BOOLEAN
+        `is on leave`                  IS A BOOLEAN
+
+GIVEN `the employee` IS AN Employee
+GIVETH A BOOLEAN
+@nlg %`the employee`% is authorised
+`is authorised` MEANS `the employee`'s `the start date` AT LEAST 1
+
+GIVEN `the section` IS A NUMBER
+GIVETH A BOOLEAN
+@nlg %`the section`% is one of sections 9 to 14
+`is one of sections 9 to 14` MEANS
+    `the section` AT LEAST 9 AND `the section` AT MOST 14
+
+GIVEN `the employee` IS AN Employee
+GIVETH A BOOLEAN
+@nlg %`the employee`% is not on leave
+`is at work` MEANS NOT `the employee`'s `is on leave`
+
+GIVEN `the employee` IS AN Employee
+GIVETH A BOOLEAN
+`may opt out` MEANS
+      `is authorised` `the employee`
+  AND `the employee`'s `is aged 16 or over`
+  AND NOT `the employee`'s `I am or have been married`
+  AND NOT `the employee`'s `a member of a pension scheme`
+  AND `is at work` `the employee`
+  AND NOT (`is one of sections 9 to 14` (`the employee`'s `the section engaged`) AND `is authorised` `the employee`)
+
+GIVEN `the last change` IS A DATE, `the next change` IS A DATE, `the employer agrees` IS A BOOLEAN
+GIVETH A BOOLEAN
+@nlg %`the next change`% is at least 92 days after %`the last change`%, or %`the employer agrees`%
+DECIDE `the change is far enough apart` `the last change` `the next change` `the employer agrees` IF
+    `the employer agrees` OR Day `the next change` MINUS Day `the last change` AT LEAST 92
+</code></pre>
+<p>. See each one with <code>l4 render fix-wording-before.l4 --format text</code>.</p>
+<table>
+<thead>
+<tr>
+<th>You see</th>
+<th>Fix</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>is authorised for the employee</code></td>
+<td><a href="#give-the-rule-a-subject">Give the rule a subject</a></td>
+</tr>
+<tr>
+<td><code>it is not the case that both is one of sections 9 to 14</code></td>
+<td><a href="#give-the-rule-a-subject">Give the rule a subject</a></td>
+</tr>
+<tr>
+<td><code>…, for the employee</code></td>
+<td><a href="#write-a-field-as-a-statement">Write a field as a statement</a></td>
+</tr>
+<tr>
+<td><code>the employee's the start date</code></td>
+<td><a href="#drop-the-extra-the">Drop the extra "the"</a></td>
+</tr>
+<tr>
+<td><code>is aged 16 or over with the employee</code></td>
+<td><a href="#make-an-assumed-fact-a-field">Make an assumed fact a field</a></td>
+</tr>
+<tr>
+<td><code>after the last, last [last], next [next]</code></td>
+<td><a href="#write-a-sentence-for-the-heading">Write a sentence for the heading</a></td>
+</tr>
+<tr>
+<td><code>it is not the case that the employee is on leave</code></td>
+<td><a href="#write-the-negative-yourself">Write the negative yourself</a></td>
+</tr>
+</tbody>
+</table>
+<h2 id="give-the-rule-a-subject">Give the rule a subject</h2>
+<p>A rule with no sentence reads as its name, then its inputs:</p>
+<pre><code class="language-text">(a) is authorised for the employee;
+(f) it is not the case that both is one of sections 9 to 14 for the employee's the section engaged and …
+</code></pre>
+<p>Write a sentence, with a slot for each input:</p>
+<pre><code class="language-l4">GIVEN `the employee` IS AN Employee
+GIVETH A BOOLEAN
+@nlg %`the employee`% is authorised
+`is authorised` MEANS `the employee`'s `the start date` AT LEAST 1
+</code></pre>
+<pre><code class="language-text">(a) the employee is authorised;
+(f) it is not the case that both the employee's section engaged is one of sections 9 to 14 and …
+</code></pre>
+<h2 id="write-a-field-as-a-statement">Write a field as a statement</h2>
+<p>A <code>BOOLEAN</code> field that doesn't start with <em>is</em> or <em>has</em> reads as its own words, then says whose it is:</p>
+<pre><code class="language-text">(c) it is not the case that I am or have been married, for the employee;
+(d) it is not the case that a member of a pension scheme, for the employee;
+</code></pre>
+<p>Give the field a whole statement. It then reads alone:</p>
+<pre><code class="language-l4">`I am or have been married`    IS A BOOLEAN
+  @nlg the employee is or has been married
+`a member of a pension scheme` IS A BOOLEAN
+  @nlg the employee is a member of a pension scheme
+</code></pre>
+<pre><code class="language-text">(c) it is not the case that the employee is or has been married;
+(d) it is not the case that the employee is a member of a pension scheme;
+</code></pre>
+<h2 id="drop-the-extra-the">Drop the extra "the"</h2>
+<p>Any other field reads after its owner, so a name that starts with "the" doubles up:</p>
+<pre><code class="language-text">the employee's the start date
+</code></pre>
+<p>Give the field the words that follow the owner:</p>
+<pre><code class="language-l4">`the start date` IS A NUMBER
+  @nlg start date
+</code></pre>
+<pre><code class="language-text">the employee's start date
+</code></pre>
+<h2 id="make-an-assumed-fact-a-field">Make an assumed fact a field</h2>
+<p>An <code>ASSUME</code>d function has no named inputs, so a sentence has no slot to fill:</p>
+<pre><code class="language-l4">ASSUME `is aged 16 or over` IS A FUNCTION FROM Employee TO BOOLEAN
+</code></pre>
+<pre><code class="language-text">(b) is aged 16 or over with the employee;
+</code></pre>
+<p>Make it a <code>BOOLEAN</code> field. A field that starts with <em>is</em> or <em>has</em> follows its owner, so it needs no <code>@nlg</code>:</p>
+<pre><code class="language-l4">DECLARE Employee
+    HAS `is aged 16 or over` IS A BOOLEAN
+</code></pre>
+<pre><code class="language-text">(b) the employee is aged 16 or over;
+</code></pre>
+<h2 id="write-a-sentence-for-the-heading">Write a sentence for the heading</h2>
+<p>A mixfix rule reads as its pattern, with its inputs as blanks. Punctuation in the pattern reads as written:</p>
+<pre><code class="language-text">The change is at least 92 days after the last, last [last], next [next], employer agrees: [agrees] if:
+</code></pre>
+<p>Write a sentence, and name the inputs as nouns:</p>
+<pre><code class="language-l4">GIVEN `the last change` IS A DATE, `the next change` IS A DATE, `the employer agrees` IS A BOOLEAN
+GIVETH A BOOLEAN
+@nlg %`the next change`% is at least 92 days after %`the last change`%, or %`the employer agrees`%
+</code></pre>
+<pre><code class="language-text">[the next change] is at least 92 days after [the last change], or [the employer agrees] if:
+</code></pre>
+<h2 id="write-the-negative-yourself">Write the negative yourself</h2>
+<p><code>NOT</code> stays outside the statement it denies:</p>
+<pre><code class="language-text">(e) it is not the case that the employee is on leave; and
+</code></pre>
+<p>For a negative wording, write a rule with a sentence, and call it:</p>
+<pre><code class="language-l4">GIVEN `the employee` IS AN Employee
+GIVETH A BOOLEAN
+@nlg %`the employee`% is not on leave
+`is at work` MEANS NOT `the employee`'s `is on leave`
+</code></pre>
+<pre><code class="language-text">(e) the employee is not on leave; and
+</code></pre>
+<h2 id="check-the-sentence">Check the sentence</h2>
+<p><code>@nlg</code> changes the wording, not the logic, and L4 can't tell if a sentence is true.
+Read each sentence against its rule, and try names first: a better name needs no sentence.</p>
+<p>For the exact rules, see <a href="/l4/reference/syntax/nlg">@nlg</a>.</p>
+0:{"rsc":["$","$1","c",{"children":[["$","$L2",null,{"navSections":[{"title":"","items":[{"title":"Overview","href":"tutorials"},{"title":"Install L4 and write your first rule","href":"tutorials/getting-started/first-l4-file"},{"title":"Draft rules with Legalese AI","href":"tutorials/llm-integration/composing-l4-with-ai"},{"title":"Test your rules","href":"tutorials/getting-started/testing-your-rules"},{"title":"Fix errors","href":"tutorials/getting-started/debugging-type-errors"},{"title":"Encode legislation","href":"tutorials/getting-started/encoding-legislation"},{"title":"Make rules read like law","href":"tutorials/natural-language-functions/optimising-natural-language-generation","children":[{"title":"Fix wording with @nlg","href":"tutorials/natural-language-functions/fix-wording-with-nlg"}]},{"title":"Common patterns","href":"tutorials/getting-started/common-patterns"},{"title":"Deploy your rules","href":"tutorials/deploying-rules/exporting-rules-for-deployment"},{"title":"Choose an integration","href":"tutorials/legalese-cloud"},{"title":"Connect an AI agent","href":"tutorials/legalese-cloud/ai-agents"},{"title":"Chat with your rules","href":"tutorials/legalese-cloud/openai-compatible-api"},{"title":"Call rules over REST","href":"tutorials/legalese-cloud/openapi-spec"},{"title":"Embed rules in a website","href":"tutorials/legalese-cloud/webmcp-embed"},{"title":"Using the l4 CLI","href":"tutorials/getting-started/l4-cli"},{"title":"Manage rules in git and CI","href":"tutorials/getting-started/version-control-for-rules"}]}],"toc":[],"htmlContent":"$3","pager":{"prev":"$0:rsc:props:children:0:props:navSections:0:items:6","next":"$0:rsc:props:children:0:props:navSections:0:items:7"}}],["$L4"],"$L5"]}],"isPartial":false,"staleTime":300,"varyParams":null,"buildId":"ydI8tQ1nsjF6OZ84JMIgJ"}
+4:["$","script","script-0",{"src":"/_next/static/chunks/0ixaclxzy-hn_.js","async":true}]
+5:["$","$L6",null,{"children":["$","$7",null,{"name":"Next.MetadataOutlet","children":"$@8"}]}]
+8:null

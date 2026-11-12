@@ -2,7 +2,7 @@
 2:I[90160,["/_next/static/chunks/0k9p8qe2_c6el.js","/_next/static/chunks/0i.l9589uvx0j.js","/_next/static/chunks/0hpy9y_1sdd42.js","/_next/static/chunks/0ixaclxzy-hn_.js"],"default"]
 6:I[897367,["/_next/static/chunks/0k9p8qe2_c6el.js","/_next/static/chunks/0i.l9589uvx0j.js"],"OutletBoundary"]
 7:"$Sreact.suspense"
-3:T2c30,<h1>daydate</h1>
+3:T3e47,<h1>daydate</h1>
 <p>Dates for deadlines and time-based rules: building dates, adding days, months and years, weekdays, ISO weeks and leap years. Import it with <code>IMPORT daydate</code>. Weeks start on Monday, following ISO 8601.</p>
 <p>Most functions take either a <code>DATE</code> or a day number (the date's serial number, as given by <code>Day</code>), so <code>`Weekday of` (Date 1 1 2024)</code> and <code>`Weekday of` 739250</code> give the same answer.</p>
 <p><strong>Example:</strong></p>
@@ -15,6 +15,26 @@ DECIDE `New Year 2025` IS Date 1 1 2025
 
 #EVAL `Christmas 2024`
 #EVAL `New Year 2025`
+
+-- Date construction in ISO 8601 order: year, month, day
+DECIDE `Christmas 2024, year first` IS YMD 2024 12 25
+#EVAL `Christmas 2024, year first`                          -- DATE OF 25, 12, 2024
+#EVAL `Christmas 2024, year first` EQUALS `Christmas 2024`  -- TRUE
+#ASSERT `Year month day` 2024 12 25 EQUALS YMD 2024 12 25
+#ASSERT YMD 2024 2 29 EQUALS Date 29 2 2024
+#ASSERT YMD 0 1 1 EQUALS Date 1 1 0  -- a whole-number year is not otherwise checked
+
+-- Date rolls a day past the end of the month, or a month past 12, forward
+#ASSERT Date 29 2 2025 EQUALS Date 1 3 2025
+#ASSERT Date 7 28 2026 EQUALS Date 7 4 2028
+#ASSERT Date 2025 1 15 EQUALS Date 17 7 20  -- Date takes the day first
+
+-- YMD refuses a year that is not a whole number, and a month or a day that does not exist, and says which part is wrong
+#EVAL YMD 2023 2 29
+#ASSERT REFUSED YMD 2023 2 29 BECAUSE "YMD: that month has no such day in that year"
+#ASSERT REFUSED YMD 2026 28 7 BECAUSE "YMD: the month is not a whole number from 1 to 12"
+#ASSERT REFUSED YMD 2026 13 32 BECAUSE "YMD: the month is not a whole number from 1 to 12"
+#ASSERT REFUSED YMD 2026.5 7 1 BECAUSE "YMD: the year is not a whole number"
 
 -- Date from ISO string (returns MAYBE DATE, ignores time/timezone if present)
 DECIDE `from iso date` IS Date "2025-06-15"
@@ -133,6 +153,11 @@ DECIDE `July 4th` IS July 4 2024
 <td>The date from its parts: <code>Date 25 12 2024</code></td>
 </tr>
 <tr>
+<td><code>YMD</code> year month day</td>
+<td>DATE</td>
+<td>The date from its parts, year first: <code>YMD 2024 12 25</code></td>
+</tr>
+<tr>
 <td><code>Date</code> days</td>
 <td>DATE</td>
 <td>The date with this day number</td>
@@ -174,7 +199,38 @@ DECIDE `July 4th` IS July 4 2024
 </tr>
 </tbody>
 </table>
-<p><code>Date</code> rolls a day that does not exist in the month forward: <code>Date 29 2 2025</code> is 1 March 2025. <code>Days to date</code> is another name for <code>Date</code>.</p>
+<p>When the day is past the end of the month, or the month is past 12, <code>Date day month year</code> rolls forward: <code>Date 29 2 2025</code> is 1 March 2025, and <code>Date 7 28 2026</code> is 7 April 2028.
+<code>Days to date</code> is another name for <code>Date</code>.</p>
+<p><code>YMD year month day</code> takes the year first, the month second and the day third, as ISO 8601 writes a date.
+<code>YMD</code> gives the date when that day exists in that month and year: <code>YMD 2024 2 29</code> is 29 February 2024, the same date as <code>Date 29 2 2024</code>.
+A year that is a whole number is not otherwise checked: <code>YMD 0 1 1</code> is 1 January of year 0.
+When the month or the day does not exist, or the year is not a whole number, it refuses to answer, with a reason that says which part is wrong (<a href="/l4/reference/control-flow/REFUSE">REFUSE</a>).
+<code>#EVAL YMD 2026 28 7</code>, where the day and the month have changed places, prints:</p>
+<pre><code class="language-text">The model refuses to answer:
+  YMD: the month is not a whole number from 1 to 12
+</code></pre>
+<p>and <code>#EVAL YMD 2023 2 29</code>, a day that 2023 does not have, prints:</p>
+<pre><code class="language-text">The model refuses to answer:
+  YMD: that month has no such day in that year
+</code></pre>
+<p>and <code>#EVAL YMD 2026.5 7 1</code>, a year that is not a whole number, prints:</p>
+<pre><code class="language-text">The model refuses to answer:
+  YMD: the year is not a whole number
+</code></pre>
+<p>(<code>Date 1 7 2026.5</code> stops with an internal error, "DATE_FROM_DMY expects integer year", where <code>YMD</code> refuses.)
+<code>YMD</code> checks the month first, then the year, then the day, and gives the reason of the first that is wrong.
+A wrong month gives the month's reason, even when the year or the day is wrong too, and a wrong year gives the year's reason, even when the day is wrong too.
+<code>Year month day</code> is another name for <code>YMD</code>.</p>
+<p>What to know before using <code>YMD</code>:</p>
+<ul>
+<li>A rule that calls <code>YMD</code> has no query plan, even when the date exists, as in <code>YMD 2026 7 28</code>.
+So a questionnaire built on the rule cannot ask for only the inputs it still needs; the same rule written with <code>Date</code> has a query plan (<a href="/l4/reference/control-flow/REFUSE#the-query-plan">REFUSE: the query plan</a>).</li>
+<li>The WASM backend (<code>jl4-mlir</code>) does not evaluate an <code>@export</code> that calls <code>YMD</code>, with the reason "REFUSE is not supported by the WASM backend"; evaluate it with jl4-service (<a href="/l4/reference/control-flow/REFUSE#limits">REFUSE: limits</a>).</li>
+<li><code>YMD</code> and <code>Year month day</code> are names in every file that imports <code>daydate</code>, or a library that imports it, such as <code>datetime</code>.
+A file that also defines its own <code>YMD</code> or <code>Year month day</code> that takes three numbers and gives a date fails to check at each place it uses that name, with "There are multiple definitions for the identifier".
+The more places a rule uses the name, the longer the file takes to check, and each place about triples the time: in measurements, eight uses took one to two seconds, ten took eight to twenty-three seconds, and twelve took more than a minute, where the same file with its own definition renamed checked in under a second.
+Rename its own definition.</li>
+</ul>
 <h2 id="reading-a-date">Reading a date</h2>
 <table>
 <thead>
@@ -391,8 +447,8 @@ DECIDE `July 4th` IS July 4 2024
 </tr>
 </tbody>
 </table>
-<p>New files should use <code>Date</code> from <code>daydate</code>, and <code>DATE_DAY</code>, <code>DATE_MONTH</code> and <code>DATE_YEAR</code>.</p>
-0:{"rsc":["$","$1","c",{"children":[["$","$L2",null,{"navSections":[{"title":"","items":[{"title":"Language Reference","href":"reference"},{"title":"Glossary","href":"reference/GLOSSARY"},{"title":"Cheat sheet","href":"reference/cheat-sheet"},{"title":"Types","href":"reference/types","children":[{"title":"DECLARE","href":"reference/types/DECLARE"},{"title":"ASSUME","href":"reference/types/ASSUME"},{"title":"FOR ALL","href":"reference/types/for-all"},{"title":"Coercions","href":"reference/types/coercions"}]},{"title":"Functions","href":"reference/functions","children":[{"title":"DECIDE","href":"reference/functions/DECIDE"},{"title":"GIVEN and GIVETH","href":"reference/functions/GIVEN"},{"title":"MEANS","href":"reference/functions/MEANS"},{"title":"LET and WHERE","href":"reference/functions/LET"},{"title":"YIELD","href":"reference/functions/YIELD"},{"title":"AKA","href":"reference/functions/AKA"}]},{"title":"Control flow","href":"reference/control-flow","children":[{"title":"IF","href":"reference/control-flow/IF"},{"title":"BRANCH","href":"reference/control-flow/BRANCH"},{"title":"CONSIDER","href":"reference/control-flow/CONSIDER"}]},{"title":"Operators","href":"reference/operators","children":[{"title":"AND, OR, NOT, IMPLIES","href":"reference/operators/logical"},{"title":"UNLESS","href":"reference/operators/UNLESS"},{"title":"Arithmetic","href":"reference/operators/arithmetic"},{"title":"Comparisons","href":"reference/operators/comparisons"}]},{"title":"Regulative rules","href":"reference/regulative","children":[{"title":"PARTY, MUST, MAY, SHANT","href":"reference/regulative/PARTY"},{"title":"Deadlines and consequences","href":"reference/regulative/consequences"},{"title":"BECAUSE","href":"reference/regulative/BECAUSE"},{"title":"DEONTIC","href":"reference/regulative/DEONTIC"},{"title":"EVENT","href":"reference/regulative/EVENT"}]},{"title":"Syntax and directives","href":"reference/syntax"},{"title":"Built-in functions","href":"reference/builtins","children":[{"title":"HTTP and JSON","href":"reference/builtins/http-json"}]},{"title":"Standard libraries","href":"reference/libraries","children":[{"title":"prelude","href":"reference/libraries/prelude"},{"title":"math","href":"reference/libraries/math"},{"title":"daydate","href":"reference/libraries/daydate"},{"title":"time","href":"reference/libraries/time"},{"title":"datetime","href":"reference/libraries/datetime"},{"title":"timezone","href":"reference/libraries/timezone"},{"title":"excel-date","href":"reference/libraries/excel-date"},{"title":"currency","href":"reference/libraries/currency"},{"title":"holdings","href":"reference/libraries/holdings"},{"title":"actus","href":"reference/libraries/actus"},{"title":"legal-persons","href":"reference/libraries/legal-persons"},{"title":"jurisdiction","href":"reference/libraries/jurisdiction"},{"title":"llm","href":"reference/libraries/llm"}]},{"title":"Error messages","href":"reference/errors"}]}],"toc":[],"htmlContent":"$3","pager":{"prev":"$0:rsc:props:children:0:props:navSections:0:items:10:children:1","next":"$0:rsc:props:children:0:props:navSections:0:items:10:children:3"}}],["$L4"],"$L5"]}],"isPartial":false,"staleTime":300,"varyParams":null,"buildId":"S__BF4ItHv_mD8HJYzclX"}
+<p>New files should use <code>Date</code> or <code>YMD</code> from <code>daydate</code>, and <code>DATE_DAY</code>, <code>DATE_MONTH</code> and <code>DATE_YEAR</code>.</p>
+0:{"rsc":["$","$1","c",{"children":[["$","$L2",null,{"navSections":[{"title":"","items":[{"title":"Language Reference","href":"reference"},{"title":"Glossary","href":"reference/GLOSSARY"},{"title":"Cheat sheet","href":"reference/cheat-sheet"},{"title":"Types","href":"reference/types","children":[{"title":"DECLARE","href":"reference/types/DECLARE"},{"title":"ASSUME","href":"reference/types/ASSUME"},{"title":"FOR ALL","href":"reference/types/for-all"},{"title":"Coercions","href":"reference/types/coercions"}]},{"title":"Functions","href":"reference/functions","children":[{"title":"DECIDE","href":"reference/functions/DECIDE"},{"title":"GIVEN and GIVETH","href":"reference/functions/GIVEN"},{"title":"MEANS","href":"reference/functions/MEANS"},{"title":"LET and WHERE","href":"reference/functions/LET"},{"title":"YIELD","href":"reference/functions/YIELD"},{"title":"AKA","href":"reference/functions/AKA"}]},{"title":"Control flow","href":"reference/control-flow","children":[{"title":"IF","href":"reference/control-flow/IF"},{"title":"BRANCH","href":"reference/control-flow/BRANCH"},{"title":"CONSIDER","href":"reference/control-flow/CONSIDER"},{"title":"REFUSE","href":"reference/control-flow/REFUSE"}]},{"title":"Operators","href":"reference/operators","children":[{"title":"AND, OR, NOT, IMPLIES","href":"reference/operators/logical"},{"title":"UNLESS","href":"reference/operators/UNLESS"},{"title":"Arithmetic","href":"reference/operators/arithmetic"},{"title":"Comparisons","href":"reference/operators/comparisons"}]},{"title":"Regulative rules","href":"reference/regulative","children":[{"title":"PARTY, MUST, MAY, SHANT","href":"reference/regulative/PARTY"},{"title":"Deadlines and consequences","href":"reference/regulative/consequences"},{"title":"BECAUSE","href":"reference/regulative/BECAUSE"},{"title":"DEONTIC","href":"reference/regulative/DEONTIC"},{"title":"EVENT","href":"reference/regulative/EVENT"}]},{"title":"Syntax and directives","href":"reference/syntax","children":[{"title":"@nlg","href":"reference/syntax/nlg"}]},{"title":"Built-in functions","href":"reference/builtins","children":[{"title":"HTTP and JSON","href":"reference/builtins/http-json"}]},{"title":"Standard libraries","href":"reference/libraries","children":[{"title":"prelude","href":"reference/libraries/prelude"},{"title":"math","href":"reference/libraries/math"},{"title":"daydate","href":"reference/libraries/daydate"},{"title":"time","href":"reference/libraries/time"},{"title":"datetime","href":"reference/libraries/datetime"},{"title":"timezone","href":"reference/libraries/timezone"},{"title":"excel-date","href":"reference/libraries/excel-date"},{"title":"currency","href":"reference/libraries/currency"},{"title":"holdings","href":"reference/libraries/holdings"},{"title":"actus","href":"reference/libraries/actus"},{"title":"legal-persons","href":"reference/libraries/legal-persons"},{"title":"jurisdiction","href":"reference/libraries/jurisdiction"},{"title":"llm","href":"reference/libraries/llm"}]},{"title":"Error messages","href":"reference/errors"}]}],"toc":[],"htmlContent":"$3","pager":{"prev":"$0:rsc:props:children:0:props:navSections:0:items:10:children:1","next":"$0:rsc:props:children:0:props:navSections:0:items:10:children:3"}}],["$L4"],"$L5"]}],"isPartial":false,"staleTime":300,"varyParams":null,"buildId":"ydI8tQ1nsjF6OZ84JMIgJ"}
 4:["$","script","script-0",{"src":"/_next/static/chunks/0ixaclxzy-hn_.js","async":true}]
 5:["$","$L6",null,{"children":["$","$7",null,{"name":"Next.MetadataOutlet","children":"$@8"}]}]
 8:null

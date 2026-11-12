@@ -2,7 +2,7 @@
 2:I[90160,["/_next/static/chunks/0k9p8qe2_c6el.js","/_next/static/chunks/0i.l9589uvx0j.js","/_next/static/chunks/0hpy9y_1sdd42.js","/_next/static/chunks/0ixaclxzy-hn_.js"],"default"]
 6:I[897367,["/_next/static/chunks/0k9p8qe2_c6el.js","/_next/static/chunks/0i.l9589uvx0j.js"],"OutletBoundary"]
 7:"$Sreact.suspense"
-3:T5a19,<h1>Make rules read like law</h1>
+3:T519d,<h1>Make rules read like law</h1>
 <p>Write rules whose calls read like sentences, and whose rendered document reads like legal drafting.</p>
 <p><strong>Before you start:</strong> <a href="/l4/tutorials/getting-started/first-l4-file">Install L4 and write your first rule</a>.</p>
 <p>This page has two parts:</p>
@@ -289,8 +289,8 @@ GIVETH A NUMBER
 </code></pre>
 <p>The first renders as "The balance due equals the purchase price − the deposit paid."; the second as "Balance equals p − d."</p>
 <p>Legal writing sometimes uses letters on purpose, as in "A person (A) discriminates against another (B) if …" (Equality Act 2010, s.13). There, single letters are the right choice.</p>
-<p>When an input has a record type, the renderer refers to it by the type's name: with <code>GIVEN claim IS A `Payment Claim`</code>, <code>claim's `amount`</code> renders as "the payment claim's amount". This works well when only one input has that type; two inputs of the same type would share the same phrase.</p>
-<p><strong>Name record fields readably.</strong> A field renders as "X's field", so field names go straight into the prose:</p>
+<p>When an input has a record type, the renderer refers to it by the type's name: with <code>GIVEN claim IS A `Payment Claim`</code>, <code>claim's `amount`</code> renders as "the payment claim's amount". A possessive is spelled to fit the word: "the contribution facts' rate", "the witness's age". A role written as a name of its own is kept: <code>GIVEN `the applicant` IS A Person</code> reads "the applicant", not "the person". This works well when only one input has that type; two inputs of the same type would share the same phrase.</p>
+<p><strong>Name record fields readably.</strong> A field renders as "X's field", so field names go straight into the prose. A <code>BOOLEAN</code> field states something, so it never takes a possessive. A field that starts with <em>is</em> or <em>has</em> follows its record ("the applicant is a citizen"), and any other reads as its own words and says which record it is about ("necessary for a contract, for the processing"). Field names go straight into the prose:</p>
 <pre><code class="language-l4">DECLARE `Property Details`
     HAS `market value`         IS A NUMBER
         `monthly property tax` IS A NUMBER
@@ -317,7 +317,7 @@ GIVETH A NUMBER
 `end date`   MEANS 7
 `the deadline` MEANS `the later of` `start date` `end date`
 </code></pre>
-<p>The call renders as "the later of start date and end date". The same function named <code>`maximum`</code> renders as "maximum with start date and end date".</p>
+<p>The call renders as "the later of start date and end date". The same function named <code>`maximum`</code> renders as "maximum for start date and end date".</p>
 <p><strong>Let control flow stay structured.</strong> <code>CONSIDER</code>, <code>IF</code>/<code>THEN</code>/<code>ELSE</code> and <code>AND</code>/<code>OR</code> render as indented outlines, not run-on sentences, so keep the operative logic where the renderer can see it:</p>
 <pre><code class="language-l4">DECLARE Status IS ONE OF Paid, Overdue
 DECLARE Claim HAS `status` IS A Status
@@ -330,10 +330,9 @@ GIVETH A STRING
     WHEN Overdue THEN "send a reminder"
 </code></pre>
 <p>renders as</p>
-<pre><code>• The reminder is determined by:
-    depending on the claim's status:
-    - if it is Paid: none
-    - if it is Overdue: send a reminder
+<pre><code class="language-text">1. The reminder depends on the claim's status:
+    (a) If the claim's status is Paid: none;
+    (b) If the claim's status is Overdue: send a reminder.
 </code></pre>
 <p><strong>Keep arithmetic as arithmetic.</strong> Numeric expressions render as formulas, with <code>+ − × ÷</code> and parentheses, not as "the sum of the product of …":</p>
 <pre><code class="language-l4">`base rent`      MEANS 1000
@@ -361,87 +360,44 @@ GIVETH A BOOLEAN
 DECIDE `the applicant` `is of working age` IF
     `the applicant`'s `age` AT LEAST 18
 </code></pre>
-<p>With <strong>Number sections</strong> turned on in the Render tab (or <code>--number-sections</code> on the command line), the headings are numbered: <code>§ 2  Eligibility</code>, then <code>2.1  Age requirements</code>. A file with no section markers is still grouped into automatic <strong>Definitions</strong> and <strong>Provisions</strong> sections, but your own markers let you name and order the parts the way a reader of the contract or statute expects.</p>
+<p>Headings are numbered by default, in the Render tab and on the command line (turn it off with <code>--no-number-sections</code>): <code>§ 2  Eligibility</code>, then <code>2.1  Age requirements</code>. A file with no section markers is still grouped into automatic <strong>Definitions</strong> and <strong>Provisions</strong> sections, but your own markers let you name and order the parts the way a reader of the contract or statute expects.</p>
 <hr>
 <h2 id="nlg-annotations"><code>@nlg</code> annotations</h2>
-<p>When names and shape are not enough (a recursive helper, a term of art, a formula you would rather state in words), add an <code>@nlg</code> annotation. It is the natural-language form of the definition and replaces the generated sentence.</p>
-<p>Write <code>@nlg</code> at the end of the definition's line, after the name and inputs, with the body on the next line. Inside the sentence, <code>%name%</code> is a slot for an input; an input whose name has spaces keeps its backticks: <code>%`the principal`%</code>.</p>
+<p>When names and shape are not enough, write the sentence yourself. Put <code>@nlg</code> on its own line above the rule, with a <code>%name%</code> slot for each input:</p>
 <pre><code class="language-l4">GIVEN x IS A NUMBER
       y IS A NUMBER
 GIVETH A NUMBER
-`bigger` x y @nlg whichever is larger of %x% and %y%
-  MEANS IF x >= y THEN x ELSE y
+@nlg whichever is larger of %x% and %y%
+`bigger` x y MEANS IF x >= y THEN x ELSE y
 
 `start date` MEANS 3
 `end date`   MEANS 7
 `the deadline` MEANS `bigger` `start date` `end date`
 </code></pre>
-<p>Each slot is filled with the input's name in the definition itself, and with the actual argument at each call:</p>
-<pre><code>• Bigger means whichever is larger of x and y.
-• The deadline means whichever is larger of start date and end date.
+<p>The sentence heads the rule, its logic follows, and every call reads as the sentence:</p>
+<pre><code class="language-text">1. Whichever is larger of [x] and [y] is:
+    (a) If x is at least y: x;
+    (b) Otherwise: y.
+
+4. The deadline means whichever is larger of start date and end date.
 </code></pre>
-<p>A slot is <strong>tight</strong>: <code>%amount%</code>, with no spaces inside the delimiters.
-That is what keeps a written-out percentage from being mistaken for one.
-In</p>
-<pre><code class="language-l4">@nlg a 5% levy on %amount%
-</code></pre>
-<p>the <code>%</code> after <code>5</code> is ordinary text, because <code>% levy on %</code> has spaces inside it and so is not a slot, while <code>%amount%</code> is one.
-Where a percent sign would end up flush against a word, as in <code>5%levy</code>, wrap it in backticks (<code>`5%`</code>) or spell it out ("5 percent"), either of which puts it beyond doubt.</p>
-<p><strong>It replaces the body.</strong> A function with <code>@nlg</code> renders as its sentence, not as its implementation. That is what makes recursive library functions readable; the prelude's <code>filter</code> has <code>@nlg the items of %list% for which %f% holds</code>, so a call reads as a sentence instead of exposing the recursion.</p>
-<table>
-<thead>
-<tr>
-<th>Situation</th>
-<th>Why <code>@nlg</code> helps</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Recursive or higher-order helpers</td>
-<td>Describes the result, hides the implementation</td>
-</tr>
-<tr>
-<td>A formula better said in words</td>
-<td>"the pro-rated premium" instead of the arithmetic</td>
-</tr>
-<tr>
-<td>Terms of art</td>
-<td>Matches the exact statutory or contractual wording</td>
-</tr>
-<tr>
-<td>A name that cannot be both valid code and good prose</td>
-<td>Separates the two</td>
-</tr>
-</tbody>
-</table>
-<p>Tips:</p>
+<p>Use it for recursive helpers, for rules called from other rules, and for terms of art. Every rule in the standard libraries has a sentence.</p>
 <ul>
-<li>Use only the function's own inputs as slots, and write the sentence so that it reads well with each slot as a noun phrase.</li>
-<li>Try names and shape first. An <code>@nlg</code> sentence can drift away from the logic it describes, so use it where it pays off.</li>
-<li>One sentence per definition. For branching prose, let <code>CONSIDER</code> or <code>IF</code> render as an outline instead.</li>
+<li><strong>Fix wording that reads badly:</strong> <a href="/l4/tutorials/natural-language-functions/fix-wording-with-nlg">Fix wording with @nlg</a></li>
+<li><strong>All the rules:</strong> <a href="/l4/reference/syntax/nlg">@nlg</a></li>
 </ul>
 <hr>
 <h2 id="one-encoding-several-languages">One encoding, several languages</h2>
-<p>An <code>@nlg</code> sentence is in whatever language you wrote it in.
-To keep the same rule readable in two languages, give it one sentence per language and tag each with its language:</p>
+<p>Give a rule one sentence per language, and ask for the one you want:</p>
 <pre><code class="language-l4">GIVEN amount IS A NUMBER
 GIVETH A BOOLEAN
 DECIDE `is large` @nlg:en the amount %amount% is large
                   @nlg:he %amount% עולה על הסף
   IF amount GREATER THAN 100
 </code></pre>
-<p>Nothing about the rule is duplicated, only its wording.
-Ask for the language you want:</p>
 <pre><code class="language-bash">l4 render --lang he --format html contract.l4 > contract.he.html
-l4 nlg --lang he contract.l4
 </code></pre>
-<p>A rule with no sentence in that language keeps its default one, so a half-translated file produces a whole document.
-When a whole module is in one language, say it once with <code>@lang he</code> on a line of its own instead of tagging every sentence; the tag then means "every untagged <code>@nlg</code> in this module is Hebrew".</p>
-<p>What this does not do is translate.
-L4 prints the words you wrote.
-The little words it adds itself, such as "is equal to" or "with", stay English unless L4 has a phrase table for the language.
-Hebrew is the one language with a table, and it is small, so have a Hebrew speaker read its output before you rely on it.
-<a href="/l4/reference/syntax#labelling-the-language-nlghe">The syntax reference</a> has the details and the limits.</p>
+<p>L4 does not translate: it prints the words you wrote. See <a href="/l4/reference/syntax/nlg#several-languages">Several languages</a>.</p>
 <hr>
 <h2 id="putting-it-together">Putting it together</h2>
 <p>Before, with short names and no annotation:</p>
@@ -451,7 +407,7 @@ Hebrew is the one language with a table, and it is small, so have a Hebrew speak
 GIVETH A NUMBER
 pmt p r n MEANS p TIMES r DIVIDED BY (1 MINUS EXPONENT (1 PLUS r) (0 MINUS n))
 </code></pre>
-<p>This renders as "Pmt equals p × r ÷ (1 − EXPONENT with the sum of 1 and r and the difference between n and 0)."</p>
+<p>This renders as "Pmt equals p × r ÷ (1 − (EXPONENT with (1 + r) and (0 − n)))."</p>
 <p>After, with descriptive names and one <code>@nlg</code>:</p>
 <pre><code class="language-l4">GIVEN `the principal`      IS A NUMBER
       `the monthly rate`   IS A NUMBER
@@ -472,7 +428,7 @@ GIVETH A NUMBER
 <p>The renderer gives a faithful, deterministic baseline: the same input always gives the same prose, and it never adds facts. House style, tone and jurisdiction conventions are editorial choices that deterministic rules should not make.</p>
 <p>Once the rendered output is accurate, Legalese AI can apply <strong>drafting policies</strong> to it: reusable style rules such as "use plain English", "prefer the active voice", "expand defined terms on first use", or a firm's house style. It rewrites the rendered prose to match, while staying anchored to the deterministic output so the meaning is kept.</p>
 <p>Names, shape and <code>@nlg</code> get the content right; drafting policies get the style right. See <a href="/l4/tutorials/llm-integration/composing-l4-with-ai">Draft rules with Legalese AI</a> for how Legalese AI fits into writing rules.</p>
-0:{"rsc":["$","$1","c",{"children":[["$","$L2",null,{"navSections":[{"title":"","items":[{"title":"Overview","href":"tutorials"},{"title":"Install L4 and write your first rule","href":"tutorials/getting-started/first-l4-file"},{"title":"Draft rules with Legalese AI","href":"tutorials/llm-integration/composing-l4-with-ai"},{"title":"Test your rules","href":"tutorials/getting-started/testing-your-rules"},{"title":"Fix errors","href":"tutorials/getting-started/debugging-type-errors"},{"title":"Encode legislation","href":"tutorials/getting-started/encoding-legislation"},{"title":"Make rules read like law","href":"tutorials/natural-language-functions/optimising-natural-language-generation"},{"title":"Common patterns","href":"tutorials/getting-started/common-patterns"},{"title":"Deploy your rules","href":"tutorials/deploying-rules/exporting-rules-for-deployment"},{"title":"Choose an integration","href":"tutorials/legalese-cloud"},{"title":"Connect an AI agent","href":"tutorials/legalese-cloud/ai-agents"},{"title":"Chat with your rules","href":"tutorials/legalese-cloud/openai-compatible-api"},{"title":"Call rules over REST","href":"tutorials/legalese-cloud/openapi-spec"},{"title":"Embed rules in a website","href":"tutorials/legalese-cloud/webmcp-embed"},{"title":"Using the l4 CLI","href":"tutorials/getting-started/l4-cli"},{"title":"Manage rules in git and CI","href":"tutorials/getting-started/version-control-for-rules"}]}],"toc":[],"htmlContent":"$3","pager":{"prev":"$0:rsc:props:children:0:props:navSections:0:items:5","next":"$0:rsc:props:children:0:props:navSections:0:items:7"}}],["$L4"],"$L5"]}],"isPartial":false,"staleTime":300,"varyParams":null,"buildId":"S__BF4ItHv_mD8HJYzclX"}
+0:{"rsc":["$","$1","c",{"children":[["$","$L2",null,{"navSections":[{"title":"","items":[{"title":"Overview","href":"tutorials"},{"title":"Install L4 and write your first rule","href":"tutorials/getting-started/first-l4-file"},{"title":"Draft rules with Legalese AI","href":"tutorials/llm-integration/composing-l4-with-ai"},{"title":"Test your rules","href":"tutorials/getting-started/testing-your-rules"},{"title":"Fix errors","href":"tutorials/getting-started/debugging-type-errors"},{"title":"Encode legislation","href":"tutorials/getting-started/encoding-legislation"},{"title":"Make rules read like law","href":"tutorials/natural-language-functions/optimising-natural-language-generation","children":[{"title":"Fix wording with @nlg","href":"tutorials/natural-language-functions/fix-wording-with-nlg"}]},{"title":"Common patterns","href":"tutorials/getting-started/common-patterns"},{"title":"Deploy your rules","href":"tutorials/deploying-rules/exporting-rules-for-deployment"},{"title":"Choose an integration","href":"tutorials/legalese-cloud"},{"title":"Connect an AI agent","href":"tutorials/legalese-cloud/ai-agents"},{"title":"Chat with your rules","href":"tutorials/legalese-cloud/openai-compatible-api"},{"title":"Call rules over REST","href":"tutorials/legalese-cloud/openapi-spec"},{"title":"Embed rules in a website","href":"tutorials/legalese-cloud/webmcp-embed"},{"title":"Using the l4 CLI","href":"tutorials/getting-started/l4-cli"},{"title":"Manage rules in git and CI","href":"tutorials/getting-started/version-control-for-rules"}]}],"toc":[],"htmlContent":"$3","pager":{"prev":"$0:rsc:props:children:0:props:navSections:0:items:5","next":"$0:rsc:props:children:0:props:navSections:0:items:6:children:0"}}],["$L4"],"$L5"]}],"isPartial":false,"staleTime":300,"varyParams":null,"buildId":"ydI8tQ1nsjF6OZ84JMIgJ"}
 4:["$","script","script-0",{"src":"/_next/static/chunks/0ixaclxzy-hn_.js","async":true}]
 5:["$","$L6",null,{"children":["$","$7",null,{"name":"Next.MetadataOutlet","children":"$@8"}]}]
 8:null

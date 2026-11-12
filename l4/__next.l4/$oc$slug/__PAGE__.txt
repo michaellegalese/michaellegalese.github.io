@@ -2,13 +2,13 @@
 2:I[90160,["/_next/static/chunks/0k9p8qe2_c6el.js","/_next/static/chunks/0i.l9589uvx0j.js","/_next/static/chunks/0hpy9y_1sdd42.js","/_next/static/chunks/0ixaclxzy-hn_.js"],"default"]
 6:I[897367,["/_next/static/chunks/0k9p8qe2_c6el.js","/_next/static/chunks/0i.l9589uvx0j.js"],"OutletBoundary"]
 7:"$Sreact.suspense"
-3:Taa5,<p><img src="/doc-images/l4.svg" alt="L4 Logo"></p>
+3:Taa6,<p><img src="/doc-images/l4.svg" alt="L4 Logo"></p>
 <h1>L4 documentation</h1>
 <p>L4 is a programming language for law. You write contracts, legislation and regulations as rules that a computer can check, run and explain.</p>
 <h2 id="get-l4">Get L4</h2>
 <ul>
 <li><strong><a href="https://marketplace.visualstudio.com/items?itemName=Legalese.l4-vscode">VS Code extension</a></strong>: the editor, the <code>l4</code> command, Legalese AI and deployment in one install.</li>
-<li><strong><a href="https://jl4.legalese.com">Web editor</a></strong>: try L4 in the browser, nothing to install.</li>
+<li><strong><a href="https://play.legalese.com">Web editor</a></strong>: try L4 in the browser, nothing to install.</li>
 </ul>
 <h2 id="where-to-start">Where to start</h2>
 <ul>
@@ -56,7 +56,7 @@
 <li><strong><a href="https://legalese.com">Legalese</a></strong>: professional implementation services.</li>
 <li><strong><a href="https://github.com/legalese/l4-ide/releases">Releases</a></strong> and <strong><a href="https://github.com/legalese/l4-ide">source code</a></strong>: L4 is open source under the <a href="https://github.com/legalese/l4-ide/blob/main/LICENSE">Apache-2.0 License</a>.</li>
 </ul>
-0:{"rsc":["$","$1","c",{"children":[["$","$L2",null,{"navSections":[{"title":"","items":[{"title":"Language Reference","href":"reference"},{"title":"Glossary","href":"reference/GLOSSARY"},{"title":"Types","href":"reference/types"},{"title":"Functions","href":"reference/functions"},{"title":"Control Flow","href":"reference/control-flow"},{"title":"Operators","href":"reference/operators"},{"title":"Syntax","href":"reference/syntax"},{"title":"Regulative","href":"reference/regulative"},{"title":"Built-ins","href":"reference/builtins"},{"title":"Libraries","href":"reference/libraries"},{"title":"Patterns","href":"tutorials/getting-started/common-patterns"},{"title":"Errors and Troubleshooting","href":"reference/errors"},{"title":"Foundation Course","href":"courses/foundation"},{"title":"Advanced Course","href":"courses/advanced"}]}],"toc":[],"htmlContent":"$3","pager":{}}],["$L4"],"$L5"]}],"isPartial":false,"staleTime":300,"varyParams":null,"buildId":"S__BF4ItHv_mD8HJYzclX"}
+0:{"rsc":["$","$1","c",{"children":[["$","$L2",null,{"navSections":[{"title":"","items":[{"title":"Language Reference","href":"reference"},{"title":"Glossary","href":"reference/GLOSSARY"},{"title":"Types","href":"reference/types"},{"title":"Functions","href":"reference/functions"},{"title":"Control Flow","href":"reference/control-flow","children":[{"title":"REFUSE","href":"reference/control-flow/REFUSE"}]},{"title":"Operators","href":"reference/operators"},{"title":"Syntax","href":"reference/syntax"},{"title":"Regulative","href":"reference/regulative"},{"title":"Built-ins","href":"reference/builtins"},{"title":"Libraries","href":"reference/libraries"},{"title":"Patterns","href":"tutorials/getting-started/common-patterns"},{"title":"Errors and Troubleshooting","href":"reference/errors"},{"title":"Foundation Course","href":"courses/foundation"},{"title":"Advanced Course","href":"courses/advanced"}]}],"toc":[],"htmlContent":"$3","pager":{}}],["$L4"],"$L5"]}],"isPartial":false,"staleTime":300,"varyParams":null,"buildId":"ydI8tQ1nsjF6OZ84JMIgJ"}
 4:["$","script","script-0",{"src":"/_next/static/chunks/0ixaclxzy-hn_.js","async":true}]
 5:["$","$L6",null,{"children":["$","$7",null,{"name":"Next.MetadataOutlet","children":"$@8"}]}]
 8:null
